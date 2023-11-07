@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseAuth
+import CryptoKit
 import AuthenticationServices
 import Firebase
 
@@ -33,41 +34,34 @@ struct AppleUser: Codable {
 }
 
 struct AppleLoginView : View {
-    @EnvironmentObject var user: userData
-    @EnvironmentObject var card: CardDetailData
-    @StateObject var loginData = AppleLoginViewModel()
+    @EnvironmentObject var user: UserOB
+    @StateObject var loginData = AppleLoginOB()
     
-    @State var currentNonce: String?
+    @State private var currentNonce: String?
     var body: some View {
-        ZStack {
-            Image("login")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-                .edgesIgnoringSafeArea(.all)
-            
+
+        VStack {
             SignInWithAppleButton(
                 onRequest: configure,
                 onCompletion: handle)
         }
     }
     
-    func failHandler(errString1: String, errString2: String){
+    private func failHandler(errString1: String, errString2: String) {
         print("error on apple login: \(errString1), \(errString2)")
     }
     
-    
-    func configure(_ request: ASAuthorizationAppleIDRequest){
+    private func configure(_ request: ASAuthorizationAppleIDRequest) {
         loginData.nonce = randomNonceString()
         request.requestedScopes = [.fullName, .email]
         request.nonce = sha256(loginData.nonce)
     }
     
-    func handle(_ authResult: Result<ASAuthorization, Error>){
+    private func handle(_ authResult: Result<ASAuthorization, Error>) {
         switch authResult{
         case .success(let auth):
             print(auth)
-            switch auth.credential{
+            switch auth.credential {
             case let appleIdCredentials as ASAuthorizationAppleIDCredential:
                 if let appleUser = AppleUser(credentials: appleIdCredentials){
                     // AppleUser 객체를 JSON 형태로 Encoding하여 UserDefaults에 저장할 수 았는 형태로.
@@ -78,9 +72,6 @@ struct AppleLoginView : View {
                     UserDefaults.standard.setValue(appleUserData, forKey: appleUser.userId)
                     
                     print(">>> Saved Apple User : ", appleUser)
-                    
-                    
-                    
                 } else {    // field 정보 부족으로 AppleUser 객체 생성 실패 시
                     print("missing some fields",
                           appleIdCredentials.email ?? "" ,
@@ -143,6 +134,54 @@ struct AppleLoginView : View {
         case .failure(let err):
             print(">>> Handle Failure : ", err)
         }
+    }
+    
+    // From Firebase Official Document...
+    // Helpers for Apple Login with Firebase
+    
+    // SHA256 암호화
+    private func sha256(_ input: String) -> String {
+        let inputData = Data(input.utf8)
+        let hashedData = SHA256.hash(data: inputData)
+        let hashString = hashedData.compactMap {
+            String(format: "%02x", $0)
+        }.joined()
+        
+        return hashString
+    }
+    
+    // random Nonce String 리턴
+    private func randomNonceString(length: Int = 32) -> String {
+        precondition(length > 0)
+        let charset: [Character] =
+        Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+        var result = ""
+        var remainingLength = length
+        
+        while remainingLength > 0 {
+            let randoms: [UInt8] = (0 ..< 16).map { _ in
+                var random: UInt8 = 0
+                let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
+                if errorCode != errSecSuccess {
+                    fatalError(
+                        "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
+                    )
+                }
+                return random
+            }
+            
+            randoms.forEach { random in
+                if remainingLength == 0 {
+                    return
+                }
+                
+                if random < charset.count {
+                    result.append(charset[Int(random)])
+                    remainingLength -= 1
+                }
+            }
+        }
+        return result
     }
 }
 
