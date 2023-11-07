@@ -13,6 +13,7 @@
 		0E18AD672AFA11F50011ED4A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD662AFA11F50011ED4A /* FirebaseFirestore */; };
 		0E18AD6B2AFA7F670011ED4A /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AD6A2AFA7F670011ED4A /* SignInView.swift */; };
 		0E18AD6D2AFA8DC50011ED4A /* UserOB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AD6C2AFA8DC50011ED4A /* UserOB.swift */; };
+		0E18AD6F2AFA8F140011ED4A /* AppleLoginOB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AD6E2AFA8F140011ED4A /* AppleLoginOB.swift */; };
 		C3C6375D2AF90C2B006D464D /* SolidnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C6375C2AF90C2B006D464D /* SolidnerApp.swift */; };
 		C3C6375F2AF90C2B006D464D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C6375E2AF90C2B006D464D /* ContentView.swift */; };
 		C3C637612AF90C2C006D464D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3C637602AF90C2C006D464D /* Assets.xcassets */; };
@@ -49,6 +50,7 @@
 		0E18AD682AFA7A260011ED4A /* Solidner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Solidner.entitlements; sourceTree = "<group>"; };
 		0E18AD6A2AFA7F670011ED4A /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		0E18AD6C2AFA8DC50011ED4A /* UserOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOB.swift; sourceTree = "<group>"; };
+		0E18AD6E2AFA8F140011ED4A /* AppleLoginOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginOB.swift; sourceTree = "<group>"; };
 		C3C637592AF90C2B006D464D /* Solidner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Solidner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3C6375C2AF90C2B006D464D /* SolidnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidnerApp.swift; sourceTree = "<group>"; };
 		C3C6375E2AF90C2B006D464D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				0E18AD6C2AFA8DC50011ED4A /* UserOB.swift */,
+				0E18AD6E2AFA8F140011ED4A /* AppleLoginOB.swift */,
 			);
 			path = ObservableObjects;
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 				C3C6375F2AF90C2B006D464D /* ContentView.swift in Sources */,
 				0E18AD6B2AFA7F670011ED4A /* SignInView.swift in Sources */,
 				C3C637982AF91EE0006D464D /* models_dummy.swift in Sources */,
+				0E18AD6F2AFA8F140011ED4A /* AppleLoginOB.swift in Sources */,
 				C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */,
 				C3C6378E2AF91E73006D464D /* network_dummy.swift in Sources */,
 				C3C637922AF91E9D006D464D /* extension_dummy.swift in Sources */,
