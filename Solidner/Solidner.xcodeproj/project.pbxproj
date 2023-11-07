@@ -1,0 +1,672 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C3C6375D2AF90C2B006D464D /* SolidnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C6375C2AF90C2B006D464D /* SolidnerApp.swift */; };
+		C3C6375F2AF90C2B006D464D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C6375E2AF90C2B006D464D /* ContentView.swift */; };
+		C3C637612AF90C2C006D464D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3C637602AF90C2C006D464D /* Assets.xcassets */; };
+		C3C637642AF90C2C006D464D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3C637632AF90C2C006D464D /* Preview Assets.xcassets */; };
+		C3C6376E2AF90C2C006D464D /* SolidnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C6376D2AF90C2C006D464D /* SolidnerTests.swift */; };
+		C3C637782AF90C2C006D464D /* SolidnerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C637772AF90C2C006D464D /* SolidnerUITests.swift */; };
+		C3C6377A2AF90C2C006D464D /* SolidnerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C637792AF90C2C006D464D /* SolidnerUITestsLaunchTests.swift */; };
+		C3C6378E2AF91E73006D464D /* network_dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C6378D2AF91E73006D464D /* network_dummy.swift */; };
+		C3C637902AF91E85006D464D /* fonts_dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C6378F2AF91E85006D464D /* fonts_dummy.swift */; };
+		C3C637922AF91E9D006D464D /* extension_dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C637912AF91E9D006D464D /* extension_dummy.swift */; };
+		C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C637932AF91EB0006D464D /* common_dummy.swift */; };
+		C3C637962AF91EC5006D464D /* views_dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C637952AF91EC5006D464D /* views_dummy.swift */; };
+		C3C637982AF91EE0006D464D /* models_dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C637972AF91EE0006D464D /* models_dummy.swift */; };
+		C3C6379A2AF91EF7006D464D /* observable_dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C637992AF91EF7006D464D /* observable_dummy.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C3C6376A2AF90C2C006D464D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C3C637512AF90C2B006D464D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C3C637582AF90C2B006D464D;
+			remoteInfo = Solidner;
+		};
+		C3C637742AF90C2C006D464D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C3C637512AF90C2B006D464D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C3C637582AF90C2B006D464D;
+			remoteInfo = Solidner;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C3C637592AF90C2B006D464D /* Solidner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Solidner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3C6375C2AF90C2B006D464D /* SolidnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidnerApp.swift; sourceTree = "<group>"; };
+		C3C6375E2AF90C2B006D464D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C3C637602AF90C2C006D464D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C3C637632AF90C2C006D464D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C3C637692AF90C2C006D464D /* SolidnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SolidnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3C6376D2AF90C2C006D464D /* SolidnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidnerTests.swift; sourceTree = "<group>"; };
+		C3C637732AF90C2C006D464D /* SolidnerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SolidnerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3C637772AF90C2C006D464D /* SolidnerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidnerUITests.swift; sourceTree = "<group>"; };
+		C3C637792AF90C2C006D464D /* SolidnerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidnerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		C3C6378D2AF91E73006D464D /* network_dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = network_dummy.swift; sourceTree = "<group>"; };
+		C3C6378F2AF91E85006D464D /* fonts_dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fonts_dummy.swift; sourceTree = "<group>"; };
+		C3C637912AF91E9D006D464D /* extension_dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extension_dummy.swift; sourceTree = "<group>"; };
+		C3C637932AF91EB0006D464D /* common_dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = common_dummy.swift; sourceTree = "<group>"; };
+		C3C637952AF91EC5006D464D /* views_dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = views_dummy.swift; sourceTree = "<group>"; };
+		C3C637972AF91EE0006D464D /* models_dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = models_dummy.swift; sourceTree = "<group>"; };
+		C3C637992AF91EF7006D464D /* observable_dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = observable_dummy.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C3C637562AF90C2B006D464D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3C637662AF90C2C006D464D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3C637702AF90C2C006D464D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C3C637502AF90C2B006D464D = {
+			isa = PBXGroup;
+			children = (
+				C3C6375B2AF90C2B006D464D /* Solidner */,
+				C3C6376C2AF90C2C006D464D /* SolidnerTests */,
+				C3C637762AF90C2C006D464D /* SolidnerUITests */,
+				C3C6375A2AF90C2B006D464D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C3C6375A2AF90C2B006D464D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C3C637592AF90C2B006D464D /* Solidner.app */,
+				C3C637692AF90C2C006D464D /* SolidnerTests.xctest */,
+				C3C637732AF90C2C006D464D /* SolidnerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C3C6375B2AF90C2B006D464D /* Solidner */ = {
+			isa = PBXGroup;
+			children = (
+				C3C6378C2AF90CA2006D464D /* Network */,
+				C3C6378B2AF90C94006D464D /* Fonts */,
+				C3C6378A2AF90C80006D464D /* Extension+ */,
+				C3C637892AF90C69006D464D /* Common */,
+				C3C637882AF90C5E006D464D /* Views */,
+				C3C637872AF90C51006D464D /* Models */,
+				C3C637862AF90C33006D464D /* ObservableObjects */,
+				C3C6375C2AF90C2B006D464D /* SolidnerApp.swift */,
+				C3C6375E2AF90C2B006D464D /* ContentView.swift */,
+				C3C637602AF90C2C006D464D /* Assets.xcassets */,
+				C3C637622AF90C2C006D464D /* Preview Content */,
+			);
+			path = Solidner;
+			sourceTree = "<group>";
+		};
+		C3C637622AF90C2C006D464D /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				C3C637632AF90C2C006D464D /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C3C6376C2AF90C2C006D464D /* SolidnerTests */ = {
+			isa = PBXGroup;
+			children = (
+				C3C6376D2AF90C2C006D464D /* SolidnerTests.swift */,
+			);
+			path = SolidnerTests;
+			sourceTree = "<group>";
+		};
+		C3C637762AF90C2C006D464D /* SolidnerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				C3C637772AF90C2C006D464D /* SolidnerUITests.swift */,
+				C3C637792AF90C2C006D464D /* SolidnerUITestsLaunchTests.swift */,
+			);
+			path = SolidnerUITests;
+			sourceTree = "<group>";
+		};
+		C3C637862AF90C33006D464D /* ObservableObjects */ = {
+			isa = PBXGroup;
+			children = (
+				C3C637992AF91EF7006D464D /* observable_dummy.swift */,
+			);
+			path = ObservableObjects;
+			sourceTree = "<group>";
+		};
+		C3C637872AF90C51006D464D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C3C637972AF91EE0006D464D /* models_dummy.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C3C637882AF90C5E006D464D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C3C637952AF91EC5006D464D /* views_dummy.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C3C637892AF90C69006D464D /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				C3C637932AF91EB0006D464D /* common_dummy.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		C3C6378A2AF90C80006D464D /* Extension+ */ = {
+			isa = PBXGroup;
+			children = (
+				C3C637912AF91E9D006D464D /* extension_dummy.swift */,
+			);
+			path = "Extension+";
+			sourceTree = "<group>";
+		};
+		C3C6378B2AF90C94006D464D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				C3C6378F2AF91E85006D464D /* fonts_dummy.swift */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		C3C6378C2AF90CA2006D464D /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				C3C6378D2AF91E73006D464D /* network_dummy.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C3C637582AF90C2B006D464D /* Solidner */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3C6377D2AF90C2C006D464D /* Build configuration list for PBXNativeTarget "Solidner" */;
+			buildPhases = (
+				C3C637552AF90C2B006D464D /* Sources */,
+				C3C637562AF90C2B006D464D /* Frameworks */,
+				C3C637572AF90C2B006D464D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Solidner;
+			productName = Solidner;
+			productReference = C3C637592AF90C2B006D464D /* Solidner.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C3C637682AF90C2C006D464D /* SolidnerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3C637802AF90C2C006D464D /* Build configuration list for PBXNativeTarget "SolidnerTests" */;
+			buildPhases = (
+				C3C637652AF90C2C006D464D /* Sources */,
+				C3C637662AF90C2C006D464D /* Frameworks */,
+				C3C637672AF90C2C006D464D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C3C6376B2AF90C2C006D464D /* PBXTargetDependency */,
+			);
+			name = SolidnerTests;
+			productName = SolidnerTests;
+			productReference = C3C637692AF90C2C006D464D /* SolidnerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C3C637722AF90C2C006D464D /* SolidnerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3C637832AF90C2C006D464D /* Build configuration list for PBXNativeTarget "SolidnerUITests" */;
+			buildPhases = (
+				C3C6376F2AF90C2C006D464D /* Sources */,
+				C3C637702AF90C2C006D464D /* Frameworks */,
+				C3C637712AF90C2C006D464D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C3C637752AF90C2C006D464D /* PBXTargetDependency */,
+			);
+			name = SolidnerUITests;
+			productName = SolidnerUITests;
+			productReference = C3C637732AF90C2C006D464D /* SolidnerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C3C637512AF90C2B006D464D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					C3C637582AF90C2B006D464D = {
+						CreatedOnToolsVersion = 14.3;
+					};
+					C3C637682AF90C2C006D464D = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = C3C637582AF90C2B006D464D;
+					};
+					C3C637722AF90C2C006D464D = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = C3C637582AF90C2B006D464D;
+					};
+				};
+			};
+			buildConfigurationList = C3C637542AF90C2B006D464D /* Build configuration list for PBXProject "Solidner" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C3C637502AF90C2B006D464D;
+			productRefGroup = C3C6375A2AF90C2B006D464D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C3C637582AF90C2B006D464D /* Solidner */,
+				C3C637682AF90C2C006D464D /* SolidnerTests */,
+				C3C637722AF90C2C006D464D /* SolidnerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C3C637572AF90C2B006D464D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3C637642AF90C2C006D464D /* Preview Assets.xcassets in Resources */,
+				C3C637612AF90C2C006D464D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3C637672AF90C2C006D464D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3C637712AF90C2C006D464D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C3C637552AF90C2B006D464D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3C637902AF91E85006D464D /* fonts_dummy.swift in Sources */,
+				C3C637962AF91EC5006D464D /* views_dummy.swift in Sources */,
+				C3C6375F2AF90C2B006D464D /* ContentView.swift in Sources */,
+				C3C6379A2AF91EF7006D464D /* observable_dummy.swift in Sources */,
+				C3C637982AF91EE0006D464D /* models_dummy.swift in Sources */,
+				C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */,
+				C3C6378E2AF91E73006D464D /* network_dummy.swift in Sources */,
+				C3C637922AF91E9D006D464D /* extension_dummy.swift in Sources */,
+				C3C6375D2AF90C2B006D464D /* SolidnerApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3C637652AF90C2C006D464D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3C6376E2AF90C2C006D464D /* SolidnerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3C6376F2AF90C2C006D464D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3C6377A2AF90C2C006D464D /* SolidnerUITestsLaunchTests.swift in Sources */,
+				C3C637782AF90C2C006D464D /* SolidnerUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C3C6376B2AF90C2C006D464D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C3C637582AF90C2B006D464D /* Solidner */;
+			targetProxy = C3C6376A2AF90C2C006D464D /* PBXContainerItemProxy */;
+		};
+		C3C637752AF90C2C006D464D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C3C637582AF90C2B006D464D /* Solidner */;
+			targetProxy = C3C637742AF90C2C006D464D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		C3C6377B2AF90C2C006D464D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C3C6377C2AF90C2C006D464D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C3C6377E2AF90C2C006D464D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Solidner/Preview Content\"";
+				DEVELOPMENT_TEAM = G8XX337GMH;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swimmer.Solidner;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C3C6377F2AF90C2C006D464D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Solidner/Preview Content\"";
+				DEVELOPMENT_TEAM = G8XX337GMH;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swimmer.Solidner;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C3C637812AF90C2C006D464D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = G8XX337GMH;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swimmer.SolidnerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Solidner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Solidner";
+			};
+			name = Debug;
+		};
+		C3C637822AF90C2C006D464D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = G8XX337GMH;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swimmer.SolidnerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Solidner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Solidner";
+			};
+			name = Release;
+		};
+		C3C637842AF90C2C006D464D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = G8XX337GMH;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swimmer.SolidnerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Solidner;
+			};
+			name = Debug;
+		};
+		C3C637852AF90C2C006D464D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = G8XX337GMH;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swimmer.SolidnerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Solidner;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C3C637542AF90C2B006D464D /* Build configuration list for PBXProject "Solidner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3C6377B2AF90C2C006D464D /* Debug */,
+				C3C6377C2AF90C2C006D464D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C3C6377D2AF90C2C006D464D /* Build configuration list for PBXNativeTarget "Solidner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3C6377E2AF90C2C006D464D /* Debug */,
+				C3C6377F2AF90C2C006D464D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C3C637802AF90C2C006D464D /* Build configuration list for PBXNativeTarget "SolidnerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3C637812AF90C2C006D464D /* Debug */,
+				C3C637822AF90C2C006D464D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C3C637832AF90C2C006D464D /* Build configuration list for PBXNativeTarget "SolidnerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3C637842AF90C2C006D464D /* Debug */,
+				C3C637852AF90C2C006D464D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C3C637512AF90C2B006D464D /* Project object */;
+}
