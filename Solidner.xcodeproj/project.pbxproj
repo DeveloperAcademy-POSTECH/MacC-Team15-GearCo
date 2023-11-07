@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E18AD5E2AFA0D270011ED4A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0E18AD5D2AFA0D270011ED4A /* GoogleService-Info.plist */; };
 		C3C6375D2AF90C2B006D464D /* SolidnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C6375C2AF90C2B006D464D /* SolidnerApp.swift */; };
 		C3C6375F2AF90C2B006D464D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C6375E2AF90C2B006D464D /* ContentView.swift */; };
 		C3C637612AF90C2C006D464D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3C637602AF90C2C006D464D /* Assets.xcassets */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E18AD5D2AFA0D270011ED4A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C3C637592AF90C2B006D464D /* Solidner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Solidner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3C6375C2AF90C2B006D464D /* SolidnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidnerApp.swift; sourceTree = "<group>"; };
 		C3C6375E2AF90C2B006D464D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 		C3C6375B2AF90C2B006D464D /* Solidner */ = {
 			isa = PBXGroup;
 			children = (
+				0E18AD5D2AFA0D270011ED4A /* GoogleService-Info.plist */,
 				C3C6378C2AF90CA2006D464D /* Network */,
 				C3C6378B2AF90C94006D464D /* Fonts */,
 				C3C6378A2AF90C80006D464D /* Extension+ */,
@@ -310,6 +313,7 @@
 			files = (
 				C3C637642AF90C2C006D464D /* Preview Assets.xcassets in Resources */,
 				C3C637612AF90C2C006D464D /* Assets.xcassets in Resources */,
+				0E18AD5E2AFA0D270011ED4A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,7 +505,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Solidner/Preview Content\"";
-				DEVELOPMENT_TEAM = G8XX337GMH;
+				DEVELOPMENT_TEAM = PAQ92DM7XD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -514,7 +518,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.swimmer.Solidner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Jeckmu.Solidner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -530,7 +534,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Solidner/Preview Content\"";
-				DEVELOPMENT_TEAM = G8XX337GMH;
+				DEVELOPMENT_TEAM = PAQ92DM7XD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -543,7 +547,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.swimmer.Solidner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Jeckmu.Solidner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
