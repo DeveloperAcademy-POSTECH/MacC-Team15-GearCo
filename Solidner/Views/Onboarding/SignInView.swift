@@ -33,7 +33,7 @@ struct AppleUser: Codable {
     }
 }
 
-struct AppleLoginView : View {
+struct SignInView: View {
     @EnvironmentObject var user: UserOB
     @StateObject var loginData = AppleLoginOB()
     
@@ -81,7 +81,8 @@ struct AppleLoginView : View {
                 
                 // ------ Firebase Login ------
                 guard let credential = auth.credential as? ASAuthorizationAppleIDCredential
-                else{print("Error with Firebase - Apple Login : GETTING CREDENTIAL")
+                else {
+                    print("Error with Firebase - Apple Login : GETTING CREDENTIAL")
                     return
                 }
                 loginData.authenticate(credential: credential, failHandler: failHandler)

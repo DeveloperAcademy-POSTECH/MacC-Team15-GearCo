@@ -8,6 +8,7 @@
 import SwiftUI
 import AuthenticationServices
 import Firebase
+import FirebaseAuth
 
 class AppleLoginOB: ObservableObject{
     @EnvironmentObject var user: UserOB
@@ -23,7 +24,6 @@ class AppleLoginOB: ObservableObject{
     @Published var nonce = ""
     
     func authenticate(credential: ASAuthorizationAppleIDCredential, failHandler : @escaping (String,String) -> Void ){
-        
         print("authenticate 시작")
         // get Token
         guard let token = credential.identityToken else{
@@ -39,24 +39,25 @@ class AppleLoginOB: ObservableObject{
             return
         }
         
+        // MARK: 추후 회원 탈퇴 기능 추가 시 참고
         // authorization Code to Unregister! => get user authorizationCode when login.
-        if let authorizationCode = credential.authorizationCode, let codeString = String(data: authorizationCode, encoding: .utf8) {
-            print("authorizationCode :: ", codeString)
-            let url = URL(string: "https://us-central1-atarashii2-fa9ec.cloudfunctions.net/getRefreshToken?code=\(codeString)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "https://apple.com")!
-            let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
-                if let data = data {
-                    let refreshToken = String(data: data, encoding: .utf8) ?? ""
-                    print("refreshToken :: ", refreshToken)
-                    // TODO: *For security reasons, we recommend iCloud keychain rather than UserDefaults.
-                    UserDefaults.standard.set(refreshToken, forKey: "refreshToken")
-                    UserDefaults.standard.synchronize()
-                }
-                if let error = error {
-                    print("Error on get Refresh Token :: \(error)")
-                }
-            }
-            task.resume()
-        }
+//        if let authorizationCode = credential.authorizationCode, let codeString = String(data: authorizationCode, encoding: .utf8) {
+//            print("authorizationCode :: ", codeString)
+//            let url = URL(string: "https://us-central1-atarashii2-fa9ec.cloudfunctions.net/getRefreshToken?code=\(codeString)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "https://apple.com")!
+//            let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+//                if let data = data {
+//                    let refreshToken = String(data: data, encoding: .utf8) ?? ""
+//                    print("refreshToken :: ", refreshToken)
+//                    // TODO: *For security reasons, we recommend iCloud keychain rather than UserDefaults.
+//                    UserDefaults.standard.set(refreshToken, forKey: "refreshToken")
+//                    UserDefaults.standard.synchronize()
+//                }
+//                if let error = error {
+//                    print("Error on get Refresh Token :: \(error)")
+//                }
+//            }
+//            task.resume()
+//        }
         
         // Initialize a Firebase credential.
         let firebaseCredential = OAuthProvider.credential(withProviderID: "apple.com",
@@ -68,9 +69,10 @@ class AppleLoginOB: ObservableObject{
                 // you're sending the SHA256-hashed nonce as a hex string with
                 // your request to Apple.
                 print(error.localizedDescription)
-                failHandler("Auth 인증 실패","다시 시도해주세요")
+                failHandler("Auth 인증 실패", "다시 시도해주세요")
                 return
             }
+            
             // User is signed in to Firebase with Apple.
             // ...
             print("Firebase - Apple Login : Logged In Successfully")
@@ -80,7 +82,7 @@ class AppleLoginOB: ObservableObject{
             let userID : String = credential.user
             let useremail : String = credential.email ?? ""
                         
-            if (useremail != ""){ //최초 register
+            if (useremail != ""){ // 최초 register
                 print("Sign in With Apple : Register, upload User Data on Firestore")
                 let userDocRef = FirebaseManager.shared.getUserDocRefWithEmail(useremail)
                 userDocRef.setData([
@@ -89,13 +91,13 @@ class AppleLoginOB: ObservableObject{
                 ], merge: true){ err in
                     if let err = err {
                         print("Error writing document: \(err)")
-                        failHandler("키페어 저장 실패","다시시도해주세요")
+                        failHandler("키페어 저장 실패", "다시시도해주세요")
                     } else {
                         print("Document successfully written!")
                         self.findUserHandler(userID, failHandler)
                     }
                 }
-            }else{ //최초 register가 아닌 경우
+            } else { //최초 register가 아닌 경우
                 self.findUserHandler(userID, failHandler)
             }
         }
