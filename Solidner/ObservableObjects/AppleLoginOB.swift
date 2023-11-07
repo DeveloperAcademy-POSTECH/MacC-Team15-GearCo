@@ -9,8 +9,8 @@ import SwiftUI
 import AuthenticationServices
 import Firebase
 
-class AppleLoginViewModel: ObservableObject{
-    @EnvironmentObject var user: userData
+class AppleLoginOB: ObservableObject{
+    @EnvironmentObject var user: UserOB
     
     // State of Signed in
     enum SignInState {
@@ -82,7 +82,8 @@ class AppleLoginViewModel: ObservableObject{
                         
             if (useremail != ""){ //최초 register
                 print("Sign in With Apple : Register, upload User Data on Firestore")
-                db.collection("Users").document(useremail).setData([
+                let userDocRef = FirebaseManager.shared.getUserDocRefWithEmail(useremail)
+                userDocRef.setData([
                     "id" : useremail,
                     "AppleID" : userID,
                 ], merge: true){ err in
@@ -102,7 +103,8 @@ class AppleLoginViewModel: ObservableObject{
     
     func findUserHandler(_ userID : String, _ failHandler : @escaping (String,String) -> Void){
         print("user 검색. \(userID)")
-        db.collection("Users").whereField("AppleID", isEqualTo: userID)
+        let userColRef = FirebaseManager.shared.getColRef(.User)
+        userColRef.whereField("AppleID", isEqualTo: userID)
             .getDocuments() { (querySnapshot, err) in
                 if let err = err {
                     print("Error getting documents: \(err)")
@@ -125,9 +127,8 @@ class AppleLoginViewModel: ObservableObject{
     func appleLoginHandler(_ result : Bool ,_ useremail : String, failHandler : @escaping (String,String) -> Void){
         // 애플로그인
         print("User Data Fetching - appleLoginHandler : \(useremail)")
-        let usersRef = db.collection("Users").document(useremail)
-        usersRef.getDocument { (snap, err) in
-            
+        let userDocRef = FirebaseManager.shared.getUserDocRefWithEmail(useremail)
+        userDocRef.getDocument { (snap, err) in
             if let snap = snap, snap.exists {
                 if let err = err {
                     print(err.localizedDescription)

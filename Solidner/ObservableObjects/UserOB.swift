@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-class userData: ObservableObject {
+class UserOB: ObservableObject {
     @AppStorage("AppleID") var AppleID = ""
+    @AppStorage("email") var email = ""
     @AppStorage("nickName") var nickName = ""
 }

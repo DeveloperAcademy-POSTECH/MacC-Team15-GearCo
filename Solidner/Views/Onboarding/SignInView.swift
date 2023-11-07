@@ -91,11 +91,12 @@ struct AppleLoginView : View {
                 // MARK: AppleLoginViewModel - AppleLoginHandler쪽에 구현되어 있으나, userData(EnvironmentOB)를 업데이트하기 위함.
                 user.AppleID = credential.user
                 if let email = credential.email {
-                    user.id = email
-                    print("첫 로그인(회원가입) : \(user.id) email data saved.")
+                    user.email = email
+                    print("첫 로그인(회원가입) : \(user.email) email data saved.")
                 } else {
                     print("로그인 - appleID ; \(user.AppleID)")
-                    db.collection("Users").whereField("AppleID", isEqualTo: user.AppleID)
+                    let userColRef = FirebaseManager.shared.getColRef(.User)
+                    userColRef.whereField("AppleID", isEqualTo: user.AppleID)
                         .getDocuments() { (querySnapshot, err) in
                             if let err = err {
                                 print("Error getting documents - AppleLoginView[handle] : \(err)")
@@ -103,24 +104,12 @@ struct AppleLoginView : View {
                                 for document in querySnapshot!.documents {
                                     print("Document ID: \(document.documentID)")
                                     if let idField = document.get("id") as? String {
-                                        user.id = idField
-                                        print("로그인(이미 가입된 회원) : \(user.id) - email data saved.")
+                                        user.email = idField
+                                        print("로그인(이미 가입된 회원) : \(user.email) - email data saved.")
                                     }
-                                    if let nickEnglish = document.get("nickEnglish") as? String {
-                                        user.nickEnglish = nickEnglish
-                                        print("로그인(이미 가입된 회원) : \(user.nickEnglish)")
-                                    }
-                                    if let nickKorean = document.get("nickKorean") as? String {
-                                        user.nickKorean = nickKorean
-                                        print("로그인(이미 가입된 회원) : \(user.nickKorean)")
-                                    }
-                                    if let isSessionMorning = document.get("isSessionMorning") as? Bool {
-                                        user.isSessionMorning = isSessionMorning
-                                        print("로그인(이미 가입된 회원) : \(user.isSessionMorning)")
-                                    }
-                                    if let cardCollectCount = document.get("cardCollectCount") as? Int {
-                                        user.cardCollectCount = cardCollectCount
-                                        print("로그인(이미 가입된 회원) : \(user.cardCollectCount)")
+                                    if let nickName = document.get("nickName") as? String {
+                                        user.nickName = nickName
+                                        print("로그인(이미 가입된 회원) : \(user.nickName)")
                                     }
                                 }
                             }
