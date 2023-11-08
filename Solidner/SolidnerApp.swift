@@ -21,9 +21,10 @@ struct SolidnerApp: App {
     // Firebase Setup.
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
+    @StateObject private var userOB = UserOB()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SignInView().environmentObject(userOB)
         }
     }
 }

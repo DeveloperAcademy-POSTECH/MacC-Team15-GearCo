@@ -8,9 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		0E18AD602AFA10840011ED4A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0E18AD5F2AFA10840011ED4A /* GoogleService-Info.plist */; };
-		0E18AD632AFA11F50011ED4A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD622AFA11F50011ED4A /* FirebaseAnalytics */; };
-		0E18AD652AFA11F50011ED4A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD642AFA11F50011ED4A /* FirebaseAuth */; };
-		0E18AD672AFA11F50011ED4A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD662AFA11F50011ED4A /* FirebaseFirestore */; };
+		0E18AD6B2AFA7F670011ED4A /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AD6A2AFA7F670011ED4A /* SignInView.swift */; };
+		0E18AD6D2AFA8DC50011ED4A /* UserOB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AD6C2AFA8DC50011ED4A /* UserOB.swift */; };
+		0E18AD6F2AFA8F140011ED4A /* AppleLoginOB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AD6E2AFA8F140011ED4A /* AppleLoginOB.swift */; };
+		0E18AD712AFA94E10011ED4A /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AD702AFA94E10011ED4A /* FirebaseManager.swift */; };
+		0E18AD742AFAA3430011ED4A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD732AFAA3430011ED4A /* FirebaseAnalytics */; };
+		0E18AD762AFAA3430011ED4A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD752AFAA3430011ED4A /* FirebaseAuth */; };
+		0E18AD782AFAA3430011ED4A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD772AFAA3430011ED4A /* FirebaseFirestore */; };
 		C3C6375D2AF90C2B006D464D /* SolidnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C6375C2AF90C2B006D464D /* SolidnerApp.swift */; };
 		C3C6375F2AF90C2B006D464D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C6375E2AF90C2B006D464D /* ContentView.swift */; };
 		C3C637612AF90C2C006D464D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3C637602AF90C2C006D464D /* Assets.xcassets */; };
@@ -22,9 +26,7 @@
 		C3C637902AF91E85006D464D /* fonts_dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C6378F2AF91E85006D464D /* fonts_dummy.swift */; };
 		C3C637922AF91E9D006D464D /* extension_dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C637912AF91E9D006D464D /* extension_dummy.swift */; };
 		C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C637932AF91EB0006D464D /* common_dummy.swift */; };
-		C3C637962AF91EC5006D464D /* views_dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C637952AF91EC5006D464D /* views_dummy.swift */; };
 		C3C637982AF91EE0006D464D /* models_dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C637972AF91EE0006D464D /* models_dummy.swift */; };
-		C3C6379A2AF91EF7006D464D /* observable_dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C637992AF91EF7006D464D /* observable_dummy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +48,11 @@
 
 /* Begin PBXFileReference section */
 		0E18AD5F2AFA10840011ED4A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0E18AD682AFA7A260011ED4A /* Solidner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Solidner.entitlements; sourceTree = "<group>"; };
+		0E18AD6A2AFA7F670011ED4A /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		0E18AD6C2AFA8DC50011ED4A /* UserOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOB.swift; sourceTree = "<group>"; };
+		0E18AD6E2AFA8F140011ED4A /* AppleLoginOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginOB.swift; sourceTree = "<group>"; };
+		0E18AD702AFA94E10011ED4A /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		C3C637592AF90C2B006D464D /* Solidner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Solidner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3C6375C2AF90C2B006D464D /* SolidnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidnerApp.swift; sourceTree = "<group>"; };
 		C3C6375E2AF90C2B006D464D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -60,9 +67,7 @@
 		C3C6378F2AF91E85006D464D /* fonts_dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fonts_dummy.swift; sourceTree = "<group>"; };
 		C3C637912AF91E9D006D464D /* extension_dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extension_dummy.swift; sourceTree = "<group>"; };
 		C3C637932AF91EB0006D464D /* common_dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = common_dummy.swift; sourceTree = "<group>"; };
-		C3C637952AF91EC5006D464D /* views_dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = views_dummy.swift; sourceTree = "<group>"; };
 		C3C637972AF91EE0006D464D /* models_dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = models_dummy.swift; sourceTree = "<group>"; };
-		C3C637992AF91EF7006D464D /* observable_dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = observable_dummy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,9 +75,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E18AD632AFA11F50011ED4A /* FirebaseAnalytics in Frameworks */,
-				0E18AD652AFA11F50011ED4A /* FirebaseAuth in Frameworks */,
-				0E18AD672AFA11F50011ED4A /* FirebaseFirestore in Frameworks */,
+				0E18AD742AFAA3430011ED4A /* FirebaseAnalytics in Frameworks */,
+				0E18AD762AFAA3430011ED4A /* FirebaseAuth in Frameworks */,
+				0E18AD782AFAA3430011ED4A /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +98,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E18AD692AFA7F180011ED4A /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				0E18AD6A2AFA7F670011ED4A /* SignInView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		C3C637502AF90C2B006D464D = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +129,7 @@
 		C3C6375B2AF90C2B006D464D /* Solidner */ = {
 			isa = PBXGroup;
 			children = (
+				0E18AD682AFA7A260011ED4A /* Solidner.entitlements */,
 				0E18AD5F2AFA10840011ED4A /* GoogleService-Info.plist */,
 				C3C6378C2AF90CA2006D464D /* Network */,
 				C3C6378B2AF90C94006D464D /* Fonts */,
@@ -160,7 +174,8 @@
 		C3C637862AF90C33006D464D /* ObservableObjects */ = {
 			isa = PBXGroup;
 			children = (
-				C3C637992AF91EF7006D464D /* observable_dummy.swift */,
+				0E18AD6C2AFA8DC50011ED4A /* UserOB.swift */,
+				0E18AD6E2AFA8F140011ED4A /* AppleLoginOB.swift */,
 			);
 			path = ObservableObjects;
 			sourceTree = "<group>";
@@ -176,7 +191,7 @@
 		C3C637882AF90C5E006D464D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C3C637952AF91EC5006D464D /* views_dummy.swift */,
+				0E18AD692AFA7F180011ED4A /* Onboarding */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -209,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				C3C6378D2AF91E73006D464D /* network_dummy.swift */,
+				0E18AD702AFA94E10011ED4A /* FirebaseManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -230,9 +246,9 @@
 			);
 			name = Solidner;
 			packageProductDependencies = (
-				0E18AD622AFA11F50011ED4A /* FirebaseAnalytics */,
-				0E18AD642AFA11F50011ED4A /* FirebaseAuth */,
-				0E18AD662AFA11F50011ED4A /* FirebaseFirestore */,
+				0E18AD732AFAA3430011ED4A /* FirebaseAnalytics */,
+				0E18AD752AFAA3430011ED4A /* FirebaseAuth */,
+				0E18AD772AFAA3430011ED4A /* FirebaseFirestore */,
 			);
 			productName = Solidner;
 			productReference = C3C637592AF90C2B006D464D /* Solidner.app */;
@@ -307,7 +323,7 @@
 			);
 			mainGroup = C3C637502AF90C2B006D464D;
 			packageReferences = (
-				0E18AD612AFA11F50011ED4A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				0E18AD722AFAA3430011ED4A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = C3C6375A2AF90C2B006D464D /* Products */;
 			projectDirPath = "";
@@ -352,11 +368,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E18AD6D2AFA8DC50011ED4A /* UserOB.swift in Sources */,
 				C3C637902AF91E85006D464D /* fonts_dummy.swift in Sources */,
-				C3C637962AF91EC5006D464D /* views_dummy.swift in Sources */,
 				C3C6375F2AF90C2B006D464D /* ContentView.swift in Sources */,
-				C3C6379A2AF91EF7006D464D /* observable_dummy.swift in Sources */,
+				0E18AD6B2AFA7F670011ED4A /* SignInView.swift in Sources */,
+				0E18AD712AFA94E10011ED4A /* FirebaseManager.swift in Sources */,
 				C3C637982AF91EE0006D464D /* models_dummy.swift in Sources */,
+				0E18AD6F2AFA8F140011ED4A /* AppleLoginOB.swift in Sources */,
 				C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */,
 				C3C6378E2AF91E73006D464D /* network_dummy.swift in Sources */,
 				C3C637922AF91E9D006D464D /* extension_dummy.swift in Sources */,
@@ -516,6 +534,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Solidner/Solidner.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Solidner/Preview Content\"";
@@ -525,8 +544,9 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -545,6 +565,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Solidner/Solidner.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Solidner/Preview Content\"";
@@ -554,8 +575,9 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -687,7 +709,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		0E18AD612AFA11F50011ED4A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		0E18AD722AFAA3430011ED4A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
@@ -698,19 +720,19 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0E18AD622AFA11F50011ED4A /* FirebaseAnalytics */ = {
+		0E18AD732AFAA3430011ED4A /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0E18AD612AFA11F50011ED4A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 0E18AD722AFAA3430011ED4A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
 		};
-		0E18AD642AFA11F50011ED4A /* FirebaseAuth */ = {
+		0E18AD752AFAA3430011ED4A /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0E18AD612AFA11F50011ED4A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 0E18AD722AFAA3430011ED4A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
-		0E18AD662AFA11F50011ED4A /* FirebaseFirestore */ = {
+		0E18AD772AFAA3430011ED4A /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0E18AD612AFA11F50011ED4A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 0E18AD722AFAA3430011ED4A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
 /* End XCSwiftPackageProductDependency section */
