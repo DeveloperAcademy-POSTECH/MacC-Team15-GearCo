@@ -9,21 +9,25 @@ import SwiftUI
 
 struct WeeklyPlanningView: View {
     var body: some View {
-        ScrollView {
-            VStack {
-                title
-            }
+        VStack {
+            title
         }
     }
 
     var title: some View {
-        Text("주간 이유식")
+        HStack {
+            Text(TextLiterals.WeeklyPlanning.weeklyPlanningText)
+                .font(.largeTitle).bold()
+            Spacer()
+            Button("편집") {
+                print("편집 버튼 눌림")
+            }
+        }
     }
+
+
 }
 
-#Preview {
-    WeeklyPlanningView()
-}
 extension WeeklyPlanningView {
     // MARK: - Mock Meals
 
