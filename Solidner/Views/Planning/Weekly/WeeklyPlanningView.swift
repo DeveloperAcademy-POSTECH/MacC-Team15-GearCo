@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct WeeklyPlanningView: View {
+    let mealPlans: [MealPlan] = MealPlan.mockMealsZero
+
     var body: some View {
         VStack {
             title
+            weeklyMeals
         }
     }
 
@@ -23,6 +26,101 @@ struct WeeklyPlanningView: View {
                 print("편집 버튼 눌림")
             }
         }
+    }
+
+    var weeklyMeals: some View {
+        ScrollView {
+            ForEach(mealPlans) { mealPlan in
+                MealPlanView(mealPlan: mealPlan)
+                    .padding()
+            }
+        }
+    }
+
+    struct MealPlanView: View {
+        var mealPlan: MealPlan
+
+        var body: some View {
+            HStack {
+                dates
+                meals
+            }
+        }
+
+        var dates: some View {
+            VStack {
+                ForEach(Date.range(from: mealPlan.startDate, to: mealPlan.endDate), id: \.self) { date in
+                    dateView(date: date)
+                }
+            }
+            .frame(width: 30)
+        }
+
+        func dateView(date: Date) -> some View {
+            VStack {
+                Text(date.weekDayKor)
+                    .font(.caption2)
+                Text(date.day.description)
+                    .font(.body).fontWeight(.semibold)
+            }
+        }
+
+        var meals: some View {
+            VStack(alignment: .leading) {
+                if mealPlan.meals.count != 0 {
+                    mealsView
+                } else {
+                    noMealsView
+                }
+                solidFoodDaysText
+            }
+            .overlay {
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.gray, lineWidth: 2)
+            }
+            .frame(maxWidth: .infinity)
+        }
+
+        var mealsView: some View {
+            let lastIndex = mealPlan.meals.indices.last
+            return ForEach(Array(mealPlan.meals.enumerated()), id: \.element) { index, meal in
+                mealView(meal: meal)
+                if index != lastIndex {
+                    Divider()
+                }
+            }
+        }
+
+        func mealView(meal: MealPlan.Meal) -> some View {
+            HStack {
+                Image(systemName: meal.time.icon)
+                    .font(.body)
+
+                meal.ingredients.enumerated().reduce(Text("")) { partialResult, enumeration  in
+                    let (index, ingredient) = (enumeration.offset, enumeration.element)
+                    let additionalText = index == meal.ingredients.endIndex ? Text("") : Text(", ")
+                    return partialResult + Text(ingredient.description)
+                        .foregroundColor(ingredient.isNew ? .blue : .black) + additionalText
+                }
+                Spacer()
+            }
+            .padding()
+        }
+
+        var noMealsView: some View {
+            Text(TextLiterals.WeeklyPlanning.chooseIngredientToTestText)
+                .padding()
+        }
+
+        var solidFoodDaysText: some View {
+            HStack {
+                Spacer()
+                Text(mealPlan.solidFoodDaysString)
+                    .font(.footnote)
+                    .padding()
+            }
+        }
+    }
 }
 
 
