@@ -19,6 +19,7 @@
 		0EA6C61E2AFBE087004FF2AA /* MonthlyPlanningDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA6C61D2AFBE087004FF2AA /* MonthlyPlanningDummy.swift */; };
 		B24836202B011FFF00525A25 /* AddPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B248361F2B011FFF00525A25 /* AddPlanView.swift */; };
 		B24836222B012B8700525A25 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24836212B012B8700525A25 /* Date+.swift */; };
+		0EAFB7212B012A3D0075A384 /* MonthlyPlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */; };
 		B29CF7882AFCCA5B00B54A3E /* WeeklyPlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF7872AFCCA5B00B54A3E /* WeeklyPlanningView.swift */; };
 		B29CF78B2AFCCEA000B54A3E /* TextLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF78A2AFCCEA000B54A3E /* TextLiterals.swift */; };
 		C3C6375D2AF90C2B006D464D /* SolidnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C6375C2AF90C2B006D464D /* SolidnerApp.swift */; };
@@ -63,6 +64,7 @@
 		0EA6C61D2AFBE087004FF2AA /* MonthlyPlanningDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningDummy.swift; sourceTree = "<group>"; };
 		B248361F2B011FFF00525A25 /* AddPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlanView.swift; sourceTree = "<group>"; };
 		B24836212B012B8700525A25 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningView.swift; sourceTree = "<group>"; };
 		B29CF7872AFCCA5B00B54A3E /* WeeklyPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyPlanningView.swift; sourceTree = "<group>"; };
 		B29CF78A2AFCCEA000B54A3E /* TextLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLiterals.swift; sourceTree = "<group>"; };
 		C3C637592AF90C2B006D464D /* Solidner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Solidner.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,7 +141,7 @@
 		0EA6C6192AFBE065004FF2AA /* Monthly */ = {
 			isa = PBXGroup;
 			children = (
-				0EA6C61D2AFBE087004FF2AA /* MonthlyPlanningDummy.swift */,
+				0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */,
 			);
 			path = Monthly;
 			sourceTree = "<group>";
@@ -435,6 +437,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E18AD6D2AFA8DC50011ED4A /* UserOB.swift in Sources */,
+				0EAFB7212B012A3D0075A384 /* MonthlyPlanningView.swift in Sources */,
 				C3C637902AF91E85006D464D /* fonts_dummy.swift in Sources */,
 				C3C6375F2AF90C2B006D464D /* ContentView.swift in Sources */,
 				0E18AD6B2AFA7F670011ED4A /* SignInView.swift in Sources */,
@@ -443,7 +446,6 @@
 				C3C637982AF91EE0006D464D /* models_dummy.swift in Sources */,
 				0E18AD7B2AFBDCE20011ED4A /* ComponentDummy.swift in Sources */,
 				0E18AD6F2AFA8F140011ED4A /* AppleLoginOB.swift in Sources */,
-				0EA6C61E2AFBE087004FF2AA /* MonthlyPlanningDummy.swift in Sources */,
 				C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */,
 				B24836202B011FFF00525A25 /* AddPlanView.swift in Sources */,
 				B24836222B012B8700525A25 /* Date+.swift in Sources */,
