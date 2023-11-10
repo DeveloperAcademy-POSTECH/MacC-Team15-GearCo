@@ -16,7 +16,7 @@ enum TextLiterals {
     enum WeeklyPlanning {
         static var weeklyPlanningText: String { "주간 이유식" }
         static var chooseIngredientToTestText: String { "테스트 할 재료를 골라주세요." }
-        static func solidFoodDayText(from: Int, to: Int) -> String { "\(from)-\(to)일차" }
+        static func solidFoodDayText(from: Int, to: Int) -> String { "\(from)-\(to)일차 >" }
     }
 
     enum SolidFoodBatchSetting {
