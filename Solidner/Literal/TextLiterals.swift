@@ -26,6 +26,18 @@ enum TextLiterals {
         static var deleteAllCalendarsText: String { "캘린더 삭제" }
         static var deleteAllCalendarsButtonText: String { "삭제하기" }
     }
+
+    enum AddPlan {
+        static var insertIngredientText: String { "재료 입력" }
+        static var insertIngredientHintText: String { "알러지 테스트를 위해 따로 입력해주세요." }
+        static var newIngredientText: String { "처음 먹는 재료" }
+        static var testedIngredientText: String { "테스트 해본 재료" }
+        static var addIngredientText: String { "재료 추가" }
+        static var mealCycleText: String { "식단 주기" }
+        static var mealCycleHintText: String { "소아과 전문의는 2-3일의 주기를 권장해요." }
+        static var gapText: String { "간격" }
+        static func gapDetailText(_ gap: Int) -> String { "총 \(gap)일간 먹어요." }
+    }
 }
 
 
