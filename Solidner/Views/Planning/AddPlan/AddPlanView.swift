@@ -147,6 +147,46 @@ struct AddPlanView: View {
     }
 }
 
-#Preview {
-    AddPlanView()
+extension AddPlanView {
+    struct Ingredient: Identifiable, Equatable {
+        static var mockIngredients: [Ingredient] = [
+            .init(type: .곡류, name: "쌀"),
+            .init(type: .단백질식품군, name: "소고기"),
+            .init(type: .녹색채소, name: "청경채")
+        ]
+
+        var type: IngredientType
+        var name: String
+        var id: UUID = UUID()
+
+        enum IngredientType {
+            case 곡류, 단백질식품군, 노란채소, 녹색채소, 과일, 유제품, 기타채소, 기타
+
+            var color: UIColor {
+                switch self {
+                case .곡류:
+                    return .lightGray
+                case .단백질식품군:
+                    return .brown
+                case .노란채소:
+                    return .yellow
+                case .녹색채소:
+                    return .green
+                case .과일:
+                    return .purple
+                case .유제품:
+                    return .black
+                case .기타채소:
+                    return .magenta
+                case .기타:
+                    return .systemIndigo
+                }
+            }
+        }
+    }
 }
+//
+//
+//#Preview {
+//    AddPlanView()
+//}
