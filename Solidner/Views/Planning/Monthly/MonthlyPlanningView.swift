@@ -10,8 +10,6 @@ import SwiftUI
 struct MonthlyPlanningView: View {
     let lightGray = Color(#colorLiteral(red: 0.8797428608, green: 0.8797428012, blue: 0.8797428608, alpha: 1)) // #D9D9D9
     
-    let calendar = Calendar.current
-    
     var body: some View {
         VStack(spacing: 0) {
             // MARK: 임시로 대충 헤더 자리 비워두기
