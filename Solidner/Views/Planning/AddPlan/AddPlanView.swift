@@ -109,11 +109,21 @@ struct AddPlanView: View {
         resultCycleText
     }
 
-    // TODO: Picker 만들기
+    // TODO: Custom Picker 만들기
     var mealPicker: some View {
         HStack {
             Text(Texts.gapText)
                 .font(.title3).bold()
+            Spacer().frame(minWidth: 30)
+            Picker(Texts.gapText, selection: $cycleGap) {
+                ForEach(1..<5) { day in
+                    Text("\(day)일").tag(day)
+                }
+           }
+            .pickerStyle(.segmented)
+            .onChange(of: cycleGap) { newValue in
+                endDate = Calendar.current.date(byAdding: .day, value: newValue-1, to: startDate)!
+            }
         }
         .padding(.vertical)
     }
