@@ -15,13 +15,17 @@
 		0E18AD742AFAA3430011ED4A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD732AFAA3430011ED4A /* FirebaseAnalytics */; };
 		0E18AD762AFAA3430011ED4A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD752AFAA3430011ED4A /* FirebaseAuth */; };
 		0E18AD782AFAA3430011ED4A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD772AFAA3430011ED4A /* FirebaseFirestore */; };
-		0E18AD7B2AFBDCE20011ED4A /* ComponentDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AD7A2AFBDCE20011ED4A /* ComponentDummy.swift */; };
 		0EA6C61E2AFBE087004FF2AA /* MonthlyPlanningDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA6C61D2AFBE087004FF2AA /* MonthlyPlanningDummy.swift */; };
+		B29CF7882AFCCA5B00B54A3E /* WeeklyPlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF7872AFCCA5B00B54A3E /* WeeklyPlanningView.swift */; };
+		B29CF78B2AFCCEA000B54A3E /* TextLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF78A2AFCCEA000B54A3E /* TextLiterals.swift */; };
 		C36942472AFCD687002465D4 /* ButtonComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36942462AFCD686002465D4 /* ButtonComponents.swift */; };
 		C36942492AFF755F002465D4 /* BackButtonHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36942482AFF755F002465D4 /* BackButtonHeader.swift */; };
 		C369424B2B00B350002465D4 /* TextFieldComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C369424A2B00B350002465D4 /* TextFieldComponents.swift */; };
-		B29CF7882AFCCA5B00B54A3E /* WeeklyPlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF7872AFCCA5B00B54A3E /* WeeklyPlanningView.swift */; };
-		B29CF78B2AFCCEA000B54A3E /* TextLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF78A2AFCCEA000B54A3E /* TextLiterals.swift */; };
+		C369424D2B00C333002465D4 /* NickNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C369424C2B00C333002465D4 /* NickNameView.swift */; };
+		C369424F2B00C42C002465D4 /* OnboardingTitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = C369424E2B00C42C002465D4 /* OnboardingTitles.swift */; };
+		C36942512B01185C002465D4 /* TextLimiterOB.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36942502B01185C002465D4 /* TextLimiterOB.swift */; };
+		C3AD1BC42B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AD1BC32B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift */; };
+		C3AD1BC62B012DA6003BB3E0 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AD1BC52B012DA6003BB3E0 /* UIApplication+.swift */; };
 		C3C6375D2AF90C2B006D464D /* SolidnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C6375C2AF90C2B006D464D /* SolidnerApp.swift */; };
 		C3C6375F2AF90C2B006D464D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C6375E2AF90C2B006D464D /* ContentView.swift */; };
 		C3C637612AF90C2C006D464D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3C637602AF90C2C006D464D /* Assets.xcassets */; };
@@ -60,13 +64,17 @@
 		0E18AD6C2AFA8DC50011ED4A /* UserOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOB.swift; sourceTree = "<group>"; };
 		0E18AD6E2AFA8F140011ED4A /* AppleLoginOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginOB.swift; sourceTree = "<group>"; };
 		0E18AD702AFA94E10011ED4A /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
-		0E18AD7A2AFBDCE20011ED4A /* ComponentDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentDummy.swift; sourceTree = "<group>"; };
 		0EA6C61D2AFBE087004FF2AA /* MonthlyPlanningDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningDummy.swift; sourceTree = "<group>"; };
+		B29CF7872AFCCA5B00B54A3E /* WeeklyPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyPlanningView.swift; sourceTree = "<group>"; };
+		B29CF78A2AFCCEA000B54A3E /* TextLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLiterals.swift; sourceTree = "<group>"; };
 		C36942462AFCD686002465D4 /* ButtonComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonComponents.swift; sourceTree = "<group>"; };
 		C36942482AFF755F002465D4 /* BackButtonHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButtonHeader.swift; sourceTree = "<group>"; };
 		C369424A2B00B350002465D4 /* TextFieldComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldComponents.swift; sourceTree = "<group>"; };
-		B29CF7872AFCCA5B00B54A3E /* WeeklyPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyPlanningView.swift; sourceTree = "<group>"; };
-		B29CF78A2AFCCEA000B54A3E /* TextLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLiterals.swift; sourceTree = "<group>"; };
+		C369424C2B00C333002465D4 /* NickNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameView.swift; sourceTree = "<group>"; };
+		C369424E2B00C42C002465D4 /* OnboardingTitles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTitles.swift; sourceTree = "<group>"; };
+		C36942502B01185C002465D4 /* TextLimiterOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLimiterOB.swift; sourceTree = "<group>"; };
+		C3AD1BC32B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightHelperOB.swift; sourceTree = "<group>"; };
+		C3AD1BC52B012DA6003BB3E0 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
 		C3C637592AF90C2B006D464D /* Solidner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Solidner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3C6375C2AF90C2B006D464D /* SolidnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidnerApp.swift; sourceTree = "<group>"; };
 		C3C6375E2AF90C2B006D464D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -116,6 +124,8 @@
 			isa = PBXGroup;
 			children = (
 				0E18AD6A2AFA7F670011ED4A /* SignInView.swift */,
+				C369424C2B00C333002465D4 /* NickNameView.swift */,
+				C369424E2B00C42C002465D4 /* OnboardingTitles.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -123,7 +133,6 @@
 		0E18AD792AFBDCD20011ED4A /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				0E18AD7A2AFBDCE20011ED4A /* ComponentDummy.swift */,
 				C36942462AFCD686002465D4 /* ButtonComponents.swift */,
 				C36942482AFF755F002465D4 /* BackButtonHeader.swift */,
 				C369424A2B00B350002465D4 /* TextFieldComponents.swift */,
@@ -235,6 +244,8 @@
 			children = (
 				0E18AD6C2AFA8DC50011ED4A /* UserOB.swift */,
 				0E18AD6E2AFA8F140011ED4A /* AppleLoginOB.swift */,
+				C36942502B01185C002465D4 /* TextLimiterOB.swift */,
+				C3AD1BC32B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift */,
 			);
 			path = ObservableObjects;
 			sourceTree = "<group>";
@@ -269,6 +280,7 @@
 			isa = PBXGroup;
 			children = (
 				C3C637912AF91E9D006D464D /* extension_dummy.swift */,
+				C3AD1BC52B012DA6003BB3E0 /* UIApplication+.swift */,
 			);
 			path = "Extension+";
 			sourceTree = "<group>";
@@ -434,19 +446,22 @@
 				C3C637902AF91E85006D464D /* fonts_dummy.swift in Sources */,
 				C3C6375F2AF90C2B006D464D /* ContentView.swift in Sources */,
 				0E18AD6B2AFA7F670011ED4A /* SignInView.swift in Sources */,
-				0EA6C61C2AFBE07A004FF2AA /* WeeklyPlanningDummy.swift in Sources */,
 				C36942492AFF755F002465D4 /* BackButtonHeader.swift in Sources */,
 				B29CF7882AFCCA5B00B54A3E /* WeeklyPlanningView.swift in Sources */,
 				0E18AD712AFA94E10011ED4A /* FirebaseManager.swift in Sources */,
+				C3AD1BC62B012DA6003BB3E0 /* UIApplication+.swift in Sources */,
+				C3AD1BC42B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift in Sources */,
 				C3C637982AF91EE0006D464D /* models_dummy.swift in Sources */,
-				0E18AD7B2AFBDCE20011ED4A /* ComponentDummy.swift in Sources */,
 				0E18AD6F2AFA8F140011ED4A /* AppleLoginOB.swift in Sources */,
 				0EA6C61E2AFBE087004FF2AA /* MonthlyPlanningDummy.swift in Sources */,
 				C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */,
+				C369424F2B00C42C002465D4 /* OnboardingTitles.swift in Sources */,
 				C3C6378E2AF91E73006D464D /* network_dummy.swift in Sources */,
 				C3C637922AF91E9D006D464D /* extension_dummy.swift in Sources */,
 				C3C6375D2AF90C2B006D464D /* SolidnerApp.swift in Sources */,
 				C369424B2B00B350002465D4 /* TextFieldComponents.swift in Sources */,
+				C369424D2B00C333002465D4 /* NickNameView.swift in Sources */,
+				C36942512B01185C002465D4 /* TextLimiterOB.swift in Sources */,
 				B29CF78B2AFCCEA000B54A3E /* TextLiterals.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

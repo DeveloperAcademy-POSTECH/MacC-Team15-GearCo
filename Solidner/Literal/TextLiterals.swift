@@ -26,6 +26,10 @@ enum TextLiterals {
         static var deleteAllCalendarsText: String { "캘린더 삭제" }
         static var deleteAllCalendarsButtonText: String { "삭제하기" }
     }
+    
+    enum Onboarding {
+        
+    }
 }
 
 
