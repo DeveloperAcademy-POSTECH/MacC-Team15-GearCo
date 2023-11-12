@@ -35,6 +35,14 @@ extension Date {
     var weekday: Int {
         return Calendar.current.component(.weekday, from: self)
     }
+    
+    var month: Int {
+        return Calendar.current.component(.month, from: self)
+    }
+
+    var weekOfMonth: Int {
+        return Calendar.current.component(.weekOfMonth, from: self)
+    }
 
     var weekDayKor: String {
         Weekday(rawValue: weekday)!.description

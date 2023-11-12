@@ -17,6 +17,10 @@ struct MonthlyPlanningView: View {
             // MARK: 임시로 대충 헤더 자리 비워두기
             Spacer().frame(height: 70)
             subHeader
+            
+            HStack(spacing: 0) {
+                
+            }
             Spacer()
         }.padding(.horizontal, 14)
     }
