@@ -8,13 +8,17 @@
 import SwiftUI
 
 struct MonthlyPlanningView: View {
+    let lightGray = Color(#colorLiteral(red: 0.8797428608, green: 0.8797428012, blue: 0.8797428608, alpha: 1)) // #D9D9D9
+    
+    let calendar = Calendar.current
+    
     var body: some View {
         VStack(spacing: 0) {
             // MARK: 임시로 대충 헤더 자리 비워두기
-            Spacer().frame(height: 60)
+            Spacer().frame(height: 70)
             subHeader
+            Spacer()
         }.padding(.horizontal, 14)
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
     
     private var subHeader: some View {
@@ -26,8 +30,7 @@ struct MonthlyPlanningView: View {
                 .padding(.vertical, 3)
                 .background {
                     RoundedRectangle(cornerRadius: 4)
-                        .foregroundColor(.gray)
-                        .opacity(0.3)
+                        .foregroundColor(lightGray)
                 }
             Spacer()
             Text("전체").foregroundColor(.gray)
