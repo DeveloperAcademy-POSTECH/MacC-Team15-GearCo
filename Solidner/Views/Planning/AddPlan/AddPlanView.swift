@@ -130,7 +130,7 @@ struct AddPlanView: View {
 
     @ViewBuilder
     var resultCycleText: some View {
-        Text(Texts.fromStartDate(Date())) + Text(endDate.formatted(.yyyyMMdd_dot))
+        Text(Texts.fromStartDate(startDate)) + Text(endDate.formatted(.yyyyMMdd_dot))
         Text(Texts.gapDetailText(cycleGap))
     }
 
