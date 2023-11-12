@@ -12,6 +12,9 @@ struct AddPlanView: View {
     let startDate: Date
     @State private var cycleGap: Int
     @State private var endDate: Date
+    @State private var newIngredient: Ingredient?
+//    @State private var testedIngredients: [Ingredient] = []
+    @State private var testedIngredients: [Ingredient] = Ingredient.mockIngredients
 
     init(startDate: Date = Date()) {
         self.startDate = startDate
@@ -47,7 +50,16 @@ struct AddPlanView: View {
             hint: Texts.insertIngredientHintText
         )
         newIngredientAddView
+        // TODO: addedNewIngredient 구현
+//        addedNewIngredient
         otherIngredientAddView
+        addedOtherIngredient
+    }
+
+    var addedOtherIngredient: some View {
+        ForEach(testedIngredients) { ingredient in
+            ingredientView(of: ingredient)
+        }
     }
 
     func titleAndHintView(title: String, hint: String) -> some View {
@@ -61,15 +73,42 @@ struct AddPlanView: View {
         .padding(.vertical)
     }
 
-    var newIngredientAddView: some View {
+    private var newIngredientAddView: some View {
         ingredientAddView(title: Texts.newIngredientText) {
             addNewIngredient()
         }
     }
 
-    var otherIngredientAddView: some View {
+    private var otherIngredientAddView: some View {
         ingredientAddView(title: Texts.testedIngredientText) {
             addOtherIngredient()
+        }
+    }
+
+    private func ingredientView(of ingredient: Ingredient) -> some View {
+        let colorChip = RoundedRectangle(cornerRadius: 5)
+            .frame(width: 16, height: 16)
+            .foregroundStyle(Color(uiColor:ingredient.type.color))
+
+        return HStack(spacing: 10) {
+            colorChip
+            Text(ingredient.name)
+            Spacer()
+            Button {
+                delete(ingredient: ingredient)
+            } label: {
+                Text(Texts.deleteText)
+            }
+        }
+        .padding()
+        .background {
+            Color.gray.clipShape(RoundedRectangle(cornerRadius: 12))
+        }
+    }
+
+    private func delete(ingredient: Ingredient) {
+        withAnimation {
+            testedIngredients.removeAll { $0 == ingredient }
         }
     }
 

@@ -33,6 +33,7 @@ enum TextLiterals {
         static var newIngredientText: String { "처음 먹는 재료" }
         static var testedIngredientText: String { "테스트 해본 재료" }
         static var addIngredientText: String { "재료 추가" }
+        static var deleteText: String { "삭제" }
         static var mealCycleText: String { "식단 주기" }
         static var mealCycleHintText: String { "소아과 전문의는 2-3일의 주기를 권장해요." }
         static var gapText: String { "간격" }
