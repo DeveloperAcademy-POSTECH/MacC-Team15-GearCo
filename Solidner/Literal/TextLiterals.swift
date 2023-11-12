@@ -36,7 +36,9 @@ enum TextLiterals {
         static var mealCycleText: String { "식단 주기" }
         static var mealCycleHintText: String { "소아과 전문의는 2-3일의 주기를 권장해요." }
         static var gapText: String { "간격" }
+        static func fromStartDate(_ startDate: Date) -> String { "\(startDate.formatted(.yyyyMMdd_dot)) ~ " }
         static func gapDetailText(_ gap: Int) -> String { "총 \(gap)일간 먹어요." }
+        static var addPlanButtonText: String { "일정 추가하기" }
     }
 }
 
