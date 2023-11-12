@@ -37,14 +37,16 @@ struct AddPlanView: View {
         }
     }
 
-    var divider: some View {
+    private var divider: some View {
         Rectangle()
             .foregroundStyle(Color(uiColor: .systemGray5))
             .frame(height: 10)
     }
 
+    // MARK: - addIngredients
+
     @ViewBuilder
-    var addIngredients: some View {
+    private var addIngredients: some View {
         titleAndHintView(
             title: Texts.insertIngredientText,
             hint: Texts.insertIngredientHintText
@@ -56,13 +58,13 @@ struct AddPlanView: View {
         addedOtherIngredient
     }
 
-    var addedOtherIngredient: some View {
+    private var addedOtherIngredient: some View {
         ForEach(testedIngredients) { ingredient in
             ingredientView(of: ingredient)
         }
     }
 
-    func titleAndHintView(title: String, hint: String) -> some View {
+    private func titleAndHintView(title: String, hint: String) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(title)
                 .font(.title).bold()
@@ -113,7 +115,7 @@ struct AddPlanView: View {
     }
 
     // TODO: Button 컴포넌트로 교체 하기
-    func ingredientAddView(title: String, addAction: @escaping ()->Void) -> some View {
+    private func ingredientAddView(title: String, addAction: @escaping ()->Void) -> some View {
         HStack {
             Text(title)
                 .font(.title3).fontWeight(.semibold)
@@ -128,17 +130,19 @@ struct AddPlanView: View {
     }
 
     // TODO: 올바른 callback 함수 구현 - addNewIngredient
-    func addNewIngredient() {
+    private func addNewIngredient() {
         print(#function)
     }
 
     // TODO: 올바른 callback 함수 구현 - addOtherIngredient
-    func addOtherIngredient() {
+    private func addOtherIngredient() {
         print(#function)
     }
 
+    // MARK: - mealCycle
+
     @ViewBuilder
-    var mealCycle: some View {
+    private var mealCycle: some View {
         titleAndHintView(
             title: Texts.mealCycleText,
             hint: Texts.mealCycleHintText
@@ -149,7 +153,7 @@ struct AddPlanView: View {
     }
 
     // TODO: Custom Picker 만들기
-    var mealPicker: some View {
+    private var mealPicker: some View {
         HStack {
             Text(Texts.gapText)
                 .font(.title3).bold()
@@ -168,13 +172,15 @@ struct AddPlanView: View {
     }
 
     @ViewBuilder
-    var resultCycleText: some View {
+    private var resultCycleText: some View {
         Text(Texts.fromStartDate(startDate)) + Text(endDate.formatted(.yyyyMMdd_dot))
         Text(Texts.gapDetailText(cycleGap))
     }
 
+    // MARK: - addPlanButton
+
     // TODO: Button 컴포넌트로 교체
-    var addPlanButton: some View {
+    private var addPlanButton: some View {
         Button {
             addPlan()
         } label: {
@@ -191,7 +197,7 @@ struct AddPlanView: View {
     }
 
     // TODO: 올바른 callback 함수 구현 - addPlan
-    func addPlan() {
+    private func addPlan() {
         print(#function)
     }
 }
