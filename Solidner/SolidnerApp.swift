@@ -25,7 +25,7 @@ struct SolidnerApp: App {
     var body: some Scene {
         WindowGroup {
             //SignInView().environmentObject(userOB)
-            NickNameView()
+            BabyBirthDateView()
         }
     }
 }

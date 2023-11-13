@@ -26,6 +26,10 @@
 		C36942512B01185C002465D4 /* TextLimiterOB.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36942502B01185C002465D4 /* TextLimiterOB.swift */; };
 		C3AD1BC42B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AD1BC32B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift */; };
 		C3AD1BC62B012DA6003BB3E0 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AD1BC52B012DA6003BB3E0 /* UIApplication+.swift */; };
+		C3AD1BC82B021660003BB3E0 /* SoCuteNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AD1BC72B021660003BB3E0 /* SoCuteNameView.swift */; };
+		C3AD1BCA2B023FA1003BB3E0 /* BabyBirthDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AD1BC92B023FA1003BB3E0 /* BabyBirthDateView.swift */; };
+		C3AD1BCC2B024FAC003BB3E0 /* FoodStartDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AD1BCB2B024FAC003BB3E0 /* FoodStartDateView.swift */; };
+		C3AD1BD02B026CB5003BB3E0 /* OnboardingEndView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AD1BCF2B026CB5003BB3E0 /* OnboardingEndView.swift */; };
 		C3C6375D2AF90C2B006D464D /* SolidnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C6375C2AF90C2B006D464D /* SolidnerApp.swift */; };
 		C3C6375F2AF90C2B006D464D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C6375E2AF90C2B006D464D /* ContentView.swift */; };
 		C3C637612AF90C2C006D464D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3C637602AF90C2C006D464D /* Assets.xcassets */; };
@@ -75,6 +79,10 @@
 		C36942502B01185C002465D4 /* TextLimiterOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLimiterOB.swift; sourceTree = "<group>"; };
 		C3AD1BC32B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightHelperOB.swift; sourceTree = "<group>"; };
 		C3AD1BC52B012DA6003BB3E0 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
+		C3AD1BC72B021660003BB3E0 /* SoCuteNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoCuteNameView.swift; sourceTree = "<group>"; };
+		C3AD1BC92B023FA1003BB3E0 /* BabyBirthDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabyBirthDateView.swift; sourceTree = "<group>"; };
+		C3AD1BCB2B024FAC003BB3E0 /* FoodStartDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodStartDateView.swift; sourceTree = "<group>"; };
+		C3AD1BCF2B026CB5003BB3E0 /* OnboardingEndView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingEndView.swift; sourceTree = "<group>"; };
 		C3C637592AF90C2B006D464D /* Solidner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Solidner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3C6375C2AF90C2B006D464D /* SolidnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidnerApp.swift; sourceTree = "<group>"; };
 		C3C6375E2AF90C2B006D464D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -126,6 +134,10 @@
 				0E18AD6A2AFA7F670011ED4A /* SignInView.swift */,
 				C369424C2B00C333002465D4 /* NickNameView.swift */,
 				C369424E2B00C42C002465D4 /* OnboardingTitles.swift */,
+				C3AD1BC72B021660003BB3E0 /* SoCuteNameView.swift */,
+				C3AD1BC92B023FA1003BB3E0 /* BabyBirthDateView.swift */,
+				C3AD1BCB2B024FAC003BB3E0 /* FoodStartDateView.swift */,
+				C3AD1BCF2B026CB5003BB3E0 /* OnboardingEndView.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -388,11 +400,12 @@
 			};
 			buildConfigurationList = C3C637542AF90C2B006D464D /* Build configuration list for PBXProject "Solidner" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = C3C637502AF90C2B006D464D;
 			packageReferences = (
@@ -453,14 +466,18 @@
 				C3AD1BC42B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift in Sources */,
 				C3C637982AF91EE0006D464D /* models_dummy.swift in Sources */,
 				0E18AD6F2AFA8F140011ED4A /* AppleLoginOB.swift in Sources */,
+				C3AD1BCC2B024FAC003BB3E0 /* FoodStartDateView.swift in Sources */,
+				C3AD1BD02B026CB5003BB3E0 /* OnboardingEndView.swift in Sources */,
 				0EA6C61E2AFBE087004FF2AA /* MonthlyPlanningDummy.swift in Sources */,
 				C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */,
 				C369424F2B00C42C002465D4 /* OnboardingTitles.swift in Sources */,
 				C3C6378E2AF91E73006D464D /* network_dummy.swift in Sources */,
 				C3C637922AF91E9D006D464D /* extension_dummy.swift in Sources */,
 				C3C6375D2AF90C2B006D464D /* SolidnerApp.swift in Sources */,
+				C3AD1BCA2B023FA1003BB3E0 /* BabyBirthDateView.swift in Sources */,
 				C369424B2B00B350002465D4 /* TextFieldComponents.swift in Sources */,
 				C369424D2B00C333002465D4 /* NickNameView.swift in Sources */,
+				C3AD1BC82B021660003BB3E0 /* SoCuteNameView.swift in Sources */,
 				C36942512B01185C002465D4 /* TextLimiterOB.swift in Sources */,
 				B29CF78B2AFCCEA000B54A3E /* TextLiterals.swift in Sources */,
 			);

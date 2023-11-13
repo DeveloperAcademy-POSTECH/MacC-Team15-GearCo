@@ -17,23 +17,23 @@ struct ButtonComponents: View {
     let buttonDisabledTextColor = Color(#colorLiteral(red: 0.2901960784, green: 0.2901960784, blue: 0.2901960784, alpha: 1))
     
     var body: some View {
-        tinyButton(title: "몰루",disabledCondition: false, action: {})
+        smallButton(disabledCondition: false, action: {})
     }
     
-    func bigButton(title: String, disabledCondition: Bool, action: @escaping ()->Void ) -> some View {
+    func bigButton(title: String = "다음" , disabledCondition: Bool, action: @escaping ()->Void, buttonColor: Color = Color.blue, titleColor: Color = Color.white) -> some View {
         return Button(action: action){
             RoundedRectangle(cornerRadius: buttonCornerRadius)
-                .fill(disabledCondition ? buttonDisabledColor : .blue)
+                .fill(disabledCondition ? buttonDisabledColor : buttonColor)
                 .frame(height: buttonHeight)
                 .overlay {
                     Text(title)
-                        .foregroundColor(disabledCondition ? buttonDisabledTextColor : .white)
+                        .foregroundColor(disabledCondition ? buttonDisabledTextColor : titleColor)
                 }
         }
         .disabled(disabledCondition)
     }
     
-    func smallButton(title: String, disabledCondition: Bool, action: @escaping () -> Void ) -> some View {
+    func smallButton(title: String = "다음", disabledCondition: Bool, action: @escaping () -> Void ) -> some View {
         return Button(action: action) {
             RoundedRectangle(cornerRadius: buttonCornerRadius)
                 .fill(disabledCondition ? buttonDisabledColor : .blue)

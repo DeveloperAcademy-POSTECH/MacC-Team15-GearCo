@@ -14,11 +14,22 @@ struct OnboardingTitles: View {
     let bigTitleFontSize = CGFloat(28)
     let smallTitleFontSize = CGFloat(19)
     let smallTitleTopPadding = CGFloat(16)
-    @State var bigTitle: String = "언제부터 이유식을\n계획할까요?"
-    @State var smallTitle: String = "이미 이유식을 진행 중이라면\n처음 시작하신 날짜를 알려주세요"
+    let centerSmallTitleTopPadding = CGFloat(10)
+    @State var alignmentCase = AlignmentCase.leading
+    @State var bigTitle = ""
+    @State var smallTitle = ""
     @State var isSmallTitleExist = true
     var body: some View {
-        HStack {
+        switch alignmentCase {
+        case .leading :
+            leadingTitles()
+        case .center :
+            centerTitles()
+        }
+    }
+    
+    func leadingTitles () -> some View {
+        return HStack {
             VStack(alignment: .leading) {
                 Text(bigTitle)
                     .font(.system(size: bigTitleFontSize, weight: .bold))
@@ -34,10 +45,28 @@ struct OnboardingTitles: View {
             Spacer()
         }
     }
+    func centerTitles () -> some View {
+        return VStack(spacing: 0) {
+            Text(bigTitle)
+                .font(.system(size: bigTitleFontSize, weight: .bold))
+                .foregroundColor(bigTitleColor)
+                .multilineTextAlignment(.center)
+            Text(smallTitle)
+                .font(.system(size: smallTitleFontSize, weight: .medium))
+                .foregroundColor(smallTitleColor)
+                .padding(.top, centerSmallTitleTopPadding)
+                .multilineTextAlignment(.center)
+        }
+        .padding(.leading, leadingPadding)
+    }
+    enum AlignmentCase {
+        case center
+        case leading
+    }
 }
 
 struct OnboardingTitles_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingTitles()
+        OnboardingTitles(bigTitle: "Dummy", smallTitle: "Dummy")
     }
 }
