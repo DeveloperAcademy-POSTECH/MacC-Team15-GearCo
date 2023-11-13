@@ -26,7 +26,6 @@ enum TextLiterals {
         static var deleteAllCalendarsText: String { "캘린더 삭제" }
         static var deleteAllCalendarsButtonText: String { "삭제하기" }
     }
-    
     enum NickName {
         static var warningMessage: String { "닉네임은 최대 10자까지 입력이 가능해요." }
         static var placeHolder: String { "최대 10자내로 입력이 가능해요." }
@@ -53,7 +52,20 @@ enum TextLiterals {
         static var smallTitle: String {"이유식 플래닝을 함께 고고씽\n어쩌구저쩌구"}
         static var buttonTitle: String {"솔리너 시작하기"}
     }
-    
+
+    enum AddPlan {
+        static var insertIngredientText: String { "재료 입력" }
+        static var insertIngredientHintText: String { "알러지 테스트를 위해 따로 입력해주세요." }
+        static var newIngredientText: String { "처음 먹는 재료" }
+        static var testedIngredientText: String { "테스트 해본 재료" }
+        static var addIngredientText: String { "재료 추가" }
+        static var mealCycleText: String { "식단 주기" }
+        static var mealCycleHintText: String { "소아과 전문의는 2-3일의 주기를 권장해요." }
+        static var gapText: String { "간격" }
+        static func fromStartDate(_ startDate: Date) -> String { "\(startDate.formatted(.yyyyMMdd_dot)) ~ " }
+        static func gapDetailText(_ gap: Int) -> String { "총 \(gap)일간 먹어요." }
+        static var addPlanButtonText: String { "일정 추가하기" }
+    }
 }
 
 
