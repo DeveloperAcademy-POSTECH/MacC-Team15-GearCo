@@ -11,4 +11,7 @@ class UserOB: ObservableObject {
     @AppStorage("AppleID") var AppleID = ""
     @AppStorage("email") var email = ""
     @AppStorage("nickName") var nickName = ""
+    @AppStorage("babyName") var babyName = ""
+    @AppStorage("babyBirthDate") var babyBirthDate = Date()
+    @AppStorage("solidStartDate") var solidStartDate = Date()
 }
