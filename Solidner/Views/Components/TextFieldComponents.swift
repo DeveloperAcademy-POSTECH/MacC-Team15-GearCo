@@ -13,7 +13,7 @@ struct TextFieldComponents: View {
     let placeHolderColor = Color(#colorLiteral(red: 0.6429678202, green: 0.6429678202, blue: 0.6429678202, alpha: 1))
     let textFieldCornerRadius: CGFloat = 12
     let textFieldPadding: CGFloat = 16
-    @State var value = ""
+    @State private var value = ""
     @FocusState var isFocused: Bool
     
     var body: some View {
