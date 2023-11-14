@@ -9,14 +9,14 @@ import SwiftUI
 
 struct FoodStartDateView: View {
     let datePickerTopPadding = 51.0
-    @State var solidStartDate = Date()
+    @State private var solidStartDate = Date()
     var body: some View {
         VStack(spacing: 0) {
             BackButtonHeader()
             viewBody()
         }
     }
-    func viewBody() -> some View {
+    private func viewBody() -> some View {
         return VStack {
             OnboardingTitles(bigTitle: TextLiterals.FoodStartDate.bigTitle, smallTitle: TextLiterals.FoodStartDate.smallTitle)
             DatePicker(selection: $solidStartDate, displayedComponents: .date){}
