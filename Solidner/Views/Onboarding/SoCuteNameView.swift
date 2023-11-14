@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SoCuteNameView: View {
-    let backgroundColor = Color(#colorLiteral(red: 0.8588235294, green: 0.9098039216, blue: 0.9568627451, alpha: 1))
     let delaySecond = 0.7
     let labelFontSize = 27.83
     let cuteNameMessageTopPadding = 10.0
@@ -18,7 +17,7 @@ struct SoCuteNameView: View {
     @EnvironmentObject var user: UserOB
     var body: some View {
         ZStack {
-            backgroundColor.ignoresSafeArea()
+            Color.soCuteBgColor.ignoresSafeArea()
             labelView()
             buttonView()
         }

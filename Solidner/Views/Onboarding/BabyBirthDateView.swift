@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct BabyBirthDateView: View {
-    let bigTitleColor = Color(#colorLiteral(red: 0.0834152922, green: 0.0834152922, blue: 0.0834152922, alpha: 1))
-    let smallTitleColor = Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)).opacity(0.6)
     let cakeLabelFontSize = 32.0
     let onboardingTitlesTopPadding = 10.0
     let datePickerTopPadding = 70.0

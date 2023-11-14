@@ -13,21 +13,19 @@ struct ButtonComponents: View {
     let buttonCornerRadius: CGFloat = 12
     let tinyButtonHeight: CGFloat = 48
     let tinyButtonWidth: CGFloat = 96
-    let buttonDisabledColor = Color(#colorLiteral(red: 0.8705882353, green: 0.8705882353, blue: 0.8705882353, alpha: 1))
-    let buttonDisabledTextColor = Color(#colorLiteral(red: 0.2901960784, green: 0.2901960784, blue: 0.2901960784, alpha: 1))
-    
+   
     var body: some View {
         smallButton(disabledCondition: false, action: {})
     }
     
-    func bigButton(title: String = "다음" , disabledCondition: Bool, action: @escaping ()->Void, buttonColor: Color = Color.blue, titleColor: Color = Color.white) -> some View {
+    func bigButton(title: String = "다음" , disabledCondition: Bool, action: @escaping ()->Void, buttonColor: Color = Color.buttonDefaultColor, titleColor: Color = Color.buttonDefaultTextColor) -> some View {
         return Button(action: action){
             RoundedRectangle(cornerRadius: buttonCornerRadius)
-                .fill(disabledCondition ? buttonDisabledColor : buttonColor)
+                .fill(disabledCondition ? Color.buttonDisabledColor : buttonColor)
                 .frame(height: buttonHeight)
                 .overlay {
                     Text(title)
-                        .foregroundColor(disabledCondition ? buttonDisabledTextColor : titleColor)
+                        .foregroundColor(disabledCondition ? Color.buttonDisabledTextColor : titleColor)
                 }
         }
         .disabled(disabledCondition)
@@ -36,11 +34,11 @@ struct ButtonComponents: View {
     func smallButton(title: String = "다음", disabledCondition: Bool, action: @escaping () -> Void ) -> some View {
         return Button(action: action) {
             RoundedRectangle(cornerRadius: buttonCornerRadius)
-                .fill(disabledCondition ? buttonDisabledColor : .blue)
+                .fill(disabledCondition ? Color.buttonDisabledColor : Color.buttonDefaultColor)
                 .frame(width: smallButtonWidth, height: buttonHeight)
                 .overlay {
                     Text(title)
-                        .foregroundColor(disabledCondition ? buttonDisabledTextColor : .white)
+                        .foregroundColor(disabledCondition ? Color.buttonDisabledTextColor : Color.buttonDefaultTextColor)
                 }
         }
         .disabled(disabledCondition)
@@ -49,11 +47,11 @@ struct ButtonComponents: View {
     func tinyButton(title: String, disabledCondition: Bool, action: @escaping () -> Void ) -> some View {
         return Button(action: action) {
             RoundedRectangle(cornerRadius: buttonCornerRadius)
-                .fill(disabledCondition ? buttonDisabledColor : .blue)
+                .fill(disabledCondition ? Color.buttonDisabledColor : Color.buttonDefaultColor)
                 .frame(width: tinyButtonWidth, height: tinyButtonHeight)
                 .overlay {
                     Text(title)
-                        .foregroundColor(disabledCondition ? buttonDisabledTextColor : .white)
+                        .foregroundColor(disabledCondition ? Color.buttonDisabledTextColor : Color.buttonDefaultTextColor)
                 }
         }
         .disabled(disabledCondition)

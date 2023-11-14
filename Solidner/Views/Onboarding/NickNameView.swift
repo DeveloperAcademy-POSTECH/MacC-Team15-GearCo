@@ -11,8 +11,8 @@ struct NickNameView: View {
     private let textFieldTopPadding = CGFloat(16)
     private let warningMessageTopPadding = CGFloat(12)
     private let warningMessageLeadingPadding = CGFloat(4)
-    private let warningMessageColor = Color(#colorLiteral(red: 0.916901052, green: 0.4367357492, blue: 0.4184575677, alpha: 1))
     private let warningMessageFontSize = 11.5
+    private let buttonUpDuration = 0.1
     var nickNameViewCase = NickNameViewCase.babyName
     @StateObject private var textLimiter = TextLimiterOB()
     @StateObject private var keyboardHeightHelper = KeyboardHeightHelperOB()
@@ -41,7 +41,7 @@ struct NickNameView: View {
                 withAnimation {
                     HStack {
                         Text(TextLiterals.NickName.warningMessage)
-                            .foregroundColor(warningMessageColor)
+                            .foregroundColor(Color.warningMessageColor)
                             .font(.system(size: warningMessageFontSize, weight: .semibold))
                         .padding(.top, warningMessageTopPadding)
                         .padding(.leading, warningMessageLeadingPadding)
@@ -61,7 +61,7 @@ struct NickNameView: View {
                     }
                 }
                     .offset(y: isFocused ? -self.keyboardHeightHelper.keyboardHeight : 0)
-                    .animation(.easeIn(duration: 0.1), value: keyboardHeightHelper.keyboardHeight)
+                    .animation(.easeIn(duration: buttonUpDuration), value: keyboardHeightHelper.keyboardHeight)
             }
         }
     }

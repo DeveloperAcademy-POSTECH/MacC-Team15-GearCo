@@ -26,6 +26,11 @@ enum TextLiterals {
         static var deleteAllCalendarsText: String { "캘린더 삭제" }
         static var deleteAllCalendarsButtonText: String { "삭제하기" }
     }
+    
+    enum ViewComponents {
+        static var placeHolderMessage: String { "최대 10자내로  입력이 가능해요." }
+    }
+    
     enum NickName {
         static var warningMessage: String { "닉네임은 최대 10자까지 입력이 가능해요." }
         static var placeHolder: String { "최대 10자내로 입력이 가능해요." }
@@ -66,6 +71,14 @@ enum TextLiterals {
         static func fromStartDate(_ startDate: Date) -> String { "\(startDate.formatted(.yyyyMMdd_dot)) ~ " }
         static func gapDetailText(_ gap: Int) -> String { "총 \(gap)일간 먹어요." }
         static var addPlanButtonText: String { "일정 추가하기" }
+    }
+    
+    enum AgreeToTermsView { 
+        static var bigTitle: String { "서비스 이용약관에\n동의해주세요" }
+        static var smallTitle: String { "솔리너의 원활한 사용을 위해\n아래의 정보 제공에 동의해주세요." }
+        static var serviceUseTitle: String { "[필수] 서비스 이용 약관" }
+        static var personalInfoTitle: String { "[필수] 개인정보 수집 및 이용 동의" }
+        static var advertisingTitle: String { "[선택] 광고성 정보 수신 동의" }
     }
 }
 

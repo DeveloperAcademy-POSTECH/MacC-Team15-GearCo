@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct BackButtonHeader: View {
-    let backButtonColor = Color(#colorLiteral(red: 0.0834152922, green: 0.0834152922, blue: 0.0834152922, alpha: 1)).opacity(0.4)
     let backButtonFrameSize: CGFloat = 34
     let backButtonSymbolWidth: CGFloat = 8.5
     let backButtonSymbolHeight: CGFloat = 17
@@ -31,7 +30,7 @@ struct BackButtonHeader: View {
                         Image(systemName: backButtonSystemName)
                             .resizable()
                             .frame(width: backButtonSymbolWidth, height: backButtonSymbolHeight)
-                            .foregroundColor(backButtonColor)
+                            .foregroundColor( Color.backButtonColor)
                     }
             })
             Spacer()
