@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class TextLimiterOB: ObservableObject {
+final class TextLimiterOB: ObservableObject {
     private let limit = 10
     @Published var value = "" {
         didSet {
