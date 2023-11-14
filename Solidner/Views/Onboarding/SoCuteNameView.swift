@@ -12,10 +12,10 @@ struct SoCuteNameView: View {
     let delaySecond = 0.7
     let labelFontSize = 27.83
     let cuteNameMessageTopPadding = 10.0
-    @State var babyNickname = "찍무" + ","
-    @State var isNicknameAppear = false
-    @State var isMessageAppear = false
-    @State var isButtonAppear = false
+    @State private var babyNickname = "찍무" + ","
+    @State private var isNicknameAppear = false
+    @State private var isMessageAppear = false
+    @State private var isButtonAppear = false
     var body: some View {
         ZStack {
             backgroundColor.ignoresSafeArea()
@@ -40,7 +40,7 @@ struct SoCuteNameView: View {
             }
         }
     }
-    func labelView() -> some View {
+    private func labelView() -> some View {
         return VStack(spacing: 0) {
             Text(babyNickname)
                 .font(.system(size: labelFontSize, weight: .bold))
@@ -51,7 +51,7 @@ struct SoCuteNameView: View {
                 .padding(.top, cuteNameMessageTopPadding)
         }
     }
-    func buttonView() -> some View {
+    private func buttonView() -> some View {
         return VStack {
             Spacer()
             if isButtonAppear {

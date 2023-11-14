@@ -13,8 +13,8 @@ struct NickNameView: View {
     private let warningMessageLeadingPadding = CGFloat(4)
     private let warningMessageColor = Color(#colorLiteral(red: 0.916901052, green: 0.4367357492, blue: 0.4184575677, alpha: 1))
     private let warningMessageFontSize = 11.5
-    @ObservedObject var textLimiter = TextLimiterOB()
-    @ObservedObject var keyboardHeightHelper = KeyboardHeightHelperOB()
+    @StateObject private var textLimiter = TextLimiterOB()
+    @StateObject private var keyboardHeightHelper = KeyboardHeightHelperOB()
     @FocusState private var isFocused: Bool
     var body: some View {
         GeometryReader { _ in

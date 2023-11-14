@@ -21,7 +21,7 @@ struct BabyBirthDateView: View {
             viewBody()
         }
     }
-    func viewBody() -> some View {
+    private func viewBody() -> some View {
         VStack(spacing: 0) {
             Text(TextLiterals.BabyBirthDate.cakeLabelText)
                 .font(.system(size: cakeLabelFontSize, weight: .bold))

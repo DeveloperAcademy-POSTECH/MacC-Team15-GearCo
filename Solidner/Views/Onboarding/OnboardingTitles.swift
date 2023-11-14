@@ -15,10 +15,10 @@ struct OnboardingTitles: View {
     let smallTitleFontSize = CGFloat(19)
     let smallTitleTopPadding = CGFloat(16)
     let centerSmallTitleTopPadding = CGFloat(10)
-    @State var alignmentCase = AlignmentCase.leading
-    @State var bigTitle = ""
-    @State var smallTitle = ""
-    @State var isSmallTitleExist = true
+    var alignmentCase = AlignmentCase.leading
+    var bigTitle = ""
+    var smallTitle = ""
+    var isSmallTitleExist = true
     var body: some View {
         switch alignmentCase {
         case .leading :
@@ -28,7 +28,7 @@ struct OnboardingTitles: View {
         }
     }
     
-    func leadingTitles () -> some View {
+    private func leadingTitles () -> some View {
         return HStack {
             VStack(alignment: .leading) {
                 Text(bigTitle)
@@ -45,7 +45,7 @@ struct OnboardingTitles: View {
             Spacer()
         }
     }
-    func centerTitles () -> some View {
+    private func centerTitles () -> some View {
         return VStack(spacing: 0) {
             Text(bigTitle)
                 .font(.system(size: bigTitleFontSize, weight: .bold))
@@ -67,6 +67,6 @@ struct OnboardingTitles: View {
 
 struct OnboardingTitles_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingTitles(bigTitle: "Dummy", smallTitle: "Dummy")
+        OnboardingTitles()
     }
 }

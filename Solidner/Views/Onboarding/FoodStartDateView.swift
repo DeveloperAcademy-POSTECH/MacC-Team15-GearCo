@@ -16,7 +16,7 @@ struct FoodStartDateView: View {
             viewBody()
         }
     }
-    func viewBody() -> some View {
+    private func viewBody() -> some View {
         return VStack {
             OnboardingTitles(bigTitle: TextLiterals.FoodStartDate.bigTitle, smallTitle: TextLiterals.FoodStartDate.smallTitle)
             DatePicker(selection: $solidStartDate, displayedComponents: .date){}

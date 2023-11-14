@@ -11,7 +11,7 @@ struct OnboardingEndView: View {
     var body: some View {
         viewBody()
     }
-    func viewBody() -> some View {
+    private func viewBody() -> some View {
         return VStack(spacing: 0) {
             Spacer()
             OnboardingTitles(alignmentCase: .center, bigTitle: TextLiterals.OnboardingEnd.bigTitle, smallTitle: TextLiterals.OnboardingEnd.smallTitle)
