@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class KeyboardHeightHelperOB: ObservableObject{
+final class KeyboardHeightHelperOB: ObservableObject {
     @Published var keyboardHeight: CGFloat = 0
     
     init() {
