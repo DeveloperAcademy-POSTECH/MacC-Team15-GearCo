@@ -26,6 +26,32 @@ enum TextLiterals {
         static var deleteAllCalendarsText: String { "캘린더 삭제" }
         static var deleteAllCalendarsButtonText: String { "삭제하기" }
     }
+    enum NickName {
+        static var warningMessage: String { "닉네임은 최대 10자까지 입력이 가능해요." }
+        static var placeHolder: String { "최대 10자내로 입력이 가능해요." }
+        static var bigTitle: String { "닉네임을\n입력해주세요" }
+    }
+    
+    enum SoCuteName {
+        static var cuteNameMessage: String { "정말 귀여운 이름이네요!" }
+    }
+    
+    enum BabyBirthDate {
+        static var cakeLabelText: String { "🎂" }
+        static var bigTitle: String { "의 생일" }
+        static var smallTitle: String {"아기의 생년월일을 입력해주세요."}
+    }
+    
+    enum FoodStartDate {
+        static var bigTitle: String { "언제부터 이유식을\n계획할까요?" }
+        static var smallTitle: String {"이미 이유식을 진행 중이라면\n처음 시작하신 날짜를 알려주세요"}
+    }
+    
+    enum OnboardingEnd {
+        static var bigTitle: String { "가장 쉬운\n이유식의 첫 시작" }
+        static var smallTitle: String {"이유식 플래닝을 함께 고고씽\n어쩌구저쩌구"}
+        static var buttonTitle: String {"솔리너 시작하기"}
+    }
 
     enum AddPlan {
         static var insertIngredientText: String { "재료 입력" }
