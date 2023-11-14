@@ -29,7 +29,8 @@ enum TextLiterals {
     enum NickName {
         static var warningMessage: String { "닉네임은 최대 10자까지 입력이 가능해요." }
         static var placeHolder: String { "최대 10자내로 입력이 가능해요." }
-        static var bigTitle: String { "닉네임을\n입력해주세요" }
+        static var bigUserNameTitle: String { "닉네임을\n입력해주세요" }
+        static var bigBabyNameTitle: String { "자녀분의 이름, 혹은\n별명이 따로 있나요? 🤶" }
     }
     
     enum SoCuteName {

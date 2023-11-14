@@ -10,6 +10,7 @@ import SwiftUI
 struct FoodStartDateView: View {
     let datePickerTopPadding = 51.0
     @State private var solidStartDate = Date()
+    @EnvironmentObject var user: UserOB
     var body: some View {
         VStack(spacing: 0) {
             BackButtonHeader()
@@ -24,7 +25,9 @@ struct FoodStartDateView: View {
                 .datePickerStyle(WheelDatePickerStyle())
                 .padding(.top, datePickerTopPadding)
             Spacer()
-            ButtonComponents().bigButton(disabledCondition: false, action: {})
+            ButtonComponents().bigButton(disabledCondition: false) {
+                user.solidStartDate = solidStartDate
+            }
         }
     }
 }
