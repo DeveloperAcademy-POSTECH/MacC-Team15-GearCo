@@ -13,8 +13,8 @@ struct BabyBirthDateView: View {
     let cakeLabelFontSize = 32.0
     let onboardingTitlesTopPadding = 10.0
     let datePickerTopPadding = 70.0
-    @State var babyName = "찍무"
-    @State var babyBirthDate = Date()
+    @State private var babyName = "찍무"
+    @State private var babyBirthDate = Date()
     var body: some View {
         VStack(spacing: 0) {
            BackButtonHeader()
