@@ -8,17 +8,16 @@
 import SwiftUI
 
 struct SoCuteNameView: View {
-    let backgroundColor = Color(#colorLiteral(red: 0.8588235294, green: 0.9098039216, blue: 0.9568627451, alpha: 1))
     let delaySecond = 0.7
     let labelFontSize = 27.83
     let cuteNameMessageTopPadding = 10.0
-    @State private var babyNickname = "찍무" + ","
     @State private var isNicknameAppear = false
     @State private var isMessageAppear = false
     @State private var isButtonAppear = false
+    @EnvironmentObject var user: UserOB
     var body: some View {
         ZStack {
-            backgroundColor.ignoresSafeArea()
+            Color.soCuteBgColor.ignoresSafeArea()
             labelView()
             buttonView()
         }
@@ -42,7 +41,7 @@ struct SoCuteNameView: View {
     }
     private func labelView() -> some View {
         return VStack(spacing: 0) {
-            Text(babyNickname)
+            Text(user.babyName+",")
                 .font(.system(size: labelFontSize, weight: .bold))
                 .foregroundColor(isNicknameAppear ? .black : .clear)
             Text(TextLiterals.SoCuteName.cuteNameMessage)
@@ -64,6 +63,6 @@ struct SoCuteNameView: View {
 
 struct SoCuteNameView_Previews: PreviewProvider {
     static var previews: some View {
-        SoCuteNameView()
+        SoCuteNameView().environmentObject(UserOB())
     }
 }
