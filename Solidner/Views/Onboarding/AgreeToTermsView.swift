@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct AgreeToTermsView: View {
     private let termsButtonsSpacing = 16.0
     private let bigButtonTopPadding = 16.0
@@ -14,20 +15,28 @@ struct AgreeToTermsView: View {
     @State private var isAgreeToServiceUse = true
     @State private var isAgreeToPersonalInfo = true
     @State private var isAgreeToAdvertising = true
+    @State private var navigationIsPresented = false
+    
     @EnvironmentObject var user: UserOB
     var body: some View {
-        VStack(spacing: 0) {
-            OnboardingTitles(bigTitle: TextLiterals.AgreeToTermsView.bigTitle, smallTitle: TextLiterals.AgreeToTermsView.smallTitle)
-            Spacer()
-            VStack(spacing: termsButtonsSpacing) {
-                agreeButton(agreeCase: .serviceUse)
-                agreeButton(agreeCase: .personalInfo)
-                agreeButton(agreeCase: .advertising)
+        NavigationStack {
+            VStack(spacing: 0) {
+                OnboardingTitles(bigTitle: TextLiterals.AgreeToTermsView.bigTitle, smallTitle: TextLiterals.AgreeToTermsView.smallTitle)
+                Spacer()
+                VStack(spacing: termsButtonsSpacing) {
+                    agreeButton(agreeCase: .serviceUse)
+                    agreeButton(agreeCase: .personalInfo)
+                    agreeButton(agreeCase: .advertising)
+                }
+                ButtonComponents().bigButton(disabledCondition: disabledCondition, action: {
+                    user.isAgreeToAdvertising = isAgreeToAdvertising
+                    navigationIsPresented = true
+                })
+                .padding(.top, bigButtonTopPadding)
             }
-            ButtonComponents().bigButton(disabledCondition: disabledCondition, action: {
-                user.isAgreeToAdvertising = isAgreeToAdvertising
-            })
-            .padding(.top, bigButtonTopPadding)
+            .navigationDestination(isPresented: $navigationIsPresented) {
+                NickNameView()
+            }
         }
     }
     private var disabledCondition: Bool {
@@ -94,6 +103,6 @@ struct AgreeToTermsView: View {
 
 struct AgreeToTermsView_Previews: PreviewProvider {
     static var previews: some View {
-        AgreeToTermsView()
+        AgreeToTermsView().environmentObject(UserOB())
     }
 }

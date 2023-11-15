@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct SoCuteNameView: View {
-    private let delaySecond = 0.7
-    private let labelFontSize = 27.83
-    private let cuteNameMessageTopPadding = 10.0
-    @State private var isNicknameAppear = false
-    @State private var isMessageAppear = false
-    @State private var isButtonAppear = false
-    @State private var navigationIsPresented = false
-    @EnvironmentObject var user: UserOB
+    let backgroundColor = Color(#colorLiteral(red: 0.8588235294, green: 0.9098039216, blue: 0.9568627451, alpha: 1))
+    let delaySecond = 0.7
+    let labelFontSize = 27.83
+    let cuteNameMessageTopPadding = 10.0
+    @State var babyNickname = "찍무" + ","
+    @State var isNicknameAppear = false
+    @State var isMessageAppear = false
+    @State var isButtonAppear = false
     var body: some View {
         ZStack {
-            Color.soCuteBgColor.ignoresSafeArea()
+            backgroundColor.ignoresSafeArea()
             labelView()
             buttonView()
         }
@@ -39,15 +39,10 @@ struct SoCuteNameView: View {
                 }
             }
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarHidden(true)
-        .navigationDestination(isPresented: $navigationIsPresented){
-            BabyBirthDateView()
-        }
     }
-    private func labelView() -> some View {
+    func labelView() -> some View {
         return VStack(spacing: 0) {
-            Text(user.babyName+",")
+            Text(babyNickname)
                 .font(.system(size: labelFontSize, weight: .bold))
                 .foregroundColor(isNicknameAppear ? .black : .clear)
             Text(TextLiterals.SoCuteName.cuteNameMessage)
@@ -56,13 +51,11 @@ struct SoCuteNameView: View {
                 .padding(.top, cuteNameMessageTopPadding)
         }
     }
-    private func buttonView() -> some View {
+    func buttonView() -> some View {
         return VStack {
             Spacer()
             if isButtonAppear {
-                ButtonComponents().bigButton(disabledCondition: false, action: {
-                    navigationIsPresented = true
-                }, buttonColor: Color.white, titleColor: Color.black)
+                ButtonComponents().bigButton(disabledCondition: false, action: {}, buttonColor: Color.white, titleColor: Color.black)
                 .transition(.opacity.animation(.easeIn))
             }
         }
@@ -71,6 +64,6 @@ struct SoCuteNameView: View {
 
 struct SoCuteNameView_Previews: PreviewProvider {
     static var previews: some View {
-        SoCuteNameView().environmentObject(UserOB())
+        SoCuteNameView()
     }
 }

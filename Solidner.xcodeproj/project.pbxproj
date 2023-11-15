@@ -15,9 +15,7 @@
 		0E18AD742AFAA3430011ED4A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD732AFAA3430011ED4A /* FirebaseAnalytics */; };
 		0E18AD762AFAA3430011ED4A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD752AFAA3430011ED4A /* FirebaseAuth */; };
 		0E18AD782AFAA3430011ED4A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD772AFAA3430011ED4A /* FirebaseFirestore */; };
-		0E18AD7B2AFBDCE20011ED4A /* ComponentDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AD7A2AFBDCE20011ED4A /* ComponentDummy.swift */; };
 		0EAFB7212B012A3D0075A384 /* MonthlyPlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */; };
-		0EA6C61E2AFBE087004FF2AA /* MonthlyPlanningDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA6C61D2AFBE087004FF2AA /* MonthlyPlanningDummy.swift */; };
 		B24836202B011FFF00525A25 /* AddPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B248361F2B011FFF00525A25 /* AddPlanView.swift */; };
 		B24836222B012B8700525A25 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24836212B012B8700525A25 /* Date+.swift */; };
 		B29CF7882AFCCA5B00B54A3E /* WeeklyPlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF7872AFCCA5B00B54A3E /* WeeklyPlanningView.swift */; };
@@ -73,9 +71,8 @@
 		0E18AD6C2AFA8DC50011ED4A /* UserOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOB.swift; sourceTree = "<group>"; };
 		0E18AD6E2AFA8F140011ED4A /* AppleLoginOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginOB.swift; sourceTree = "<group>"; };
 		0E18AD702AFA94E10011ED4A /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
-		0E18AD7A2AFBDCE20011ED4A /* ComponentDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentDummy.swift; sourceTree = "<group>"; };
-		0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningView.swift; sourceTree = "<group>"; };
 		0EA6C61D2AFBE087004FF2AA /* MonthlyPlanningDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningDummy.swift; sourceTree = "<group>"; };
+		0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningView.swift; sourceTree = "<group>"; };
 		B248361F2B011FFF00525A25 /* AddPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlanView.swift; sourceTree = "<group>"; };
 		B24836212B012B8700525A25 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		B29CF7872AFCCA5B00B54A3E /* WeeklyPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyPlanningView.swift; sourceTree = "<group>"; };
@@ -205,6 +202,14 @@
 			path = Literal;
 			sourceTree = "<group>";
 		};
+		C336EE4E2B04CB4F0057D8B8 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				0EA6C61D2AFBE087004FF2AA /* MonthlyPlanningDummy.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		C3C637502AF90C2B006D464D = {
 			isa = PBXGroup;
 			children = (
@@ -212,6 +217,7 @@
 				C3C6376C2AF90C2C006D464D /* SolidnerTests */,
 				C3C637762AF90C2C006D464D /* SolidnerUITests */,
 				C3C6375A2AF90C2B006D464D /* Products */,
+				C336EE4E2B04CB4F0057D8B8 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -310,7 +316,6 @@
 		C3C6378A2AF90C80006D464D /* Extension+ */ = {
 			isa = PBXGroup;
 			children = (
-				C3C637912AF91E9D006D464D /* extension_dummy.swift */,
 				C3AD1BC52B012DA6003BB3E0 /* UIApplication+.swift */,
 				B24836212B012B8700525A25 /* Date+.swift */,
 				C336EE492B03F13B0057D8B8 /* Image+.swift */,
@@ -491,7 +496,6 @@
 				0E18AD6F2AFA8F140011ED4A /* AppleLoginOB.swift in Sources */,
 				C3AD1BCC2B024FAC003BB3E0 /* FoodStartDateView.swift in Sources */,
 				C3AD1BD02B026CB5003BB3E0 /* OnboardingEndView.swift in Sources */,
-				0EA6C61E2AFBE087004FF2AA /* MonthlyPlanningDummy.swift in Sources */,
 				C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */,
 				C369424F2B00C42C002465D4 /* OnboardingTitles.swift in Sources */,
 				B24836202B011FFF00525A25 /* AddPlanView.swift in Sources */,
