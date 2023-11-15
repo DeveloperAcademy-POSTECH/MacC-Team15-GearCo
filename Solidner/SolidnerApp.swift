@@ -24,8 +24,8 @@ struct SolidnerApp: App {
     @StateObject private var userOB = UserOB()
     var body: some Scene {
         WindowGroup {
-//            SignInView().environmentObject(userOB)
-            MonthlyPlanningView()
+            //SignInView().environmentObject(userOB)
+            BabyBirthDateView()
         }
     }
 }
