@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct BackButtonHeader: View {
-    let backButtonFrameSize: CGFloat = 34
-    let backButtonSymbolWidth: CGFloat = 8.5
-    let backButtonSymbolHeight: CGFloat = 17
-    let backButtonHorizontalPadding: CGFloat = 16.64
-    let backButtonTopPadding: CGFloat = 6.73
-    let backButtonSystemName = "chevron.left"
+    private let backButtonFrameSize: CGFloat = 34
+    private let backButtonSymbolWidth: CGFloat = 8.5
+    private let backButtonSymbolHeight: CGFloat = 17
+    private let backButtonHorizontalPadding: CGFloat = 16.64
+    private let backButtonTopPadding: CGFloat = 6.73
+    private let backButtonSystemName = "chevron.left"
     @State var action: ()->Void = {}
     
     var body: some View {

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct TextFieldComponents: View {
-    let textFieldCornerRadius: CGFloat = 12
-    let textFieldPadding: CGFloat = 16
+    private let textFieldCornerRadius: CGFloat = 12
+    private let textFieldPadding: CGFloat = 16
     @State private var value = ""
     @FocusState var isFocused: Bool
     

@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct ButtonComponents: View {
-    let buttonHeight: CGFloat = 56
-    let smallButtonWidth: CGFloat = 138
-    let buttonCornerRadius: CGFloat = 12
-    let tinyButtonHeight: CGFloat = 48
-    let tinyButtonWidth: CGFloat = 96
+    private let buttonHeight: CGFloat = 56
+    private let smallButtonWidth: CGFloat = 138
+    private let buttonCornerRadius: CGFloat = 12
+    private let tinyButtonHeight: CGFloat = 48
+    private let tinyButtonWidth: CGFloat = 96
    
     var body: some View {
         smallButton(disabledCondition: false, action: {})

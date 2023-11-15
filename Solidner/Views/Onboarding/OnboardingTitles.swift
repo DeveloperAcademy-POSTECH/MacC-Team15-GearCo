@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct OnboardingTitles: View {
-    let leadingPadding = CGFloat(4)
-    let bigTitleFontSize = CGFloat(28)
-    let smallTitleFontSize = CGFloat(19)
-    let smallTitleTopPadding = CGFloat(16)
-    let centerSmallTitleTopPadding = CGFloat(10)
+    private let leadingPadding = 4.0
+    private let bigTitleFontSize = 28.0
+    private let smallTitleFontSize = 19.0
+    private let smallTitleTopPadding = 16.0
+    private let centerSmallTitleTopPadding = 10.0
     var alignmentCase = AlignmentCase.leading
     var bigTitle = ""
     var smallTitle = ""

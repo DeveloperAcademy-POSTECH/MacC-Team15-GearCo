@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct NickNameView: View {
-    private let textFieldTopPadding = CGFloat(16)
-    private let warningMessageTopPadding = CGFloat(12)
-    private let warningMessageLeadingPadding = CGFloat(4)
+    private let textFieldTopPadding = 16.0
+    private let warningMessageTopPadding = 12.0
+    private let warningMessageLeadingPadding = 4.0
     private let warningMessageFontSize = 11.5
     private let buttonUpDuration = 0.1
     var nickNameViewCase = NickNameViewCase.babyName
