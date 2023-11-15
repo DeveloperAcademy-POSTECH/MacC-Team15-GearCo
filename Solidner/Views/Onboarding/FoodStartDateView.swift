@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FoodStartDateView: View {
-    let datePickerTopPadding = 51.0
+    private let datePickerTopPadding = 51.0
     @State private var solidStartDate = Date()
     @EnvironmentObject var user: UserOB
     var body: some View {

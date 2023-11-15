@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct AgreeToTermsView: View {
-    let termsButtonsSpacing = 16.0
-    let bigButtonTopPadding = 16.0
-    let agreeTitleLeadingPadding = 15.0
+    private let termsButtonsSpacing = 16.0
+    private let bigButtonTopPadding = 16.0
+    private let agreeTitleLeadingPadding = 15.0
     @State private var isAgreeToServiceUse = true
     @State private var isAgreeToPersonalInfo = true
     @State private var isAgreeToAdvertising = true

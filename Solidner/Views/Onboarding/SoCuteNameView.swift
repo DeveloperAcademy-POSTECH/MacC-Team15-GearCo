@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct SoCuteNameView: View {
-    let delaySecond = 0.7
-    let labelFontSize = 27.83
-    let cuteNameMessageTopPadding = 10.0
+    private let delaySecond = 0.7
+    private let labelFontSize = 27.83
+    private let cuteNameMessageTopPadding = 10.0
     @State private var isNicknameAppear = false
     @State private var isMessageAppear = false
     @State private var isButtonAppear = false
