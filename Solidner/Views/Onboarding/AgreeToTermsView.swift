@@ -16,12 +16,11 @@ struct AgreeToTermsView: View {
     @State private var isAgreeToPersonalInfo = true
     @State private var isAgreeToAdvertising = true
     @State private var navigationIsPresented = false
-    
     @EnvironmentObject var user: UserOB
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                OnboardingTitles(bigTitle: TextLiterals.AgreeToTermsView.bigTitle, smallTitle: TextLiterals.AgreeToTermsView.smallTitle)
+                OnboardingTitles(bigTitle: TextLiterals.AgreeToTerms.bigTitle, smallTitle: TextLiterals.AgreeToTerms.smallTitle)
                 Spacer()
                 VStack(spacing: termsButtonsSpacing) {
                     agreeButton(agreeCase: .serviceUse)
@@ -50,11 +49,11 @@ struct AgreeToTermsView: View {
         var title: String {
             switch agreeCase {
             case .serviceUse :
-                return TextLiterals.AgreeToTermsView.serviceUseTitle
+                return TextLiterals.AgreeToTerms.serviceUseTitle
             case .personalInfo :
-                return TextLiterals.AgreeToTermsView.personalInfoTitle
+                return TextLiterals.AgreeToTerms.personalInfoTitle
             case .advertising :
-                return TextLiterals.AgreeToTermsView.advertisingTitle
+                return TextLiterals.AgreeToTerms.advertisingTitle
             }
         }
         return HStack {
@@ -93,11 +92,6 @@ struct AgreeToTermsView: View {
                     .foregroundColor(.black.opacity(0.4))
             }
         }
-    }
-    enum AgreeCase {
-        case serviceUse
-        case personalInfo
-        case advertising
     }
 }
 

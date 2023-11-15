@@ -73,12 +73,20 @@ enum TextLiterals {
         static var addPlanButtonText: String { "일정 추가하기" }
     }
     
-    enum AgreeToTermsView { 
+    enum AgreeToTerms {
         static var bigTitle: String { "서비스 이용약관에\n동의해주세요" }
         static var smallTitle: String { "솔리너의 원활한 사용을 위해\n아래의 정보 제공에 동의해주세요." }
         static var serviceUseTitle: String { "[필수] 서비스 이용 약관" }
         static var personalInfoTitle: String { "[필수] 개인정보 수집 및 이용 동의" }
         static var advertisingTitle: String { "[선택] 광고성 정보 수신 동의" }
+    }
+    
+    enum TermsWeb {
+        static var serviceUseUrl: String { "https://flaxen-headline-80b.notion.site/Solidner-db0e9f2efed2414aa50a53a9438d99dc?pvs=4" }
+        static var personalInfoUrl: String { "https://flaxen-headline-80b.notion.site/Solidner-cf1b28d08a794dffbcc824bcb8391932?pvs=4" }
+        static var advertisingURL: String {
+            "https://flaxen-headline-80b.notion.site/Solidner-5484d23677674cc686f8e7f197ef729e?pvs=4"
+        }
     }
 }
 
