@@ -15,6 +15,9 @@ struct AgreeToTermsView: View {
     @State private var isAgreeToServiceUse = true
     @State private var isAgreeToPersonalInfo = true
     @State private var isAgreeToAdvertising = true
+    @State private var openServiceUseTerms = false
+    @State private var openPersonalInfoTerms = false
+    @State private var openAdvertisingTerms = false
     @State private var navigationIsPresented = false
     @EnvironmentObject var user: UserOB
     var body: some View {
@@ -35,6 +38,15 @@ struct AgreeToTermsView: View {
             }
             .navigationDestination(isPresented: $navigationIsPresented) {
                 NickNameView()
+            }
+            .sheet(isPresented: $openServiceUseTerms) {
+                TermsWebView(agreeCase: .serviceUse)
+            }
+            .sheet(isPresented: $openPersonalInfoTerms) {
+                TermsWebView(agreeCase: .personalInfo)
+            }
+            .sheet(isPresented: $openAdvertisingTerms) {
+                TermsWebView(agreeCase: .advertising)
             }
         }
     }
@@ -86,7 +98,14 @@ struct AgreeToTermsView: View {
             }
             Spacer()
             Button(action: {
-                
+                switch agreeCase {
+                case .serviceUse :
+                    openServiceUseTerms = true
+                case .personalInfo :
+                    openPersonalInfoTerms = true
+                case .advertising :
+                    openAdvertisingTerms = true
+                }
             }){
                 Image(systemName: "chevron.right")
                     .foregroundColor(.black.opacity(0.4))

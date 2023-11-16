@@ -35,7 +35,7 @@ struct TermsWebView: UIViewRepresentable {
  
 struct TermsWebView_Previews: PreviewProvider {
     static var previews: some View {
-        TermsWebView(agreeCase: .advertising)
+        TermsWebView(agreeCase: .serviceUse)
     }
 }
 
