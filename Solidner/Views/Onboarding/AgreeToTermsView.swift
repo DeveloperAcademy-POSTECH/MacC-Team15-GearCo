@@ -64,11 +64,11 @@ struct AgreeToTermsView: View {
                 HStack(spacing: 0) {
                     switch agreeCase {
                     case .serviceUse :
-                        isAgreeToServiceUse ? Image(.checkOn) : Image(.checkOff)
+                        isAgreeToServiceUse ? Image(assetName: .checkOn) : Image(assetName: .checkOff)
                     case .personalInfo :
-                        isAgreeToPersonalInfo ? Image(.checkOn) : Image(.checkOff)
+                        isAgreeToPersonalInfo ? Image(assetName: .checkOn) : Image(assetName: .checkOff)
                     case .advertising :
-                        isAgreeToAdvertising ? Image(.checkOn) : Image(.checkOff)
+                        isAgreeToAdvertising ? Image(assetName: .checkOn) : Image(assetName: .checkOff)
                     }
                     Text(title)
                         .foregroundColor(.black.opacity(0.6))
