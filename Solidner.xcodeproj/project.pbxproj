@@ -17,7 +17,6 @@
 		0E18AD782AFAA3430011ED4A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD772AFAA3430011ED4A /* FirebaseFirestore */; };
 		0E18AD7B2AFBDCE20011ED4A /* ComponentDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AD7A2AFBDCE20011ED4A /* ComponentDummy.swift */; };
 		0EAFB7212B012A3D0075A384 /* MonthlyPlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */; };
-		0EA6C61E2AFBE087004FF2AA /* MonthlyPlanningDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA6C61D2AFBE087004FF2AA /* MonthlyPlanningDummy.swift */; };
 		B24836202B011FFF00525A25 /* AddPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B248361F2B011FFF00525A25 /* AddPlanView.swift */; };
 		B24836222B012B8700525A25 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24836212B012B8700525A25 /* Date+.swift */; };
 		B26732AA2B0232EE004AFF83 /* CycleGapSegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26732A92B0232EE004AFF83 /* CycleGapSegmentedPicker.swift */; };
@@ -81,7 +80,6 @@
 		0E18AD702AFA94E10011ED4A /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		0E18AD7A2AFBDCE20011ED4A /* ComponentDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentDummy.swift; sourceTree = "<group>"; };
 		0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningView.swift; sourceTree = "<group>"; };
-		0EA6C61D2AFBE087004FF2AA /* MonthlyPlanningDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningDummy.swift; sourceTree = "<group>"; };
 		B248361F2B011FFF00525A25 /* AddPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlanView.swift; sourceTree = "<group>"; };
 		B24836212B012B8700525A25 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		B26732A92B0232EE004AFF83 /* CycleGapSegmentedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleGapSegmentedPicker.swift; sourceTree = "<group>"; };
@@ -518,7 +516,6 @@
 				B2746E3D2B05DF900083AB57 /* StartDateSettingModal.swift in Sources */,
 				C3AD1BCC2B024FAC003BB3E0 /* FoodStartDateView.swift in Sources */,
 				C3AD1BD02B026CB5003BB3E0 /* OnboardingEndView.swift in Sources */,
-				0EA6C61E2AFBE087004FF2AA /* MonthlyPlanningDummy.swift in Sources */,
 				C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */,
 				C369424F2B00C42C002465D4 /* OnboardingTitles.swift in Sources */,
 				B24836202B011FFF00525A25 /* AddPlanView.swift in Sources */,
