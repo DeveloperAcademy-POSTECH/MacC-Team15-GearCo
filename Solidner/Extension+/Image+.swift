@@ -13,7 +13,7 @@ extension Image {
         case checkOff
     }
     
-    init(_ name: ImageAssetName){
-        self.init(name.rawValue)
+    init(assetName: ImageAssetName){
+        self.init(assetName.rawValue)
     }
 }

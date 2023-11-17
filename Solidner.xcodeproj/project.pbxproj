@@ -18,6 +18,12 @@
 		0EAFB7212B012A3D0075A384 /* MonthlyPlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */; };
 		B24836202B011FFF00525A25 /* AddPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B248361F2B011FFF00525A25 /* AddPlanView.swift */; };
 		B24836222B012B8700525A25 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24836212B012B8700525A25 /* Date+.swift */; };
+		B26732AA2B0232EE004AFF83 /* CycleGapSegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26732A92B0232EE004AFF83 /* CycleGapSegmentedPicker.swift */; };
+		B2746E3B2B052A4D0083AB57 /* Shape+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E3A2B052A4D0083AB57 /* Shape+.swift */; };
+		B2746E3D2B05DF900083AB57 /* StartDateSettingModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E3C2B05DF900083AB57 /* StartDateSettingModal.swift */; };
+		B2746E3F2B05F5210083AB57 /* ThickDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E3E2B05F5210083AB57 /* ThickDivider.swift */; };
+		B2746E412B05F9860083AB57 /* TitleAndActionButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E402B05F9860083AB57 /* TitleAndActionButtonView.swift */; };
+		B2746E432B05FDC40083AB57 /* TitleAndHintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E422B05FDC40083AB57 /* TitleAndHintView.swift */; };
 		B29CF7882AFCCA5B00B54A3E /* WeeklyPlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF7872AFCCA5B00B54A3E /* WeeklyPlanningView.swift */; };
 		B29CF78B2AFCCEA000B54A3E /* TextLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF78A2AFCCEA000B54A3E /* TextLiterals.swift */; };
 		C336EE432B03C37B0057D8B8 /* AgreeToTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336EE422B03C37B0057D8B8 /* AgreeToTermsView.swift */; };
@@ -74,9 +80,16 @@
 		0E18AD6E2AFA8F140011ED4A /* AppleLoginOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginOB.swift; sourceTree = "<group>"; };
 		0E18AD702AFA94E10011ED4A /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		0EA6C61D2AFBE087004FF2AA /* MonthlyPlanningDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningDummy.swift; sourceTree = "<group>"; };
+		0E18AD7A2AFBDCE20011ED4A /* ComponentDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentDummy.swift; sourceTree = "<group>"; };
 		0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningView.swift; sourceTree = "<group>"; };
 		B248361F2B011FFF00525A25 /* AddPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlanView.swift; sourceTree = "<group>"; };
 		B24836212B012B8700525A25 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		B26732A92B0232EE004AFF83 /* CycleGapSegmentedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleGapSegmentedPicker.swift; sourceTree = "<group>"; };
+		B2746E3A2B052A4D0083AB57 /* Shape+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Shape+.swift"; sourceTree = "<group>"; };
+		B2746E3C2B05DF900083AB57 /* StartDateSettingModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDateSettingModal.swift; sourceTree = "<group>"; };
+		B2746E3E2B05F5210083AB57 /* ThickDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThickDivider.swift; sourceTree = "<group>"; };
+		B2746E402B05F9860083AB57 /* TitleAndActionButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleAndActionButtonView.swift; sourceTree = "<group>"; };
+		B2746E422B05FDC40083AB57 /* TitleAndHintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleAndHintView.swift; sourceTree = "<group>"; };
 		B29CF7872AFCCA5B00B54A3E /* WeeklyPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyPlanningView.swift; sourceTree = "<group>"; };
 		B29CF78A2AFCCEA000B54A3E /* TextLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLiterals.swift; sourceTree = "<group>"; };
 		C336EE422B03C37B0057D8B8 /* AgreeToTermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeToTermsView.swift; sourceTree = "<group>"; };
@@ -159,6 +172,11 @@
 		0E18AD792AFBDCD20011ED4A /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				0E18AD7A2AFBDCE20011ED4A /* ComponentDummy.swift */,
+				B26732A92B0232EE004AFF83 /* CycleGapSegmentedPicker.swift */,
+				B2746E3E2B05F5210083AB57 /* ThickDivider.swift */,
+				B2746E402B05F9860083AB57 /* TitleAndActionButtonView.swift */,
+				B2746E422B05FDC40083AB57 /* TitleAndHintView.swift */,
 				C36942462AFCD686002465D4 /* ButtonComponents.swift */,
 				C36942482AFF755F002465D4 /* BackButtonHeader.swift */,
 				C369424A2B00B350002465D4 /* TextFieldComponents.swift */,
@@ -196,6 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				B248361F2B011FFF00525A25 /* AddPlanView.swift */,
+				B2746E3C2B05DF900083AB57 /* StartDateSettingModal.swift */,
 			);
 			path = AddPlan;
 			sourceTree = "<group>";
@@ -326,6 +345,7 @@
 			children = (
 				C3AD1BC52B012DA6003BB3E0 /* UIApplication+.swift */,
 				B24836212B012B8700525A25 /* Date+.swift */,
+				B2746E3A2B052A4D0083AB57 /* Shape+.swift */,
 				C336EE492B03F13B0057D8B8 /* Image+.swift */,
 				C336EE4B2B03F5320057D8B8 /* Color+.swift */,
 			);
@@ -490,10 +510,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E18AD6D2AFA8DC50011ED4A /* UserOB.swift in Sources */,
+				B2746E3F2B05F5210083AB57 /* ThickDivider.swift in Sources */,
+				B2746E3B2B052A4D0083AB57 /* Shape+.swift in Sources */,
 				0EAFB7212B012A3D0075A384 /* MonthlyPlanningView.swift in Sources */,
 				C36942472AFCD687002465D4 /* ButtonComponents.swift in Sources */,
 				C3C637902AF91E85006D464D /* fonts_dummy.swift in Sources */,
 				0E18AD6B2AFA7F670011ED4A /* SignInView.swift in Sources */,
+				B2746E432B05FDC40083AB57 /* TitleAndHintView.swift in Sources */,
 				C36942492AFF755F002465D4 /* BackButtonHeader.swift in Sources */,
 				B29CF7882AFCCA5B00B54A3E /* WeeklyPlanningView.swift in Sources */,
 				C336EE4A2B03F13B0057D8B8 /* Image+.swift in Sources */,
@@ -502,6 +525,11 @@
 				C3AD1BC42B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift in Sources */,
 				C3C637982AF91EE0006D464D /* models_dummy.swift in Sources */,
 				0E18AD6F2AFA8F140011ED4A /* AppleLoginOB.swift in Sources */,
+				B2746E412B05F9860083AB57 /* TitleAndActionButtonView.swift in Sources */,
+				B26732AA2B0232EE004AFF83 /* CycleGapSegmentedPicker.swift in Sources */,
+				0EA6C61E2AFBE087004FF2AA /* MonthlyPlanningDummy.swift in Sources */,
+				C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */,
+				B2746E3D2B05DF900083AB57 /* StartDateSettingModal.swift in Sources */,
 				C3AD1BCC2B024FAC003BB3E0 /* FoodStartDateView.swift in Sources */,
 				C3AD1BD02B026CB5003BB3E0 /* OnboardingEndView.swift in Sources */,
 				C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */,
