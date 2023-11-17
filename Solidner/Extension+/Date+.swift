@@ -45,7 +45,11 @@ extension Date {
             Calendar.current.date(byAdding: .day, value: $0, to: startDate)
         }
     }
-    
+
+    func add(_ component: Calendar.Component, value: Int) -> Date {
+        Calendar.current.date(byAdding: component, value: value, to: self)!
+    }
+
     /// 아래의 day부터 weekDayOrdinal까지는
     /// Calendar 객체의 데이터를 Date의 Extension으로 포함시켜 Date 객체에서 바로 사용할 수 있게 합니다.
     var day: Int {
@@ -58,6 +62,10 @@ extension Date {
     
     var month: Int {
         return Calendar.current.component(.month, from: self)
+    }
+
+    var year: Int {
+        return Calendar.current.component(.year, from: self)
     }
 
     var weekOfMonth: Int {
@@ -81,7 +89,11 @@ extension Date {
         // 11/13
         case MMdd_slash = "MM/dd"
     }
-    
+
+    func isInBetween(from: Date, to: Date) -> Bool {
+        self >= from && self <= to
+    }
+
     /// 이 Extension 내에서 정의한 DateFormat Enum 참고.
     /// DateFormat 형식에 따라 Date를 가공하여 문자열 형식으로 반환합니다.
     /// - Parameter format: DateFormat Enum의 case.
