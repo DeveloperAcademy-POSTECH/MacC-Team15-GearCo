@@ -22,31 +22,36 @@ struct AgreeToTermsView: View {
     @EnvironmentObject var user: UserOB
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
-                OnboardingTitles(bigTitle: TextLiterals.AgreeToTerms.bigTitle, smallTitle: TextLiterals.AgreeToTerms.smallTitle)
-                Spacer()
-                VStack(spacing: termsButtonsSpacing) {
-                    agreeButton(agreeCase: .serviceUse)
-                    agreeButton(agreeCase: .personalInfo)
-                    agreeButton(agreeCase: .advertising)
+            ZStack {
+                VStack(spacing: 0) {
+                    OnboardingTitles(bigTitle: TextLiterals.AgreeToTerms.bigTitle, smallTitle: TextLiterals.AgreeToTerms.smallTitle)
+                    Spacer()
+                    VStack(spacing: termsButtonsSpacing) {
+                        agreeButton(agreeCase: .serviceUse)
+                        agreeButton(agreeCase: .personalInfo)
+                        agreeButton(agreeCase: .advertising)
+                    }
+                    ButtonComponents().bigButton(disabledCondition: disabledCondition, action: {
+                        user.isAgreeToAdvertising = isAgreeToAdvertising
+                        navigationIsPresented = true
+                    })
+                    .padding(.top, bigButtonTopPadding)
                 }
-                ButtonComponents().bigButton(disabledCondition: disabledCondition, action: {
-                    user.isAgreeToAdvertising = isAgreeToAdvertising
-                    navigationIsPresented = true
-                })
-                .padding(.top, bigButtonTopPadding)
             }
             .navigationDestination(isPresented: $navigationIsPresented) {
                 NickNameView()
             }
             .sheet(isPresented: $openServiceUseTerms) {
                 TermsWebView(agreeCase: .serviceUse)
+                    .presentationDragIndicator(.visible)
             }
             .sheet(isPresented: $openPersonalInfoTerms) {
                 TermsWebView(agreeCase: .personalInfo)
+                    .presentationDragIndicator(.visible)
             }
             .sheet(isPresented: $openAdvertisingTerms) {
                 TermsWebView(agreeCase: .advertising)
+                    .presentationDragIndicator(.visible)
             }
         }
     }
