@@ -15,9 +15,8 @@
 		0E18AD742AFAA3430011ED4A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD732AFAA3430011ED4A /* FirebaseAnalytics */; };
 		0E18AD762AFAA3430011ED4A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD752AFAA3430011ED4A /* FirebaseAuth */; };
 		0E18AD782AFAA3430011ED4A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD772AFAA3430011ED4A /* FirebaseFirestore */; };
-		0E18AD7B2AFBDCE20011ED4A /* ComponentDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AD7A2AFBDCE20011ED4A /* ComponentDummy.swift */; };
 		0EAFB7212B012A3D0075A384 /* MonthlyPlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */; };
-		B24836202B011FFF00525A25 /* AddPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B248361F2B011FFF00525A25 /* AddPlanView.swift */; };
+		B24836202B011FFF00525A25 /* MealDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B248361F2B011FFF00525A25 /* MealDetailView.swift */; };
 		B24836222B012B8700525A25 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24836212B012B8700525A25 /* Date+.swift */; };
 		B26732AA2B0232EE004AFF83 /* CycleGapSegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26732A92B0232EE004AFF83 /* CycleGapSegmentedPicker.swift */; };
 		B2746E3B2B052A4D0083AB57 /* Shape+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E3A2B052A4D0083AB57 /* Shape+.swift */; };
@@ -25,8 +24,11 @@
 		B2746E3F2B05F5210083AB57 /* ThickDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E3E2B05F5210083AB57 /* ThickDivider.swift */; };
 		B2746E412B05F9860083AB57 /* TitleAndActionButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E402B05F9860083AB57 /* TitleAndActionButtonView.swift */; };
 		B2746E432B05FDC40083AB57 /* TitleAndHintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E422B05FDC40083AB57 /* TitleAndHintView.swift */; };
-		B29CF7882AFCCA5B00B54A3E /* WeeklyPlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF7872AFCCA5B00B54A3E /* WeeklyPlanningView.swift */; };
+		B29CF7882AFCCA5B00B54A3E /* PlanListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF7872AFCCA5B00B54A3E /* PlanListView.swift */; };
 		B29CF78B2AFCCEA000B54A3E /* TextLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF78A2AFCCEA000B54A3E /* TextLiterals.swift */; };
+		B2D1DCD62B07466500D7B77B /* MealGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D1DCD52B07466500D7B77B /* MealGroupView.swift */; };
+		B2EFE9832B067CA000E3F94B /* PlanDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EFE9822B067CA000E3F94B /* PlanDetailView.swift */; };
+		B2EFE9852B067FB200E3F94B /* MockPlanData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EFE9842B067FB200E3F94B /* MockPlanData.swift */; };
 		C336EE432B03C37B0057D8B8 /* AgreeToTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336EE422B03C37B0057D8B8 /* AgreeToTermsView.swift */; };
 		C336EE4A2B03F13B0057D8B8 /* Image+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336EE492B03F13B0057D8B8 /* Image+.swift */; };
 		C336EE4C2B03F5320057D8B8 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336EE4B2B03F5320057D8B8 /* Color+.swift */; };
@@ -80,7 +82,7 @@
 		0E18AD702AFA94E10011ED4A /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		0E18AD7A2AFBDCE20011ED4A /* ComponentDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentDummy.swift; sourceTree = "<group>"; };
 		0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningView.swift; sourceTree = "<group>"; };
-		B248361F2B011FFF00525A25 /* AddPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlanView.swift; sourceTree = "<group>"; };
+		B248361F2B011FFF00525A25 /* MealDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailView.swift; sourceTree = "<group>"; };
 		B24836212B012B8700525A25 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		B26732A92B0232EE004AFF83 /* CycleGapSegmentedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleGapSegmentedPicker.swift; sourceTree = "<group>"; };
 		B2746E3A2B052A4D0083AB57 /* Shape+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Shape+.swift"; sourceTree = "<group>"; };
@@ -88,8 +90,11 @@
 		B2746E3E2B05F5210083AB57 /* ThickDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThickDivider.swift; sourceTree = "<group>"; };
 		B2746E402B05F9860083AB57 /* TitleAndActionButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleAndActionButtonView.swift; sourceTree = "<group>"; };
 		B2746E422B05FDC40083AB57 /* TitleAndHintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleAndHintView.swift; sourceTree = "<group>"; };
-		B29CF7872AFCCA5B00B54A3E /* WeeklyPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyPlanningView.swift; sourceTree = "<group>"; };
+		B29CF7872AFCCA5B00B54A3E /* PlanListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanListView.swift; sourceTree = "<group>"; };
 		B29CF78A2AFCCEA000B54A3E /* TextLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLiterals.swift; sourceTree = "<group>"; };
+		B2D1DCD52B07466500D7B77B /* MealGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealGroupView.swift; sourceTree = "<group>"; };
+		B2EFE9822B067CA000E3F94B /* PlanDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDetailView.swift; sourceTree = "<group>"; };
+		B2EFE9842B067FB200E3F94B /* MockPlanData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPlanData.swift; sourceTree = "<group>"; };
 		C336EE422B03C37B0057D8B8 /* AgreeToTermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeToTermsView.swift; sourceTree = "<group>"; };
 		C336EE492B03F13B0057D8B8 /* Image+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+.swift"; sourceTree = "<group>"; };
 		C336EE4B2B03F5320057D8B8 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
@@ -199,7 +204,9 @@
 		0EA6C61A2AFBE06B004FF2AA /* Weekly */ = {
 			isa = PBXGroup;
 			children = (
-				B29CF7872AFCCA5B00B54A3E /* WeeklyPlanningView.swift */,
+				B29CF7872AFCCA5B00B54A3E /* PlanListView.swift */,
+				B2EFE9822B067CA000E3F94B /* PlanDetailView.swift */,
+				B2D1DCD52B07466500D7B77B /* MealGroupView.swift */,
 			);
 			path = Weekly;
 			sourceTree = "<group>";
@@ -207,7 +214,7 @@
 		B248361E2B011FEF00525A25 /* AddPlan */ = {
 			isa = PBXGroup;
 			children = (
-				B248361F2B011FFF00525A25 /* AddPlanView.swift */,
+				B248361F2B011FFF00525A25 /* MealDetailView.swift */,
 				B2746E3C2B05DF900083AB57 /* StartDateSettingModal.swift */,
 			);
 			path = AddPlan;
@@ -301,6 +308,7 @@
 			isa = PBXGroup;
 			children = (
 				C3C637972AF91EE0006D464D /* models_dummy.swift */,
+				B2EFE9842B067FB200E3F94B /* MockPlanData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -326,7 +334,6 @@
 		C3C6378A2AF90C80006D464D /* Extension+ */ = {
 			isa = PBXGroup;
 			children = (
-				C3C637912AF91E9D006D464D /* extension_dummy.swift */,
 				C3AD1BC52B012DA6003BB3E0 /* UIApplication+.swift */,
 				B24836212B012B8700525A25 /* Date+.swift */,
 				B2746E3A2B052A4D0083AB57 /* Shape+.swift */,
@@ -499,10 +506,11 @@
 				0EAFB7212B012A3D0075A384 /* MonthlyPlanningView.swift in Sources */,
 				C36942472AFCD687002465D4 /* ButtonComponents.swift in Sources */,
 				C3C637902AF91E85006D464D /* fonts_dummy.swift in Sources */,
+				B2EFE9852B067FB200E3F94B /* MockPlanData.swift in Sources */,
 				0E18AD6B2AFA7F670011ED4A /* SignInView.swift in Sources */,
 				B2746E432B05FDC40083AB57 /* TitleAndHintView.swift in Sources */,
 				C36942492AFF755F002465D4 /* BackButtonHeader.swift in Sources */,
-				B29CF7882AFCCA5B00B54A3E /* WeeklyPlanningView.swift in Sources */,
+				B29CF7882AFCCA5B00B54A3E /* PlanListView.swift in Sources */,
 				C336EE4A2B03F13B0057D8B8 /* Image+.swift in Sources */,
 				0E18AD712AFA94E10011ED4A /* FirebaseManager.swift in Sources */,
 				C3AD1BC62B012DA6003BB3E0 /* UIApplication+.swift in Sources */,
@@ -511,17 +519,17 @@
 				0E18AD6F2AFA8F140011ED4A /* AppleLoginOB.swift in Sources */,
 				B2746E412B05F9860083AB57 /* TitleAndActionButtonView.swift in Sources */,
 				B26732AA2B0232EE004AFF83 /* CycleGapSegmentedPicker.swift in Sources */,
-				0EA6C61E2AFBE087004FF2AA /* MonthlyPlanningDummy.swift in Sources */,
 				C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */,
 				B2746E3D2B05DF900083AB57 /* StartDateSettingModal.swift in Sources */,
 				C3AD1BCC2B024FAC003BB3E0 /* FoodStartDateView.swift in Sources */,
 				C3AD1BD02B026CB5003BB3E0 /* OnboardingEndView.swift in Sources */,
 				C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */,
 				C369424F2B00C42C002465D4 /* OnboardingTitles.swift in Sources */,
-				B24836202B011FFF00525A25 /* AddPlanView.swift in Sources */,
+				B24836202B011FFF00525A25 /* MealDetailView.swift in Sources */,
 				B24836222B012B8700525A25 /* Date+.swift in Sources */,
 				C3C6378E2AF91E73006D464D /* network_dummy.swift in Sources */,
 				C3C6375D2AF90C2B006D464D /* SolidnerApp.swift in Sources */,
+				B2D1DCD62B07466500D7B77B /* MealGroupView.swift in Sources */,
 				C3AD1BCA2B023FA1003BB3E0 /* BabyBirthDateView.swift in Sources */,
 				C369424B2B00B350002465D4 /* TextFieldComponents.swift in Sources */,
 				C369424D2B00C333002465D4 /* NickNameView.swift in Sources */,
@@ -529,6 +537,7 @@
 				C336EE432B03C37B0057D8B8 /* AgreeToTermsView.swift in Sources */,
 				C3AD1BC82B021660003BB3E0 /* SoCuteNameView.swift in Sources */,
 				C36942512B01185C002465D4 /* TextLimiterOB.swift in Sources */,
+				B2EFE9832B067CA000E3F94B /* PlanDetailView.swift in Sources */,
 				B29CF78B2AFCCEA000B54A3E /* TextLiterals.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
