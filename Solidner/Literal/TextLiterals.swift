@@ -35,6 +35,19 @@ enum TextLiterals {
         }
     }
 
+    enum PlanDetail {
+        static func dateRangeTitle(from: Date, to: Date) -> String { "\(from.month)/\(from.day)(\(from.weekDayKor)) ~\n \(to.day)일(\(to.weekDayKor)) 식단" }
+        
+        static var editPlan: String { "편집" }
+        static var deletePlan: String { "일정 삭제" }
+
+        static func dateRangeString(start: Date, end: Date) -> String {
+            "\(start.day)일(\(start.weekDayKor)) ~ \(end.day)일(\(end.weekDayKor))"
+        }
+        static var existsDuplicatedMeal: String { "중복되는 끼니가 계획되어 있어요." }
+        static var addMeal: String { "끼니 추가" }
+    }
+
     enum SolidFoodBatchSetting {
         static var labelText: String { "이유식 일괄 설정" }
         static var hintText: String { "전체적으로 변경되는 어쩌구 저쩌구에요." }
