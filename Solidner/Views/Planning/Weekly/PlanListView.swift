@@ -18,17 +18,9 @@
 import SwiftUI
 
 struct PlanListView: View {
-    struct SolidDate: Hashable {
-        let startDate: Date
-        let endDate: Date
-
-        var description: String {
-            TextLiterals.WeeklyPlanning.dateRangeString(start: startDate, end: endDate)
-        }
-    }
     @State private var selectedDate = Date()
     let mealPlans: [MealPlan]
-    let texts = TextLiterals.WeeklyPlanning.self
+    let texts = TextLiterals.PlanList.self
     private(set) var mealsDict = [SolidDate:[MealPlan]]()
     let defaultCycleGap = 3
 
@@ -137,7 +129,19 @@ struct PlanListView: View {
 //        .padding()
 //    }
 }
-//
+
+// MARK: - Structure - Solid Date
+extension PlanListView {
+    struct SolidDate: Hashable {
+        let startDate: Date
+        let endDate: Date
+
+        var description: String {
+            TextLiterals.PlanList.dateRangeString(start: startDate, end: endDate)
+        }
+    }
+}
+
 #Preview {
     Group {
         PlanListView(mealPlans: MealPlan.mockMealsOne)
