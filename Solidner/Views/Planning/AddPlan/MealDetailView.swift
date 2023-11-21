@@ -272,7 +272,7 @@ struct MealDetailView: View {
             }
     }
 }
-
-#Preview {
-    MealDetailView()
-}
+//
+//#Preview {
+//    MealDetailView()
+//}

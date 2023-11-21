@@ -26,6 +26,6 @@ struct ThickDivider: View {
     }
 }
 
-#Preview {
-    ThickDivider()
-}
+//#Preview {
+//    ThickDivider()
+//}

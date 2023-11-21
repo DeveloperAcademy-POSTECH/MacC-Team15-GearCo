@@ -71,6 +71,6 @@ struct PlanDetailView: View {
     }
 }
 
-#Preview {
-    PlanDetailView(startDate: .constant(Date()), endDate: .constant(Date()), mealPlans: .constant(Array(MealPlan.mockMealsOne[0...3])))
-}
+//#Preview {
+//    PlanDetailView(startDate: .constant(Date()), endDate: .constant(Date()), mealPlans: .constant(Array(MealPlan.mockMealsOne[0...3])))
+//}

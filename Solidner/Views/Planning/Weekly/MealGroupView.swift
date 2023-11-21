@@ -111,6 +111,6 @@ struct MealGroupView: View {
     }
 }
 
-#Preview {
-    MealGroupView(dateRange: "25일(일) ~ 28일(화)", mealPlans: Array(MealPlan.mockMealsOne[0...5]), isTodayInDateRange: true)
-}
+//#Preview {
+//    MealGroupView(dateRange: "25일(일) ~ 28일(화)", mealPlans: Array(MealPlan.mockMealsOne[0...5]), isTodayInDateRange: true)
+//}
