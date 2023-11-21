@@ -14,6 +14,7 @@ struct SoCuteNameView: View {
     @State private var isNicknameAppear = false
     @State private var isMessageAppear = false
     @State private var isButtonAppear = false
+    @State private var navigationIsPresented = false
     @EnvironmentObject var user: UserOB
     var body: some View {
         ZStack {
@@ -38,6 +39,11 @@ struct SoCuteNameView: View {
                 }
             }
         }
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
+        .navigationDestination(isPresented: $navigationIsPresented){
+            BabyBirthDateView()
+        }
     }
     private func labelView() -> some View {
         return VStack(spacing: 0) {
@@ -54,7 +60,9 @@ struct SoCuteNameView: View {
         return VStack {
             Spacer()
             if isButtonAppear {
-                ButtonComponents().bigButton(disabledCondition: false, action: {}, buttonColor: Color.white, titleColor: Color.black)
+                ButtonComponents().bigButton(disabledCondition: false, action: {
+                    navigationIsPresented = true
+                }, buttonColor: Color.white, titleColor: Color.black)
                 .transition(.opacity.animation(.easeIn))
             }
         }
