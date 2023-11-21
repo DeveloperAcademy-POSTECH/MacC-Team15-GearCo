@@ -15,7 +15,7 @@
 		0E18AD742AFAA3430011ED4A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD732AFAA3430011ED4A /* FirebaseAnalytics */; };
 		0E18AD762AFAA3430011ED4A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD752AFAA3430011ED4A /* FirebaseAuth */; };
 		0E18AD782AFAA3430011ED4A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD772AFAA3430011ED4A /* FirebaseFirestore */; };
-		0E18AD7B2AFBDCE20011ED4A /* ComponentDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AD7A2AFBDCE20011ED4A /* ComponentDummy.swift */; };
+		0EA65EE22B0C846200E1C8D7 /* AddTestIngredientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA65EE12B0C846200E1C8D7 /* AddTestIngredientsView.swift */; };
 		0EAFB7212B012A3D0075A384 /* MonthlyPlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */; };
 		B24836202B011FFF00525A25 /* AddPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B248361F2B011FFF00525A25 /* AddPlanView.swift */; };
 		B24836222B012B8700525A25 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24836212B012B8700525A25 /* Date+.swift */; };
@@ -79,6 +79,7 @@
 		0E18AD6E2AFA8F140011ED4A /* AppleLoginOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginOB.swift; sourceTree = "<group>"; };
 		0E18AD702AFA94E10011ED4A /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		0E18AD7A2AFBDCE20011ED4A /* ComponentDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentDummy.swift; sourceTree = "<group>"; };
+		0EA65EE12B0C846200E1C8D7 /* AddTestIngredientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTestIngredientsView.swift; sourceTree = "<group>"; };
 		0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningView.swift; sourceTree = "<group>"; };
 		B248361F2B011FFF00525A25 /* AddPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlanView.swift; sourceTree = "<group>"; };
 		B24836212B012B8700525A25 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
@@ -209,6 +210,7 @@
 			children = (
 				B248361F2B011FFF00525A25 /* AddPlanView.swift */,
 				B2746E3C2B05DF900083AB57 /* StartDateSettingModal.swift */,
+				0EA65EE12B0C846200E1C8D7 /* AddTestIngredientsView.swift */,
 			);
 			path = AddPlan;
 			sourceTree = "<group>";
@@ -326,7 +328,6 @@
 		C3C6378A2AF90C80006D464D /* Extension+ */ = {
 			isa = PBXGroup;
 			children = (
-				C3C637912AF91E9D006D464D /* extension_dummy.swift */,
 				C3AD1BC52B012DA6003BB3E0 /* UIApplication+.swift */,
 				B24836212B012B8700525A25 /* Date+.swift */,
 				B2746E3A2B052A4D0083AB57 /* Shape+.swift */,
@@ -496,6 +497,7 @@
 				0E18AD6D2AFA8DC50011ED4A /* UserOB.swift in Sources */,
 				B2746E3F2B05F5210083AB57 /* ThickDivider.swift in Sources */,
 				B2746E3B2B052A4D0083AB57 /* Shape+.swift in Sources */,
+				0EA65EE22B0C846200E1C8D7 /* AddTestIngredientsView.swift in Sources */,
 				0EAFB7212B012A3D0075A384 /* MonthlyPlanningView.swift in Sources */,
 				C36942472AFCD687002465D4 /* ButtonComponents.swift in Sources */,
 				C3C637902AF91E85006D464D /* fonts_dummy.swift in Sources */,
@@ -511,7 +513,6 @@
 				0E18AD6F2AFA8F140011ED4A /* AppleLoginOB.swift in Sources */,
 				B2746E412B05F9860083AB57 /* TitleAndActionButtonView.swift in Sources */,
 				B26732AA2B0232EE004AFF83 /* CycleGapSegmentedPicker.swift in Sources */,
-				0EA6C61E2AFBE087004FF2AA /* MonthlyPlanningDummy.swift in Sources */,
 				C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */,
 				B2746E3D2B05DF900083AB57 /* StartDateSettingModal.swift in Sources */,
 				C3AD1BCC2B024FAC003BB3E0 /* FoodStartDateView.swift in Sources */,
