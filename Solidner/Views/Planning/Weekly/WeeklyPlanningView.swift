@@ -36,7 +36,7 @@ struct WeeklyPlanningView: View {
         ScrollView {
             ForEach(mealPlans) { mealPlan in
                 MealPlanView(mealPlan: mealPlan)
-                    .padding()
+                    .padding(10)
             }
         }
     }
@@ -107,13 +107,12 @@ struct WeeklyPlanningView: View {
                         .foregroundColor(ingredient.isNew ? .blue : .black) + additionalText
                 }
                 Spacer()
-            }
-            .padding()
+            }.padding(10)
         }
 
         var noMealsView: some View {
             Text(TextLiterals.WeeklyPlanning.chooseIngredientToTestText)
-                .padding()
+                .padding(10)
         }
 
         var solidFoodDaysText: some View {
@@ -121,7 +120,7 @@ struct WeeklyPlanningView: View {
                 Spacer()
                 Text(mealPlan.solidFoodDaysString)
                     .font(.footnote)
-                    .padding()
+                    .padding(10)
             }
         }
     }

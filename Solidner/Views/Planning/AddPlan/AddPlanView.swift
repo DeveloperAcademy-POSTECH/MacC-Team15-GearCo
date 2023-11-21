@@ -40,10 +40,10 @@ struct MealDetailView: View {
                         deleteMealPlan
                     }
                 }
-                .padding()
+                .padding(10)
             }
             addMealPlanButton
-                .padding()
+                .padding(10)
         }
     }
 
@@ -109,7 +109,7 @@ struct MealDetailView: View {
                 Text(Texts.deleteText)
             }
         }
-        .padding()
+        .padding(10)
         .background {
             Color.gray.clipShape(RoundedRectangle(cornerRadius: 12))
         }
@@ -160,7 +160,7 @@ struct MealDetailView: View {
         } label: {
             Text(mealType.rawValue)
                 .bold()
-                .padding()
+                .padding(10)
                 .foregroundStyle(selectedMealType == mealType ? Color.white : Color.black)
                 .frame(maxWidth: .infinity)
                 .background(
