@@ -8,10 +8,19 @@
 import SwiftUI
 
 struct AddTestIngredientsView: View {
+    private let Texts = TextLiterals.AddIngredientsView.self
+    
     var body: some View {
         VStack(spacing: 0) {
-            BackButtonHeader()
-        }
+            BackButtonHeader(title: Texts.testViewTitle)
+            Spacer()
+            
+            ScrollView {
+                VStack(spacing: 0) {
+                    
+                }
+            }
+        }.background(Color.mainBackgroundColor)
     }
 }
 

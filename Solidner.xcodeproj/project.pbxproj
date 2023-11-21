@@ -78,7 +78,6 @@
 		0E18AD6C2AFA8DC50011ED4A /* UserOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOB.swift; sourceTree = "<group>"; };
 		0E18AD6E2AFA8F140011ED4A /* AppleLoginOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginOB.swift; sourceTree = "<group>"; };
 		0E18AD702AFA94E10011ED4A /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
-		0E18AD7A2AFBDCE20011ED4A /* ComponentDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentDummy.swift; sourceTree = "<group>"; };
 		0EA65EE12B0C846200E1C8D7 /* AddTestIngredientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTestIngredientsView.swift; sourceTree = "<group>"; };
 		0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningView.swift; sourceTree = "<group>"; };
 		B248361F2B011FFF00525A25 /* AddPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlanView.swift; sourceTree = "<group>"; };
@@ -167,7 +166,6 @@
 		0E18AD792AFBDCD20011ED4A /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				0E18AD7A2AFBDCE20011ED4A /* ComponentDummy.swift */,
 				B26732A92B0232EE004AFF83 /* CycleGapSegmentedPicker.swift */,
 				B2746E3E2B05F5210083AB57 /* ThickDivider.swift */,
 				B2746E402B05F9860083AB57 /* TitleAndActionButtonView.swift */,

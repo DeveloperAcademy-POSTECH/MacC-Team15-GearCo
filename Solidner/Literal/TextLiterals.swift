@@ -89,6 +89,10 @@ enum TextLiterals {
         static var personalInfoTitle: String { "[필수] 개인정보 수집 및 이용 동의" }
         static var advertisingTitle: String { "[선택] 광고성 정보 수신 동의" }
     }
+    
+    enum AddIngredientsView {
+        static var testViewTitle: String { "테스트 재료 추가" }
+    }
 }
 
 
