@@ -9,6 +9,8 @@ import SwiftUI
 
 struct AddTestIngredientsView: View {
     private let Texts = TextLiterals.AddIngredientsView.self
+    // TODO: 형식 수정
+    @State private var selectedIngredientPair: (first: String, second: String?)? = ("곡물", nil)
     
     var body: some View {
         VStack(spacing: 0) {
@@ -22,12 +24,22 @@ struct AddTestIngredientsView: View {
                         ingredientTypeButton(ingredientType.rawValue)
                     }
                 }.padding(.leading, 20)
+            }.padding(.bottom, 15)
+            
+            if let pair = selectedIngredientPair {
+                HStack(spacing: 0) {
+                    Text("\(pair.first)")
+                        .font(.caption)
+                }
             }
             
+            Spacer().frame(height: 30)
             ScrollView {
                 VStack(spacing: 0) {
-                    Spacer()
-                }
+                    Text("이상 반응 재료")
+                        .font(.title2)
+                        .bold()
+                }.padding(.horizontal, 20)
             }
         }.background(Color.mainBackgroundColor)
     }
