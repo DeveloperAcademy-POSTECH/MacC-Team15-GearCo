@@ -39,7 +39,7 @@ struct AgreeToTermsView: View {
                 }
             }
             .navigationDestination(isPresented: $navigationIsPresented) {
-                NickNameView()
+                NickNameView(nickNameViewCase: .userName)
             }
             .sheet(isPresented: $openServiceUseTerms) {
                 TermsWebView(agreeCase: .serviceUse)
