@@ -1,5 +1,5 @@
 //
-//  AddPlanView.swift
+//  MealDetailView.swift
 //  Solidner
 //
 //  Created by sei on 11/13/23.
@@ -132,9 +132,6 @@ struct MealDetailView: View {
     }
 
     // MARK: - mealType
-    enum MealType: String, CaseIterable {
-        case 아침, 점심, 저녁, 간식1, 간식2, 기타
-    }
 
     @ViewBuilder
     private var mealTypeSelectView: some View {
@@ -158,7 +155,7 @@ struct MealDetailView: View {
         Button {
             mealTypeButtonTapped(mealType)
         } label: {
-            Text(mealType.rawValue)
+            Text(mealType.description)
                 .bold()
                 .padding()
                 .foregroundStyle(selectedMealType == mealType ? Color.white : Color.black)
@@ -275,46 +272,7 @@ struct MealDetailView: View {
             }
     }
 }
-
-extension MealDetailView {
-    struct Ingredient: Identifiable, Equatable {
-        static var mockIngredients: [Ingredient] = [
-            .init(type: .곡류, name: "쌀"),
-            .init(type: .단백질식품군, name: "소고기"),
-            .init(type: .녹색채소, name: "청경채")
-        ]
-
-        var type: IngredientType
-        var name: String
-        var id: UUID = UUID()
-
-        enum IngredientType {
-            case 곡류, 단백질식품군, 노란채소, 녹색채소, 과일, 유제품, 기타채소, 기타
-
-            var color: UIColor {
-                switch self {
-                case .곡류:
-                    return .lightGray
-                case .단백질식품군:
-                    return .brown
-                case .노란채소:
-                    return .yellow
-                case .녹색채소:
-                    return .green
-                case .과일:
-                    return .purple
-                case .유제품:
-                    return .black
-                case .기타채소:
-                    return .magenta
-                case .기타:
-                    return .systemIndigo
-                }
-            }
-        }
-    }
-}
-
+//
 //#Preview {
-//    AddPlanView()
+//    MealDetailView()
 //}

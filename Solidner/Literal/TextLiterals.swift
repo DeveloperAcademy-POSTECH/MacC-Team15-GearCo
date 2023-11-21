@@ -13,10 +13,39 @@ enum TextLiterals {
     // 1. enum으로 한 번 더 뺄지, 2. TextLiterals 내에 두되 mark로 구분할지 고민
     // 일단 1의 방식으로 진행했습니다.
 
-    enum WeeklyPlanning {
-        static var weeklyPlanningText: String { "주간 이유식" }
-        static var chooseIngredientToTestText: String { "테스트 할 재료를 골라주세요." }
-        static func solidFoodDayText(from: Int, to: Int) -> String { "\(from)-\(to)일차 >" }
+    enum PlanList {
+        static func yyyymmHeaderText(date: Date) ->  String {
+            "\(date.year)년 \(date.month)월"
+        }
+
+        static func ddDateText(date: Date) -> String {
+            "\(date.day)일"
+        }
+
+        static func dateRangeString(start: Date, end: Date) -> String {
+            "\(start.day)일(\(start.weekDayKor)) ~ \(end.day)일(\(end.weekDayKor))"
+        }
+
+        static func fromDateToDateText(from: Int, to: Int) -> String {
+            "\(from) ~ \(to)일차"
+        }
+
+        static var addIngredientText: String {
+            "재료 추가"
+        }
+    }
+
+    enum PlanDetail {
+        static func dateRangeTitle(from: Date, to: Date) -> String { "\(from.month)/\(from.day)(\(from.weekDayKor)) ~\n \(to.day)일(\(to.weekDayKor)) 식단" }
+        
+        static var editPlan: String { "편집" }
+        static var deletePlan: String { "일정 삭제" }
+
+        static func dateRangeString(start: Date, end: Date) -> String {
+            "\(start.day)일(\(start.weekDayKor)) ~ \(end.day)일(\(end.weekDayKor))"
+        }
+        static var existsDuplicatedMeal: String { "중복되는 끼니가 계획되어 있어요." }
+        static var addMeal: String { "끼니 추가" }
     }
 
     enum SolidFoodBatchSetting {
