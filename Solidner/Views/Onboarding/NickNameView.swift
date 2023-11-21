@@ -13,7 +13,7 @@ struct NickNameView: View {
     private let warningMessageLeadingPadding = 4.0
     private let warningMessageFontSize = 11.5
     private let buttonUpDuration = 0.1
-    var nickNameViewCase = NickNameViewCase.userName
+    let nickNameViewCase: NickNameViewCase
     @StateObject private var textLimiter = TextLimiterOB()
     @StateObject private var keyboardHeightHelper = KeyboardHeightHelperOB()
     @FocusState private var isFocused: Bool
@@ -86,6 +86,6 @@ struct NickNameView: View {
 
 struct NickNameView_Previews: PreviewProvider {
     static var previews: some View {
-        NickNameView().environmentObject(UserOB())
+        NickNameView(nickNameViewCase: .userName).environmentObject(UserOB())
     }
 }
