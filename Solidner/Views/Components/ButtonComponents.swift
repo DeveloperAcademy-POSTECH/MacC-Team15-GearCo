@@ -18,15 +18,19 @@ struct ButtonComponents: View {
         smallButton(disabledCondition: false, action: {})
     }
     
+    func bitButtonLabel(disabledCondition: Bool, title: String = "다음", buttonColor: Color = Color.buttonDefaultColor, titleColor: Color = Color.buttonDefaultTextColor) -> some View {
+        RoundedRectangle(cornerRadius: buttonCornerRadius)
+            .fill(disabledCondition ? Color.buttonDisabledColor : buttonColor)
+            .frame(height: buttonHeight)
+            .overlay {
+                Text(title)
+                    .foregroundColor(disabledCondition ? Color.buttonDisabledTextColor : titleColor)
+            }
+    }
+    
     func bigButton(title: String = "다음" , disabledCondition: Bool, action: @escaping ()->Void, buttonColor: Color = Color.buttonDefaultColor, titleColor: Color = Color.buttonDefaultTextColor) -> some View {
         return Button(action: action){
-            RoundedRectangle(cornerRadius: buttonCornerRadius)
-                .fill(disabledCondition ? Color.buttonDisabledColor : buttonColor)
-                .frame(height: buttonHeight)
-                .overlay {
-                    Text(title)
-                        .foregroundColor(disabledCondition ? Color.buttonDisabledTextColor : titleColor)
-                }
+            bitButtonLabel(disabledCondition: disabledCondition, title: title, buttonColor: buttonColor, titleColor: titleColor)
         }
         .disabled(disabledCondition)
     }

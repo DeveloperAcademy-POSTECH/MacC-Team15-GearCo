@@ -15,7 +15,6 @@
 		0E18AD742AFAA3430011ED4A /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD732AFAA3430011ED4A /* FirebaseAnalytics */; };
 		0E18AD762AFAA3430011ED4A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD752AFAA3430011ED4A /* FirebaseAuth */; };
 		0E18AD782AFAA3430011ED4A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD772AFAA3430011ED4A /* FirebaseFirestore */; };
-		0E18AD7B2AFBDCE20011ED4A /* ComponentDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AD7A2AFBDCE20011ED4A /* ComponentDummy.swift */; };
 		0EAFB7212B012A3D0075A384 /* MonthlyPlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */; };
 		B24836202B011FFF00525A25 /* AddPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B248361F2B011FFF00525A25 /* AddPlanView.swift */; };
 		B24836222B012B8700525A25 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24836212B012B8700525A25 /* Date+.swift */; };
@@ -30,6 +29,8 @@
 		C336EE432B03C37B0057D8B8 /* AgreeToTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336EE422B03C37B0057D8B8 /* AgreeToTermsView.swift */; };
 		C336EE4A2B03F13B0057D8B8 /* Image+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336EE492B03F13B0057D8B8 /* Image+.swift */; };
 		C336EE4C2B03F5320057D8B8 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336EE4B2B03F5320057D8B8 /* Color+.swift */; };
+		C336EE512B054AED0057D8B8 /* TermsWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336EE502B054AED0057D8B8 /* TermsWebView.swift */; };
+		C336EE532B054C820057D8B8 /* AgreeCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336EE522B054C820057D8B8 /* AgreeCase.swift */; };
 		C36942472AFCD687002465D4 /* ButtonComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36942462AFCD686002465D4 /* ButtonComponents.swift */; };
 		C36942492AFF755F002465D4 /* BackButtonHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36942482AFF755F002465D4 /* BackButtonHeader.swift */; };
 		C369424B2B00B350002465D4 /* TextFieldComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C369424A2B00B350002465D4 /* TextFieldComponents.swift */; };
@@ -78,6 +79,7 @@
 		0E18AD6C2AFA8DC50011ED4A /* UserOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOB.swift; sourceTree = "<group>"; };
 		0E18AD6E2AFA8F140011ED4A /* AppleLoginOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginOB.swift; sourceTree = "<group>"; };
 		0E18AD702AFA94E10011ED4A /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		0EA6C61D2AFBE087004FF2AA /* MonthlyPlanningDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningDummy.swift; sourceTree = "<group>"; };
 		0E18AD7A2AFBDCE20011ED4A /* ComponentDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentDummy.swift; sourceTree = "<group>"; };
 		0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningView.swift; sourceTree = "<group>"; };
 		B248361F2B011FFF00525A25 /* AddPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlanView.swift; sourceTree = "<group>"; };
@@ -93,6 +95,9 @@
 		C336EE422B03C37B0057D8B8 /* AgreeToTermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeToTermsView.swift; sourceTree = "<group>"; };
 		C336EE492B03F13B0057D8B8 /* Image+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+.swift"; sourceTree = "<group>"; };
 		C336EE4B2B03F5320057D8B8 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
+		C336EE4F2B054A300057D8B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C336EE502B054AED0057D8B8 /* TermsWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsWebView.swift; sourceTree = "<group>"; };
+		C336EE522B054C820057D8B8 /* AgreeCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeCase.swift; sourceTree = "<group>"; };
 		C36942462AFCD686002465D4 /* ButtonComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonComponents.swift; sourceTree = "<group>"; };
 		C36942482AFF755F002465D4 /* BackButtonHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButtonHeader.swift; sourceTree = "<group>"; };
 		C369424A2B00B350002465D4 /* TextFieldComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldComponents.swift; sourceTree = "<group>"; };
@@ -159,6 +164,7 @@
 				C3AD1BCB2B024FAC003BB3E0 /* FoodStartDateView.swift */,
 				C3AD1BCF2B026CB5003BB3E0 /* OnboardingEndView.swift */,
 				C336EE422B03C37B0057D8B8 /* AgreeToTermsView.swift */,
+				C336EE502B054AED0057D8B8 /* TermsWebView.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -221,6 +227,14 @@
 			path = Literal;
 			sourceTree = "<group>";
 		};
+		C336EE4E2B04CB4F0057D8B8 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				0EA6C61D2AFBE087004FF2AA /* MonthlyPlanningDummy.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		C3C637502AF90C2B006D464D = {
 			isa = PBXGroup;
 			children = (
@@ -228,6 +242,7 @@
 				C3C6376C2AF90C2C006D464D /* SolidnerTests */,
 				C3C637762AF90C2C006D464D /* SolidnerUITests */,
 				C3C6375A2AF90C2B006D464D /* Products */,
+				C336EE4E2B04CB4F0057D8B8 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -244,6 +259,7 @@
 		C3C6375B2AF90C2B006D464D /* Solidner */ = {
 			isa = PBXGroup;
 			children = (
+				C336EE4F2B054A300057D8B8 /* Info.plist */,
 				B29CF7892AFCCE9200B54A3E /* Literal */,
 				0E18AD682AFA7A260011ED4A /* Solidner.entitlements */,
 				0E18AD5F2AFA10840011ED4A /* GoogleService-Info.plist */,
@@ -301,6 +317,7 @@
 			isa = PBXGroup;
 			children = (
 				C3C637972AF91EE0006D464D /* models_dummy.swift */,
+				C336EE522B054C820057D8B8 /* AgreeCase.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -326,7 +343,6 @@
 		C3C6378A2AF90C80006D464D /* Extension+ */ = {
 			isa = PBXGroup;
 			children = (
-				C3C637912AF91E9D006D464D /* extension_dummy.swift */,
 				C3AD1BC52B012DA6003BB3E0 /* UIApplication+.swift */,
 				B24836212B012B8700525A25 /* Date+.swift */,
 				B2746E3A2B052A4D0083AB57 /* Shape+.swift */,
@@ -522,6 +538,8 @@
 				B24836222B012B8700525A25 /* Date+.swift in Sources */,
 				C3C6378E2AF91E73006D464D /* network_dummy.swift in Sources */,
 				C3C6375D2AF90C2B006D464D /* SolidnerApp.swift in Sources */,
+				C336EE512B054AED0057D8B8 /* TermsWebView.swift in Sources */,
+				C336EE532B054C820057D8B8 /* AgreeCase.swift in Sources */,
 				C3AD1BCA2B023FA1003BB3E0 /* BabyBirthDateView.swift in Sources */,
 				C369424B2B00B350002465D4 /* TextFieldComponents.swift in Sources */,
 				C369424D2B00C333002465D4 /* NickNameView.swift in Sources */,
@@ -695,6 +713,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = PAQ92DM7XD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Solidner/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -731,6 +750,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = PAQ92DM7XD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Solidner/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
