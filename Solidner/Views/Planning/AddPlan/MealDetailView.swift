@@ -94,7 +94,7 @@ extension MealDetailView {
     private func ingredientView(of ingredient: Ingredient, in testType: MealOB.IngredientTestType) -> some View {
         let colorChip = RoundedRectangle(cornerRadius: 5)
             .frame(width: 16, height: 16)
-            .foregroundStyle(Color(uiColor:ingredient.type.color))
+            .foregroundStyle(ingredient.type.color)
 
         return HStack(spacing: 10) {
             colorChip
