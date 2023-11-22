@@ -16,6 +16,18 @@ struct MonthlyPlanningView: View {
     
     private let nowMonthWeekNums = Date.nowMonthWeeks()
     
+    // Dummy struct
+    struct planData {
+        var startDate: Int
+        var endDate: Int
+    }
+    let plan: [planData] =
+    [planData(startDate: 1, endDate: 3),
+    planData(startDate: 3, endDate: 5),
+    planData(startDate: 5, endDate: 7),
+    planData(startDate: 12, endDate: 15)]
+
+    
     var body: some View {
         VStack(spacing: 0) {
             // MARK: 임시로 대충 헤더 자리 비워두기
@@ -35,7 +47,7 @@ struct MonthlyPlanningView: View {
                             .foregroundColor(.white)
                     }
                     Spacer()
-                }.padding(.horizontal, 16)
+                }.clipped().padding(.horizontal, 16)
             }
         }.background(Color(.lightGray))
     }
@@ -51,7 +63,6 @@ struct MonthlyPlanningView: View {
         
         let barHorizontalPadding = screenWidth * (10/390)
         
-
         func ingredientBar() -> some View {
             let barWidth = (mainDaySectionWidth*3) - (barHorizontalPadding*2)
             return VStack {
@@ -65,8 +76,9 @@ struct MonthlyPlanningView: View {
                 }
             }.frame(width: barWidth, height: ingredientBarHeight)
                 .background {
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(Color.pink.opacity(0.5))
+                    Rectangle()
+                        .leftCornerRadius(4)
+                        .foregroundColor(Color.pink.opacity(0.5))
                 }.padding(.horizontal, barHorizontalPadding)
         }
         
@@ -78,9 +90,12 @@ struct MonthlyPlanningView: View {
                 ingredientBar()
                 Spacer()
             }.frame(height: ingredientBarHeight)
+                .frame(maxWidth: 358)
             Spacer().frame(height: gapToSecondBar)
             HStack(spacing: 0) {
+                Spacer().frame(width: rowHorizontalPadding)
                 ingredientBar()
+                Spacer()
             }.frame(height: ingredientBarHeight)
             Spacer()
         }.frame(height: newIngredientRowHeight)
