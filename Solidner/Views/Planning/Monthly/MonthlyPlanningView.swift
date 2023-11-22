@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct MonthlyPlanningView: View {
-    let screenWidth = UIScreen.main.bounds.size.width
-    let screenHeight = UIScreen.main.bounds.size.height
+    private let screenWidth = UIScreen.main.bounds.size.width
+    private let screenHeight = UIScreen.main.bounds.size.height
     
-    let lightGray = Color(#colorLiteral(red: 0.8797428608, green: 0.8797428012, blue: 0.8797428608, alpha: 1)) // #D9D9D9
-    let weekDayKorList = ["일", "월", "화", "수", "목", "금", "토"]
+    private let lightGray = Color(#colorLiteral(red: 0.8797428608, green: 0.8797428012, blue: 0.8797428608, alpha: 1)) // #D9D9D9
+    private let weekDayKorList = ["일", "월", "화", "수", "목", "금", "토"]
+    
+    private let nowMonthDates = Date.nowMonthDates()
+    private let nowMonthWeekNum = Date.nowMonthWeeks()
+    private let nowWeekDates = Date.nowWeekDates()
     
     var body: some View {
         VStack(spacing: 0) {
@@ -22,6 +26,8 @@ struct MonthlyPlanningView: View {
             
             VStack(spacing: 0) {
                 calendarWeekDayRow
+                calendarDayNumberRow()
+
                 Spacer()
             }.background {
                 RoundedRectangle(cornerRadius: 12)
@@ -32,26 +38,63 @@ struct MonthlyPlanningView: View {
             .background(Color(.lightGray))
     }
     
+    private func calendarDayNumberRow() -> some View {
+        let mainDaySectionWidth = screenWidth * (50/390)
+        let dayNumberRowFrameHeight = screenWidth * (60/390)
+        let dayNumberGap = screenWidth * (6/390)
+        let number: [Int] = [1, 2, 3, 4, 5, 6, 7]
+        
+        return VStack(spacing: 0) {
+            HStack(alignment: .center, spacing: 0) {
+                ForEach(number.indices, id: \.self) { i in
+                    VStack(spacing: 0) {
+                        Text("\(number[i])")
+                            .font(.system(size: 11))
+                            .padding(.bottom, dayNumberGap)
+                        Text("\(number[i])")
+                            .font(.system(size: 17))
+                    }.frame(width: mainDaySectionWidth)
+                }
+            }.frame(height: dayNumberRowFrameHeight)
+            calendarDivider
+        }
+    }
+    
     private var calendarWeekDayRow: some View {
+        // TODO: color 및 font 수정
         let mainHorizontalPadding = screenWidth * (6/390)
         let mainDaySectionWidth = screenWidth * (50/390)
+        let weekDayRowFrameHeight = screenWidth * (25/390)
         
-        return HStack(alignment: .center, spacing: 0) {
-            ForEach(weekDayKorList.indices) { i in
-                if i == 0 {
-                    Text(weekDayKorList[i])
-                        .frame(width: mainDaySectionWidth)
-                        .padding(.leading, mainHorizontalPadding)
-                } else if i == 6 {
-                    Text(weekDayKorList[i])
-                        .frame(width: mainDaySectionWidth)
-                        .padding(.trailing, mainHorizontalPadding)
-                } else {
-                    Text(weekDayKorList[i])
-                        .frame(width: mainDaySectionWidth)
+        return VStack(spacing: 0) {
+            HStack(alignment: .center, spacing: 0) {
+                ForEach(weekDayKorList.indices, id: \.self) { i in
+                    if i == 0 {
+                        Text(weekDayKorList[i])
+                            .font(.system(size: 12))
+                            .bold()
+                            .frame(width: mainDaySectionWidth)
+//                            .padding(.leading, mainHorizontalPadding)
+                    } else if i == 6 {
+                        Text(weekDayKorList[i])
+                            .font(.system(size: 12))
+                            .bold()
+                            .frame(width: mainDaySectionWidth)
+//                            .padding(.trailing, mainHorizontalPadding)
+                    } else {
+                        Text(weekDayKorList[i])
+                            .font(.system(size: 12))
+                            .bold()
+                            .frame(width: mainDaySectionWidth)
+                    }
                 }
-            }
-        }.frame(height: 25)
+            }.frame(height: weekDayRowFrameHeight)
+            calendarDivider
+        }
+    }
+    
+    private var calendarDivider: some View {
+        Rectangle().frame(height: 1).foregroundColor(.black)
     }
     
     private var calendarCurrentYearMonth: some View {

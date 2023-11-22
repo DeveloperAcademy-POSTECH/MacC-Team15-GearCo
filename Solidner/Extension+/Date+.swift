@@ -45,6 +45,49 @@ extension Date {
             Calendar.current.date(byAdding: .day, value: $0, to: startDate)
         }
     }
+    
+    /// 현재 날짜가 포함된 달의 모든 날짜의 Date 객체들을 반환합니다.
+    /// - Returns: 현재 달의 모든 날짜의 Date 객체를 포함한 리스트.
+    static func nowMonthDates() -> [Date] {
+        let now = Date()
+        let range = Calendar.current.range(of: .day, in: .month, for: now) ?? Range<Int>(1...1)
+        
+        let nowMonthFirstDay = Date.date(year: now.year, month: now.month, day: 1) ?? now
+        let nowMonthLastDay = Date.date(year: now.year, month: now.month, day: range.upperBound) ?? now
+        let resultDates = Date.range(from: nowMonthFirstDay, to: nowMonthLastDay)
+        
+        if resultDates.count <= 1 {
+            fatalError("시간 설정 오류. 기기의 시간을 확인해주세요.")
+        } else {
+            return resultDates
+        }
+    }
+    
+    /// 현재 날짜가 포함된 달이 몇 주차 까지 있는지 계산하여 Int형 리스트로 반환합니다.
+    /// - Returns: 현재 달의 주차를 Int형 리스트로 반환 (ex. `[1, 2, 3, 4, 5]`)
+    static func nowMonthWeeks() -> [Int] {
+        let now = Date()
+        let range = Calendar.current.range(of: .weekOfMonth, in: .month, for: now) ?? Range<Int>(1...1)
+        
+        if range.upperBound == 1 {
+            fatalError("시간 설정 오류. 기기의 시간을 확인해주세요.")
+        } else {
+            return Array(range.lowerBound...range.upperBound)
+        }
+    }
+    
+    static func nowWeekDates() -> [Date] {
+        let nowWeekOfMonth = Date().weekOfMonth
+        let nowMonthDates = Date.nowMonthDates()
+        
+        return nowMonthDates.filter { $0.weekOfMonth == nowWeekOfMonth }
+    }
+    
+    static func weekDates(_ index: Int) -> [Date] {
+        let nowMonthDates = Date.nowMonthDates()
+        
+        return nowMonthDates.filter { $0.weekOfMonth == index }
+    }
 
     func add(_ component: Calendar.Component, value: Int) -> Date {
         Calendar.current.date(byAdding: component, value: value, to: self)!
