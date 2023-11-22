@@ -5,12 +5,11 @@
 //  Created by sei on 11/17/23.
 //
 /**
- -[ ] 플랜에 대한 경고 필요
+ -[x] 플랜에 대한 경고 필요
  -[ ] cell을 누르면 해당 meal에 대한 detail로 넘어간다
 ## CRUD
  -[ ] 끼니 추가 버튼으로 끼니 추가
-    -[ ] 6끼라면 버튼 disable
- -[ ] 일정 전체 삭제
+    -[ ] 6끼라면 버튼 disable 안함. 대신 끼니 추가 후 wrongplan 경고뷰가 나옴
  -[ ] 편집을 누르면 드래거블
  */
 import SwiftUI
@@ -25,12 +24,15 @@ struct PlanDetailView: View {
     private(set) var isWrongPlan: Bool = true
     
     private let texts = TextLiterals.PlanDetail.self
+    private enum K {
+        static var wholeVStackSpacing: CGFloat { 26 }
+    }
     private var dateRangeString: String {
         TextLiterals.PlanList.dateRangeString(start: startDate, end: endDate)
     }
 
     var body: some View {
-        VStack {
+        VStack(spacing: K.wholeVStackSpacing) {
             header
             if isWrongPlan {
                 WarningView()
@@ -49,11 +51,13 @@ struct PlanDetailView: View {
     private var header: some View {
         HStack(alignment: .top) {
             Text(texts.dateRangeTitle(from: startDate, to: endDate))
+                .headerFont2()
             Spacer()
+            // TODO: - 나중에는 navi button으로 빠짐
             Button {
                 isEditMode.toggle()
             } label: {
-                Text(isEditMode ? texts.deletePlan : texts.editPlan)
+                Text(isEditMode ? texts.editComplete : texts.editPlan)
             }
         }
     }
@@ -73,6 +77,7 @@ struct PlanDetailView: View {
         )
     }
 
+    // TODO: - add meal action
     private var addMealButton: some View {
         Button {
             print(#function)

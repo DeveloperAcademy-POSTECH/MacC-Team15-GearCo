@@ -49,7 +49,7 @@ enum TextLiterals {
         static func dateRangeTitle(from: Date, to: Date) -> String { "\(from.month)/\(from.day)(\(from.weekDayKor)) ~\n \(to.day)일(\(to.weekDayKor)) 식단" }
         
         static var editPlan: String { "편집" }
-        static var deletePlan: String { "일정 삭제" }
+        static var editComplete: String { "완료" }
 
         static func dateRangeString(start: Date, end: Date) -> String {
             "\(start.day)일(\(start.weekDayKor)) ~ \(end.day)일(\(end.weekDayKor))"
