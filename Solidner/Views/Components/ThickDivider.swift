@@ -25,7 +25,3 @@ struct ThickDivider: View {
             .padding(.horizontal, -100)
     }
 }
-
-//#Preview {
-//    ThickDivider()
-//}

@@ -42,4 +42,5 @@ extension Color {
     static let secondaryText = Color(#colorLiteral(red: 0.3098039216, green: 0.3098039216, blue: 0.3098039216, alpha: 1)) //4F4F4F
     static let tertinaryText = Color(#colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1)) //9C9C9C
     static let quarternaryText = Color(#colorLiteral(red: 0.7843137255, green: 0.7843137255, blue: 0.7843137255, alpha: 1)) //C8C8C8
+    static let mainBackgroundColor = Color(#colorLiteral(red: 0.968627451, green: 0.9529411765, blue: 0.9254901961, alpha: 1)) //F7F3EC
 }

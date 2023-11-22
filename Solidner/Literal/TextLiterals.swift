@@ -8,10 +8,20 @@
 import Foundation
 
 enum TextLiterals {
+    static var emptyString: String { "" }
 
     // MARK: - Weekly Planning
     // 1. enum으로 한 번 더 뺄지, 2. TextLiterals 내에 두되 mark로 구분할지 고민
     // 일단 1의 방식으로 진행했습니다.
+
+    enum StartPlan {
+        static var noWorriesJustStartHeaderText: String { "솔리너로\n걱정없는 이유식 계획" }
+        static var noWorriesJustStartDetailText: String { "이유식 구성에 어려움을 겪으셨나요?\n지금 바로 시작해보세요." }
+        static var goToPlanButtonText: String { "이유식 구성하기" }
+        static var selectStartDateModalHeaderText: String { "이제, 시작해볼까요!" }
+        static var selectStartDateModalDetailText: String { "첫 계획 시작일을 언제로 할까요?" }
+        static var startButtonLabel: String { "시작하기" }
+    }
 
     enum PlanList {
         static func yyyymmHeaderText(date: Date) ->  String {
@@ -48,14 +58,27 @@ enum TextLiterals {
         static var addMeal: String { "끼니 추가" }
     }
 
-    enum SolidFoodBatchSetting {
+    enum PlanBatchSetting {
         static var labelText: String { "이유식 일괄 설정" }
-        static var hintText: String { "전체적으로 변경되는 어쩌구 저쩌구에요." }
-        static var testCycleText: String { "테스트 주기" }
+        static var hintText: String { "플래너에서 보여지는 어찌구를 뷁" }
+
+        static var testCycleLabel: String { "간격" }
+        static func dateText(of number: Int) -> String { "\(number)일" }
+
+        static var displayDateTypeLabel: String { "날짜 표시" }
+        static var bySolidDate: String { "이유식 진행일" }
+        static var byBirthDate: String { "생후일자" }
+
         static var deleteAllCalendarsText: String { "캘린더 삭제" }
         static var deleteAllCalendarsButtonText: String { "삭제하기" }
     }
-    
+
+    enum ChangeMonth {
+        static func currentYearText(of date: Date) -> String { "\(date.year)년" }
+        static func monthText(of number: Int) -> String { "\(number)월" }
+        static var saveButtonText: String { "저장" }
+    }
+
     enum ViewComponents {
         static var placeHolderMessage: String { "최대 10자내로  입력이 가능해요." }
     }
@@ -109,6 +132,9 @@ enum TextLiterals {
         static var addMealPlanButtonText: String { "일정 추가하기" }
         static var deleteMealPlanTitleText: String { "끼니 삭제" }
         static var deleteMealPlanButtonText: String { "삭제하기" }
+
+        static var changeStartDateText: String { "시작일 변경" }
+        static var changeStartDateDetailText: String { "아래 날짜부터 시작할 예정이에요." }
     }
     
     enum AgreeToTerms {
@@ -125,6 +151,10 @@ enum TextLiterals {
         static var advertisingURL: String {
             "https://flaxen-headline-80b.notion.site/Solidner-5484d23677674cc686f8e7f197ef729e?pvs=4"
         }
+    }
+    
+    enum AddIngredientsView {
+        static var testViewTitle: String { "테스트 재료 추가" }
     }
 }
 
