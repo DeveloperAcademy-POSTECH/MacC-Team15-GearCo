@@ -18,4 +18,13 @@ enum DisplayDateType: Int, CaseIterable, Hashable, CustomStringConvertible {
             return TextLiterals.PlanBatchSetting.byBirthDate
         }
     }
+
+    var iconImageName: String {
+        switch self {
+        case .solid:
+            return "fork.knife"
+        case .birth:
+            return "heart.fill"
+        }
+    }
 }

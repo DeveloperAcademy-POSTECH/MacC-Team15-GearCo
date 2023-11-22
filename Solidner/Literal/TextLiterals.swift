@@ -58,6 +58,24 @@ enum TextLiterals {
         static var addMeal: String { "끼니 추가" }
     }
 
+    enum DailyPlanList {
+        static func titleText(_ date: Date) -> String { "\(date.month)/\(date.day)일(\(date.weekDayKor)) 식단" }
+        static func dateRangeString(start: Date, end: Date) -> String {
+            "\(start.day)일(\(start.weekDayKor)) ~ \(end.day)일(\(end.weekDayKor))"
+        }
+        static func fromDateToDateText(from: Int, to: Int) -> String {
+            "\(from) ~ \(to)일차"
+        }
+
+        static var addMealPlanText: String {
+            "끼니 추가"
+        }
+    }
+
+    enum MealGroup {
+        static var addIngredientText: String { "재료 추가" }
+    }
+
     enum PlanBatchSetting {
         static var labelText: String { "이유식 일괄 설정" }
         static var hintText: String { "플래너에서 보여지는 어찌구를 뷁" }
@@ -77,6 +95,10 @@ enum TextLiterals {
         static func currentYearText(of date: Date) -> String { "\(date.year)년" }
         static func monthText(of number: Int) -> String { "\(number)월" }
         static var saveButtonText: String { "저장" }
+    }
+
+    enum Warning {
+        static var warningText: String { "중복되는 끼니가 계획되어 있어요." }
     }
 
     enum ViewComponents {

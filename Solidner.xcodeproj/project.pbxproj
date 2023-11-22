@@ -39,6 +39,9 @@
 		B2F7909E2B0DDC9900CB4F71 /* SolidnerSegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F7909D2B0DDC9900CB4F71 /* SolidnerSegmentedPicker.swift */; };
 		B2F790A22B0DF30B00CB4F71 /* CycleGaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F790A12B0DF30B00CB4F71 /* CycleGaps.swift */; };
 		B2F790A42B0DF40400CB4F71 /* DisplayDateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F790A32B0DF40400CB4F71 /* DisplayDateType.swift */; };
+		B2F790A62B0E05AB00CB4F71 /* DailyPlanListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F790A52B0E05AB00CB4F71 /* DailyPlanListView.swift */; };
+		B2F790A82B0E28B400CB4F71 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F790A72B0E28B400CB4F71 /* WarningView.swift */; };
+		B2F790AA2B0E37DA00CB4F71 /* DisplayDateInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F790A92B0E37DA00CB4F71 /* DisplayDateInfoView.swift */; };
 		C336EE432B03C37B0057D8B8 /* AgreeToTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336EE422B03C37B0057D8B8 /* AgreeToTermsView.swift */; };
 		C336EE4A2B03F13B0057D8B8 /* Image+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336EE492B03F13B0057D8B8 /* Image+.swift */; };
 		C336EE4C2B03F5320057D8B8 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336EE4B2B03F5320057D8B8 /* Color+.swift */; };
@@ -101,7 +104,6 @@
 		0E18AD6C2AFA8DC50011ED4A /* UserOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOB.swift; sourceTree = "<group>"; };
 		0E18AD6E2AFA8F140011ED4A /* AppleLoginOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginOB.swift; sourceTree = "<group>"; };
 		0E18AD702AFA94E10011ED4A /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
-		0E18AD7A2AFBDCE20011ED4A /* ComponentDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentDummy.swift; sourceTree = "<group>"; };
 		0EA65EE12B0C846200E1C8D7 /* AddTestIngredientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTestIngredientsView.swift; sourceTree = "<group>"; };
 		0EA6C61D2AFBE087004FF2AA /* MonthlyPlanningDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningDummy.swift; sourceTree = "<group>"; };
 		0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningView.swift; sourceTree = "<group>"; };
@@ -127,6 +129,9 @@
 		B2F7909D2B0DDC9900CB4F71 /* SolidnerSegmentedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidnerSegmentedPicker.swift; sourceTree = "<group>"; };
 		B2F790A12B0DF30B00CB4F71 /* CycleGaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleGaps.swift; sourceTree = "<group>"; };
 		B2F790A32B0DF40400CB4F71 /* DisplayDateType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDateType.swift; sourceTree = "<group>"; };
+		B2F790A52B0E05AB00CB4F71 /* DailyPlanListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPlanListView.swift; sourceTree = "<group>"; };
+		B2F790A72B0E28B400CB4F71 /* WarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningView.swift; sourceTree = "<group>"; };
+		B2F790A92B0E37DA00CB4F71 /* DisplayDateInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDateInfoView.swift; sourceTree = "<group>"; };
 		C336EE422B03C37B0057D8B8 /* AgreeToTermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeToTermsView.swift; sourceTree = "<group>"; };
 		C336EE492B03F13B0057D8B8 /* Image+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+.swift"; sourceTree = "<group>"; };
 		C336EE4B2B03F5320057D8B8 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
@@ -248,7 +253,6 @@
 			children = (
 				B29CF7872AFCCA5B00B54A3E /* PlanListView.swift */,
 				B2EFE9822B067CA000E3F94B /* PlanDetailView.swift */,
-				B2D1DCD52B07466500D7B77B /* MealGroupView.swift */,
 			);
 			path = Weekly;
 			sourceTree = "<group>";
@@ -276,6 +280,10 @@
 			isa = PBXGroup;
 			children = (
 				B29854B72B0DB38C009FBE33 /* ChangeMonthModal.swift */,
+				B2F790A52B0E05AB00CB4F71 /* DailyPlanListView.swift */,
+				B2F790A72B0E28B400CB4F71 /* WarningView.swift */,
+				B2F790A92B0E37DA00CB4F71 /* DisplayDateInfoView.swift */,
+				B2D1DCD52B07466500D7B77B /* MealGroupView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -605,7 +613,6 @@
 				C36942472AFCD687002465D4 /* ButtonComponents.swift in Sources */,
 				B2F7909E2B0DDC9900CB4F71 /* SolidnerSegmentedPicker.swift in Sources */,
 				B2F790A22B0DF30B00CB4F71 /* CycleGaps.swift in Sources */,
-				C3C637902AF91E85006D464D /* fonts_dummy.swift in Sources */,
 				B2EFE9852B067FB200E3F94B /* MockPlanData.swift in Sources */,
 				B219F1212B0C915300886087 /* StartDateInitialSelectModal.swift in Sources */,
 				0E18AD6B2AFA7F670011ED4A /* SignInView.swift in Sources */,
@@ -626,10 +633,13 @@
 				C3AD1BCC2B024FAC003BB3E0 /* FoodStartDateView.swift in Sources */,
 				C3AD1BD02B026CB5003BB3E0 /* OnboardingEndView.swift in Sources */,
 				C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */,
+				B2F790A62B0E05AB00CB4F71 /* DailyPlanListView.swift in Sources */,
+				B2F790AA2B0E37DA00CB4F71 /* DisplayDateInfoView.swift in Sources */,
 				C369424F2B00C42C002465D4 /* OnboardingTitles.swift in Sources */,
 				B24836202B011FFF00525A25 /* MealDetailView.swift in Sources */,
 				B24836202B011FFF00525A25 /* MealDetailView.swift in Sources */,
 				B24836222B012B8700525A25 /* Date+.swift in Sources */,
+				B2F790A82B0E28B400CB4F71 /* WarningView.swift in Sources */,
 				C3C6378E2AF91E73006D464D /* network_dummy.swift in Sources */,
 				B2F790A42B0DF40400CB4F71 /* DisplayDateType.swift in Sources */,
 				B219F1252B0C974F00886087 /* MealOB.swift in Sources */,
