@@ -15,8 +15,7 @@ struct MonthlyPlanningView: View {
     private let weekDayKorList = ["일", "월", "화", "수", "목", "금", "토"]
     
     private let nowMonthDates = Date.nowMonthDates()
-    private let nowMonthWeekNum = Date.nowMonthWeeks()
-    private let nowWeekDates = Date.nowWeekDates()
+    private let nowMonthWeekNums = Date.nowMonthWeeks()
     
     var body: some View {
         VStack(spacing: 0) {
@@ -26,8 +25,10 @@ struct MonthlyPlanningView: View {
             
             VStack(spacing: 0) {
                 calendarWeekDayRow
-                calendarDayNumberRow()
-
+                ForEach(nowMonthWeekNums, id: \.self) { num in
+                    calendarDayNumberRow(weekOfMonth: num)
+                }
+                Text("\(nowMonthWeekNums.last!.description)")
                 Spacer()
             }.background {
                 RoundedRectangle(cornerRadius: 12)
@@ -38,23 +39,41 @@ struct MonthlyPlanningView: View {
             .background(Color(.lightGray))
     }
     
-    private func calendarDayNumberRow() -> some View {
+    private func calendarDayNumberRow(weekOfMonth: Int) -> some View {
         let mainDaySectionWidth = screenWidth * (50/390)
         let dayNumberRowFrameHeight = screenWidth * (60/390)
         let dayNumberGap = screenWidth * (6/390)
-        let number: [Int] = [1, 2, 3, 4, 5, 6, 7]
+        let rowHorizontalPadding = screenWidth * (6/390)
+        let thisWeekDates: [Date] = Date.weekDates(weekOfMonth)
+        
+        func rowLeftEndSpacer() -> some View {
+            if weekOfMonth == nowMonthWeekNums.first! {
+                return AnyView(Spacer())
+            } else {
+                return AnyView(Spacer().frame(width: 6))
+            }
+        }
+        func rowRightEndSpacer() -> some View {
+            if weekOfMonth == nowMonthWeekNums.last! {
+                return AnyView(Spacer())
+            } else {
+                return AnyView(Spacer().frame(width: 6))
+            }
+        }
         
         return VStack(spacing: 0) {
             HStack(alignment: .center, spacing: 0) {
-                ForEach(number.indices, id: \.self) { i in
+                rowLeftEndSpacer()
+                ForEach(thisWeekDates, id: \.self) { date in
                     VStack(spacing: 0) {
-                        Text("\(number[i])")
+                        Text("\(date.day)")
                             .font(.system(size: 11))
                             .padding(.bottom, dayNumberGap)
-                        Text("\(number[i])")
+                        Text("\(date.day)")
                             .font(.system(size: 17))
                     }.frame(width: mainDaySectionWidth)
                 }
+                rowRightEndSpacer()
             }.frame(height: dayNumberRowFrameHeight)
             calendarDivider
         }

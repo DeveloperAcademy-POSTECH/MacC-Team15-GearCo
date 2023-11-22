@@ -53,7 +53,7 @@ extension Date {
         let range = Calendar.current.range(of: .day, in: .month, for: now) ?? Range<Int>(1...1)
         
         let nowMonthFirstDay = Date.date(year: now.year, month: now.month, day: 1) ?? now
-        let nowMonthLastDay = Date.date(year: now.year, month: now.month, day: range.upperBound) ?? now
+        let nowMonthLastDay = Date.date(year: now.year, month: now.month, day: range.upperBound - 1) ?? now
         let resultDates = Date.range(from: nowMonthFirstDay, to: nowMonthLastDay)
         
         if resultDates.count <= 1 {
@@ -72,7 +72,7 @@ extension Date {
         if range.upperBound == 1 {
             fatalError("시간 설정 오류. 기기의 시간을 확인해주세요.")
         } else {
-            return Array(range.lowerBound...range.upperBound)
+            return Array(range.lowerBound...range.upperBound - 1)
         }
     }
     
@@ -83,10 +83,10 @@ extension Date {
         return nowMonthDates.filter { $0.weekOfMonth == nowWeekOfMonth }
     }
     
-    static func weekDates(_ index: Int) -> [Date] {
+    static func weekDates(_ weekOfMonth: Int) -> [Date] {
         let nowMonthDates = Date.nowMonthDates()
         
-        return nowMonthDates.filter { $0.weekOfMonth == index }
+        return nowMonthDates.filter { $0.weekOfMonth == weekOfMonth }
     }
 
     func add(_ component: Calendar.Component, value: Int) -> Date {
