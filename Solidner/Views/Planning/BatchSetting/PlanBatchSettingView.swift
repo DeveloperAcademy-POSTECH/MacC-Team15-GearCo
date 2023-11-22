@@ -8,8 +8,17 @@
 import SwiftUI
 
 struct PlanBatchSettingView: View {
+    private let texts = TextLiterals.PlanBatchSetting.self
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading) {
+            settingTitle
+            ThickDivider()
+        }
+    }
+
+    private var settingTitle: some View {
+        TitleAndHintView(title: texts.labelText, hint: texts.hintText)
     }
 }
 
