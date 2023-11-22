@@ -17,6 +17,7 @@ struct PlanBatchSettingView: View {
             settingTitle
             solidCycleGapSelectionView
             ThickDivider()
+            solidDisplayDateTypeSelectionView
         }
     }
 
@@ -27,6 +28,11 @@ struct PlanBatchSettingView: View {
     private var solidCycleGapSelectionView: some View {
         SolidnerSegmentedCyclePicker(user: user)
     }
+
+    private var solidDisplayDateTypeSelectionView: some View {
+        SolidnerSegmentedDisplayDateTypePicker(user: user)
+    }
+
 }
 
 struct PlanBatchSettingView_Previews: PreviewProvider {

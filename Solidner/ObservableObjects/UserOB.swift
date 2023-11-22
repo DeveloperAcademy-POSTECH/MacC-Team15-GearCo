@@ -16,4 +16,5 @@ final class UserOB: ObservableObject {
     @AppStorage("babyBirthDate") var babyBirthDate = Date()
     @AppStorage("solidStartDate") var solidStartDate = Date()
     @AppStorage("planCycleGap") var planCycleGap = CycleGaps.three
+    @AppStorage("displayDateType") var displayDateType = DisplayDateType.birth
 }

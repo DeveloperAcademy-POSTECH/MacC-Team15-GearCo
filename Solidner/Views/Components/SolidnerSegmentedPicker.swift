@@ -29,6 +29,27 @@ struct SolidnerSegmentedCyclePicker: View {
 }
 
 
+struct SolidnerSegmentedDisplayDateTypePicker: View {
+    @ObservedObject var user: UserOB
+    @State private var selection: DisplayDateType
+
+    init(user: UserOB) {
+        self.user = user
+        self._selection = State(initialValue: user.displayDateType)
+    }
+
+    var body: some View {
+        SolidnerSegmentedPicker(
+            label: TextLiterals.PlanBatchSetting.displayDateTypeLabel,
+            items: DisplayDateType.allCases,
+            selection: $selection
+        )
+        .onChange(of: selection) { value in
+            user.displayDateType = selection
+        }
+    }
+}
+
 struct SolidnerSegmentedPicker<Data> : View where Data: Hashable & CustomStringConvertible {
     let label: String
     let items: [Data]
