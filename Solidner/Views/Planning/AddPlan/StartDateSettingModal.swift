@@ -35,7 +35,3 @@ struct StartDateSettingModal: View {
     }
 
 }
-
-//#Preview {
-//    StartDateSettingModal(startDate: .constant(Date()))
-//}

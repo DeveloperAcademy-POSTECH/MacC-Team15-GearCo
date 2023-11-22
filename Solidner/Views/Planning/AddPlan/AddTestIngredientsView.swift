@@ -8,9 +8,16 @@
 import SwiftUI
 
 struct AddTestIngredientsView: View {
+    // TODO: 전체적인 Padding 계층 및 Magic Number 수정 요함
     private let Texts = TextLiterals.AddIngredientsView.self
     
     private let viewHorizontalPadding: CGFloat = 20
+    
+    @State private var dummyFoldState: [Bool] = [false, false, false, false]
+    
+    private func toggleFoldState(foldStateList: inout [Bool], index: Int) {
+        foldStateList[index].toggle()
+    }
     
     // TODO: 형식 수정
     @State private var selectedIngredientPair: (first: String, second: String?)? = ("곡물", "유제품류")
@@ -39,9 +46,10 @@ struct AddTestIngredientsView: View {
                     Spacer()
                 }.padding(.leading, viewHorizontalPadding)
             }
-            
-            Spacer().frame(height: 30)
+            Spacer().frame(height: 15)
+
             ScrollView {
+                Spacer().frame(height: 15)
                 VStack(alignment: .leading, spacing: 0) {
                     Text("이상 반응 재료")
                         .font(.title2)
@@ -52,6 +60,52 @@ struct AddTestIngredientsView: View {
                 }.padding(.horizontal, viewHorizontalPadding)
                 
                 ThickDivider()
+                
+                VStack(alignment: .leading, spacing: 0) {
+                    Text("먹을 수 있는 재료")
+                        .font(.title2)
+                        .bold()
+                    Text("아이가 섭취할 수 있는 재료의\n전체 목록이에요")
+                        .padding(.top, 13)
+                        .padding(.bottom, 30)
+                    
+                    ForEach(dummyFoldState.indices, id: \.self) { index in
+                        HStack(spacing: 0) {
+                            Button {
+                                withAnimation(.spring()) {
+                                    toggleFoldState(foldStateList: &dummyFoldState, index: index)
+                                }
+                            } label: {
+                                Text("곡류")
+                                    .font(.system(size: 19, weight: .semibold))
+                                    .padding(.trailing, 6)
+                                Spacer()
+                                Image(systemName: dummyFoldState[index] ? "chevron.up" : "chevron.down")
+                                    .resizable()
+                                    .bold()
+                                    .frame(width: 18, height: 10)
+                            }.foregroundColor(.black)
+                                .toggleStyle(.automatic)
+                        }.buttonStyle(PlainButtonStyle())   // 깜빡임 제거
+                        
+                        if dummyFoldState[index] {
+                            Divider()
+                                .padding(.top, 24)
+                                .padding(.bottom, 20)
+                            Group {
+                                ingredientSelectRow().padding(.bottom, 30)
+                                ingredientSelectRow().padding(.bottom, 30)
+                                ingredientSelectRow().padding(.bottom, 30)
+                                ingredientSelectRow().padding(.bottom, 30)
+                            }.transition(.push(from: dummyFoldState[index] ? .bottom : .top))
+                                
+                        }
+                        
+                        ThickDivider()
+                    }
+                    
+                    
+                }.padding(.horizontal, viewHorizontalPadding)
             }
         }.background(Color.mainBackgroundColor)
     }
