@@ -30,6 +30,8 @@ struct WarningView: View {
     }
 }
 
-#Preview {
-    WarningView()
+struct WarningView_Previews: PreviewProvider {
+    static var previews: some View {
+        WarningView()
+    }
 }

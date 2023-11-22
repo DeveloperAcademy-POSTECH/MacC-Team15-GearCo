@@ -82,6 +82,9 @@ struct PlanDetailView: View {
     }
 }
 
-//#Preview {
-//    PlanDetailView(startDate: .constant(Date()), endDate: .constant(Date()), mealPlans: .constant(Array(MealPlan.mockMealsOne[0...3])))
-//}
+struct PlanDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        PlanDetailView(startDate: .constant(Date()), endDate: .constant(Date()), mealPlans: .constant(Array(MealPlan.mockMealsOne[0...3])))
+            .environmentObject(UserOB())
+    }
+}
