@@ -8,32 +8,32 @@
 import SwiftUI
 
 struct BackButtonHeader: View {
-    private let backButtonFrameSize: CGFloat = 34
-    private let backButtonSymbolWidth: CGFloat = 8.5
-    private let backButtonSymbolHeight: CGFloat = 17
+    private let backButtonSymbolWidth: CGFloat = 10
+    private let backButtonSymbolHeight: CGFloat = 17.5
     private let backButtonHorizontalPadding: CGFloat = 16.64
     private let backButtonTopPadding: CGFloat = 6.73
-    private let backButtonSystemName = "chevron.left"
-    @State var action: ()->Void = {}
+    var action: ()->Void = {}
+    var title: String = ""
     
     var body: some View {
         headerButton(action: action)
     }
     
     func headerButton(action: @escaping ()-> Void) -> some View {
-        return HStack {
+        return HStack(spacing: 0) {
             Button(action: action, label: {
-                Rectangle()
-                    .fill(Color.clear)
-                    .frame(width: backButtonFrameSize, height: backButtonFrameSize)
-                    .overlay {
-                        Image(systemName: backButtonSystemName)
-                            .resizable()
-                            .frame(width: backButtonSymbolWidth, height: backButtonSymbolHeight)
-                            .foregroundColor( Color.backButtonColor)
-                    }
+                Image(systemName: "chevron.left")
+                    .resizable()
+                    .frame(width: backButtonSymbolWidth, height: backButtonSymbolHeight)
+                    .foregroundColor(Color.backButtonColor)
+                    .bold()
             })
             Spacer()
+            Text(title)
+                .foregroundColor(.bigTitleColor)
+                .bold()
+            Spacer()
+            Spacer().frame(width: backButtonSymbolWidth)
         }
         .padding(.horizontal, backButtonHorizontalPadding)
         .padding(.top, backButtonTopPadding)

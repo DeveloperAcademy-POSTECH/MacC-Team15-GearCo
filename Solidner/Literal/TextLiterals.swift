@@ -126,6 +126,10 @@ enum TextLiterals {
             "https://flaxen-headline-80b.notion.site/Solidner-5484d23677674cc686f8e7f197ef729e?pvs=4"
         }
     }
+    
+    enum AddIngredientsView {
+        static var testViewTitle: String { "테스트 재료 추가" }
+    }
 }
 
 
