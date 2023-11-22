@@ -8,18 +8,21 @@
 import SwiftUI
 
 struct StartDateSettingModal: View {
-    @Binding var startDate: Date
+    @ObservedObject var planOB: MealOB
     @State private var currentDate: Date
     @Environment(\.dismiss) private var dismiss
+    private let texts = TextLiterals.MealDetail.self
 
-    init(startDate: Binding<Date>) {
-        self._startDate = startDate
-        self._currentDate = State(initialValue: startDate.wrappedValue)
+    init(planOB: MealOB) {
+        self.planOB = planOB
+        self._currentDate = State(initialValue: planOB.startDate)
     }
 
     var body: some View {
         VStack {
-            Text("시작일 변경")
+            Text(texts.changeStartDateText)
+                .font(.title3.bold())
+            Text(texts.changeStartDateDetailText)
             DatePicker("", selection: $currentDate, displayedComponents: [.date])
                 .labelsHidden()
                 .datePickerStyle(.wheel)
@@ -31,11 +34,12 @@ struct StartDateSettingModal: View {
     }
 
     private func setStartDate() {
-        startDate = currentDate
+        planOB.set(startDate: currentDate)
     }
-
 }
 
-//#Preview {
-//    StartDateSettingModal(startDate: .constant(Date()))
-//}
+struct StartDateSettingModal_Previews: PreviewProvider {
+    static var previews: some View {
+        StartDateSettingModal(planOB: MealOB())
+    }
+}
