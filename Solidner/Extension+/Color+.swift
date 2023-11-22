@@ -19,4 +19,6 @@ extension Color {
     static let bigTitleColor = Color(#colorLiteral(red: 0.0834152922, green: 0.0834152922, blue: 0.0834152922, alpha: 1))
     static let smallTitleColor = Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)).opacity(0.6)
     static let soCuteBgColor = Color(#colorLiteral(red: 0.8588235294, green: 0.9098039216, blue: 0.9568627451, alpha: 1))
+    
+    static let mainBackgroundColor = Color(#colorLiteral(red: 0.968627451, green: 0.9529411765, blue: 0.9254901961, alpha: 1)) //F7F3EC
 }
