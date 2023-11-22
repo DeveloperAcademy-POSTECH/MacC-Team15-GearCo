@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class UserOB: ObservableObject {
+final class UserOB: ObservableObject {
     @AppStorage("AppleID") var AppleID = ""
     @AppStorage("email") var email = ""
     @AppStorage("nickName") var nickName = ""
@@ -15,4 +15,6 @@ class UserOB: ObservableObject {
     @AppStorage("isAgreeToAdvertising") var isAgreeToAdvertising = true
     @AppStorage("babyBirthDate") var babyBirthDate = Date()
     @AppStorage("solidStartDate") var solidStartDate = Date()
+    @AppStorage("planCycleGap") var planCycleGap = CycleGaps.three
+    @AppStorage("displayDateType") var displayDateType = DisplayDateType.birth
 }

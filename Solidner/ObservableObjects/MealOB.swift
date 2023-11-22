@@ -14,9 +14,9 @@ final class MealOB: ObservableObject {
     @Published private(set) var mealType: MealType?
     @Published private(set) var startDate: Date
     // TODO: cycleGap은 default 값을 받아와야 합니다.
-    @Published var cycleGap: Int = 3
+    @Published var cycleGap: CycleGaps = .three
     var endDate: Date {
-        startDate.add(.day, value: cycleGap - 1)
+        startDate.add(.day, value: cycleGap.rawValue - 1)
     }
 
     init(testingIngredients: [Ingredient] = Ingredient.mockTestingIngredients,

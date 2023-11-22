@@ -58,10 +58,17 @@ enum TextLiterals {
         static var addMeal: String { "끼니 추가" }
     }
 
-    enum SolidFoodBatchSetting {
+    enum PlanBatchSetting {
         static var labelText: String { "이유식 일괄 설정" }
-        static var hintText: String { "전체적으로 변경되는 어쩌구 저쩌구에요." }
-        static var testCycleText: String { "테스트 주기" }
+        static var hintText: String { "플래너에서 보여지는 어찌구를 뷁" }
+
+        static var testCycleLabel: String { "간격" }
+        static func dateText(of number: Int) -> String { "\(number)일" }
+
+        static var displayDateTypeLabel: String { "날짜 표시" }
+        static var bySolidDate: String { "이유식 진행일" }
+        static var byBirthDate: String { "생후일자" }
+
         static var deleteAllCalendarsText: String { "캘린더 삭제" }
         static var deleteAllCalendarsButtonText: String { "삭제하기" }
     }

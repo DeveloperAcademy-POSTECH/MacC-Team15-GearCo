@@ -33,8 +33,12 @@
 		B29CF7882AFCCA5B00B54A3E /* PlanListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF7872AFCCA5B00B54A3E /* PlanListView.swift */; };
 		B29CF78B2AFCCEA000B54A3E /* TextLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF78A2AFCCEA000B54A3E /* TextLiterals.swift */; };
 		B2D1DCD62B07466500D7B77B /* MealGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D1DCD52B07466500D7B77B /* MealGroupView.swift */; };
+		B2DE212E2B0DDA54006E42C7 /* PlanBatchSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DE212D2B0DDA54006E42C7 /* PlanBatchSettingView.swift */; };
 		B2EFE9832B067CA000E3F94B /* PlanDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EFE9822B067CA000E3F94B /* PlanDetailView.swift */; };
 		B2EFE9852B067FB200E3F94B /* MockPlanData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EFE9842B067FB200E3F94B /* MockPlanData.swift */; };
+		B2F7909E2B0DDC9900CB4F71 /* SolidnerSegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F7909D2B0DDC9900CB4F71 /* SolidnerSegmentedPicker.swift */; };
+		B2F790A22B0DF30B00CB4F71 /* CycleGaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F790A12B0DF30B00CB4F71 /* CycleGaps.swift */; };
+		B2F790A42B0DF40400CB4F71 /* DisplayDateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F790A32B0DF40400CB4F71 /* DisplayDateType.swift */; };
 		C336EE432B03C37B0057D8B8 /* AgreeToTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336EE422B03C37B0057D8B8 /* AgreeToTermsView.swift */; };
 		C336EE4A2B03F13B0057D8B8 /* Image+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336EE492B03F13B0057D8B8 /* Image+.swift */; };
 		C336EE4C2B03F5320057D8B8 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336EE4B2B03F5320057D8B8 /* Color+.swift */; };
@@ -107,8 +111,12 @@
 		B29CF7872AFCCA5B00B54A3E /* PlanListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanListView.swift; sourceTree = "<group>"; };
 		B29CF78A2AFCCEA000B54A3E /* TextLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLiterals.swift; sourceTree = "<group>"; };
 		B2D1DCD52B07466500D7B77B /* MealGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealGroupView.swift; sourceTree = "<group>"; };
+		B2DE212D2B0DDA54006E42C7 /* PlanBatchSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanBatchSettingView.swift; sourceTree = "<group>"; };
 		B2EFE9822B067CA000E3F94B /* PlanDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDetailView.swift; sourceTree = "<group>"; };
 		B2EFE9842B067FB200E3F94B /* MockPlanData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPlanData.swift; sourceTree = "<group>"; };
+		B2F7909D2B0DDC9900CB4F71 /* SolidnerSegmentedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidnerSegmentedPicker.swift; sourceTree = "<group>"; };
+		B2F790A12B0DF30B00CB4F71 /* CycleGaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleGaps.swift; sourceTree = "<group>"; };
+		B2F790A32B0DF40400CB4F71 /* DisplayDateType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDateType.swift; sourceTree = "<group>"; };
 		C336EE422B03C37B0057D8B8 /* AgreeToTermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeToTermsView.swift; sourceTree = "<group>"; };
 		C336EE492B03F13B0057D8B8 /* Image+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+.swift"; sourceTree = "<group>"; };
 		C336EE4B2B03F5320057D8B8 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
@@ -190,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				B26732A92B0232EE004AFF83 /* CycleGapSegmentedPicker.swift */,
+				B2F7909D2B0DDC9900CB4F71 /* SolidnerSegmentedPicker.swift */,
 				B2746E3E2B05F5210083AB57 /* ThickDivider.swift */,
 				B2746E402B05F9860083AB57 /* TitleAndActionButtonView.swift */,
 				B2746E422B05FDC40083AB57 /* TitleAndHintView.swift */,
@@ -203,6 +212,7 @@
 		0EA6C6182AFBE05D004FF2AA /* Planning */ = {
 			isa = PBXGroup;
 			children = (
+				B2DE212C2B0DDA44006E42C7 /* BatchSetting */,
 				B29854B62B0DB374009FBE33 /* Common */,
 				B219F11D2B0C90FE00886087 /* StartPlan */,
 				B248361E2B011FEF00525A25 /* AddPlan */,
@@ -263,6 +273,14 @@
 				B29CF78A2AFCCEA000B54A3E /* TextLiterals.swift */,
 			);
 			path = Literal;
+			sourceTree = "<group>";
+		};
+		B2DE212C2B0DDA44006E42C7 /* BatchSetting */ = {
+			isa = PBXGroup;
+			children = (
+				B2DE212D2B0DDA54006E42C7 /* PlanBatchSettingView.swift */,
+			);
+			path = BatchSetting;
 			sourceTree = "<group>";
 		};
 		C336EE4E2B04CB4F0057D8B8 /* Recovered References */ = {
@@ -358,6 +376,8 @@
 				C3C637972AF91EE0006D464D /* models_dummy.swift */,
 				B2EFE9842B067FB200E3F94B /* MockPlanData.swift */,
 				C336EE522B054C820057D8B8 /* AgreeCase.swift */,
+				B2F790A12B0DF30B00CB4F71 /* CycleGaps.swift */,
+				B2F790A32B0DF40400CB4F71 /* DisplayDateType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -557,6 +577,8 @@
 				0EAFB7212B012A3D0075A384 /* MonthlyPlanningView.swift in Sources */,
 				B219F1272B0CE13000886087 /* View+.swift in Sources */,
 				C36942472AFCD687002465D4 /* ButtonComponents.swift in Sources */,
+				B2F7909E2B0DDC9900CB4F71 /* SolidnerSegmentedPicker.swift in Sources */,
+				B2F790A22B0DF30B00CB4F71 /* CycleGaps.swift in Sources */,
 				C3C637902AF91E85006D464D /* fonts_dummy.swift in Sources */,
 				B2EFE9852B067FB200E3F94B /* MockPlanData.swift in Sources */,
 				B219F1212B0C915300886087 /* StartDateInitialSelectModal.swift in Sources */,
@@ -583,10 +605,12 @@
 				B24836202B011FFF00525A25 /* MealDetailView.swift in Sources */,
 				B24836222B012B8700525A25 /* Date+.swift in Sources */,
 				C3C6378E2AF91E73006D464D /* network_dummy.swift in Sources */,
+				B2F790A42B0DF40400CB4F71 /* DisplayDateType.swift in Sources */,
 				B219F1252B0C974F00886087 /* MealOB.swift in Sources */,
 				C3C6375D2AF90C2B006D464D /* SolidnerApp.swift in Sources */,
 				B2D1DCD62B07466500D7B77B /* MealGroupView.swift in Sources */,
 				C336EE512B054AED0057D8B8 /* TermsWebView.swift in Sources */,
+				B2DE212E2B0DDA54006E42C7 /* PlanBatchSettingView.swift in Sources */,
 				C336EE532B054C820057D8B8 /* AgreeCase.swift in Sources */,
 				C3AD1BCA2B023FA1003BB3E0 /* BabyBirthDateView.swift in Sources */,
 				C369424B2B00B350002465D4 /* TextFieldComponents.swift in Sources */,
