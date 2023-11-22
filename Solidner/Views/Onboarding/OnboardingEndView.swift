@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct OnboardingEndView: View {
+    @AppStorage("isOnboardingOn") var isOnboardingOn = true
     var body: some View {
         viewBody()
             .navigationBarBackButtonHidden(true)
@@ -18,7 +19,9 @@ struct OnboardingEndView: View {
             Spacer()
             OnboardingTitles(alignmentCase: .center, bigTitle: TextLiterals.OnboardingEnd.bigTitle, smallTitle: TextLiterals.OnboardingEnd.smallTitle)
             Spacer()
-            ButtonComponents().bigButton(title: TextLiterals.OnboardingEnd.buttonTitle, disabledCondition: false, action: {})
+            ButtonComponents().bigButton(title: TextLiterals.OnboardingEnd.buttonTitle, disabledCondition: false) {
+                isOnboardingOn = false
+            }
         }
     }
 }

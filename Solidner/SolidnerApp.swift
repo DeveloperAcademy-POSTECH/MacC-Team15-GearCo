@@ -20,12 +20,21 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct SolidnerApp: App {
     // Firebase Setup.
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @AppStorage("isOnboardingOn") var isOnboardingOn = true
+
+    var isPlanEmpty: Bool = true
     
     @StateObject private var userOB = UserOB()
     var body: some Scene {
         WindowGroup {
-//            SignInView().environmentObject(userOB)
-            AddTestIngredientsView()
+            if isOnboardingOn {
+                AgreeToTermsView().environmentObject(userOB)
+            } else if isPlanEmpty {
+                StartPlanView()
+            } else {
+                PlanListView()
+            }
+            //SignInView().environmentObject(userOB)
         }
     }
 }

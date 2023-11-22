@@ -8,23 +8,12 @@
 import SwiftUI
 
 struct MealDetailView: View {
-    private let Texts = TextLiterals.MealDetail.self
-    @State private var newIngredient: Ingredient?
-    @State private var testedIngredients: [Ingredient] = Ingredient.mockIngredients
-    @State private var selectedMealType: MealType?
-    @State private var cycleGap: Int
-    @State private var startDate: Date
-    @State private var endDate: Date
+    @StateObject private var mealOB = MealOB()
+    private let texts = TextLiterals.MealDetail.self
     @State private var showSettingStartDate: Bool = false
 
-    private(set) var isEditMode: Bool = false
-
-    init(startDate: Date = Date()) {
-        self._startDate = State(initialValue: startDate)
-        let defaultCycleGap = 3
-        _cycleGap = State(initialValue: defaultCycleGap)
-        _endDate = State(initialValue: Calendar.current.date(byAdding: .day, value: defaultCycleGap - 1, to: startDate)!)
-    }
+    // TODO: 나중에 let으로 바꿀 것
+    private(set) var isEditMode: Bool = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -46,55 +35,63 @@ struct MealDetailView: View {
                 .padding()
         }
     }
+}
 
+extension MealDetailView {
     // MARK: - addIngredients
-
     @ViewBuilder
     private var addIngredients: some View {
         if (isEditMode) {
             // TODO: - 재료 디테일어찌구에.. chip 추가해야.. Title And Hint View를 수정할지, 아니면 새로 만들지가 고민.
             TitleAndHintView(
-                title: Texts.ingredientsDetailTitleText,
+                title: texts.ingredientsDetailTitleText,
                 //                title: Texts.insertIngredientText,
-                hint: Texts.insertIngredientHintText
+                hint: texts.insertIngredientHintText
             )
         } else {
             TitleAndHintView(
-                title: Texts.insertIngredientText,
-                hint: Texts.insertIngredientHintText
+                title: texts.insertIngredientText,
+                hint: texts.insertIngredientHintText
             )
         }
-        newIngredientAddView
+        testingIngredientAddView
         // TODO: addedNewIngredient 구현
-        //        addedNewIngredient
-        otherIngredientAddView
-        addedOtherIngredient
+        addedTestingIngredients
+        testedIngredientAddView
+        addedTestedIngredients
     }
 
-    private var addedOtherIngredient: some View {
-        ForEach(testedIngredients) { ingredient in
-            ingredientView(of: ingredient)
+    private var addedTestingIngredients: some View {
+        ForEach(mealOB.testingIngredients) { ingredient in
+            ingredientView(of: ingredient, in: .testing)
         }
     }
 
-    private var newIngredientAddView: some View {
+    private var addedTestedIngredients: some View {
+        ForEach(mealOB.testedIngredients) { ingredient in
+            ingredientView(of: ingredient, in: .tested)
+        }
+    }
+
+    private var testingIngredientAddView: some View {
         TitleAndActionButtonView(
-            title: Texts.newIngredientText,
-            buttonLabel: Texts.addOrEditIngredientText(isEditMode: isEditMode)) {
+            title: texts.newIngredientText,
+            buttonLabel: texts.addOrEditIngredientText(isEditMode: isEditMode)) {
                 addNewIngredient()
             }
     }
 
-    private var otherIngredientAddView: some View {
+    private var testedIngredientAddView: some View {
         TitleAndActionButtonView(
-            title: Texts.testedIngredientText,
-            buttonLabel: Texts.addOrEditIngredientText(isEditMode: isEditMode)) {
+            title: texts.testedIngredientText,
+            buttonLabel: texts.addOrEditIngredientText(isEditMode: isEditMode)) {
                 addOtherIngredient()
             }
     }
 
     // TODO: IngredientView Component화 하기
-    private func ingredientView(of ingredient: Ingredient) -> some View {
+
+    private func ingredientView(of ingredient: Ingredient, in testType: MealOB.IngredientTestType) -> some View {
         let colorChip = RoundedRectangle(cornerRadius: 5)
             .frame(width: 16, height: 16)
             .foregroundStyle(Color(uiColor:ingredient.type.color))
@@ -104,9 +101,11 @@ struct MealDetailView: View {
             Text(ingredient.name)
             Spacer()
             Button {
-                delete(ingredient: ingredient)
+                withAnimation {
+                    mealOB.delete(ingredient: ingredient, in: testType)
+                }
             } label: {
-                Text(Texts.deleteText)
+                Text(texts.deleteText)
             }
         }
         .padding()
@@ -115,29 +114,26 @@ struct MealDetailView: View {
         }
     }
 
-    private func delete(ingredient: Ingredient) {
-        withAnimation {
-            testedIngredients.removeAll { $0 == ingredient }
-        }
-    }
-
     // TODO: 올바른 callback 함수 구현 - addNewIngredient
+    //       -> 재료 추가 화면 띄우기
     private func addNewIngredient() {
         print(#function)
     }
 
     // TODO: 올바른 callback 함수 구현 - addOtherIngredient
+    //       -> 재료 추가 화면 띄우기
     private func addOtherIngredient() {
         print(#function)
     }
+}
 
-    // MARK: - mealType
-
+// MARK: - mealType
+extension MealDetailView {
     @ViewBuilder
     private var mealTypeSelectView: some View {
         TitleAndHintView(
-            title: Texts.mealTypeText,
-            hint: Texts.mealTypeHintText
+            title: texts.mealTypeText,
+            hint: texts.mealTypeHintText
         )
         mealTypeButtons
     }
@@ -153,37 +149,30 @@ struct MealDetailView: View {
 
     private func mealTypeButton(of mealType: MealType) -> some View {
         Button {
-            mealTypeButtonTapped(mealType)
+            mealOB.set(mealType: mealType)
         } label: {
             Text(mealType.description)
                 .bold()
                 .padding()
-                .foregroundStyle(selectedMealType == mealType ? Color.white : Color.black)
+                .foregroundStyle(mealOB.mealType == mealType ? Color.white : Color.black)
                 .frame(maxWidth: .infinity)
                 .background(
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(selectedMealType == mealType ? Color.blue : Color.gray,
-                              strokeBorder: selectedMealType == mealType ? .gray : .black,
+                        .fill(mealOB.mealType == mealType ? Color.blue : Color.gray,
+                              strokeBorder: mealOB.mealType == mealType ? .gray : .black,
                               lineWidth: 2)
                 )
         }
     }
+}
 
-    private func mealTypeButtonTapped(_ mealType: MealType) {
-        print(#function)
-        withAnimation {
-            selectedMealType = mealType
-        }
-
-    }
-
-    // MARK: - mealCycle
-
+// MARK: - mealCycle
+extension MealDetailView {
     @ViewBuilder
     private var mealCycle: some View {
         TitleAndHintView(
-            title: Texts.mealCycleText,
-            hint: Texts.mealCycleHintText
+            title: texts.mealCycleText,
+            hint: texts.mealCycleHintText
         )
         startDateSelectView
         mealPicker
@@ -194,16 +183,13 @@ struct MealDetailView: View {
     private var startDateSelectView: some View {
         HStack {
             TitleAndActionButtonView(
-                title: Texts.startDateText,
-                buttonLabel: Texts.changeDateText) {
+                title: texts.startDateText,
+                buttonLabel: texts.changeDateText) {
                     showSettingStartDate = true
                 }
                 .sheet(isPresented: $showSettingStartDate) {
-                    StartDateSettingModal(startDate: $startDate)
+                    StartDateSettingModal(planOB: mealOB)
                         .presentationDetents([.medium])
-                }
-                .onChange(of: startDate) { newValue in
-                    endDate = Calendar.current.date(byAdding: .day, value: cycleGap-1, to: newValue)!
                 }
         }
     }
@@ -211,7 +197,7 @@ struct MealDetailView: View {
     // TODO: Custom Picker 만들기
     private var mealPicker: some View {
         HStack {
-            Text(Texts.gapText)
+            Text(texts.gapText)
                 .font(.title3).bold()
             Spacer()
                 .frame(maxWidth: 100)
@@ -220,14 +206,11 @@ struct MealDetailView: View {
                 .overlay(Color.gray)
             CycleGapSegmentedPicker(
                 Array(1..<5),
-                selection: $cycleGap
+                selection: $mealOB.cycleGap
             ) { item in
-                Text(Texts.dateText(item))
+                Text(texts.dateText(item))
                     .font(.callout).bold()
                     .padding(.horizontal, 10)
-            }
-            .onChange(of: cycleGap) { newValue in
-                endDate = Calendar.current.date(byAdding: .day, value: newValue-1, to: startDate)!
             }
         }
         .padding(.vertical)
@@ -235,18 +218,30 @@ struct MealDetailView: View {
 
     @ViewBuilder
     private var resultCycleText: some View {
-        Text(Texts.fromStartDate(startDate)) + Text(endDate.formatted(.yyyyMMdd_dot))
-        Text(Texts.gapDetailText(cycleGap))
+        Text(texts.fromStartDate(mealOB.startDate)) + Text(mealOB.endDate.formatted(.yyyyMMdd_dot))
+        Text(texts.gapDetailText(mealOB.cycleGap))
     }
+}
 
-    // MARK: - addPlanButton
+// MARK: - Delete meal plan
+extension MealDetailView {
+    private var deleteMealPlan: some View {
+        TitleAndActionButtonView(
+            title: texts.deleteMealPlanTitleText,
+            buttonLabel: texts.deleteMealPlanButtonText) {
+                print(#function)
+            }
+    }
+}
 
+// MARK: - addPlanButton
+extension MealDetailView {
     // TODO: Button 컴포넌트로 교체 -> Big Button
     private var addMealPlanButton: some View {
         Button {
-            addMealPlan()
+            mealOB.addMealPlan()
         } label: {
-            Text(Texts.addMealPlanButtonText)
+            Text(texts.addMealPlanButtonText)
                 .font(.title3).bold()
                 .foregroundStyle(.white)
                 .padding(.vertical)
@@ -257,22 +252,10 @@ struct MealDetailView: View {
                 }
         }
     }
+}
 
-    // TODO: 올바른 callback 함수 구현 - addPlan
-    private func addMealPlan() {
-        print(#function)
-    }
-
-    // MARK: - Delete meal plan
-    private var deleteMealPlan: some View {
-        TitleAndActionButtonView(
-            title: Texts.deleteMealPlanTitleText,
-            buttonLabel: Texts.deleteMealPlanButtonText) {
-                print(#function)
-            }
+struct MealDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        MealDetailView()
     }
 }
-//
-//#Preview {
-//    MealDetailView()
-//}
