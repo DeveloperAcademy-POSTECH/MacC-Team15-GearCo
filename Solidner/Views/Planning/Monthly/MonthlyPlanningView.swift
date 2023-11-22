@@ -14,50 +14,97 @@ struct MonthlyPlanningView: View {
     private let lightGray = Color(#colorLiteral(red: 0.8797428608, green: 0.8797428012, blue: 0.8797428608, alpha: 1)) // #D9D9D9
     private let weekDayKorList = ["일", "월", "화", "수", "목", "금", "토"]
     
-    private let nowMonthDates = Date.nowMonthDates()
     private let nowMonthWeekNums = Date.nowMonthWeeks()
     
     var body: some View {
         VStack(spacing: 0) {
             // MARK: 임시로 대충 헤더 자리 비워두기
             Spacer().frame(height: 70)
-            calendarCurrentYearMonth.padding(.bottom, 15)
-            
-            VStack(spacing: 0) {
-                calendarWeekDayRow
-                ForEach(nowMonthWeekNums, id: \.self) { num in
-                    calendarDayNumberRow(weekOfMonth: num)
-                }
-                Text("\(nowMonthWeekNums.last!.description)")
-                Spacer()
-            }.background {
-                RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(.white)
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 0) {
+                    calendarCurrentYearMonth.padding(.bottom, 15)
+                    VStack(spacing: 0) {
+                        calendarWeekDayRow
+                        ForEach(nowMonthWeekNums, id: \.self) { num in
+                            calendarDayNumberRow(weekOfMonth: num)
+                            calendarNewIngredientRow(weekOfMonth: num)
+                        }
+                        Spacer()
+                    }.background {
+                        RoundedRectangle(cornerRadius: 12)
+                            .foregroundColor(.white)
+                    }
+                    Spacer()
+                }.padding(.horizontal, 16)
             }
+        }.background(Color(.lightGray))
+    }
+    
+    private func calendarNewIngredientRow(weekOfMonth: Int) -> some View {
+        let mainDaySectionWidth = screenWidth * (50/390)
+        let newIngredientRowHeight = screenWidth * (64/390)
+        let ingredientBarHeight = screenWidth * (22/390)
+        let rowHorizontalPadding = screenWidth * (4/390)
+        
+        let gapToFirstBar = screenWidth * (10/390)
+        let gapToSecondBar = screenWidth * (5/390)
+        
+        let barHorizontalPadding = screenWidth * (10/390)
+        
+
+        func ingredientBar() -> some View {
+            let barWidth = (mainDaySectionWidth*3) - (barHorizontalPadding*2)
+            return VStack {
+                HStack {
+                    Text("\(barHorizontalPadding)")
+                        .font(.system(size: 10))
+                        .bold()
+                        .foregroundColor(.white)
+                        .padding(.leading, 7)
+                    Spacer()
+                }
+            }.frame(width: barWidth, height: ingredientBarHeight)
+                .background {
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Color.pink.opacity(0.5))
+                }.padding(.horizontal, barHorizontalPadding)
+        }
+        
+        return VStack(spacing: 0) {
+            Spacer().frame(height: gapToFirstBar)
+            HStack(spacing: 0) {
+                Spacer().frame(width: rowHorizontalPadding)
+                ingredientBar()
+                ingredientBar()
+                Spacer()
+            }.frame(height: ingredientBarHeight)
+            Spacer().frame(height: gapToSecondBar)
+            HStack(spacing: 0) {
+                ingredientBar()
+            }.frame(height: ingredientBarHeight)
             Spacer()
-        }.padding(.horizontal, 14)
-            .background(Color(.lightGray))
+        }.frame(height: newIngredientRowHeight)
     }
     
     private func calendarDayNumberRow(weekOfMonth: Int) -> some View {
         let mainDaySectionWidth = screenWidth * (50/390)
         let dayNumberRowFrameHeight = screenWidth * (60/390)
         let dayNumberGap = screenWidth * (6/390)
-        let rowHorizontalPadding = screenWidth * (6/390)
+        let rowHorizontalPadding = screenWidth * (4/390)
         let thisWeekDates: [Date] = Date.weekDates(weekOfMonth)
         
         func rowLeftEndSpacer() -> some View {
             if weekOfMonth == nowMonthWeekNums.first! {
                 return AnyView(Spacer())
             } else {
-                return AnyView(Spacer().frame(width: 6))
+                return AnyView(Spacer().frame(width: rowHorizontalPadding))
             }
         }
         func rowRightEndSpacer() -> some View {
             if weekOfMonth == nowMonthWeekNums.last! {
                 return AnyView(Spacer())
             } else {
-                return AnyView(Spacer().frame(width: 6))
+                return AnyView(Spacer().frame(width: rowHorizontalPadding))
             }
         }
         
@@ -81,7 +128,7 @@ struct MonthlyPlanningView: View {
     
     private var calendarWeekDayRow: some View {
         // TODO: color 및 font 수정
-        let mainHorizontalPadding = screenWidth * (6/390)
+        let mainHorizontalPadding = screenWidth * (4/390)
         let mainDaySectionWidth = screenWidth * (50/390)
         let weekDayRowFrameHeight = screenWidth * (25/390)
         
@@ -90,19 +137,19 @@ struct MonthlyPlanningView: View {
                 ForEach(weekDayKorList.indices, id: \.self) { i in
                     if i == 0 {
                         Text(weekDayKorList[i])
-                            .font(.system(size: 12))
+                            .font(.system(size: 10))
                             .bold()
                             .frame(width: mainDaySectionWidth)
-//                            .padding(.leading, mainHorizontalPadding)
+                            .padding(.leading, mainHorizontalPadding)
                     } else if i == 6 {
                         Text(weekDayKorList[i])
-                            .font(.system(size: 12))
+                            .font(.system(size: 10))
                             .bold()
                             .frame(width: mainDaySectionWidth)
-//                            .padding(.trailing, mainHorizontalPadding)
+                            .padding(.trailing, mainHorizontalPadding)
                     } else {
                         Text(weekDayKorList[i])
-                            .font(.system(size: 12))
+                            .font(.system(size: 10))
                             .bold()
                             .frame(width: mainDaySectionWidth)
                     }
