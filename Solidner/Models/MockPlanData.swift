@@ -223,7 +223,10 @@ extension MealPlan {
 }
 
 extension Ingredient {
-    static var mockIngredients: [Ingredient] = [
+    static var mockTestingIngredients: [Ingredient] = [
+        Mock.당근
+    ]
+    static var mockTestedIngredients: [Ingredient] = [
         Mock.쌀, Mock.소고기, Mock.청경채
     ]
 
