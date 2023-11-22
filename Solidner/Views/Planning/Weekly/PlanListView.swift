@@ -142,9 +142,9 @@ extension PlanListView {
     }
 }
 
-//#Preview {
-//    Group {
-//        PlanListView(mealPlans: MealPlan.mockMealsOne)
-////        PlanListView(mealPlans: MealPlan.mockMealsTwo)
-//    }
-//}
+struct PlanListView_Previews: PreviewProvider {
+    static var previews: some View {
+        PlanListView(mealPlans: MealPlan.mockMealsOne)
+//        PlanListView(mealPlans: MealPlan.mockMealsTwo)
+    }
+}
