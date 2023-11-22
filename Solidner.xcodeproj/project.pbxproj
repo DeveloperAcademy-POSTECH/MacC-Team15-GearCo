@@ -29,6 +29,7 @@
 		B2746E3F2B05F5210083AB57 /* ThickDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E3E2B05F5210083AB57 /* ThickDivider.swift */; };
 		B2746E412B05F9860083AB57 /* TitleAndActionButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E402B05F9860083AB57 /* TitleAndActionButtonView.swift */; };
 		B2746E432B05FDC40083AB57 /* TitleAndHintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E422B05FDC40083AB57 /* TitleAndHintView.swift */; };
+		B29854B82B0DB38C009FBE33 /* ChangeMonthModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29854B72B0DB38C009FBE33 /* ChangeMonthModal.swift */; };
 		B29CF7882AFCCA5B00B54A3E /* PlanListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF7872AFCCA5B00B54A3E /* PlanListView.swift */; };
 		B29CF78B2AFCCEA000B54A3E /* TextLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF78A2AFCCEA000B54A3E /* TextLiterals.swift */; };
 		B2D1DCD62B07466500D7B77B /* MealGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D1DCD52B07466500D7B77B /* MealGroupView.swift */; };
@@ -106,6 +107,7 @@
 		B2746E3E2B05F5210083AB57 /* ThickDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThickDivider.swift; sourceTree = "<group>"; };
 		B2746E402B05F9860083AB57 /* TitleAndActionButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleAndActionButtonView.swift; sourceTree = "<group>"; };
 		B2746E422B05FDC40083AB57 /* TitleAndHintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleAndHintView.swift; sourceTree = "<group>"; };
+		B29854B72B0DB38C009FBE33 /* ChangeMonthModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeMonthModal.swift; sourceTree = "<group>"; };
 		B29CF7872AFCCA5B00B54A3E /* PlanListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanListView.swift; sourceTree = "<group>"; };
 		B29CF78A2AFCCEA000B54A3E /* TextLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLiterals.swift; sourceTree = "<group>"; };
 		B2D1DCD52B07466500D7B77B /* MealGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealGroupView.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				B2DE212C2B0DDA44006E42C7 /* BatchSetting */,
+				B29854B62B0DB374009FBE33 /* Common */,
 				B219F11D2B0C90FE00886087 /* StartPlan */,
 				B248361E2B011FEF00525A25 /* AddPlan */,
 				0EA6C61A2AFBE06B004FF2AA /* Weekly */,
@@ -254,6 +257,14 @@
 				0EA65EE12B0C846200E1C8D7 /* AddTestIngredientsView.swift */,
 			);
 			path = AddPlan;
+			sourceTree = "<group>";
+		};
+		B29854B62B0DB374009FBE33 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				B29854B72B0DB38C009FBE33 /* ChangeMonthModal.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		B29CF7892AFCCE9200B54A3E /* Literal */ = {
@@ -574,6 +585,7 @@
 				0E18AD6B2AFA7F670011ED4A /* SignInView.swift in Sources */,
 				B2746E432B05FDC40083AB57 /* TitleAndHintView.swift in Sources */,
 				C36942492AFF755F002465D4 /* BackButtonHeader.swift in Sources */,
+				B29854B82B0DB38C009FBE33 /* ChangeMonthModal.swift in Sources */,
 				B29CF7882AFCCA5B00B54A3E /* PlanListView.swift in Sources */,
 				C336EE4A2B03F13B0057D8B8 /* Image+.swift in Sources */,
 				0E18AD712AFA94E10011ED4A /* FirebaseManager.swift in Sources */,

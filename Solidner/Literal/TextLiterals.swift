@@ -72,7 +72,13 @@ enum TextLiterals {
         static var deleteAllCalendarsText: String { "캘린더 삭제" }
         static var deleteAllCalendarsButtonText: String { "삭제하기" }
     }
-    
+
+    enum ChangeMonth {
+        static func currentYearText(of date: Date) -> String { "\(date.year)년" }
+        static func monthText(of number: Int) -> String { "\(number)월" }
+        static var saveButtonText: String { "저장" }
+    }
+
     enum ViewComponents {
         static var placeHolderMessage: String { "최대 10자내로  입력이 가능해요." }
     }
