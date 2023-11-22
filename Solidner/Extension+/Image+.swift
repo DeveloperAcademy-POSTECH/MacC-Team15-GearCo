@@ -17,3 +17,9 @@ extension Image {
         self.init(assetName.rawValue)
     }
 }
+
+extension Image {
+    func clickableSFSymbolFont2() -> some View {
+        self.font(.system(size: 13, weight: .medium))
+    }
+}

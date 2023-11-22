@@ -18,11 +18,11 @@
 import SwiftUI
 
 struct PlanListView: View {
+    @EnvironmentObject private var user: UserOB
     @State private var selectedDate = Date()
     let mealPlans: [MealPlan]
     let texts = TextLiterals.PlanList.self
     private(set) var mealsDict = [SolidDate:[MealPlan]]()
-    let defaultCycleGap = 3
 
     init(mealPlans: [MealPlan] = MealPlan.mockMealsOne) {
         self.mealPlans = mealPlans
@@ -77,10 +77,14 @@ struct PlanListView: View {
     // MARK: - meal Group List
     var mealGroupList: some View {
         VStack(spacing: 20) {
-            ForEach(Array(mealsDict.keys.sorted(by: { $0.startDate < $1.startDate }).enumerated()), id: \.element) { index, solidDate in
+            let mealDictKeys = Array(mealsDict.keys.sorted(by: { $0.startDate < $1.startDate }).enumerated())
+            ForEach(mealDictKeys, id: \.element) { index, solidDate in
                 if let meals = mealsDict[solidDate] {
                     MealGroupView(
                         dateRange: solidDate.description,
+                        displayDateInfo: DisplayDateInfoView(
+                            from: solidDate.startDate,
+                            to: solidDate.endDate),
                         mealPlans: meals,
                         isTodayInDateRange: Date().isInBetween(from: solidDate.startDate, to: solidDate.endDate)
                     )
@@ -92,9 +96,13 @@ struct PlanListView: View {
 
     var addNewMealPlan: some View {
         let newStartDate = mealPlans.sorted { $0.endDate > $1.endDate }.first?.endDate.add(.day, value: 1) ?? (Date.date(year: selectedDate.year, month: selectedDate.month, day: 1) ?? Date())
-        let newEndDate = newStartDate.add(.day, value: defaultCycleGap - 1)
+        let newEndDate = newStartDate.add(.day, value: user.planCycleGap.rawValue - 1)
         let dateRangeString = texts.dateRangeString(start: newStartDate, end: newEndDate)
-        return MealGroupView(type: .addNew, dateRange: dateRangeString)
+        return MealGroupView(
+            type: .addNew,
+            dateRange: dateRangeString,
+            displayDateInfo: DisplayDateInfoView(from: newStartDate, to: newEndDate)
+        )
     }
 
     // MARK: - totalSetting
@@ -144,7 +152,7 @@ extension PlanListView {
 
 struct PlanListView_Previews: PreviewProvider {
     static var previews: some View {
-        PlanListView(mealPlans: MealPlan.mockMealsOne)
+        PlanListView(mealPlans: MealPlan.mockMealsOne).environmentObject(UserOB())
 //        PlanListView(mealPlans: MealPlan.mockMealsTwo)
     }
 }

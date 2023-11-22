@@ -13,8 +13,8 @@ final class UserOB: ObservableObject {
     @AppStorage("nickName") var nickName = ""
     @AppStorage("babyName") var babyName = ""
     @AppStorage("isAgreeToAdvertising") var isAgreeToAdvertising = true
-    @AppStorage("babyBirthDate") var babyBirthDate = Date()
-    @AppStorage("solidStartDate") var solidStartDate = Date()
+    @AppStorage("babyBirthDate") var babyBirthDate = Date.date(year: 2023, month: 2, day: 22)!
+    @AppStorage("solidStartDate") var solidStartDate = Date.date(year: 2023, month: 9, day: 22)!
     @AppStorage("planCycleGap") var planCycleGap = CycleGaps.three
     @AppStorage("displayDateType") var displayDateType = DisplayDateType.birth
 }
