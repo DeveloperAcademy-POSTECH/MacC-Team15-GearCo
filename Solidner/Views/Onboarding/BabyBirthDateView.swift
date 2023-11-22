@@ -36,10 +36,10 @@ struct BabyBirthDateView: View {
                 .datePickerStyle(WheelDatePickerStyle())
                 .padding(.top, datePickerTopPadding)
             Spacer()
-            ButtonComponents().bigButton(disabledCondition: false) {
+            ButtonComponents(.big, disabledCondition: false, action: {
                 user.babyBirthDate = babyBirthDate
                 navigationIsPresented = true
-            }
+            })
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
