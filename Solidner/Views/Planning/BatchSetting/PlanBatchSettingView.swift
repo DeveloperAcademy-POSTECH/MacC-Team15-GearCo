@@ -5,6 +5,8 @@
 //  Created by sei on 11/22/23.
 //
 
+// TODO: - 패딩 ㄱㄱ
+
 import SwiftUI
 
 struct PlanBatchSettingView: View {
@@ -36,10 +38,12 @@ struct PlanBatchSettingView: View {
     }
 
     private var deleteWholeCalendarView: some View {
+        // TODO: - 삭제 버튼 컴포넌트로 변경하기
         HStack {
             Text(texts.deleteAllCalendarsText)
             Spacer()
             Button {
+                // TODO: - 캘린더 삭제 구현하기
                 print(#function)
             } label: {
                 Text(texts.deleteAllCalendarsButtonText)
