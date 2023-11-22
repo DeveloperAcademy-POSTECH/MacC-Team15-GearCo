@@ -196,30 +196,18 @@ extension MealDetailView {
 
     // TODO: Custom Picker 만들기
     private var mealPicker: some View {
-        HStack {
-            Text(texts.gapText)
-                .font(.title3).bold()
-            Spacer()
-                .frame(maxWidth: 100)
-                .foregroundColor(.blue)
-                .background(Color.red)
-                .overlay(Color.gray)
-            CycleGapSegmentedPicker(
-                Array(1..<5),
-                selection: $mealOB.cycleGap
-            ) { item in
-                Text(texts.dateText(item))
-                    .font(.callout).bold()
-                    .padding(.horizontal, 10)
-            }
-        }
+        SolidnerSegmentedPicker(
+            label: texts.gapText,
+            items: CycleGaps.allCases,
+            selection: $mealOB.cycleGap
+        )
         .padding(.vertical)
     }
 
     @ViewBuilder
     private var resultCycleText: some View {
         Text(texts.fromStartDate(mealOB.startDate)) + Text(mealOB.endDate.formatted(.yyyyMMdd_dot))
-        Text(texts.gapDetailText(mealOB.cycleGap))
+        Text(texts.gapDetailText(mealOB.cycleGap.rawValue))
     }
 }
 
