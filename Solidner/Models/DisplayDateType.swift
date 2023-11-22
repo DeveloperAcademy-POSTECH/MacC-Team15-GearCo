@@ -6,3 +6,16 @@
 //
 
 import Foundation
+
+enum DisplayDateType: Int, CaseIterable, Hashable, CustomStringConvertible {
+    case solid, birth
+
+    var description: String {
+        switch self {
+        case .solid:
+            return TextLiterals.PlanBatchSetting.bySolidDate
+        case .birth:
+            return TextLiterals.PlanBatchSetting.byBirthDate
+        }
+    }
+}
