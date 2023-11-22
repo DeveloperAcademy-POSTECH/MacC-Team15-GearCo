@@ -50,7 +50,7 @@ struct ButtonComponents: View {
                 title: title,
                 disabledCondition: disabledCondition,
                 action: action,
-                buttonColor: buttonColor ?? Color.buttonDefaultColor,
+                buttonColor: buttonColor ?? Color.accentColor1,
                 titleColor: titleColor ?? Color.buttonDefaultTextColor
             )
         case .small:

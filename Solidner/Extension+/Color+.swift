@@ -29,15 +29,20 @@ extension Color {
     static let fishAndMeat = Color(#colorLiteral(red: 0.9215686275, green: 0.6980392157, blue: 0.6352941176, alpha: 1)) //EBB2A2
     static let etcIngredient = Color(#colorLiteral(red: 0.7960784314, green: 0.7960784314, blue: 0.7960784314, alpha: 1)) //CBCBCB
     //component
-    static let accentColor = Color(#colorLiteral(red: 0.9137254902, green: 0.4784313725, blue: 0.5098039216, alpha: 1)) //E97A82
+    static let accentColor1 = Color(#colorLiteral(red: 0.9137254902, green: 0.4784313725, blue: 0.5098039216, alpha: 1)) //E97A82
     static let accentColor2 = Color(#colorLiteral(red: 0.4, green: 0.2823529412, blue: 0.1725490196, alpha: 1)) //66482C
     static let bgColor = Color(#colorLiteral(red: 0.7960784314, green: 0.7960784314, blue: 0.7960784314, alpha: 1)) //F7F6F4
     static let secondBgColor = Color(#colorLiteral(red: 0.968627451, green: 0.9529411765, blue: 0.9254901961, alpha: 1)) //F7F3EC
     static let buttonBgColor = Color(#colorLiteral(red: 0.9137254902, green: 0.8941176471, blue: 0.862745098, alpha: 1)) //E9E4DC
     static let dividerColor = Color(#colorLiteral(red: 0.8509803922, green: 0.8509803922, blue: 0.8509803922, alpha: 1)) //D9D9D9
     static let chipBgColor = Color(#colorLiteral(red: 0.9098039216, green: 0.8941176471, blue: 0.8823529412, alpha: 1)) //E8E4E1
+    static let buttonStrokeColor = Color.black.opacity(0.1)
+    static let listStrokeColor = Color(#colorLiteral(red: 0.9176470588, green: 0.9176470588, blue: 0.9176470588, alpha: 1)) //EAEAEA
+    static let ageColor = Color(#colorLiteral(red: 0.6588235294, green: 0.4705882353, blue: 0.7450980392, alpha: 1)) //A878BE
+    static let newColor = Color(#colorLiteral(red: 0.4352941176, green: 0.6549019608, blue: 0.8549019608, alpha: 1)) //6FA7DA
     //text
     static let defaultText = Color.black
+    static let defaultText_wh = Color.white
     static let primeText = Color(#colorLiteral(red: 0.2470588235, green: 0.2431372549, blue: 0.2431372549, alpha: 1)) //3F3E3E
     static let secondaryText = Color(#colorLiteral(red: 0.3098039216, green: 0.3098039216, blue: 0.3098039216, alpha: 1)) //4F4F4F
     static let tertinaryText = Color(#colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1)) //9C9C9C
