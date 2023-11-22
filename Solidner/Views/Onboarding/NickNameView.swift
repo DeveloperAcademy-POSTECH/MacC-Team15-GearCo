@@ -13,23 +13,34 @@ struct NickNameView: View {
     private let warningMessageLeadingPadding = 4.0
     private let warningMessageFontSize = 11.5
     private let buttonUpDuration = 0.1
-    var nickNameViewCase = NickNameViewCase.babyName
+    let nickNameViewCase: NickNameViewCase
     @StateObject private var textLimiter = TextLimiterOB()
     @StateObject private var keyboardHeightHelper = KeyboardHeightHelperOB()
     @FocusState private var isFocused: Bool
     @EnvironmentObject var user: UserOB
+    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
+    @State private var babyNameViewIsPresented = false
+    @State private var navigationIsPresented = false
     
     var body: some View {
         GeometryReader { _ in
             VStack(spacing: 0) {
                 BackButtonHeader {
-                    print("~~")
+                    presentationMode.wrappedValue.dismiss()
                 }
                 viewBody()
             }
             .onAppear (perform : UIApplication.shared.hideKeyboard)
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
+        .navigationDestination(isPresented: $babyNameViewIsPresented) {
+            NickNameView(nickNameViewCase: .babyName)
+        }
+        .navigationDestination(isPresented: $navigationIsPresented) {
+            SoCuteNameView()
+        }
     }
     
     private func viewBody() -> some View {
@@ -56,8 +67,10 @@ struct NickNameView: View {
                     switch nickNameViewCase {
                     case .userName :
                         user.nickName = textLimiter.value
+                        babyNameViewIsPresented = true
                     case .babyName :
                         user.babyName = textLimiter.value
+                        navigationIsPresented = true
                     }
                 }
                     .offset(y: isFocused ? -self.keyboardHeightHelper.keyboardHeight : 0)
@@ -73,6 +86,6 @@ struct NickNameView: View {
 
 struct NickNameView_Previews: PreviewProvider {
     static var previews: some View {
-        NickNameView().environmentObject(UserOB())
+        NickNameView(nickNameViewCase: .userName).environmentObject(UserOB())
     }
 }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct AgreeToTermsView: View {
     private let termsButtonsSpacing = 16.0
     private let bigButtonTopPadding = 16.0
@@ -14,20 +15,44 @@ struct AgreeToTermsView: View {
     @State private var isAgreeToServiceUse = true
     @State private var isAgreeToPersonalInfo = true
     @State private var isAgreeToAdvertising = true
+    @State private var openServiceUseTerms = false
+    @State private var openPersonalInfoTerms = false
+    @State private var openAdvertisingTerms = false
+    @State private var navigationIsPresented = false
     @EnvironmentObject var user: UserOB
     var body: some View {
-        VStack(spacing: 0) {
-            OnboardingTitles(bigTitle: TextLiterals.AgreeToTermsView.bigTitle, smallTitle: TextLiterals.AgreeToTermsView.smallTitle)
-            Spacer()
-            VStack(spacing: termsButtonsSpacing) {
-                agreeButton(agreeCase: .serviceUse)
-                agreeButton(agreeCase: .personalInfo)
-                agreeButton(agreeCase: .advertising)
+        NavigationStack {
+            ZStack {
+                VStack(spacing: 0) {
+                    OnboardingTitles(bigTitle: TextLiterals.AgreeToTerms.bigTitle, smallTitle: TextLiterals.AgreeToTerms.smallTitle)
+                    Spacer()
+                    VStack(spacing: termsButtonsSpacing) {
+                        agreeButton(agreeCase: .serviceUse)
+                        agreeButton(agreeCase: .personalInfo)
+                        agreeButton(agreeCase: .advertising)
+                    }
+                    ButtonComponents().bigButton(disabledCondition: disabledCondition, action: {
+                        user.isAgreeToAdvertising = isAgreeToAdvertising
+                        navigationIsPresented = true
+                    })
+                    .padding(.top, bigButtonTopPadding)
+                }
             }
-            ButtonComponents().bigButton(disabledCondition: disabledCondition, action: {
-                user.isAgreeToAdvertising = isAgreeToAdvertising
-            })
-            .padding(.top, bigButtonTopPadding)
+            .navigationDestination(isPresented: $navigationIsPresented) {
+                NickNameView(nickNameViewCase: .userName)
+            }
+            .sheet(isPresented: $openServiceUseTerms) {
+                TermsWebView(agreeCase: .serviceUse)
+                    .presentationDragIndicator(.visible)
+            }
+            .sheet(isPresented: $openPersonalInfoTerms) {
+                TermsWebView(agreeCase: .personalInfo)
+                    .presentationDragIndicator(.visible)
+            }
+            .sheet(isPresented: $openAdvertisingTerms) {
+                TermsWebView(agreeCase: .advertising)
+                    .presentationDragIndicator(.visible)
+            }
         }
     }
     private var disabledCondition: Bool {
@@ -41,11 +66,11 @@ struct AgreeToTermsView: View {
         var title: String {
             switch agreeCase {
             case .serviceUse :
-                return TextLiterals.AgreeToTermsView.serviceUseTitle
+                return TextLiterals.AgreeToTerms.serviceUseTitle
             case .personalInfo :
-                return TextLiterals.AgreeToTermsView.personalInfoTitle
+                return TextLiterals.AgreeToTerms.personalInfoTitle
             case .advertising :
-                return TextLiterals.AgreeToTermsView.advertisingTitle
+                return TextLiterals.AgreeToTerms.advertisingTitle
             }
         }
         return HStack {
@@ -78,22 +103,24 @@ struct AgreeToTermsView: View {
             }
             Spacer()
             Button(action: {
-                
+                switch agreeCase {
+                case .serviceUse :
+                    openServiceUseTerms = true
+                case .personalInfo :
+                    openPersonalInfoTerms = true
+                case .advertising :
+                    openAdvertisingTerms = true
+                }
             }){
                 Image(systemName: "chevron.right")
                     .foregroundColor(.black.opacity(0.4))
             }
         }
     }
-    enum AgreeCase {
-        case serviceUse
-        case personalInfo
-        case advertising
-    }
 }
 
 struct AgreeToTermsView_Previews: PreviewProvider {
     static var previews: some View {
-        AgreeToTermsView()
+        AgreeToTermsView().environmentObject(UserOB())
     }
 }

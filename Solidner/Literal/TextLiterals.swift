@@ -13,10 +13,39 @@ enum TextLiterals {
     // 1. enum으로 한 번 더 뺄지, 2. TextLiterals 내에 두되 mark로 구분할지 고민
     // 일단 1의 방식으로 진행했습니다.
 
-    enum WeeklyPlanning {
-        static var weeklyPlanningText: String { "주간 이유식" }
-        static var chooseIngredientToTestText: String { "테스트 할 재료를 골라주세요." }
-        static func solidFoodDayText(from: Int, to: Int) -> String { "\(from)-\(to)일차 >" }
+    enum PlanList {
+        static func yyyymmHeaderText(date: Date) ->  String {
+            "\(date.year)년 \(date.month)월"
+        }
+
+        static func ddDateText(date: Date) -> String {
+            "\(date.day)일"
+        }
+
+        static func dateRangeString(start: Date, end: Date) -> String {
+            "\(start.day)일(\(start.weekDayKor)) ~ \(end.day)일(\(end.weekDayKor))"
+        }
+
+        static func fromDateToDateText(from: Int, to: Int) -> String {
+            "\(from) ~ \(to)일차"
+        }
+
+        static var addIngredientText: String {
+            "재료 추가"
+        }
+    }
+
+    enum PlanDetail {
+        static func dateRangeTitle(from: Date, to: Date) -> String { "\(from.month)/\(from.day)(\(from.weekDayKor)) ~\n \(to.day)일(\(to.weekDayKor)) 식단" }
+        
+        static var editPlan: String { "편집" }
+        static var deletePlan: String { "일정 삭제" }
+
+        static func dateRangeString(start: Date, end: Date) -> String {
+            "\(start.day)일(\(start.weekDayKor)) ~ \(end.day)일(\(end.weekDayKor))"
+        }
+        static var existsDuplicatedMeal: String { "중복되는 끼니가 계획되어 있어요." }
+        static var addMeal: String { "끼니 추가" }
     }
 
     enum SolidFoodBatchSetting {
@@ -82,12 +111,20 @@ enum TextLiterals {
         static var deleteMealPlanButtonText: String { "삭제하기" }
     }
     
-    enum AgreeToTermsView { 
+    enum AgreeToTerms {
         static var bigTitle: String { "서비스 이용약관에\n동의해주세요" }
         static var smallTitle: String { "솔리너의 원활한 사용을 위해\n아래의 정보 제공에 동의해주세요." }
         static var serviceUseTitle: String { "[필수] 서비스 이용 약관" }
         static var personalInfoTitle: String { "[필수] 개인정보 수집 및 이용 동의" }
         static var advertisingTitle: String { "[선택] 광고성 정보 수신 동의" }
+    }
+    
+    enum TermsWeb {
+        static var serviceUseUrl: String { "https://flaxen-headline-80b.notion.site/Solidner-db0e9f2efed2414aa50a53a9438d99dc?pvs=4" }
+        static var personalInfoUrl: String { "https://flaxen-headline-80b.notion.site/Solidner-cf1b28d08a794dffbcc824bcb8391932?pvs=4" }
+        static var advertisingURL: String {
+            "https://flaxen-headline-80b.notion.site/Solidner-5484d23677674cc686f8e7f197ef729e?pvs=4"
+        }
     }
     
     enum AddIngredientsView {

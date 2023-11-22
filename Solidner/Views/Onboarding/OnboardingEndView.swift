@@ -10,6 +10,8 @@ import SwiftUI
 struct OnboardingEndView: View {
     var body: some View {
         viewBody()
+            .navigationBarBackButtonHidden(true)
+            .navigationBarHidden(true)
     }
     private func viewBody() -> some View {
         return VStack(spacing: 0) {
