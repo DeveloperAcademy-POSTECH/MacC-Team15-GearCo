@@ -62,11 +62,11 @@ enum TextLiterals {
         static var labelText: String { "이유식 일괄 설정" }
         static var hintText: String { "플래너에서 보여지는 어찌구를 뷁" }
 
-        static var testCycleText: String { "간격" }
+        static var testCycleLabel: String { "간격" }
         static func dateText(of number: Int) -> String { "\(number)일" }
 
         static var displayDateTypeLabel: String { "날짜 표시" }
-        static var byFoodDate: String { "이유식 진행일" }
+        static var bySolidDate: String { "이유식 진행일" }
         static var byBirthDate: String { "생후일자" }
 
         static var deleteAllCalendarsText: String { "캘린더 삭제" }
