@@ -16,10 +16,14 @@
 import SwiftUI
 
 struct PlanDetailView: View {
+    @EnvironmentObject private var user: UserOB
     @Binding var startDate: Date
     @Binding var endDate: Date
     @Binding var mealPlans: [MealPlan]
     @State private var isEditMode: Bool = false
+    // TODO: - 나중에 어떻게 선언해야할지 고민 State? Binding? 계획이 바뀌었을 때, 바뀐 계획에 따라서 값이 바뀌어야함.
+    private(set) var isWrongPlan: Bool = true
+    
     private let texts = TextLiterals.PlanDetail.self
     private var dateRangeString: String {
         TextLiterals.PlanList.dateRangeString(start: startDate, end: endDate)
@@ -28,8 +32,15 @@ struct PlanDetailView: View {
     var body: some View {
         VStack {
             header
-            warningView
-            MealGroupView(dateRange: dateRangeString, mealPlans: mealPlans)
+            if isWrongPlan {
+                WarningView()
+            }
+            MealGroupView(
+                dateRange: dateRangeString,
+                displayDateInfo: user.displayDateType.textInfo(of: user, from: startDate, to: endDate),
+                mealPlans: mealPlans,
+                isInList: false
+            )
             Spacer()
             addMealButton
         }
