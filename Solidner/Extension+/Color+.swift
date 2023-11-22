@@ -29,7 +29,7 @@ extension Color {
     static let fishAndMeat = Color(#colorLiteral(red: 0.9215686275, green: 0.6980392157, blue: 0.6352941176, alpha: 1)) //EBB2A2
     static let etcIngredient = Color(#colorLiteral(red: 0.7960784314, green: 0.7960784314, blue: 0.7960784314, alpha: 1)) //CBCBCB
     //component
-    static let accentColor = Color(#colorLiteral(red: 0.9137254902, green: 0.4784313725, blue: 0.5098039216, alpha: 1)) //E97A82
+    static let accentColor1 = Color(#colorLiteral(red: 0.9137254902, green: 0.4784313725, blue: 0.5098039216, alpha: 1)) //E97A82
     static let accentColor2 = Color(#colorLiteral(red: 0.4, green: 0.2823529412, blue: 0.1725490196, alpha: 1)) //66482C
     static let bgColor = Color(#colorLiteral(red: 0.7960784314, green: 0.7960784314, blue: 0.7960784314, alpha: 1)) //F7F6F4
     static let secondBgColor = Color(#colorLiteral(red: 0.968627451, green: 0.9529411765, blue: 0.9254901961, alpha: 1)) //F7F3EC
