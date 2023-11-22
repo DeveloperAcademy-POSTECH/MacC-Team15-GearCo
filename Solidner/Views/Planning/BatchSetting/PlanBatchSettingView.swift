@@ -18,6 +18,8 @@ struct PlanBatchSettingView: View {
             solidCycleGapSelectionView
             ThickDivider()
             solidDisplayDateTypeSelectionView
+            Spacer()
+            deleteWholeCalendarView
         }
     }
 
@@ -33,6 +35,17 @@ struct PlanBatchSettingView: View {
         SolidnerSegmentedDisplayDateTypePicker(user: user)
     }
 
+    private var deleteWholeCalendarView: some View {
+        HStack {
+            Text(texts.deleteAllCalendarsText)
+            Spacer()
+            Button {
+                print(#function)
+            } label: {
+                Text(texts.deleteAllCalendarsButtonText)
+            }
+        }
+    }
 }
 
 struct PlanBatchSettingView_Previews: PreviewProvider {
