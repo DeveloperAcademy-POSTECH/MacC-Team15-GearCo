@@ -34,6 +34,7 @@ struct ChangeMonthModal: View {
         VStack {
             monthTitleBar
             monthButtons
+            saveButton
         }
     }
 
@@ -121,6 +122,13 @@ struct ChangeMonthModal: View {
         }
     }
 
+    private var saveButton: some View {
+        ButtonComponents(.big, title: texts.saveButtonText) {
+            withAnimation {
+                selectedDate = selectingDate
+            }
+        }
+    }
 }
 
 struct ChangeMonthModal_Previews: PreviewProvider {
