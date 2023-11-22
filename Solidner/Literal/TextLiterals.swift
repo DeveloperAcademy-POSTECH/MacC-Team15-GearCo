@@ -85,8 +85,8 @@ enum TextLiterals {
     }
 
     enum PlanBatchSetting {
-        static var labelText: String { "이유식 일괄 설정" }
-        static var hintText: String { "플래너에서 보여지는 어찌구를 뷁" }
+        static var labelText: String { "이유식 전체 설정" }
+        static var hintText: String { "캘린더의 간격과 날짜 표기를 지정해요" }
 
         static var testCycleLabel: String { "간격" }
         static func dateText(of number: Int) -> String { "\(number)일" }
@@ -95,8 +95,8 @@ enum TextLiterals {
         static var bySolidDate: String { "이유식 진행일" }
         static var byBirthDate: String { "생후일자" }
 
-        static var deleteAllCalendarsText: String { "캘린더 삭제" }
-        static var deleteAllCalendarsButtonText: String { "삭제하기" }
+        static var deleteAllCalendarsText: String { "전체 일정 삭제" }
+        static var deleteAllCalendarsButtonText: String { "삭제" }
     }
 
     enum ChangeMonth {
