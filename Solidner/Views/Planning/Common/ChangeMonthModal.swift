@@ -5,6 +5,13 @@
 //  Created by sei on 11/22/23.
 //
 
+///
+// TODO: ---
+/// 디자인 시스템이 올라온 후,
+/// [ ] 컴포넌트 정리하기
+/// [ ] 하이파이로 수정하기
+/// [ ] 다른 뷰와 연결하기
+
 import SwiftUI
 
 struct ChangeMonthModal: View {
