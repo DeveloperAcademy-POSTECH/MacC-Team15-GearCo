@@ -83,24 +83,24 @@ struct Ingredient: CustomStringConvertible, Identifiable, Hashable {
 enum IngredientType {
     case 곡물, 어육류, 노란채소, 녹색채소, 과일, 유제품, 기타채소, 기타
 
-    var color: UIColor {
+    var color: Color {
         switch self {
         case .곡물:
-            return .lightGray
+            return .grain
         case .어육류:
-            return .brown
+            return .greenVegitable
         case .노란채소:
-            return .yellow
+            return .yellowVegitable
         case .녹색채소:
-            return .green
+            return .greenVegitable
         case .과일:
-            return .purple
+            return .fruit
         case .유제품:
-            return .black
+            return .dairy
         case .기타채소:
-            return .magenta
+            return .etcVegitable
         case .기타:
-            return .systemIndigo
+            return .etcIngredient
         }
     }
 }

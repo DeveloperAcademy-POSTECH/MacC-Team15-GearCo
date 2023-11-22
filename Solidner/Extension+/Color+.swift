@@ -19,4 +19,27 @@ extension Color {
     static let bigTitleColor = Color(#colorLiteral(red: 0.0834152922, green: 0.0834152922, blue: 0.0834152922, alpha: 1))
     static let smallTitleColor = Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)).opacity(0.6)
     static let soCuteBgColor = Color(#colorLiteral(red: 0.8588235294, green: 0.9098039216, blue: 0.9568627451, alpha: 1))
+    //ingredient
+    static let yellowVegitable = Color(#colorLiteral(red: 0.9019607843, green: 0.8039215686, blue: 0.5450980392, alpha: 1)) //E97A82
+    static let greenVegitable = Color(#colorLiteral(red: 0.8117647059, green: 0.8588235294, blue: 0.6509803922, alpha: 1)) //CFDBA6
+    static let etcVegitable = Color(#colorLiteral(red: 0.8078431373, green: 0.8196078431, blue: 0.737254902, alpha: 1)) //CED1BC
+    static let grain = Color(#colorLiteral(red: 0.8549019608, green: 0.7843137255, blue: 0.6156862745, alpha: 1)) //DAC89D
+    static let dairy = Color(#colorLiteral(red: 0.7921568627, green: 0.8588235294, blue: 0.9568627451, alpha: 1)) //CADBF4
+    static let fruit = Color(#colorLiteral(red: 0.8666666667, green: 0.7803921569, blue: 0.9764705882, alpha: 1)) //DDC7F9
+    static let fishAndMeat = Color(#colorLiteral(red: 0.9215686275, green: 0.6980392157, blue: 0.6352941176, alpha: 1)) //EBB2A2
+    static let etcIngredient = Color(#colorLiteral(red: 0.7960784314, green: 0.7960784314, blue: 0.7960784314, alpha: 1)) //CBCBCB
+    //component
+    static let accentColor = Color(#colorLiteral(red: 0.9137254902, green: 0.4784313725, blue: 0.5098039216, alpha: 1)) //E97A82
+    static let accentColor2 = Color(#colorLiteral(red: 0.4, green: 0.2823529412, blue: 0.1725490196, alpha: 1)) //66482C
+    static let bgColor = Color(#colorLiteral(red: 0.7960784314, green: 0.7960784314, blue: 0.7960784314, alpha: 1)) //F7F6F4
+    static let secondBgColor = Color(#colorLiteral(red: 0.968627451, green: 0.9529411765, blue: 0.9254901961, alpha: 1)) //F7F3EC
+    static let buttonBgColor = Color(#colorLiteral(red: 0.9137254902, green: 0.8941176471, blue: 0.862745098, alpha: 1)) //E9E4DC
+    static let dividerColor = Color(#colorLiteral(red: 0.8509803922, green: 0.8509803922, blue: 0.8509803922, alpha: 1)) //D9D9D9
+    static let chipBgColor = Color(#colorLiteral(red: 0.9098039216, green: 0.8941176471, blue: 0.8823529412, alpha: 1)) //E8E4E1
+    //text
+    static let defaultText = Color.black
+    static let primeText = Color(#colorLiteral(red: 0.2470588235, green: 0.2431372549, blue: 0.2431372549, alpha: 1)) //3F3E3E
+    static let secondaryText = Color(#colorLiteral(red: 0.3098039216, green: 0.3098039216, blue: 0.3098039216, alpha: 1)) //4F4F4F
+    static let tertinaryText = Color(#colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1)) //9C9C9C
+    static let quarternaryText = Color(#colorLiteral(red: 0.7843137255, green: 0.7843137255, blue: 0.7843137255, alpha: 1)) //C8C8C8
 }
