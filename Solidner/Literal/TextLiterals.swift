@@ -67,14 +67,13 @@ enum TextLiterals {
     }
 
     enum DailyPlanList {
-        static func titleText(_ date: Date) -> String { "\(date.month)/\(date.day)일(\(date.weekDayKor)) 식단" }
+        static func titleText(_ date: Date) -> String { "\(date.month).\(date.day).(\(date.weekDayKor)) 식단" }
         static func dateRangeString(start: Date, end: Date) -> String {
             "\(start.day)일(\(start.weekDayKor)) ~ \(end.day)일(\(end.weekDayKor))"
         }
         static func fromDateToDateText(from: Int, to: Int) -> String {
             "\(from) ~ \(to)일차"
         }
-
         static var addMealPlanText: String {
             "끼니 추가"
         }
@@ -106,11 +105,11 @@ enum TextLiterals {
     }
 
     enum Warning {
-        static var warningText: String { "중복되는 끼니가 계획되어 있어요." }
+        static var warningText: String { "식단에 중복되는 계획이 있어요" }
     }
 
     enum ViewComponents {
-        static var placeHolderMessage: String { "최대 10자내로  입력이 가능해요." }
+        static var placeHolderMessage: String { "최대 10자내로 입력이 가능해요." }
     }
     
     enum NickName {
