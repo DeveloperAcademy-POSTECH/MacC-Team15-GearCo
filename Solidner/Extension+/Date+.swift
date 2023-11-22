@@ -76,6 +76,9 @@ extension Date {
         }
     }
     
+    
+    /// 현재 주차에 포함된 Date 객체들을 리스트로 반환합니다.
+    /// - Returns: 현재 주차의 날들을 Date형 리스트로 반환
     static func nowWeekDates() -> [Date] {
         let nowWeekOfMonth = Date().weekOfMonth
         let nowMonthDates = Date.nowMonthDates()
@@ -83,6 +86,10 @@ extension Date {
         return nowMonthDates.filter { $0.weekOfMonth == nowWeekOfMonth }
     }
     
+    
+    /// 파라미터로 받은 주차에 포함된 Date 객체를 리스트로 반환합니다.
+    /// - Parameter weekOfMonth: 원하는 주차 (Int)
+    /// - Returns: 입력된 주차에 포함된 날들을 Date형 리스트로 반환
     static func weekDates(_ weekOfMonth: Int) -> [Date] {
         let nowMonthDates = Date.nowMonthDates()
         
@@ -121,7 +128,7 @@ extension Date {
     
     /// weekDay의 한글 표현을 반환합니다.
     /// weekday는 1~7 사이의 Int형 정수입니다. (1 - 일요일, 2 - 월요일..)
-    /// Ex. 월, 화, 수, 목, 금, 토, 일
+    /// Ex. 일, 월, 화, 수, 목, 금, 토
     var weekDayKor: String {
         Weekday(rawValue: weekday)!.description
     }

@@ -23,12 +23,15 @@ struct MonthlyPlanningView: View {
     }
     let plans: [planData] =
     [planData(startDate: 1, endDate: 3),
-    planData(startDate: 3, endDate: 5),
-    planData(startDate: 2, endDate: 4),
-    planData(startDate: 5, endDate: 7),
-    planData(startDate: 12, endDate: 15)]
+     planData(startDate: 3, endDate: 5),
+     planData(startDate: 2, endDate: 4),
+     planData(startDate: 5, endDate: 7),
+     planData(startDate: 8, endDate: 11),
+     planData(startDate: 13, endDate: 14),
+     planData(startDate: 21, endDate: 24),
+     planData(startDate: 12, endDate: 15)]
     
-    @State private var reducePlans: [(planData, BarPosition)] = []
+    @State private var reducedPlans: [(first: planData, second: BarPosition)] = []
     
     var body: some View {
         VStack(spacing: 0) {
@@ -53,8 +56,8 @@ struct MonthlyPlanningView: View {
             }
         }.background(Color(.lightGray))
             .onAppear {
-                reducePlans = reducePlanData(plans: plans)
-                print(reducePlans)
+                reducedPlans = reducePlanData(plans: plans)
+                print(reducedPlans)
             }
     }
     
@@ -69,40 +72,106 @@ struct MonthlyPlanningView: View {
         
         let barHorizontalPadding = screenWidth * (10/390)
         
-        func ingredientBar() -> some View {
-            let barWidth = (mainDaySectionWidth*3) - (barHorizontalPadding*2)
-            return VStack {
-                HStack {
-                    Text("\(barHorizontalPadding)")
-                        .font(.system(size: 10))
-                        .bold()
-                        .foregroundColor(.white)
-                        .padding(.leading, 7)
-                    Spacer()
+        let plansInWeek: [(data: planData, position: BarPosition)]
+        = reducePlanDataInWeek(weekOfMonth: weekOfMonth, reducedPlans: reducedPlans)
+        
+        let weekDates = Date.weekDates(weekOfMonth)
+        let monthDates = Date.nowMonthDates()
+        
+        // 바 길이 계산
+        func calculateBarWidth(plan: planData, isBarFromEnd: inout (left: Bool, right: Bool)) -> CGFloat {
+            let cycleGap: CGFloat = CGFloat(plan.endDate - plan.startDate + 1)
+            let dayNumsInWeek: [Int] = weekDates.map{ $0.day }
+            var result: CGFloat = 0
+            
+            if dayNumsInWeek.contains(plan.startDate) &&
+                dayNumsInWeek.contains(plan.endDate) {
+                result = (mainDaySectionWidth * cycleGap) - (barHorizontalPadding * 2)
+            } else if dayNumsInWeek.first! > plan.startDate {
+                isBarFromEnd.left = true
+                if dayNumsInWeek.first! == 1 {  // 1일 이전부터 이어지는 바
+                    let weekDay = CGFloat(weekDates.first!.weekday)  // 요일
+                    result = (mainDaySectionWidth * weekDay) - barHorizontalPadding + rowHorizontalPadding
+                } else {
+                    result = (mainDaySectionWidth * cycleGap) - barHorizontalPadding + rowHorizontalPadding
                 }
-            }.frame(width: barWidth, height: ingredientBarHeight)
-                .background {
-                    Rectangle()
-                        .leftCornerRadius(4)
-                        .foregroundColor(Color.pink.opacity(0.5))
-                }.padding(.horizontal, barHorizontalPadding)
+            } else if dayNumsInWeek.last! < plan.endDate {
+                isBarFromEnd.right = true
+                if dayNumsInWeek.last! == monthDates.last!.day {    // 월말 이후까지 이어지는 바
+                    let weekDay = weekDates.first!.weekday  // 요일
+                    let dayGap = CGFloat(7 - weekDay + 1)
+                    result = (mainDaySectionWidth * dayGap) - barHorizontalPadding + rowHorizontalPadding
+                } else {
+                    result = (mainDaySectionWidth * cycleGap) - barHorizontalPadding + rowHorizontalPadding
+                }
+            } else {
+                fatalError("Error in MonthlyPlanningView: calculateBarWidth")
+            }
+            
+            return result
         }
         
+        // 재료 바 view return
+        func ingredientBar(plan: planData) -> some View {
+            var isBarFromEnd: (left: Bool, right: Bool) = (false, false)
+            var barWidth: CGFloat = calculateBarWidth(plan: plan, isBarFromEnd: &isBarFromEnd)
+            let barRadius: CGFloat = 4
+                        
+            return HStack {
+                VStack {
+                    HStack {
+                        Text("고기고기고기")
+                            .font(.system(size: 10))
+                            .bold()
+                            .foregroundColor(.white)
+                            .padding(.leading, 7)
+                        Spacer()
+                    }
+                }.frame(width: barWidth, height: ingredientBarHeight)
+                .background {
+                    Rectangle()
+                        .foregroundColor(Color.pink.opacity(0.5))
+                        .if(!isBarFromEnd.left) { view in
+                            view.leftCornerRadius(barRadius)
+                        }.if(!isBarFromEnd.right) { view in
+                            view.rightCornerRadius(barRadius)
+                        }
+                }
+            }
+        }
+        
+//        func barLeftPadding(index: Int, isBarFromEnd: inout (left: Bool, right: Bool)) -> some View {
+//            if index
+//                return Spacer().frame()
+//        }
+        
+        // MARK: 재료 바를 포함한 한 줄 return
         return VStack(spacing: 0) {
             Spacer().frame(height: gapToFirstBar)
+            
             HStack(spacing: 0) {
-                Spacer().frame(width: rowHorizontalPadding)
-                ingredientBar()
-                ingredientBar()
-                Spacer()
+                //                Spacer().frame(width: rowHorizontalPadding)
+                ForEach(Array(plansInWeek.indices), id: \.self) { i in
+                    
+                    if plansInWeek[i].position == .first {
+                        ingredientBar(plan: plansInWeek[i].data)
+                    }
+                }
+                //                Spacer()
             }.frame(height: ingredientBarHeight)
-                .frame(maxWidth: 358)
+            
             Spacer().frame(height: gapToSecondBar)
+            
             HStack(spacing: 0) {
                 Spacer().frame(width: rowHorizontalPadding)
-                ingredientBar()
+                ForEach(Array(plansInWeek.indices), id: \.self) { i in
+                    if plansInWeek[i].position == .second {
+                        ingredientBar(plan: plansInWeek[i].data)
+                    }
+                }
                 Spacer()
             }.frame(height: ingredientBarHeight)
+            
             Spacer()
         }.frame(height: newIngredientRowHeight)
     }
@@ -229,7 +298,22 @@ extension MonthlyPlanningView {
             }
         }
         
-        return result
+        return result.sorted { $0.0.startDate < $1.0.startDate }    // startDate 순 정렬
+    }
+    
+    private func reducePlanDataInWeek(weekOfMonth: Int,
+                                      reducedPlans: [(first: planData, second: BarPosition)])
+    -> [(planData, BarPosition)] {
+        let dayNumsInWeek: [Int] = Date.weekDates(weekOfMonth).map{ $0.day }
+        var result: [(planData, BarPosition)] = []
+        
+        for plan in reducedPlans {
+            if dayNumsInWeek.contains(plan.first.startDate) ||
+                dayNumsInWeek.contains(plan.first.endDate) {
+                result.append(plan)
+            }
+        }
+        return result.sorted { $0.0.startDate < $1.0.startDate }    // startDate 순 정렬
     }
 }
 
