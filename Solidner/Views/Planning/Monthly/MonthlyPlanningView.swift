@@ -21,12 +21,14 @@ struct MonthlyPlanningView: View {
         var startDate: Int
         var endDate: Int
     }
-    let plan: [planData] =
+    let plans: [planData] =
     [planData(startDate: 1, endDate: 3),
     planData(startDate: 3, endDate: 5),
+    planData(startDate: 2, endDate: 4),
     planData(startDate: 5, endDate: 7),
     planData(startDate: 12, endDate: 15)]
-
+    
+    @State private var reducePlans: [(planData, BarPosition)] = []
     
     var body: some View {
         VStack(spacing: 0) {
@@ -50,6 +52,10 @@ struct MonthlyPlanningView: View {
                 }.clipped().padding(.horizontal, 16)
             }
         }.background(Color(.lightGray))
+            .onAppear {
+                reducePlans = reducePlanData(plans: plans)
+                print(reducePlans)
+            }
     }
     
     private func calendarNewIngredientRow(weekOfMonth: Int) -> some View {
@@ -183,6 +189,47 @@ struct MonthlyPlanningView: View {
             Text("2023년 10월").font(.title).bold()
             Spacer()
         }
+    }
+}
+
+extension MonthlyPlanningView {
+    enum BarPosition: Int {
+        case first = 1
+        case second = 2
+    }
+    
+    private func reducePlanData(plans: [planData]) -> [(planData, BarPosition)] {
+        let nowMonthDates = Date.nowMonthDates()
+        let lastDateNum = nowMonthDates.last!.day
+        var dict = Dictionary(uniqueKeysWithValues: (1...lastDateNum).map { ($0, 0) })
+        
+        var result: [(planData, BarPosition)] = []
+        
+        for plan in plans {
+            var isPlanAccepted = true
+            var isFirstBar = true
+            
+            for i in Range<Int>(plan.startDate...plan.endDate) {
+                if dict[i] == 2 {
+                    isPlanAccepted = false
+                } else if dict[i] == 1 {
+                    isFirstBar = false
+                }
+            }
+            
+            if isPlanAccepted {
+                for i in Range<Int>(plan.startDate...plan.endDate) {
+                    dict[i]! += 1
+                }
+                if isFirstBar {
+                    result.append((plan, .first))
+                } else {
+                    result.append((plan, .second))
+                }
+            }
+        }
+        
+        return result
     }
 }
 
