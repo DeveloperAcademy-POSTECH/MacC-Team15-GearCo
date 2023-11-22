@@ -77,7 +77,8 @@ struct PlanListView: View {
     // MARK: - meal Group List
     var mealGroupList: some View {
         VStack(spacing: 20) {
-            ForEach(Array(mealsDict.keys.sorted(by: { $0.startDate < $1.startDate }).enumerated()), id: \.element) { index, solidDate in
+            let mealDictKeys = Array(mealsDict.keys.sorted(by: { $0.startDate < $1.startDate }).enumerated())
+            ForEach(mealDictKeys, id: \.element) { index, solidDate in
                 if let meals = mealsDict[solidDate] {
                     MealGroupView(
                         dateRange: solidDate.description,

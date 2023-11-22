@@ -72,6 +72,10 @@ enum TextLiterals {
         }
     }
 
+    enum MealGroup {
+        static var addIngredientText: String { "재료 추가" }
+    }
+
     enum PlanBatchSetting {
         static var labelText: String { "이유식 일괄 설정" }
         static var hintText: String { "플래너에서 보여지는 어찌구를 뷁" }

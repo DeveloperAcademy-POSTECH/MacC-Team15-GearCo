@@ -13,7 +13,7 @@ struct DisplayDateInfoView: View {
     let to: Date
 
     private enum K {
-        static var textColor: Color { Color.defaultText.opacity(0.4) }
+        static var textColor: Color { .quarternaryText }
     }
 
     private var fromDateCount: Int {
