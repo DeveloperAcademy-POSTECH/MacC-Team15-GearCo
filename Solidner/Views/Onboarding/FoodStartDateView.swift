@@ -29,7 +29,7 @@ struct FoodStartDateView: View {
                 .datePickerStyle(WheelDatePickerStyle())
                 .padding(.top, datePickerTopPadding)
             Spacer()
-            ButtonComponents().bigButton(disabledCondition: false) {
+            ButtonComponents(.big, disabledCondition: false) {
                 user.solidStartDate = solidStartDate
                 navigationIsPresented = true
             }

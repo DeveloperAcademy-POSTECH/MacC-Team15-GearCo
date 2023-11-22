@@ -31,7 +31,7 @@ struct AgreeToTermsView: View {
                         agreeButton(agreeCase: .personalInfo)
                         agreeButton(agreeCase: .advertising)
                     }
-                    ButtonComponents().bigButton(disabledCondition: disabledCondition, action: {
+                    ButtonComponents(.big, disabledCondition: disabledCondition, action: {
                         user.isAgreeToAdvertising = isAgreeToAdvertising
                         navigationIsPresented = true
                     })

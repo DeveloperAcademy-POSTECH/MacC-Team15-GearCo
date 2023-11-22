@@ -18,6 +18,7 @@ struct ButtonComponents: View {
     let disabledCondition: Bool
     let action: () -> Void
 
+    @State private var isClicked = false
     @State private var titleColor: Color?
     func titleColor(_ color: Color) -> Self {
         var view = self
@@ -33,7 +34,7 @@ struct ButtonComponents: View {
     }
 
     enum ButtonType {
-        case big, small, tiny
+        case big, small, tiny, clickableTiny
     }
 
     init(_ buttonType: ButtonType = .small, title: String = "다음", disabledCondition: Bool = false, action: @escaping () -> Void = {}) {
@@ -51,7 +52,7 @@ struct ButtonComponents: View {
                 disabledCondition: disabledCondition,
                 action: action,
                 buttonColor: buttonColor ?? Color.accentColor1,
-                titleColor: titleColor ?? Color.buttonDefaultTextColor
+                titleColor: titleColor ?? Color.defaultText_wh
             )
         case .small:
             smallButton(
@@ -65,17 +66,20 @@ struct ButtonComponents: View {
                 disabledCondition: disabledCondition,
                 action: action
             )
+        case .clickableTiny:
+            clickableTinyButton(disabledCondition: disabledCondition, action: action)
         }
     }
 
-    func bigButton(title: String = "다음" , disabledCondition: Bool, action: @escaping () -> Void, buttonColor: Color = .buttonDefaultColor, titleColor: Color = .buttonDefaultTextColor) -> some View {
+    func bigButton(title: String = "다음" , disabledCondition: Bool, action: @escaping () -> Void, buttonColor: Color, titleColor: Color) -> some View {
         return Button(action: action){
             RoundedRectangle(cornerRadius: buttonCornerRadius)
-                .fill(disabledCondition ? Color.buttonDisabledColor : buttonColor)
+                .fill(disabledCondition ? buttonColor.opacity(0.2) : buttonColor)
                 .frame(height: buttonHeight)
                 .overlay {
                     Text(title)
-                        .foregroundColor(disabledCondition ? Color.buttonDisabledTextColor : titleColor)
+                        .buttonFont()
+                        .foregroundColor(titleColor)
                 }
         }
         .disabled(disabledCondition)
@@ -84,11 +88,12 @@ struct ButtonComponents: View {
     func smallButton(title: String = "다음", disabledCondition: Bool, action: @escaping () -> Void ) -> some View {
         return Button(action: action) {
             RoundedRectangle(cornerRadius: buttonCornerRadius)
-                .fill(disabledCondition ? Color.buttonDisabledColor : Color.buttonDefaultColor)
+                .fill(disabledCondition ? Color.accentColor1.opacity(0.2) : Color.accentColor1)
                 .frame(width: smallButtonWidth, height: buttonHeight)
                 .overlay {
                     Text(title)
-                        .foregroundColor(disabledCondition ? Color.buttonDisabledTextColor : Color.buttonDefaultTextColor)
+                        .buttonFont()
+                        .foregroundColor(.defaultText_wh)
                 }
         }
         .disabled(disabledCondition)
@@ -97,11 +102,29 @@ struct ButtonComponents: View {
     func tinyButton(title: String, disabledCondition: Bool, action: @escaping () -> Void ) -> some View {
         return Button(action: action) {
             RoundedRectangle(cornerRadius: buttonCornerRadius)
-                .fill(disabledCondition ? Color.buttonDisabledColor : Color.buttonDefaultColor)
+                .fill(Color.buttonBgColor)
                 .frame(width: tinyButtonWidth, height: tinyButtonHeight)
                 .overlay {
                     Text(title)
-                        .foregroundColor(disabledCondition ? Color.buttonDisabledTextColor : Color.buttonDefaultTextColor)
+                        .headerFont6()
+                        .foregroundColor(.primeText)
+                }
+        }
+        .disabled(disabledCondition)
+    }
+    
+    func clickableTinyButton(disabledCondition: Bool, action: @escaping () -> Void) -> some View {
+        return Button(action: {
+            action()
+            isClicked.toggle()
+        }) {
+            RoundedRectangle(cornerRadius: buttonCornerRadius)
+                .fill(isClicked ? Color.accentColor1 : Color.buttonBgColor, strokeBorder: Color.buttonStrokeColor, lineWidth: 1.5)
+                .frame(width: tinyButtonWidth, height: tinyButtonHeight)
+                .overlay {
+                    Text(isClicked ? "추가됨" : "재료 추가")
+                        .headerFont6()
+                        .foregroundColor(isClicked ? .defaultText_wh : .primeText)
                 }
         }
         .disabled(disabledCondition)
@@ -119,9 +142,8 @@ struct ButtonComponents_Previews: PreviewProvider {
             }
             .buttonColor(.red)
             .titleColor(.black)
-
             ButtonComponents(.small,
-                             title: "이전",
+                             title: "다음",
                              disabledCondition: false
             ) {
                 print(#function)
@@ -132,6 +154,7 @@ struct ButtonComponents_Previews: PreviewProvider {
             ) {
                 print(#function)
             }
+            ButtonComponents(.clickableTiny)
         }
     }
 }
