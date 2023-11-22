@@ -48,7 +48,9 @@ struct DailyPlanListView: View {
                 if let meals = mealsDict[solidDate] {
                     MealGroupView(
                         dateRange: solidDate.description,
-                        displayDateInfo: user.displayDateType.textInfo(of: user, from: solidDate.startDate, to: solidDate.endDate),
+                        displayDateInfo: DisplayDateInfoView(
+                            from: solidDate.startDate,
+                            to: solidDate.endDate),
                         mealPlans: meals,
                         isInList: false
                     )

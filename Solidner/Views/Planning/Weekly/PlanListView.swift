@@ -81,7 +81,9 @@ struct PlanListView: View {
                 if let meals = mealsDict[solidDate] {
                     MealGroupView(
                         dateRange: solidDate.description,
-                        displayDateInfo: user.displayDateType.textInfo(of: user, from: solidDate.startDate, to: solidDate.endDate),
+                        displayDateInfo: DisplayDateInfoView(
+                            from: solidDate.startDate,
+                            to: solidDate.endDate),
                         mealPlans: meals,
                         isTodayInDateRange: Date().isInBetween(from: solidDate.startDate, to: solidDate.endDate)
                     )
@@ -95,7 +97,11 @@ struct PlanListView: View {
         let newStartDate = mealPlans.sorted { $0.endDate > $1.endDate }.first?.endDate.add(.day, value: 1) ?? (Date.date(year: selectedDate.year, month: selectedDate.month, day: 1) ?? Date())
         let newEndDate = newStartDate.add(.day, value: user.planCycleGap.rawValue - 1)
         let dateRangeString = texts.dateRangeString(start: newStartDate, end: newEndDate)
-        return MealGroupView(type: .addNew, dateRange: dateRangeString, displayDateInfo: user.displayDateType.textInfo(of: user, from: newStartDate, to: newEndDate))
+        return MealGroupView(
+            type: .addNew,
+            dateRange: dateRangeString,
+            displayDateInfo: DisplayDateInfoView(from: newStartDate, to: newEndDate)
+        )
     }
 
     // MARK: - totalSetting

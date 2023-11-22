@@ -37,7 +37,7 @@ struct PlanDetailView: View {
             }
             MealGroupView(
                 dateRange: dateRangeString,
-                displayDateInfo: user.displayDateType.textInfo(of: user, from: startDate, to: endDate),
+                displayDateInfo: DisplayDateInfoView(from: startDate, to: endDate),
                 mealPlans: mealPlans,
                 isInList: false
             )
