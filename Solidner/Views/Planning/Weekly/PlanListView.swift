@@ -103,7 +103,7 @@ struct PlanListView: View {
             print(#function)
         } label: {
             HStack {
-                Text(TextLiterals.SolidFoodBatchSetting.labelText)
+                Text(TextLiterals.PlanBatchSetting.labelText)
                     .foregroundStyle(Color.black)
                     .bold()
                 Spacer()
