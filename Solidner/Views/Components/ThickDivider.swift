@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ThickDivider: View {
 
-    @State private var foregroundColor: Color = Color(uiColor: .systemGray5)
+    @State private var foregroundColor: Color = K.foregroundColor
 
     func foregroundColor(_ color: Color) -> ThickDivider {
         var view = self
@@ -17,11 +17,17 @@ struct ThickDivider: View {
         return view
     }
 
+    private enum K {
+        static var foregroundColor: Color { .dividerColor.opacity(0.2) }
+        static var height: CGFloat { 10 }
+        static var horizontalPadding: CGFloat { -20 }
+    }
+
+
     var body: some View {
         Rectangle()
             .foregroundStyle(foregroundColor)
-            .frame(height: 10)
-            .padding(.vertical)
-            .padding(.horizontal, -100)
+            .frame(height: K.height)
+            .padding(.horizontal, K.horizontalPadding)
     }
 }

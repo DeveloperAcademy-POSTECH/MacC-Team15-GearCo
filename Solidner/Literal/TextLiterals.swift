@@ -32,6 +32,10 @@ enum TextLiterals {
             "\(date.day)일"
         }
 
+        static func ddDateText(date: Int) -> String {
+            "\(date)일"
+        }
+
         static func dateRangeString(start: Date, end: Date) -> String {
             "\(start.day)일(\(start.weekDayKor)) ~ \(end.day)일(\(end.weekDayKor))"
         }
@@ -42,6 +46,10 @@ enum TextLiterals {
 
         static var addIngredientText: String {
             "재료 추가"
+        }
+
+        static var solidTotalSettingText: String {
+            "이유식 전체설정"
         }
     }
 

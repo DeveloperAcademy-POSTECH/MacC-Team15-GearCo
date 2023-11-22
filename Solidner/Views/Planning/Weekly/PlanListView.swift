@@ -15,13 +15,18 @@
  -[x] 그룹
  -[ ] 이상 반응 보이게
  */
+// TODO: - date 각 년월일 들어가게 :)
+// TODO: - 문제있는 date만 표시될 수 있도록 새로운 struct를 선언해야 할까?
+// TODO: - date 버튼 눌렀을 때 action
+// TODO: - totalSetting action 추가하기
+
 import SwiftUI
 
 struct PlanListView: View {
     @EnvironmentObject private var user: UserOB
     @State private var selectedDate = Date()
     let mealPlans: [MealPlan]
-    let texts = TextLiterals.PlanList.self
+    private let texts = TextLiterals.PlanList.self
     private(set) var mealsDict = [SolidDate:[MealPlan]]()
 
     init(mealPlans: [MealPlan] = MealPlan.mockMealsOne) {
@@ -29,9 +34,34 @@ struct PlanListView: View {
         mealsDict = Dictionary(grouping: mealPlans) { SolidDate(startDate: $0.startDate, endDate: $0.endDate) }
     }
 
+    private enum K {
+        static var rootVStackSpacing: CGFloat { 26 }
+        static var defaultHorizontalPadding: CGFloat { 20 }
+
+        static var titleHStackSpacing: CGFloat { 4 }
+        static var titleTextColor: Color { .defaultText }
+        static var chevronDownSFSymbolName: String { "chevron.down" }
+        static var chevronDownColor: Color { .primeText }
+
+
+        static var dateHStackSpacing: CGFloat { 12 }
+        static var dateTextColor: Color { .secondaryText }
+        static var dateButtonWidth: CGFloat { 70 }
+        static var dateButtonHeight: CGFloat { 36 }
+        static var dateButtonCornerRadius: CGFloat { 12 }
+        static var dateButtonBackgroundColor: Color { .buttonBgColor }
+
+        static var mealGroupListVStackSpacing: CGFloat { 40 }
+
+        static var chevronRightSFSymbolName: String { "chevron.right" }
+        static var chevronRightColor: Color { .primeText }
+
+        static var solidTotalSettingTextColor: Color { .primeText }
+    }
+
     var body: some View {
         ScrollView {
-            VStack {
+            VStack(spacing: K.rootVStackSpacing) {
                 title
                 dateScroll
                 ThickDivider()
@@ -41,43 +71,70 @@ struct PlanListView: View {
             }
         }
     }
+}
 
+// MARK: - title
+extension PlanListView {
     private var title: some View {
-        HStack {
-            Text(texts.yyyymmHeaderText(date: selectedDate))
-                .font(.largeTitle).bold()
-            Image(systemName: "chevron.down")
-            Spacer()
-        }
-    }
-
-    //TODO: - date 각 년월일 들어가게 :)
-    private var dateScroll: some View {
-        ScrollView(.horizontal) {
-            HStack {
-                ForEach(1..<31) { number in
-                    Button {
-                        print(#function)
-                    } label: {
-//                        Text(texts.ddDateText(date: <#T##Date#>))
-                        Text("\(number)일")
-                            .foregroundStyle(Color.black).bold()
-                            .padding(.horizontal, 25)
-                            .padding(.vertical, 9)
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(Color.gray)
-                            )
-                    }
-                }
+        Button {
+            print(#function)
+        } label: {
+            HStack(spacing: K.titleHStackSpacing) {
+                Text(texts.yyyymmHeaderText(date: selectedDate))
+                    .headerFont2().bold()
+                    .foregroundStyle(K.titleTextColor)
+                Image(systemName: K.chevronDownSFSymbolName)
+                    .foregroundStyle(K.chevronDownColor)
+                    .bold()
+                Spacer()
             }
         }
     }
 
-    // MARK: - meal Group List
-    var mealGroupList: some View {
-        VStack(spacing: 20) {
+    // TODO: - date 각 년월일 들어가게 :)
+    // TODO: - 문제있는 date만 표시될 수 있도록 새로운 struct를 선언해야 할까?
+    // TODO: - date 버튼 눌렀을 때 action
+    private var dateScroll: some View {
+        let endDateDay: Int = {
+            let nextMonthFirstDay = Date.date(year: selectedDate.year, month: (selectedDate.month + 1) % 12 + 1, day: 1)!
+            let currentMonthLastDay = nextMonthFirstDay.add(.day, value: -1)
+            return currentMonthLastDay.day
+        }()
+
+        return ScrollView(.horizontal) {
+            HStack(spacing: K.dateHStackSpacing) {
+                Spacer().frame(width: K.defaultHorizontalPadding - K.dateHStackSpacing)
+                ForEach(Array(1..<endDateDay), id: \.self) { number in
+                    Button {
+                        print(#function)
+                    } label: {
+                        dateScrollLabel(of: number)
+                    }
+                }
+            }
+        }
+        .padding(.horizontal, -K.defaultHorizontalPadding)
+    }
+
+    private func dateScrollLabel(of number: Int) -> some View {
+        Text(texts.ddDateText(date: number))
+            .headerFont6()
+            .foregroundStyle(Color.black)
+            .frame(width: K.dateButtonWidth, height: K.dateButtonHeight)
+            .background(
+                RoundedRectangle(cornerRadius: K.dateButtonCornerRadius)
+                    .fill(K.dateButtonBackgroundColor)
+            )
+    }
+}
+
+// MARK: - meal Group List
+
+extension PlanListView {
+    private var mealGroupList: some View {
+        VStack(spacing: K.mealGroupListVStackSpacing) {
             let mealDictKeys = Array(mealsDict.keys.sorted(by: { $0.startDate < $1.startDate }).enumerated())
+
             ForEach(mealDictKeys, id: \.element) { index, solidDate in
                 if let meals = mealsDict[solidDate] {
                     MealGroupView(
@@ -94,7 +151,7 @@ struct PlanListView: View {
         }
     }
 
-    var addNewMealPlan: some View {
+    private var addNewMealPlan: some View {
         let newStartDate = mealPlans.sorted { $0.endDate > $1.endDate }.first?.endDate.add(.day, value: 1) ?? (Date.date(year: selectedDate.year, month: selectedDate.month, day: 1) ?? Date())
         let newEndDate = newStartDate.add(.day, value: user.planCycleGap.rawValue - 1)
         let dateRangeString = texts.dateRangeString(start: newStartDate, end: newEndDate)
@@ -104,38 +161,41 @@ struct PlanListView: View {
             displayDateInfo: DisplayDateInfoView(from: newStartDate, to: newEndDate)
         )
     }
+}
 
-    // MARK: - totalSetting
-    var totalSetting: some View {
+// MARK: - totalSetting
+// TODO: - totalSetting action 추가하기
+
+extension PlanListView {
+    private var totalSetting: some View {
         Button {
             print(#function)
         } label: {
             HStack {
-                Text(TextLiterals.PlanBatchSetting.labelText)
-                    .foregroundStyle(Color.black)
-                    .bold()
+                Text(texts.solidTotalSettingText)
+                    .headerFont4()
+                    .foregroundStyle(K.solidTotalSettingTextColor)
                 Spacer()
-                Image(systemName: "chevron.right")
-                    .foregroundStyle(Color.gray)
+                Image(systemName: K.chevronRightSFSymbolName)
+                    .foregroundStyle(K.chevronRightColor)
+                    .bold()
             }
-
         }
-
-
     }
 
-//    func mealView(meal: MealPlan.Meal) -> some View {
-//        HStack {
-//            meal.ingredients.enumerated().reduce(Text("")) { partialResult, enumeration  in
-//                let (index, ingredient) = (enumeration.offset, enumeration.element)
-//                let additionalText = index == meal.ingredients.endIndex ? Text("") : Text(", ")
-//                return partialResult + Text(ingredient.description)
-//                    .foregroundColor(ingredient.isNew ? .blue : .black) + additionalText
-//            }
-//            Spacer()
-//        }
-//        .padding()
-//    }
+    // 나중에 써먹을 코드.. 얼른 쓰고 지우겟읍니다.
+    //    func mealView(meal: MealPlan.Meal) -> some View {
+    //        HStack {
+    //            meal.ingredients.enumerated().reduce(Text("")) { partialResult, enumeration  in
+    //                let (index, ingredient) = (enumeration.offset, enumeration.element)
+    //                let additionalText = index == meal.ingredients.endIndex ? Text("") : Text(", ")
+    //                return partialResult + Text(ingredient.description)
+    //                    .foregroundColor(ingredient.isNew ? .blue : .black) + additionalText
+    //            }
+    //            Spacer()
+    //        }
+    //        .padding()
+    //    }
 }
 
 // MARK: - Structure - Solid Date
@@ -153,6 +213,5 @@ extension PlanListView {
 struct PlanListView_Previews: PreviewProvider {
     static var previews: some View {
         PlanListView(mealPlans: MealPlan.mockMealsOne).environmentObject(UserOB())
-//        PlanListView(mealPlans: MealPlan.mockMealsTwo)
     }
 }
