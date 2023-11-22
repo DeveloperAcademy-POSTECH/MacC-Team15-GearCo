@@ -23,15 +23,15 @@ struct MonthlyPlanningView: View {
     }
     // MARK: 이전 달의 데이터와 이후 달의 데이터는 -2, 33 등과 같이 표현할 것.
     let plans: [planData] =
-    [planData(startDate: 1, endDate: 2),
-     planData(startDate: 3, endDate: 4),
-     planData(startDate: 2, endDate: 4),
-     planData(startDate: 5, endDate: 7),
-     planData(startDate: 8, endDate: 10),
-     planData(startDate: 9, endDate: 11),
-     planData(startDate: 13, endDate: 14),
-     planData(startDate: 26, endDate: 27),
-     planData(startDate: 29, endDate: 30),
+    [planData(startDate: 0, endDate: 2),
+//     planData(startDate: 3, endDate: 4),
+//     planData(startDate: 2, endDate: 4),
+//     planData(startDate: 5, endDate: 7),
+//     planData(startDate: 8, endDate: 10),
+//     planData(startDate: 9, endDate: 11),
+//     planData(startDate: 13, endDate: 14),
+//     planData(startDate: 26, endDate: 27),
+//     planData(startDate: 29, endDate: 30),
 //     planData(startDate: -1, endDate: 1),
 //     planData(startDate: 29, endDate: 31),
      planData(startDate: 12, endDate: 15)]
@@ -62,7 +62,6 @@ struct MonthlyPlanningView: View {
         }.background(Color(.lightGray))
             .onAppear {
                 reducedPlans = reducePlanData(plans: plans)
-                print(reducedPlans)
             }
     }
     
@@ -76,6 +75,7 @@ struct MonthlyPlanningView: View {
         let gapToSecondBar = screenWidth * (5/390)
         
         let barHorizontalPadding = screenWidth * (10/390)
+        let endPadding = barHorizontalPadding + rowHorizontalPadding
         
         let plansInWeek: [(data: planData, position: BarPosition)]
         = reducePlanDataInWeek(weekOfMonth: weekOfMonth, reducedPlans: reducedPlans)
@@ -91,8 +91,9 @@ struct MonthlyPlanningView: View {
         let dayNumsInWeek: [Int] = weekDates.map{ $0.day }
         let monthDates = Date.nowMonthDates()
         
+        
         // 바 길이 계산
-        func calculateBarWidth(plan: planData, isBarFromEnd: inout (left: Bool, right: Bool)) -> CGFloat {
+        func calculateBarWidth(plan: planData, isBarFromEnd: (left: Bool, right: Bool)) -> CGFloat {
             let cycleGap: CGFloat = CGFloat(plan.endDate - plan.startDate + 1)
             var result: CGFloat = 0
             
@@ -100,15 +101,13 @@ struct MonthlyPlanningView: View {
                 dayNumsInWeek.contains(plan.endDate) {
                 result = (mainDaySectionWidth * cycleGap) - (barHorizontalPadding * 2)
             } else if dayNumsInWeek.first! > plan.startDate {
-                isBarFromEnd.left = true
                 if dayNumsInWeek.first! == 1 {  // 1일 이전부터 이어지는 바
                     let weekDay = CGFloat(weekDates.first!.weekday)  // 요일
-                    result = (mainDaySectionWidth * weekDay) - barHorizontalPadding + rowHorizontalPadding
+                    result = (mainDaySectionWidth * weekDay) - barHorizontalPadding * 2 + endPadding
                 } else {
-                    result = (mainDaySectionWidth * cycleGap) - barHorizontalPadding + rowHorizontalPadding
+                    result = (mainDaySectionWidth * cycleGap) - barHorizontalPadding * 2 + endPadding
                 }
             } else if dayNumsInWeek.last! < plan.endDate {
-                isBarFromEnd.right = true
                 if dayNumsInWeek.last! == monthDates.last!.day {    // 월말 이후까지 이어지는 바
                     let weekDay = weekDates.first!.weekday  // 요일
                     let dayGap = CGFloat(7 - weekDay + 1)
@@ -124,36 +123,32 @@ struct MonthlyPlanningView: View {
         }
         
         // 재료 바 view return
-        func ingredientBar(plan: planData, index: Int, isBarFromEnd: inout (left: Bool, right: Bool)) -> some View {
-//            var isBarFromEnd: (left: Bool, right: Bool) = (false, false)
+        func ingredientBar(plan: planData, index: Int, isBarFromEnd: (left: Bool, right: Bool)) -> some View {
             // MARK: 오류나면 다시볼 것
-            let barWidth: CGFloat = calculateBarWidth(plan: plan, isBarFromEnd: &isBarFromEnd)
+            let barWidth: CGFloat = calculateBarWidth(plan: plan, isBarFromEnd: isBarFromEnd)
             let barRadius: CGFloat = 4
                         
-            return HStack(spacing: 0) {
-                VStack(spacing: 0) {
-                    HStack(spacing: 0) {
-                        Text("고기고기고기")
-                            .font(.system(size: 10))
-                            .bold()
-                            .foregroundColor(.white)
-                            .padding(.leading, 7)
-                        Spacer()
-                    }
-                }.frame(width: barWidth, height: ingredientBarHeight)
-                .background {
-                    Rectangle()
-                        .foregroundColor(Color.pink.opacity(0.5))
-                        .if(!isBarFromEnd.left) { view in
-                            view.leftCornerRadius(barRadius)
-                        }.if(!isBarFromEnd.right) { view in
-                            view.rightCornerRadius(barRadius)
-                        }
+            return VStack(spacing: 0) {
+                HStack(spacing: 0) {
+                    Text("고기고기고기")
+                        .font(.system(size: 10))
+                        .bold()
+                        .foregroundColor(.white)
+                        .padding(.leading, 7)
+                    Spacer()
                 }
+            }.frame(width: barWidth, height: ingredientBarHeight)
+            .background {
+                Rectangle()
+                    .foregroundColor(Color.pink.opacity(0.5))
+                    .if(!isBarFromEnd.left) { view in
+                        view.leftCornerRadius(barRadius)
+                    }.if(!isBarFromEnd.right) { view in
+                        view.rightCornerRadius(barRadius)
+                    }
             }
         }
         
-        let endPadding = barHorizontalPadding + rowHorizontalPadding
         func barLeftPadding(plans: [planData], index: Int, isBarFromEnd: (left: Bool, right: Bool)) -> some View {
             
             switch plans.count {
@@ -161,6 +156,7 @@ struct MonthlyPlanningView: View {
                 return AnyView(Spacer())
             case 1: // 한 줄에 plan이 하나일 때
                 if isBarFromEnd.left {  // 왼쪽으로 붙여야 하면
+                    print(isBarFromEnd)
                     return AnyView(EmptyView())
                 } else if isBarFromEnd.right {  // 오른쪽으로 붙여야 하면
                     return AnyView(Spacer())
@@ -209,7 +205,6 @@ struct MonthlyPlanningView: View {
                     return AnyView(Spacer().frame(width: width))
                 }
             }
-                
         }
         func barRightPadding(plans: [planData], index: Int, isBarFromEnd: (left: Bool, right: Bool)) -> some View {
             switch plans.count {
@@ -240,15 +235,26 @@ struct MonthlyPlanningView: View {
             }
         }
         
+        func calculateIsBarFromEnd(plan: planData) -> (Bool, Bool) {
+            var result: (left: Bool, right: Bool) = (false, false)
+            if dayNumsInWeek.first! > plan.startDate {
+                result.left = true
+            } else if dayNumsInWeek.last! < plan.endDate {
+                result.right = true
+            }
+            
+            return result
+        }
+        
         // MARK: 재료 바를 포함한 한 줄 return
         return VStack(spacing: 0) {
             Spacer().frame(height: gapToFirstBar)
             
             HStack(spacing: 0) {
                 ForEach(Array(plansInWeekFirstLine.indices), id: \.self) { i in
-                    var isBarFromEnd: (left: Bool, right: Bool) = (false, false)
+                    let isBarFromEnd: (Bool, Bool) = calculateIsBarFromEnd(plan: plansInWeekFirstLine[i])
                     barLeftPadding(plans: plansInWeekFirstLine, index: i, isBarFromEnd: isBarFromEnd)
-                    ingredientBar(plan: plansInWeekFirstLine[i], index: i, isBarFromEnd: &isBarFromEnd)
+                    ingredientBar(plan: plansInWeekFirstLine[i], index: i, isBarFromEnd: isBarFromEnd)
                     barRightPadding(plans: plansInWeekFirstLine, index: i, isBarFromEnd: isBarFromEnd)
                 }
             }.frame(height: ingredientBarHeight)
@@ -257,9 +263,10 @@ struct MonthlyPlanningView: View {
             
             HStack(spacing: 0) {
                 ForEach(Array(plansInWeekSecondLine.indices), id: \.self) { i in
-                    var isBarFromEnd: (left: Bool, right: Bool) = (false, false)
+                    let isBarFromEnd: (Bool, Bool) = calculateIsBarFromEnd(plan: plansInWeekFirstLine[i])
+                    
                     barLeftPadding(plans: plansInWeekSecondLine, index: i, isBarFromEnd: isBarFromEnd)
-                    ingredientBar(plan: plansInWeekSecondLine[i], index: i, isBarFromEnd: &isBarFromEnd)
+                    ingredientBar(plan: plansInWeekSecondLine[i], index: i, isBarFromEnd: isBarFromEnd)
                     barRightPadding(plans: plansInWeekSecondLine, index: i, isBarFromEnd: isBarFromEnd)
                 }
             }.frame(height: ingredientBarHeight)
@@ -399,7 +406,7 @@ extension MonthlyPlanningView {
         let dayNumsInWeek: [Int] = Date.weekDates(weekOfMonth).map{ $0.day }
         var result: [(planData, BarPosition)] = []
         
-        for plan in reducedPlans {
+        for plan in reducedPlans.sorted(by: { $0.0.startDate < $1.0.startDate }) {
             if dayNumsInWeek.contains(plan.first.startDate) ||
                 dayNumsInWeek.contains(plan.first.endDate) {
                 result.append(plan)
