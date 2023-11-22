@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct PlanBatchSettingView: View {
+    @EnvironmentObject var user: UserOB
+
     private let texts = TextLiterals.PlanBatchSetting.self
 
     var body: some View {
         VStack(alignment: .leading) {
             settingTitle
+            solidCycleGapSelectionView
             ThickDivider()
         }
     }
@@ -20,10 +23,14 @@ struct PlanBatchSettingView: View {
     private var settingTitle: some View {
         TitleAndHintView(title: texts.labelText, hint: texts.hintText)
     }
+
+    private var solidCycleGapSelectionView: some View {
+        SolidnerSegmentedCyclePicker(user: user)
+    }
 }
 
 struct PlanBatchSettingView_Previews: PreviewProvider {
     static var previews: some View {
-        PlanBatchSettingView()
+        PlanBatchSettingView().environmentObject(UserOB())
     }
 }

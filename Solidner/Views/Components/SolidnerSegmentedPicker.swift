@@ -7,6 +7,27 @@
 
 import SwiftUI
 
+struct SolidnerSegmentedCyclePicker: View {
+    @ObservedObject var user: UserOB
+    @State private var selection: CycleGaps
+
+    init(user: UserOB) {
+        self.user = user
+        self._selection = State(initialValue: user.planCycleGap)
+    }
+
+    var body: some View {
+        SolidnerSegmentedPicker(
+            label: TextLiterals.PlanBatchSetting.testCycleLabel,
+            items: CycleGaps.allCases,
+            selection: $selection
+        )
+        .onChange(of: selection) { value in
+            user.planCycleGap = selection
+        }
+    }
+}
+
 
 struct SolidnerSegmentedPicker<Data> : View where Data: Hashable & CustomStringConvertible {
     let label: String
@@ -84,5 +105,6 @@ fileprivate struct SolidnerSegmentWidthKey: PreferenceKey {
 struct SolidnerSegmentedPicker_Previews: PreviewProvider {
     static var previews: some View {
 //        SolidnerSegmentedPicker(label: "간격", items: [1, 2, 3], selection: .constant(1))
+        SolidnerSegmentedCyclePicker(user: UserOB())
     }
 }
