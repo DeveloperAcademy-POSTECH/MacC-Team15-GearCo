@@ -15,6 +15,13 @@ struct ChangeMonthModal: View {
         static var leftButtonIcon: String { "chevron.left" }
         static var rightButtonIcon: String { "chevron.right" }
         static var monthTitleColor: Color { Color.black }
+        //TODO: - color 시스템 적용
+        static var selectedCurrentMonthCircleColor: Color { Color.pink }
+        static var selectedotherMonthCircleColor: Color { Color.black }
+        static var chevronColor: Color { Color.black }
+        static var monthColumnNumber: Int { 4 }
+        static var monthTextColor: Color { Color.black }
+        static var selectedMonthTextColor: Color { Color.white }
     }
     private let texts = TextLiterals.ChangeMonth.self
 
@@ -26,6 +33,7 @@ struct ChangeMonthModal: View {
     var body: some View {
         VStack {
             monthTitleBar
+            monthButtons
         }
     }
 
@@ -79,6 +87,38 @@ struct ChangeMonthModal: View {
         Text(texts.currentYearText(of: selectingDate))
             .font(.title)
             .foregroundStyle(K.monthTitleColor)
+    }
+
+    private var monthButtons: some View {
+        let columns: [GridItem] = Array(repeating: .init(.flexible()), count: K.monthColumnNumber)
+        let isSelectedCurrentMonth = Date().month == selectingDate.month && Date().year == selectingDate.year
+        return ZStack {
+            LazyVGrid(columns: columns) {
+                ForEach(1..<13) { number in
+                    Button {
+                        withAnimation {
+                            selectingDate = Date.date(year: selectingDate.year, month: number, day: 1)!
+                        }
+                    } label: {
+                        Text(texts.monthText(of: number))
+                            .bold()
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .if(number == selectingDate.month) { view in
+                                view
+                                    .foregroundStyle(K.selectedMonthTextColor)
+                                    .background(
+                                    Circle()
+                                        .foregroundStyle(
+                                            isSelectedCurrentMonth ?  K.selectedCurrentMonthCircleColor : K.selectedotherMonthCircleColor
+                                        )
+                                )
+                            }
+                    }
+                    .foregroundStyle(K.monthTextColor)
+                }
+            }
+        }
     }
 
 }
