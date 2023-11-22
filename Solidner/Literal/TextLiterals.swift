@@ -8,10 +8,20 @@
 import Foundation
 
 enum TextLiterals {
+    static var emptyString: String { "" }
 
     // MARK: - Weekly Planning
     // 1. enum으로 한 번 더 뺄지, 2. TextLiterals 내에 두되 mark로 구분할지 고민
     // 일단 1의 방식으로 진행했습니다.
+
+    enum StartPlan {
+        static var noWorriesJustStartHeaderText: String { "솔리너로\n걱정없는 이유식 계획" }
+        static var noWorriesJustStartDetailText: String { "이유식 구성에 어려움을 겪으셨나요?\n지금 바로 시작해보세요." }
+        static var goToPlanButtonText: String { "이유식 구성하기" }
+        static var selectStartDateModalHeaderText: String { "이제, 시작해볼까요!" }
+        static var selectStartDateModalDetailText: String { "첫 계획 시작일을 언제로 할까요?" }
+        static var startButtonLabel: String { "시작하기" }
+    }
 
     enum PlanList {
         static func yyyymmHeaderText(date: Date) ->  String {
@@ -109,6 +119,9 @@ enum TextLiterals {
         static var addMealPlanButtonText: String { "일정 추가하기" }
         static var deleteMealPlanTitleText: String { "끼니 삭제" }
         static var deleteMealPlanButtonText: String { "삭제하기" }
+
+        static var changeStartDateText: String { "시작일 변경" }
+        static var changeStartDateDetailText: String { "아래 날짜부터 시작할 예정이에요." }
     }
     
     enum AgreeToTerms {
