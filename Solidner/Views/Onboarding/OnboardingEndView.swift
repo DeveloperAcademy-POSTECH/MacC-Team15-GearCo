@@ -19,7 +19,7 @@ struct OnboardingEndView: View {
             Spacer()
             OnboardingTitles(alignmentCase: .center, bigTitle: TextLiterals.OnboardingEnd.bigTitle, smallTitle: TextLiterals.OnboardingEnd.smallTitle)
             Spacer()
-            ButtonComponents().bigButton(title: TextLiterals.OnboardingEnd.buttonTitle, disabledCondition: false) {
+            ButtonComponents(.big, title: TextLiterals.OnboardingEnd.buttonTitle, disabledCondition: false) {
                 isOnboardingOn = false
             }
         }

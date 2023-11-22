@@ -36,8 +36,13 @@ extension Color {
     static let buttonBgColor = Color(#colorLiteral(red: 0.9137254902, green: 0.8941176471, blue: 0.862745098, alpha: 1)) //E9E4DC
     static let dividerColor = Color(#colorLiteral(red: 0.8509803922, green: 0.8509803922, blue: 0.8509803922, alpha: 1)) //D9D9D9
     static let chipBgColor = Color(#colorLiteral(red: 0.9098039216, green: 0.8941176471, blue: 0.8823529412, alpha: 1)) //E8E4E1
+    static let buttonStrokeColor = Color.black.opacity(0.1)
+    static let listStrokeColor = Color(#colorLiteral(red: 0.9176470588, green: 0.9176470588, blue: 0.9176470588, alpha: 1)) //EAEAEA
+    static let ageColor = Color(#colorLiteral(red: 0.6588235294, green: 0.4705882353, blue: 0.7450980392, alpha: 1)) //A878BE
+    static let newColor = Color(#colorLiteral(red: 0.4352941176, green: 0.6549019608, blue: 0.8549019608, alpha: 1)) //6FA7DA
     //text
     static let defaultText = Color.black
+    static let defaultText_wh = Color.white
     static let primeText = Color(#colorLiteral(red: 0.2470588235, green: 0.2431372549, blue: 0.2431372549, alpha: 1)) //3F3E3E
     static let secondaryText = Color(#colorLiteral(red: 0.3098039216, green: 0.3098039216, blue: 0.3098039216, alpha: 1)) //4F4F4F
     static let tertinaryText = Color(#colorLiteral(red: 0.6117647059, green: 0.6117647059, blue: 0.6117647059, alpha: 1)) //9C9C9C
