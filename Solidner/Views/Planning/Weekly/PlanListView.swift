@@ -100,10 +100,12 @@ extension PlanListView {
             let currentMonthLastDay = nextMonthFirstDay.add(.day, value: -1)
             return currentMonthLastDay.day
         }()
+        let spacer: some View = Spacer()
+            .frame(width: K.defaultHorizontalPadding - K.dateHStackSpacing)
 
         return ScrollView(.horizontal) {
             HStack(spacing: K.dateHStackSpacing) {
-                Spacer().frame(width: K.defaultHorizontalPadding - K.dateHStackSpacing)
+                spacer
                 ForEach(Array(1..<endDateDay), id: \.self) { number in
                     Button {
                         print(#function)
@@ -111,8 +113,10 @@ extension PlanListView {
                         dateScrollLabel(of: number)
                     }
                 }
+                spacer
             }
         }
+        .scrollIndicators(.hidden)
         .padding(.horizontal, -K.defaultHorizontalPadding)
     }
 
