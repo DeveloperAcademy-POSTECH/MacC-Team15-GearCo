@@ -11,153 +11,127 @@ struct AddTestIngredientsView: View {
     // TODO: 전체적인 Padding 계층 및 Magic Number 수정 요함
     private let Texts = TextLiterals.AddIngredientsView.self
     
+    // MARK: Padding&Spacing Magic Numbers
     private let viewHorizontalPadding: CGFloat = 20
     
-    @State private var dummyFoldState: [Bool] = [false, false, false, false]
+    private let headerBottomPadding: CGFloat = 20
+    private let typeButtonsRowBottomPadding: CGFloat = 17
+    private let typeButtonBetweenSpace: CGFloat = 10
     
-    private func toggleFoldState(foldStateList: inout [Bool], index: Int) {
-        foldStateList[index].toggle()
-    }
+    private let selectedTypeBottomSpace: CGFloat = 25
+    private let selectedTypeSpaceWhenDisappear: CGFloat = 30
+    private let divisionDividerVerticalPadding: CGFloat = 10
     
+    private let saveButtonBottomSpace: CGFloat = 40
+    private let saveButtonTopSpace: CGFloat = 100
+    private let reportButtonTopSpace: CGFloat = 20
+        
     // TODO: 형식 수정
     @State private var selectedIngredientPair: (first: String, second: String?)? = ("곡물", "유제품류")
     
     var body: some View {
         VStack(spacing: 0) {
             BackButtonHeader(title: Texts.testViewTitle)
-                .padding(.bottom, 20)
+                .padding(.bottom, headerBottomPadding)
             
-            // MARK: 스크롤 위치 확인
+            // MARK: 검색, 재료 타입 버튼
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 10) {
+                HStack(spacing: typeButtonBetweenSpace) {
                     searchButton
                     ForEach(TempIngredientType.allCases, id: \.self) { ingredientType in
                         ingredientTypeButton(ingredientType.rawValue)
                     }
                 }.padding(.leading, viewHorizontalPadding)
-            }.padding(.bottom, 15)
+            }.padding(.bottom, typeButtonsRowBottomPadding)
             
+            // MARK: 선택된 재료 타입 확인 Row
             if let pair = selectedIngredientPair {
-                HStack(spacing: 10) {
+                HStack(spacing: typeButtonBetweenSpace) {
                     selectedIngredientTypeBox(typeText: pair.first)
                     if let second = pair.second {
                         selectedIngredientTypeBox(typeText: second)
                     }
                     Spacer()
                 }.padding(.leading, viewHorizontalPadding)
+                
+                Spacer().frame(height: selectedTypeBottomSpace)
+            } else {
+                Spacer().frame(height: selectedTypeSpaceWhenDisappear)
             }
-            Spacer().frame(height: 15)
-
+            
             ScrollView {
-                Spacer().frame(height: 15)
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("이상 반응 재료")
-                        .font(.title2)
-                        .bold()
-                    
-                    ingredientSelectRow().padding(.top, 24)
-                    ingredientSelectRow().padding(.top, 30)
-                }.padding(.horizontal, viewHorizontalPadding)
+                IngredientsBigDivision(divisionCase: .이상반응재료)
+//                IngredientsBigDivision(divisionCase: .자주사용한재료)
                 
-                ThickDivider()
+                ThickDivider().padding(.vertical, divisionDividerVerticalPadding)
                 
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("먹을 수 있는 재료")
-                        .font(.title2)
-                        .bold()
-                    Text("아이가 섭취할 수 있는 재료의\n전체 목록이에요")
-                        .padding(.top, 13)
-                        .padding(.bottom, 30)
-                    
-                    ForEach(dummyFoldState.indices, id: \.self) { index in
-                        HStack(spacing: 0) {
-                            Button {
-                                withAnimation(.spring()) {
-                                    toggleFoldState(foldStateList: &dummyFoldState, index: index)
-                                }
-                            } label: {
-                                Text("곡류")
-                                    .font(.system(size: 19, weight: .semibold))
-                                    .padding(.trailing, 6)
-                                Spacer()
-                                Image(systemName: dummyFoldState[index] ? "chevron.up" : "chevron.down")
-                                    .resizable()
-                                    .bold()
-                                    .frame(width: 18, height: 10)
-                            }.foregroundColor(.black)
-                                .toggleStyle(.automatic)
-                        }.buttonStyle(PlainButtonStyle())   // 깜빡임 제거
-                        
-                        if dummyFoldState[index] {
-                            Divider()
-                                .padding(.top, 24)
-                                .padding(.bottom, 20)
-                            Group {
-                                ingredientSelectRow().padding(.bottom, 30)
-                                ingredientSelectRow().padding(.bottom, 30)
-                                ingredientSelectRow().padding(.bottom, 30)
-                                ingredientSelectRow().padding(.bottom, 30)
-                            }.transition(.push(from: dummyFoldState[index] ? .bottom : .top))
-                                
-                        }
-                        
-                        ThickDivider()
-                    }
-                    
-                    
-                }.padding(.horizontal, viewHorizontalPadding)
+                IngredientsBigDivision(divisionCase: .먹을수있는재료)
+                Spacer().frame(height: divisionDividerVerticalPadding)
+                IngredientsBigDivision(divisionCase: .권장하지않는재료)
+                
+                Spacer().frame(height: reportButtonTopSpace)
+                reportButton
+                
+                Spacer().frame(height: saveButtonTopSpace)
+                ButtonComponents(.big).padding(.horizontal, viewHorizontalPadding)
+                Spacer().frame(height: saveButtonBottomSpace)
             }
         }.background(Color.mainBackgroundColor)
     }
     
+    private var reportButton: some View {
+        Button {
+            // TODO: 재료 신고 기능
+        } label: {
+            Text(Texts.isIngredientNotExist)
+                .clickableTextFont2()
+                .underline()
+                .foregroundColor(.primary.opacity(0.3))
+        }
+    }
+    
+    // MARK: 테스트 재료 분류
     private func ingredientTypeButton(_ text: String) -> some View {
         let textHorizontalPadding: CGFloat = 17
         let buttonFrameHeight: CGFloat = 40
         let buttonBackgroundRadius: CGFloat = 27.5
         
         return Button {
-            // TODO: Change State of Button
+            // TODO: 재료 분류에 따라 리스트 추가, 버튼 기능, 스크롤 따라가기, 선택여부따라 색 변경
         } label: {
-            // TODO: Color Change, font setting
             Text(text)
-                .foregroundColor(.white)
-                .font(.system(size: 15, weight: .medium))
+                .bodyFont2()
+                .foregroundColor(.defaultText_wh)
                 .padding(.horizontal, textHorizontalPadding)
                 .frame(height: buttonFrameHeight)
                 .background {
                     RoundedRectangle(cornerRadius: buttonBackgroundRadius)
-                        .fill(Color.black)
+                        .fill(Color.secondaryText)
+                    //                        .fill(Color.defaultText_wh)
                 }
         }
     }
     
+    // MARK: 검색 버튼
     private var searchButton: some View {
         let searchIconSize: CGFloat = 20
-        let searchIconHorizontalPadding: CGFloat = 25
+        let buttonFrameWidth: CGFloat = 70
         let buttonFrameHeight: CGFloat = 40
         let searchButtonBackgroundRadius: CGFloat = 24
-        let searchButtonStrokeInset: CGFloat = 0.5
         let searchButtonStrokeLineWidth: CGFloat = 1
         
         return Button {
             // TODO: Search
         } label: {
-            // TODO: Color Change, font setting
             Image(systemName: "magnifyingglass")
                 .resizable()
                 .scaledToFit()
                 .frame(width: searchIconSize)
-                .foregroundColor(.gray)
-                .padding(.horizontal, searchIconHorizontalPadding)
-                .frame(height: buttonFrameHeight)
-
+                .foregroundColor(.tertinaryText)
+                .frame(width: buttonFrameWidth, height: buttonFrameHeight)
                 .background {
                     RoundedRectangle(cornerRadius: searchButtonBackgroundRadius)
-                        .fill(Color.mainBackgroundColor)
-                }.overlay {
-                    RoundedRectangle(cornerRadius: searchButtonBackgroundRadius)
-                        .inset(by: searchButtonStrokeInset)
-                        .stroke(.black.opacity(0.1), lineWidth: searchButtonStrokeLineWidth)
+                        .fill(Color.buttonBgColor, strokeBorder: Color.buttonStrokeColor, lineWidth: searchButtonStrokeLineWidth)
                 }
         }
     }
@@ -174,31 +148,6 @@ struct AddTestIngredientsView: View {
     }
 }
 
-func ingredientSelectRow() -> some View {
-    // TODO: 수정
-    HStack(spacing: 0) {
-        Text("재료명")
-            .font(.system(size: 19, weight: .semibold))
-            .padding(.trailing, 6)
-        
-        Text("00/00")
-            .font(.caption)
-            .bold()
-            .foregroundColor(.white)
-            .symmetricBackground(HPad: 5, VPad: 2.5, color: .pink, radius: 3.8)
-        
-        Spacer()
-        
-        Button {
-            // TODO: 추가 로직, 색, 폰트 수정
-        } label: {
-            Text("재료 추가")
-                .font(.system(size: 15))
-                .symmetricBackground(HPad: 20, VPad: 15, color: .gray, radius: 12)
-        }
-    }
-}
-
 /// 선택된 재료들의 구분을 표시하는 블럭을 return합니다.
 /// - Parameter typeText: 표시될 text
 /// - Returns: 선택된 재료 확인 box
@@ -207,13 +156,13 @@ func selectedIngredientTypeBox(typeText: String) -> some View {
     let verticalPadding: CGFloat = 7
     let cornerRadius: CGFloat = 6
     
-    // TODO: font, color 수정
+    // TODO: 재료 타입에 따른 color가 되도록 수정
     return Text("\(typeText)")
-        .font(.caption)
-        .bold()
+        .bodyFont3()
+        .foregroundColor(.secondaryText)
         .symmetricBackground(HPad: horizontalPadding,
                              VPad: verticalPadding,
-                             color: .gray,
+                             color: .grain,
                              radius: cornerRadius)
 }
 
