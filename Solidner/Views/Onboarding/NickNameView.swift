@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct NickNameView: View {
-    private let textFieldTopPadding = 16.0
+    private let textFieldTopPadding = 22.0
     private let warningMessageTopPadding = 12.0
-    private let warningMessageLeadingPadding = 4.0
-    private let warningMessageFontSize = 11.5
+    private let warningMessageLeadingPadding = 6.0
     private let buttonUpDuration = 0.1
     let nickNameViewCase: NickNameViewCase
     @StateObject private var textLimiter = TextLimiterOB()
@@ -24,13 +23,17 @@ struct NickNameView: View {
     
     var body: some View {
         GeometryReader { _ in
-            VStack(spacing: 0) {
-                BackButtonHeader {
-                    presentationMode.wrappedValue.dismiss()
+            ZStack {
+                BackgroundView()
+                VStack(spacing: 0) {
+                    BackButtonHeader {
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                    viewBody()
+                        .padding(horizontal: 20, top: 31, bottom: 20)
                 }
-                viewBody()
+                .onAppear (perform : UIApplication.shared.hideKeyboard)
             }
-            .onAppear (perform : UIApplication.shared.hideKeyboard)
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .navigationBarBackButtonHidden(true)
@@ -44,16 +47,16 @@ struct NickNameView: View {
     }
     
     private func viewBody() -> some View {
-        return VStack {
-            OnboardingTitles(bigTitle: nickNameViewCase == .userName ? TextLiterals.NickName.bigUserNameTitle : TextLiterals.NickName.bigBabyNameTitle , isSmallTitleExist: false)
+        return VStack(spacing: 0) {
+            OnboardingTitles(bigTitle: nickNameViewCase == .userName ? TextLiterals.NickName.bigUserNameTitle : TextLiterals.NickName.bigBabyNameTitle , smallTitle: "", isSmallTitleExist: false)
             TextFieldComponents().shortTextfield(placeHolder: TextLiterals.NickName.placeHolder, value: $textLimiter.value, isFocused: $isFocused)
                 .padding(.top, textFieldTopPadding)
             if textLimiter.hasReachedLimit {
                 withAnimation {
                     HStack {
                         Text(TextLiterals.NickName.warningMessage)
-                            .foregroundColor(Color.warningMessageColor)
-                            .font(.system(size: warningMessageFontSize, weight: .semibold))
+                            .foregroundColor(Color.accentColor1)
+                            .inputErrorFont()
                         .padding(.top, warningMessageTopPadding)
                         .padding(.leading, warningMessageLeadingPadding)
                         Spacer()

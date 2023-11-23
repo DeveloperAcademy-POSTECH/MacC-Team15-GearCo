@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AgreeToTermsView: View {
     private let termsButtonsSpacing = 16.0
-    private let bigButtonTopPadding = 16.0
+    private let bigButtonTopPadding = 70.0
     private let agreeTitleLeadingPadding = 15.0
     @State private var isAgreeToServiceUse = true
     @State private var isAgreeToPersonalInfo = true
@@ -23,6 +23,7 @@ struct AgreeToTermsView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                BackgroundView()
                 VStack(spacing: 0) {
                     OnboardingTitles(bigTitle: TextLiterals.AgreeToTerms.bigTitle, smallTitle: TextLiterals.AgreeToTerms.smallTitle)
                     Spacer()
@@ -37,6 +38,7 @@ struct AgreeToTermsView: View {
                     })
                     .padding(.top, bigButtonTopPadding)
                 }
+                .padding(horizontal: 20, top: 76, bottom: 20)
             }
             .navigationDestination(isPresented: $navigationIsPresented) {
                 NickNameView(nickNameViewCase: .userName)
@@ -96,8 +98,8 @@ struct AgreeToTermsView: View {
                         isAgreeToAdvertising ? Image(assetName: .checkOn) : Image(assetName: .checkOff)
                     }
                     Text(title)
-                        .foregroundColor(.black.opacity(0.6))
-                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundColor(.primaryLabelColor)
+                        .clickableTextFont1()
                         .padding(.leading, agreeTitleLeadingPadding)
                 }
             }
@@ -112,7 +114,7 @@ struct AgreeToTermsView: View {
                     openAdvertisingTerms = true
                 }
             }){
-                Image(systemName: "chevron.right")
+                Image(assetName: .tinyChevron)
                     .foregroundColor(.black.opacity(0.4))
             }
         }

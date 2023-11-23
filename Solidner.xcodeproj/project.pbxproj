@@ -17,6 +17,7 @@
 		0E18AD782AFAA3430011ED4A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD772AFAA3430011ED4A /* FirebaseFirestore */; };
 		0EA65EE22B0C846200E1C8D7 /* AddTestIngredientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA65EE12B0C846200E1C8D7 /* AddTestIngredientsView.swift */; };
 		0EAFB7212B012A3D0075A384 /* MonthlyPlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */; };
+		0EB0F4322B0F5F5A00A32DFB /* AddIngredientBigDivision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB0F4312B0F5F5A00A32DFB /* AddIngredientBigDivision.swift */; };
 		B219F11F2B0C911200886087 /* StartPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219F11E2B0C911200886087 /* StartPlanView.swift */; };
 		B219F1212B0C915300886087 /* StartDateInitialSelectModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219F1202B0C915300886087 /* StartDateInitialSelectModal.swift */; };
 		B219F1252B0C974F00886087 /* MealOB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219F1242B0C974F00886087 /* MealOB.swift */; };
@@ -69,6 +70,8 @@
 		C3B4DB3F2B0DF18700772C2A /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = C3B4DB3E2B0DF18700772C2A /* Pretendard-Medium.otf */; };
 		C3B4DB402B0DF18700772C2A /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = C3B4DB3E2B0DF18700772C2A /* Pretendard-Medium.otf */; };
 		C3B4DB412B0DF18700772C2A /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = C3B4DB3E2B0DF18700772C2A /* Pretendard-Medium.otf */; };
+		C3B4DB472B0E84A500772C2A /* UIScreen+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B4DB462B0E84A500772C2A /* UIScreen+.swift */; };
+		C3B4DB492B0F22AF00772C2A /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B4DB482B0F22AF00772C2A /* BackgroundView.swift */; };
 		C3C6375D2AF90C2B006D464D /* SolidnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C6375C2AF90C2B006D464D /* SolidnerApp.swift */; };
 		C3C637612AF90C2C006D464D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3C637602AF90C2C006D464D /* Assets.xcassets */; };
 		C3C637642AF90C2C006D464D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3C637632AF90C2C006D464D /* Preview Assets.xcassets */; };
@@ -107,6 +110,7 @@
 		0EA65EE12B0C846200E1C8D7 /* AddTestIngredientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTestIngredientsView.swift; sourceTree = "<group>"; };
 		0EA6C61D2AFBE087004FF2AA /* MonthlyPlanningDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningDummy.swift; sourceTree = "<group>"; };
 		0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningView.swift; sourceTree = "<group>"; };
+		0EB0F4312B0F5F5A00A32DFB /* AddIngredientBigDivision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIngredientBigDivision.swift; sourceTree = "<group>"; };
 		B219F11E2B0C911200886087 /* StartPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartPlanView.swift; sourceTree = "<group>"; };
 		B219F1202B0C915300886087 /* StartDateInitialSelectModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDateInitialSelectModal.swift; sourceTree = "<group>"; };
 		B219F1242B0C974F00886087 /* MealOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealOB.swift; sourceTree = "<group>"; };
@@ -154,6 +158,8 @@
 		C3B4DB362B0DF16D00772C2A /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		C3B4DB3A2B0DF17700772C2A /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
 		C3B4DB3E2B0DF18700772C2A /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		C3B4DB462B0E84A500772C2A /* UIScreen+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+.swift"; sourceTree = "<group>"; };
+		C3B4DB482B0F22AF00772C2A /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		C3C637592AF90C2B006D464D /* Solidner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Solidner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3C6375C2AF90C2B006D464D /* SolidnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidnerApp.swift; sourceTree = "<group>"; };
 		C3C637602AF90C2C006D464D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -223,6 +229,7 @@
 				C36942462AFCD686002465D4 /* ButtonComponents.swift */,
 				C36942482AFF755F002465D4 /* BackButtonHeader.swift */,
 				C369424A2B00B350002465D4 /* TextFieldComponents.swift */,
+				C3B4DB482B0F22AF00772C2A /* BackgroundView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -272,6 +279,7 @@
 				B248361F2B011FFF00525A25 /* MealDetailView.swift */,
 				B2746E3C2B05DF900083AB57 /* StartDateSettingModal.swift */,
 				0EA65EE12B0C846200E1C8D7 /* AddTestIngredientsView.swift */,
+				0EB0F4312B0F5F5A00A32DFB /* AddIngredientBigDivision.swift */,
 			);
 			path = AddPlan;
 			sourceTree = "<group>";
@@ -431,6 +439,7 @@
 				C336EE4B2B03F5320057D8B8 /* Color+.swift */,
 				C3B4DB342B0DEBA700772C2A /* Text+.swift */,
 				B219F1262B0CE13000886087 /* View+.swift */,
+				C3B4DB462B0E84A500772C2A /* UIScreen+.swift */,
 			);
 			path = "Extension+";
 			sourceTree = "<group>";
@@ -613,6 +622,7 @@
 				C36942472AFCD687002465D4 /* ButtonComponents.swift in Sources */,
 				B2F7909E2B0DDC9900CB4F71 /* SolidnerSegmentedPicker.swift in Sources */,
 				B2F790A22B0DF30B00CB4F71 /* CycleGaps.swift in Sources */,
+				0EB0F4322B0F5F5A00A32DFB /* AddIngredientBigDivision.swift in Sources */,
 				B2EFE9852B067FB200E3F94B /* MockPlanData.swift in Sources */,
 				B219F1212B0C915300886087 /* StartDateInitialSelectModal.swift in Sources */,
 				0E18AD6B2AFA7F670011ED4A /* SignInView.swift in Sources */,
@@ -639,6 +649,7 @@
 				B24836202B011FFF00525A25 /* MealDetailView.swift in Sources */,
 				B24836202B011FFF00525A25 /* MealDetailView.swift in Sources */,
 				B24836222B012B8700525A25 /* Date+.swift in Sources */,
+				C3B4DB492B0F22AF00772C2A /* BackgroundView.swift in Sources */,
 				B2F790A82B0E28B400CB4F71 /* WarningView.swift in Sources */,
 				C3C6378E2AF91E73006D464D /* network_dummy.swift in Sources */,
 				B2F790A42B0DF40400CB4F71 /* DisplayDateType.swift in Sources */,
@@ -654,6 +665,7 @@
 				C336EE4C2B03F5320057D8B8 /* Color+.swift in Sources */,
 				B219F11F2B0C911200886087 /* StartPlanView.swift in Sources */,
 				C336EE432B03C37B0057D8B8 /* AgreeToTermsView.swift in Sources */,
+				C3B4DB472B0E84A500772C2A /* UIScreen+.swift in Sources */,
 				C3AD1BC82B021660003BB3E0 /* SoCuteNameView.swift in Sources */,
 				C36942512B01185C002465D4 /* TextLimiterOB.swift in Sources */,
 				B2EFE9832B067CA000E3F94B /* PlanDetailView.swift in Sources */,

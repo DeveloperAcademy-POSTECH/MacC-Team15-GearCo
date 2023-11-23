@@ -69,6 +69,27 @@ extension View {
             )
         )
     }
+    /// Horizontal 동일, Top과 Bottom Padding은 다르게
+    /// - Parameters:
+    ///   - top: top Padding
+    ///   - leading: leading Padding
+    ///   - bottom: bottom Padding
+    ///   - trailing: trailing Padding
+    /// - Returns: Padded View
+    func padding(
+        horizontal: Double,
+        top: Double,
+        bottom: Double
+    ) -> some View {
+        return self.padding(
+            EdgeInsets(
+                top: top,
+                leading: horizontal,
+                bottom: bottom,
+                trailing: horizontal
+            )
+        )
+    }
     
     /// 글자에 가로세로 대칭 padding과 배경색을 주고 싶을 때 사용
     /// - Parameters:
@@ -87,5 +108,33 @@ extension View {
                 RoundedRectangle(cornerRadius: radius)
                     .fill(color)
             }
+    }
+    
+    /// View의 왼쪽을 radius값만큼 clip하여 반환합니다. (ex.`Rectangle().leftCornerRadius(10)` 처럼 사용)
+    /// - Parameter radius: radius값
+    /// - Returns: 왼쪽이 둥글어진 View
+    func leftCornerRadius(_ radius: CGFloat) -> some View {
+        self.cornerRadius(radius, corners: .topLeft)
+            .cornerRadius(radius, corners: .bottomLeft)
+    }
+    /// View의 오른쪽을 radius값만큼 clip하여 반환합니다. (ex.`Rectangle().rightCornerRadius(10)` 처럼 사용)
+    /// - Parameter radius: radius값
+    /// - Returns: 오른쪽이 둥글어진 View
+    func rightCornerRadius(_ radius: CGFloat) -> some View {
+        self.cornerRadius(radius, corners: .topRight)
+            .cornerRadius(radius, corners: .bottomRight)
+    }
+    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape( RoundedCorner(radius: radius, corners: corners) )
+    }
+}
+
+struct RoundedCorner: Shape {
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
     }
 }
