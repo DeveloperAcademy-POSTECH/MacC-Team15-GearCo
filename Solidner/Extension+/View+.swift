@@ -69,6 +69,27 @@ extension View {
             )
         )
     }
+    /// Horizontal 동일, Top과 Bottom Padding은 다르게
+    /// - Parameters:
+    ///   - top: top Padding
+    ///   - leading: leading Padding
+    ///   - bottom: bottom Padding
+    ///   - trailing: trailing Padding
+    /// - Returns: Padded View
+    func padding(
+        horizontal: Double,
+        top: Double,
+        bottom: Double
+    ) -> some View {
+        return self.padding(
+            EdgeInsets(
+                top: top,
+                leading: horizontal,
+                bottom: bottom,
+                trailing: horizontal
+            )
+        )
+    }
     
     /// 글자에 가로세로 대칭 padding과 배경색을 주고 싶을 때 사용
     /// - Parameters:

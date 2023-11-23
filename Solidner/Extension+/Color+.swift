@@ -14,7 +14,6 @@ extension Color {
     static let buttonDefaultTextColor = Color.white
     static let backButtonColor = Color(#colorLiteral(red: 0.0834152922, green: 0.0834152922, blue: 0.0834152922, alpha: 1)).opacity(0.4) //151515
     static let textFieldColor = Color(#colorLiteral(red: 0.9294117647, green: 0.9294117647, blue: 0.9294117647, alpha: 1)) //EDEDED
-    static let placeHolderColor = Color(#colorLiteral(red: 0.6431372549, green: 0.6431372549, blue: 0.6431372549, alpha: 1)) //A4A4A4
     static let warningMessageColor = Color(#colorLiteral(red: 0.9176470588, green: 0.4352941176, blue: 0.4196078431, alpha: 1)) //EA6F6B
     static let bigTitleColor = Color(#colorLiteral(red: 0.0834152922, green: 0.0834152922, blue: 0.0834152922, alpha: 1))
     static let smallTitleColor = Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)).opacity(0.6)
@@ -40,6 +39,9 @@ extension Color {
     static let listStrokeColor = Color(#colorLiteral(red: 0.9176470588, green: 0.9176470588, blue: 0.9176470588, alpha: 1)) //EAEAEA
     static let ageColor = Color(#colorLiteral(red: 0.6588235294, green: 0.4705882353, blue: 0.7450980392, alpha: 1)) //A878BE
     static let newColor = Color(#colorLiteral(red: 0.4352941176, green: 0.6549019608, blue: 0.8549019608, alpha: 1)) //6FA7DA
+    static let loginButtonColor = Color(#colorLiteral(red: 0.1333333333, green: 0.1333333333, blue: 0.1333333333, alpha: 1))//222222
+    static let primaryLabelColor = Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)).opacity(0.6) // 000000 * opacity 60
+    static let placeHolderColor = Color(#colorLiteral(red: 0.5764705882, green: 0.5764705882, blue: 0.5764705882, alpha: 1))
     //text
     static let defaultText = Color.black
     static let defaultText_wh = Color.white

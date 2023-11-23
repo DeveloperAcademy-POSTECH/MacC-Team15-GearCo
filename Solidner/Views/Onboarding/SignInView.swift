@@ -39,11 +39,26 @@ struct SignInView: View {
     
     @State private var currentNonce: String?
     var body: some View {
-
-        VStack {
-            SignInWithAppleButton(
-                onRequest: configure,
-                onCompletion: handle)
+        ZStack {
+            BackgroundView()
+            VStack {
+                Spacer()
+                SignInWithAppleButton(
+                    onRequest: configure,
+                    onCompletion: handle)
+                    .frame(width: 335, height: 56)
+                    .cornerRadius(12)
+                    .padding(.bottom, 21)
+            }
+            .background(
+                Image(assetName: .loginBg)
+                    .resizable()
+                    .edgesIgnoringSafeArea(.all)
+                    .frame(width: UIScreen.getWidth(390), height: UIScreen.getWidth(844))
+            )
+            Image(assetName: .loginTypo)
+                .resizable()
+                .frame(width: UIScreen.getWidth(250.86), height: UIScreen.getWidth(52))
         }
     }
     

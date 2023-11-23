@@ -9,8 +9,7 @@ import SwiftUI
 
 struct SoCuteNameView: View {
     private let delaySecond = 0.7
-    private let labelFontSize = 27.83
-    private let cuteNameMessageTopPadding = 10.0
+    private let cuteNameMessageTopPadding = 9.0
     @State private var isNicknameAppear = false
     @State private var isMessageAppear = false
     @State private var isButtonAppear = false
@@ -18,10 +17,13 @@ struct SoCuteNameView: View {
     @EnvironmentObject var user: UserOB
     var body: some View {
         ZStack {
-            Color.soCuteBgColor.ignoresSafeArea()
             labelView()
             buttonView()
+                .padding(top: 0, leading: 20, bottom: 20, trailing: 20)
         }
+        .background(
+            Image(assetName: .soCuteNameBackground).ignoresSafeArea()
+        )
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now()) {
                 withAnimation(.easeInOut.delay(delaySecond)) {
@@ -48,11 +50,11 @@ struct SoCuteNameView: View {
     private func labelView() -> some View {
         return VStack(spacing: 0) {
             Text(user.babyName+",")
-                .font(.system(size: labelFontSize, weight: .bold))
-                .foregroundColor(isNicknameAppear ? .black : .clear)
+                .headerFont1()
+                .foregroundColor(isNicknameAppear ? .secondBgColor : .clear)
             Text(TextLiterals.SoCuteName.cuteNameMessage)
-                .font(.system(size: labelFontSize, weight: .bold))
-                .foregroundColor(isMessageAppear ? .black : .clear)
+                .headerFont1()
+                .foregroundColor(isMessageAppear ? .secondBgColor : .clear)
                 .padding(.top, cuteNameMessageTopPadding)
         }
     }
@@ -60,9 +62,9 @@ struct SoCuteNameView: View {
         return VStack {
             Spacer()
             if isButtonAppear {
-                ButtonComponents().bigButton(disabledCondition: false, action: {
+                ButtonComponents().bigButton(title: TextLiterals.SoCuteName.cuteNameButtonTitle, disabledCondition: false, action: {
                     navigationIsPresented = true
-                }, buttonColor: Color.white, titleColor: Color.black)
+                }, buttonColor: .defaultText_wh, titleColor: .defaultText)
                 .transition(.opacity.animation(.easeIn))
             }
         }
