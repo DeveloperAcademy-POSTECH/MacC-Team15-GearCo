@@ -17,6 +17,7 @@
 		0E18AD782AFAA3430011ED4A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD772AFAA3430011ED4A /* FirebaseFirestore */; };
 		0EA65EE22B0C846200E1C8D7 /* AddTestIngredientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA65EE12B0C846200E1C8D7 /* AddTestIngredientsView.swift */; };
 		0EAFB7212B012A3D0075A384 /* MonthlyPlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */; };
+		0EB0F4322B0F5F5A00A32DFB /* AddIngredientBigDivision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB0F4312B0F5F5A00A32DFB /* AddIngredientBigDivision.swift */; };
 		B219F11F2B0C911200886087 /* StartPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219F11E2B0C911200886087 /* StartPlanView.swift */; };
 		B219F1212B0C915300886087 /* StartDateInitialSelectModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219F1202B0C915300886087 /* StartDateInitialSelectModal.swift */; };
 		B219F1252B0C974F00886087 /* MealOB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219F1242B0C974F00886087 /* MealOB.swift */; };
@@ -107,6 +108,7 @@
 		0EA65EE12B0C846200E1C8D7 /* AddTestIngredientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTestIngredientsView.swift; sourceTree = "<group>"; };
 		0EA6C61D2AFBE087004FF2AA /* MonthlyPlanningDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningDummy.swift; sourceTree = "<group>"; };
 		0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningView.swift; sourceTree = "<group>"; };
+		0EB0F4312B0F5F5A00A32DFB /* AddIngredientBigDivision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIngredientBigDivision.swift; sourceTree = "<group>"; };
 		B219F11E2B0C911200886087 /* StartPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartPlanView.swift; sourceTree = "<group>"; };
 		B219F1202B0C915300886087 /* StartDateInitialSelectModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDateInitialSelectModal.swift; sourceTree = "<group>"; };
 		B219F1242B0C974F00886087 /* MealOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealOB.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				B248361F2B011FFF00525A25 /* MealDetailView.swift */,
 				B2746E3C2B05DF900083AB57 /* StartDateSettingModal.swift */,
 				0EA65EE12B0C846200E1C8D7 /* AddTestIngredientsView.swift */,
+				0EB0F4312B0F5F5A00A32DFB /* AddIngredientBigDivision.swift */,
 			);
 			path = AddPlan;
 			sourceTree = "<group>";
@@ -613,6 +616,7 @@
 				C36942472AFCD687002465D4 /* ButtonComponents.swift in Sources */,
 				B2F7909E2B0DDC9900CB4F71 /* SolidnerSegmentedPicker.swift in Sources */,
 				B2F790A22B0DF30B00CB4F71 /* CycleGaps.swift in Sources */,
+				0EB0F4322B0F5F5A00A32DFB /* AddIngredientBigDivision.swift in Sources */,
 				B2EFE9852B067FB200E3F94B /* MockPlanData.swift in Sources */,
 				B219F1212B0C915300886087 /* StartDateInitialSelectModal.swift in Sources */,
 				0E18AD6B2AFA7F670011ED4A /* SignInView.swift in Sources */,
