@@ -99,7 +99,7 @@ enum TextLiterals {
     }
 
     enum ChangeMonth {
-        static func currentYearText(of date: Date) -> String { "\(date.year)년" }
+        static func currentYearText(of year: Int) -> String { "\(year)년" }
         static func monthText(of number: Int) -> String { "\(number)월" }
         static var saveButtonText: String { "저장" }
     }

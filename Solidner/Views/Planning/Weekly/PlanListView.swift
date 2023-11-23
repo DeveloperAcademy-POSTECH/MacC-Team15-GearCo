@@ -17,8 +17,8 @@
  */
 // TODO: - date 각 년월일 들어가게 :)
 // TODO: - 문제있는 date만 표시될 수 있도록 새로운 struct를 선언해야 할까?
-// TODO: - date 버튼 눌렀을 때 action
-// TODO: - totalSetting action 추가하기
+// TODO: - date 버튼 눌렀을 때 화면 전환 action
+// TODO: - totalSetting으로 화면 전환
 
 import SwiftUI
 
@@ -93,7 +93,7 @@ extension PlanListView {
 
     // TODO: - date 각 년월일 들어가게 :)
     // TODO: - 문제있는 date만 표시될 수 있도록 새로운 struct를 선언해야 할까?
-    // TODO: - date 버튼 눌렀을 때 action
+    // TODO: - date 버튼 눌렀을 때 화면 전환 action
     private var dateScroll: some View {
         let endDateDay: Int = {
             let nextMonthFirstDay = Date.date(year: selectedDate.year, month: (selectedDate.month + 1) % 12 + 1, day: 1)!
@@ -168,7 +168,7 @@ extension PlanListView {
 }
 
 // MARK: - totalSetting
-// TODO: - totalSetting action 추가하기
+// TODO: - totalSetting으로 화면 전환
 
 extension PlanListView {
     private var totalSetting: some View {
