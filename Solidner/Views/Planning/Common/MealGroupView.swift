@@ -48,10 +48,11 @@ struct MealGroupView<Content>: View where Content: View {
         static var testedIngredientTextColor: Color { .primeText }
         // background
         static var backgroundRectangleRadius: CGFloat { 12 }
-        static var backgroundStrokeNormalColor: Color { .secondBgColor }
+        static var backgroundStrokeNormalColor: Color { .listStrokeColor }
         static var backgroundHighlightStrokeColor: Color { .accentColor1 }
         static var backgroundStrokeLineWidth: Double { 2 }
         static var addNewPlanHeight: Double { 64 }
+        static var addNewPlanBottomPadding: Double { 6 }
         static var addNewPlanTextColor: Color { .defaultText.opacity(0.6) }
     }
 
@@ -157,6 +158,7 @@ extension MealGroupView {
         .padding()
         .foregroundStyle(K.addNewPlanTextColor)
         .frame(height: K.addNewPlanHeight)
+        .padding(.bottom, K.addNewPlanBottomPadding)
         .background(backgroundRectangle)
     }
 
@@ -218,5 +220,6 @@ extension MealGroupView {
     private var chevron: some View {
         Image(systemName: K.chevronRightSFSymbolName)
             .foregroundStyle(K.chevronColor)
+            .bold()
     }
 }
