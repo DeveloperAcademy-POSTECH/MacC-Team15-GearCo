@@ -27,13 +27,14 @@ struct SolidnerApp: App {
     @StateObject private var userOB = UserOB()
     var body: some Scene {
         WindowGroup {
-            if isOnboardingOn {
-                AgreeToTermsView().environmentObject(userOB)
-            } else if isPlanEmpty {
-                StartPlanView()
-            } else {
-                PlanListView()
-            }
+//            if isOnboardingOn {
+//                AgreeToTermsView().environmentObject(userOB)
+//            } else if isPlanEmpty {
+//                StartPlanView()
+//            } else {
+//                PlanListView()
+//            }
+            MonthlyPlanningView()
             //SignInView().environmentObject(userOB)
         }
     }
