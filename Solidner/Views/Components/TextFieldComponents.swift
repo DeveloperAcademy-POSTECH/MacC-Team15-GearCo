@@ -9,7 +9,8 @@ import SwiftUI
 
 struct TextFieldComponents: View {
     private let textFieldCornerRadius: CGFloat = 12
-    private let textFieldPadding: CGFloat = 16
+    private let textFieldVerticalPadding: CGFloat = 19
+    private let textFieldHorizontalPadding: CGFloat = 16
     @State private var value = ""
     @FocusState var isFocused: Bool
     
@@ -20,8 +21,9 @@ struct TextFieldComponents: View {
     func shortTextfield(placeHolder: String, value: Binding<String>, isFocused: FocusState<Bool>.Binding) -> some View {
         TextField("", text: value, prompt: Text(placeHolder).foregroundColor(Color.placeHolderColor))
             .focused(isFocused)
-            .padding(textFieldPadding)
-            .background(Color.textFieldColor)
+            .tint(Color.accentColor1)
+            .padding(horizontal: textFieldHorizontalPadding, vertical: textFieldVerticalPadding)
+            .background(Color.buttonBgColor)
             .cornerRadius(textFieldCornerRadius)
     }
 }

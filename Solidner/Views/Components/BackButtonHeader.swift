@@ -10,8 +10,8 @@ import SwiftUI
 struct BackButtonHeader: View {
     private let backButtonSymbolWidth: CGFloat = 10
     private let backButtonSymbolHeight: CGFloat = 17.5
-    private let backButtonHorizontalPadding: CGFloat = 16.64
-    private let backButtonTopPadding: CGFloat = 6.73
+    private let backButtonHorizontalPadding: CGFloat = 16
+    private let backButtonTopPadding: CGFloat = 18
     var action: ()->Void = {}
     var title: String = ""
     
@@ -22,18 +22,14 @@ struct BackButtonHeader: View {
     func headerButton(action: @escaping ()-> Void) -> some View {
         return HStack(spacing: 0) {
             Button(action: action, label: {
-                Image(systemName: "chevron.left")
-                    .resizable()
-                    .frame(width: backButtonSymbolWidth, height: backButtonSymbolHeight)
-                    .foregroundColor(Color.backButtonColor)
-                    .bold()
+                Image(assetName: .headerChevron)
             })
             Spacer()
+        }
+        .overlay {
             Text(title)
-                .foregroundColor(.bigTitleColor)
-                .bold()
-            Spacer()
-            Spacer().frame(width: backButtonSymbolWidth)
+                .headerFont5()
+                .foregroundColor(.defaultText)
         }
         .padding(.horizontal, backButtonHorizontalPadding)
         .padding(.top, backButtonTopPadding)

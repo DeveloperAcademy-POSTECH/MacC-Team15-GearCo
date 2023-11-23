@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "checkOn.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "appsymbol.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

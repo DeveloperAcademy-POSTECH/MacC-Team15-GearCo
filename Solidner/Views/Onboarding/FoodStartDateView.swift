@@ -8,17 +8,21 @@
 import SwiftUI
 
 struct FoodStartDateView: View {
-    private let datePickerTopPadding = 51.0
+    private let datePickerTopPadding = 64.0
     @State private var solidStartDate = Date()
     @State private var navigationIsPresented = false
     @EnvironmentObject var user: UserOB
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     var body: some View {
-        VStack(spacing: 0) {
-            BackButtonHeader {
-                presentationMode.wrappedValue.dismiss()
+        ZStack {
+            BackgroundView()
+            VStack(spacing: 0) {
+                BackButtonHeader {
+                    presentationMode.wrappedValue.dismiss()
+                }
+                viewBody()
+                    .padding(horizontal: 20, top: 32, bottom: 20)
             }
-            viewBody()
         }
     }
     private func viewBody() -> some View {

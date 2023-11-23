@@ -116,11 +116,12 @@ enum TextLiterals {
         static var warningMessage: String { "닉네임은 최대 10자까지 입력이 가능해요." }
         static var placeHolder: String { "최대 10자내로 입력이 가능해요." }
         static var bigUserNameTitle: String { "닉네임을\n입력해주세요" }
-        static var bigBabyNameTitle: String { "자녀분의 이름, 혹은\n별명이 따로 있나요? 🤶" }
+        static var bigBabyNameTitle: String { "자녀분의 이름, 혹은\n별명이 따로 있나요?👼" }
     }
     
     enum SoCuteName {
         static var cuteNameMessage: String { "정말 귀여운 이름이네요!" }
+        static var cuteNameButtonTitle: String { "생일도 알려줄래요" }
     }
     
     enum BabyBirthDate {
@@ -136,7 +137,7 @@ enum TextLiterals {
     
     enum OnboardingEnd {
         static var bigTitle: String { "가장 쉬운\n이유식의 첫 시작" }
-        static var smallTitle: String {"이유식 플래닝을 함께 고고씽\n어쩌구저쩌구"}
+        static var smallTitle: String {"솔리너와 함께라면 이유식 척척박사,\n식단 계획부터 재료 정보까지"}
         static var buttonTitle: String {"솔리너 시작하기"}
     }
 

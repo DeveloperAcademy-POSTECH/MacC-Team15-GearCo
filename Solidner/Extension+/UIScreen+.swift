@@ -2,7 +2,7 @@
 //  UIScreen+.swift
 //  Solidner
 //
-//  Created by 황지우2 on 2023/11/17.
+//  Created by 황지우2 on 2023/11/23.
 //
 
 import UIKit
