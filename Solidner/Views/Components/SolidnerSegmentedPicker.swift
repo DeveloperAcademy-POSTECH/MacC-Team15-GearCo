@@ -57,11 +57,16 @@ struct SolidnerSegmentedPicker<Data> : View where Data: Hashable & CustomStringC
     @State private var segmentWidths: [CGFloat] = []
 
     private enum K {
-        static var hStackSpacing: CGFloat { 12 }
+        static var labelTextColor: Color { .defaultText }
+
+        static var segmentedPickerHStackSpacing: CGFloat { 12 }
         static var textHorizontalPadding: CGFloat { 16 }
         static var textVerticalPadding: CGFloat { 10 }
-        static var selectedTextColor: Color { Color.white }
-        static var unselectedTextColor: Color { Color.black }
+        
+        static var selectedTextColor: Color { Color.defaultText_wh }
+        static var unselectedTextColor: Color { Color.defaultText.opacity(0.4) }
+
+        static var highlightBackgroundColor: Color { .accentColor1 }
         static var highlightCornerRadius: CGFloat { 12 }
     }
 
@@ -75,14 +80,16 @@ struct SolidnerSegmentedPicker<Data> : View where Data: Hashable & CustomStringC
 
     private var labelText: some View {
         Text(label)
+            .headerFont4()
+            .foregroundStyle(K.labelTextColor)
     }
 
     private var segmentedPicker: some View {
-        HStack(alignment: .center, spacing: K.hStackSpacing) {
+        HStack(alignment: .center, spacing: K.segmentedPickerHStackSpacing) {
             ForEach(items, id: \.self) { item in
                 Text(item.description)
-                    .padding(.horizontal, K.textHorizontalPadding)
-                    .padding(.vertical, K.textVerticalPadding)
+                    .headerFont6()
+                    .padding(horizontal: K.textHorizontalPadding, vertical: K.textVerticalPadding)
                     .foregroundStyle(selection == item ? K.selectedTextColor : K.unselectedTextColor)
                     .background(GeometryReader { geometry in
                         Color.clear.preference(key: SolidnerSegmentWidthKey.self, value: [geometry.size.width])
@@ -105,10 +112,10 @@ struct SolidnerSegmentedPicker<Data> : View where Data: Hashable & CustomStringC
         let widths = preferences
         let index = items.firstIndex(of: selection) ?? .zero
         let totalWidthBefore = widths.prefix(index).reduce(.zero, +)
-        let offsetX = totalWidthBefore +  CGFloat(Int(index)) * K.hStackSpacing
+        let offsetX = totalWidthBefore +  CGFloat(Int(index)) * K.segmentedPickerHStackSpacing
 
         return RoundedRectangle(cornerRadius: K.highlightCornerRadius)
-            .fill(Color.accentColor)
+            .fill(K.highlightBackgroundColor)
             .frame(width: widths[index])
             .offset(x: offsetX, y: .zero)
     }

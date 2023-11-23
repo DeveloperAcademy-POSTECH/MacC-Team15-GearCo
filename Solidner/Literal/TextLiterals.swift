@@ -32,6 +32,10 @@ enum TextLiterals {
             "\(date.day)일"
         }
 
+        static func ddDateText(date: Int) -> String {
+            "\(date)일"
+        }
+
         static func dateRangeString(start: Date, end: Date) -> String {
             "\(start.day)일(\(start.weekDayKor)) ~ \(end.day)일(\(end.weekDayKor))"
         }
@@ -42,6 +46,10 @@ enum TextLiterals {
 
         static var addIngredientText: String {
             "재료 추가"
+        }
+
+        static var solidTotalSettingText: String {
+            "이유식 전체설정"
         }
     }
 
@@ -59,14 +67,13 @@ enum TextLiterals {
     }
 
     enum DailyPlanList {
-        static func titleText(_ date: Date) -> String { "\(date.month)/\(date.day)일(\(date.weekDayKor)) 식단" }
+        static func titleText(_ date: Date) -> String { "\(date.month).\(date.day).(\(date.weekDayKor)) 식단" }
         static func dateRangeString(start: Date, end: Date) -> String {
             "\(start.day)일(\(start.weekDayKor)) ~ \(end.day)일(\(end.weekDayKor))"
         }
         static func fromDateToDateText(from: Int, to: Int) -> String {
             "\(from) ~ \(to)일차"
         }
-
         static var addMealPlanText: String {
             "끼니 추가"
         }
@@ -77,8 +84,8 @@ enum TextLiterals {
     }
 
     enum PlanBatchSetting {
-        static var labelText: String { "이유식 일괄 설정" }
-        static var hintText: String { "플래너에서 보여지는 어찌구를 뷁" }
+        static var labelText: String { "이유식 전체 설정" }
+        static var hintText: String { "캘린더의 간격과 날짜 표기를 지정해요" }
 
         static var testCycleLabel: String { "간격" }
         static func dateText(of number: Int) -> String { "\(number)일" }
@@ -87,22 +94,22 @@ enum TextLiterals {
         static var bySolidDate: String { "이유식 진행일" }
         static var byBirthDate: String { "생후일자" }
 
-        static var deleteAllCalendarsText: String { "캘린더 삭제" }
-        static var deleteAllCalendarsButtonText: String { "삭제하기" }
+        static var deleteAllCalendarsText: String { "전체 일정 삭제" }
+        static var deleteAllCalendarsButtonText: String { "삭제" }
     }
 
     enum ChangeMonth {
-        static func currentYearText(of date: Date) -> String { "\(date.year)년" }
+        static func currentYearText(of year: Int) -> String { "\(year)년" }
         static func monthText(of number: Int) -> String { "\(number)월" }
         static var saveButtonText: String { "저장" }
     }
 
     enum Warning {
-        static var warningText: String { "중복되는 끼니가 계획되어 있어요." }
+        static var warningText: String { "식단에 중복되는 계획이 있어요" }
     }
 
     enum ViewComponents {
-        static var placeHolderMessage: String { "최대 10자내로  입력이 가능해요." }
+        static var placeHolderMessage: String { "최대 10자내로 입력이 가능해요." }
     }
     
     enum NickName {

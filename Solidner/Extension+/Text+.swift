@@ -83,3 +83,26 @@ extension Text {
         case semiBold = "Pretendard-SemiBold"
     }
 }
+
+extension Text {
+    enum HeaderFontType {
+        case one, two, three, four, five, six
+    }
+
+    func headerFont(_ type: HeaderFontType) -> some View {
+        switch type {
+        case .one:
+            return AnyView(self.headerFont1())
+        case .two:
+            return AnyView(self.headerFont2())
+        case .three:
+            return AnyView(self.headerFont3())
+        case .four:
+            return AnyView(self.headerFont4())
+        case .five:
+            return AnyView(self.headerFont5())
+        case .six:
+            return AnyView(self.headerFont6())
+        }
+    }
+}
