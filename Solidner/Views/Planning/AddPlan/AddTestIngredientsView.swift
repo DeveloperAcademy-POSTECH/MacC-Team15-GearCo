@@ -116,28 +116,6 @@ struct AddTestIngredientsView: View {
         }.background(Color.mainBackgroundColor)
     }
     
-    private func ingredientsBigDivision(_ divisionCase: DivisionCase) -> some View {
-        let titleBottomSpace: CGFloat = 24
-        let rowBetweenSpace: CGFloat = 30
-        let divisionBottomSpace: CGFloat = 26
-        
-        return VStack(alignment: .leading, spacing: 0) {
-            Text("이상 반응 재료")
-                .headerFont2()
-                .foregroundColor(.defaultText)
-            Spacer().frame(height: titleBottomSpace)
-            // TODO: 실제 데이터로 변경
-            ForEach(Range<Int>(1...4)) { i in
-                ingredientSelectRow(divisionCase: .이상반응재료)
-                if(i != 4) {
-                    Spacer().frame(height: rowBetweenSpace)
-                } else {
-                    Spacer().frame(height: divisionBottomSpace)
-                }
-            }
-        }.padding(.horizontal, viewHorizontalPadding)
-    }
-    
     // MARK: 테스트 재료 분류
     private func ingredientTypeButton(_ text: String) -> some View {
         let textHorizontalPadding: CGFloat = 17
@@ -202,6 +180,34 @@ enum DivisionCase: String {
     case 권장하지않는재료 = "권장하지 않는 재료"
     case 자주사용한재료 = "자주 사용한 재료"
 }
+
+struct ingredientsBigDivision: View {
+    let divisionCase: DivisionCase
+    
+    let viewHorizontalPadding: CGFloat = 20
+    let titleBottomSpace: CGFloat = 24
+    let rowBetweenSpace: CGFloat = 30
+    let divisionBottomSpace: CGFloat = 26
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Text("이상 반응 재료")
+                .headerFont2()
+                .foregroundColor(.defaultText)
+            Spacer().frame(height: titleBottomSpace)
+            // TODO: 실제 데이터로 변경
+            ForEach(Range<Int>(1...4)) { i in
+                ingredientSelectRow(divisionCase: .이상반응재료)
+                if(i != 4) {
+                    Spacer().frame(height: rowBetweenSpace)
+                } else {
+                    Spacer().frame(height: divisionBottomSpace)
+                }
+            }
+        }.padding(.horizontal, viewHorizontalPadding)
+    }
+}
+
 func ingredientSelectRow(divisionCase: DivisionCase) -> some View {
     let dateTextHorizontalPadding: CGFloat = 5
     let dateTextVerticalPadding: CGFloat = 2.5
