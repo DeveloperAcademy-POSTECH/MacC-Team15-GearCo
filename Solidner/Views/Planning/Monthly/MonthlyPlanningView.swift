@@ -23,18 +23,28 @@ struct MonthlyPlanningView: View {
     }
     // MARK: 이전 달의 데이터와 이후 달의 데이터는 -2, 33 등과 같이 표현할 것.
     let plans: [planData] =
-    [planData(startDate: 0, endDate: 2),
-//     planData(startDate: 3, endDate: 4),
-//     planData(startDate: 2, endDate: 4),
-//     planData(startDate: 5, endDate: 7),
-//     planData(startDate: 8, endDate: 10),
-//     planData(startDate: 9, endDate: 11),
-//     planData(startDate: 13, endDate: 14),
-//     planData(startDate: 26, endDate: 27),
-//     planData(startDate: 29, endDate: 30),
-//     planData(startDate: -1, endDate: 1),
-//     planData(startDate: 29, endDate: 31),
-     planData(startDate: 12, endDate: 15)]
+    [
+     planData(startDate: -1, endDate: 1),
+     planData(startDate: 2, endDate: 4),
+     planData(startDate: 2, endDate: 3),
+     planData(startDate: 5, endDate: 7),
+     planData(startDate: 8, endDate: 10),
+     planData(startDate: 9, endDate: 11),
+     planData(startDate: 13, endDate: 14),
+     planData(startDate: 11, endDate: 12),
+     planData(startDate: 16, endDate: 19),
+     planData(startDate: 16, endDate: 18),
+     planData(startDate: 19, endDate: 22),
+     planData(startDate: 19, endDate: 22),
+     planData(startDate: 21, endDate: 24),
+     planData(startDate: 21, endDate: 24),
+     planData(startDate: 23, endDate: 26),
+     planData(startDate: 24, endDate: 25),
+     planData(startDate: 26, endDate: 27),
+     planData(startDate: 29, endDate: 30),
+     planData(startDate: 29, endDate: 31),
+     planData(startDate: 27, endDate: 32)
+    ]
     
     @State private var reducedPlans: [(first: planData, second: BarPosition)] = []
     
@@ -62,9 +72,13 @@ struct MonthlyPlanningView: View {
         }.background(Color(.lightGray))
             .onAppear {
                 reducedPlans = reducePlanData(plans: plans)
+                for plan in reducedPlans {
+                    print("plan :: \(plan.first.startDate)~\(plan.first.endDate) / \(plan.second)")
+                }
             }
     }
     
+    // MARK: 재료 바 Row return 함수
     private func calendarNewIngredientRow(weekOfMonth: Int) -> some View {
         let mainDaySectionWidth = screenWidth * (50/390)
         let newIngredientRowHeight = screenWidth * (64/390)
@@ -92,39 +106,48 @@ struct MonthlyPlanningView: View {
         let monthDates = Date.nowMonthDates()
         
         
-        // 바 길이 계산
+        // MARK: 바 길이 계산
         func calculateBarWidth(plan: planData, isBarFromEnd: (left: Bool, right: Bool)) -> CGFloat {
-            let cycleGap: CGFloat = CGFloat(plan.endDate - plan.startDate + 1)
+            var cycle: CGFloat {
+                if isBarFromEnd.left {
+                    return CGFloat(plan.endDate - weekDates.first!.day + 1)
+                } else if isBarFromEnd.right {
+                    return CGFloat(weekDates.last!.day - plan.startDate + 1)
+                } else {
+                    return CGFloat(plan.endDate - plan.startDate + 1)
+                }
+            }
             var result: CGFloat = 0
             
             if dayNumsInWeek.contains(plan.startDate) &&
                 dayNumsInWeek.contains(plan.endDate) {
-                result = (mainDaySectionWidth * cycleGap) - (barHorizontalPadding * 2)
-            } else if dayNumsInWeek.first! > plan.startDate {
+                result = (mainDaySectionWidth * cycle) - (barHorizontalPadding * 2)
+            } else if isBarFromEnd.left {
                 if dayNumsInWeek.first! == 1 {  // 1일 이전부터 이어지는 바
-                    let weekDay = CGFloat(weekDates.first!.weekday)  // 요일
+                    // 빈 날의 공간 + plan의 마지막 날까지
+                    let weekDay = CGFloat(weekDates.first!.weekday + plan.endDate - 1)
                     result = (mainDaySectionWidth * weekDay) - barHorizontalPadding * 2 + endPadding
                 } else {
-                    result = (mainDaySectionWidth * cycleGap) - barHorizontalPadding * 2 + endPadding
+                    result = (mainDaySectionWidth * cycle) - barHorizontalPadding * 2 + endPadding
                 }
-            } else if dayNumsInWeek.last! < plan.endDate {
+            } else if isBarFromEnd.right {
                 if dayNumsInWeek.last! == monthDates.last!.day {    // 월말 이후까지 이어지는 바
-                    let weekDay = weekDates.first!.weekday  // 요일
+                    let weekDay = monthDates[plan.startDate-1].weekday // 요일
                     let dayGap = CGFloat(7 - weekDay + 1)
                     result = (mainDaySectionWidth * dayGap) - barHorizontalPadding + rowHorizontalPadding
                 } else {
-                    result = (mainDaySectionWidth * cycleGap) - barHorizontalPadding + rowHorizontalPadding
+                    result = (mainDaySectionWidth * cycle) - barHorizontalPadding + rowHorizontalPadding
                 }
             } else {
+                // TODO: Error fix
                 fatalError("Error in MonthlyPlanningView: calculateBarWidth")
             }
             
             return result
         }
         
-        // 재료 바 view return
+        // MARK: 재료 바 한 개 return 함수
         func ingredientBar(plan: planData, index: Int, isBarFromEnd: (left: Bool, right: Bool)) -> some View {
-            // MARK: 오류나면 다시볼 것
             let barWidth: CGFloat = calculateBarWidth(plan: plan, isBarFromEnd: isBarFromEnd)
             let barRadius: CGFloat = 4
                         
@@ -149,6 +172,7 @@ struct MonthlyPlanningView: View {
             }
         }
         
+        // MARK: 바 한 개 왼쪽, 오른쪽 공간 계산
         func barLeftPadding(plans: [planData], index: Int, isBarFromEnd: (left: Bool, right: Bool)) -> some View {
             
             switch plans.count {
@@ -156,7 +180,6 @@ struct MonthlyPlanningView: View {
                 return AnyView(Spacer())
             case 1: // 한 줄에 plan이 하나일 때
                 if isBarFromEnd.left {  // 왼쪽으로 붙여야 하면
-                    print(isBarFromEnd)
                     return AnyView(EmptyView())
                 } else if isBarFromEnd.right {  // 오른쪽으로 붙여야 하면
                     return AnyView(Spacer())
@@ -180,7 +203,7 @@ struct MonthlyPlanningView: View {
                     let prevEndDate = plans[index-1].endDate
                     let dayGap = CGFloat(plans[index].startDate - prevEndDate - 1)
                     let width = mainDaySectionWidth * dayGap + barHorizontalPadding * 2
-                    return AnyView(EmptyView().frame(width: width))
+                    return AnyView(Spacer().frame(width: width))
                 } else {    // 어느 쪽으로도 붙이지 않을 때
                     var width: CGFloat
                     if dayNumsInWeek.first! == 1 {  // 주의 시작일이 1일일 때
@@ -235,6 +258,7 @@ struct MonthlyPlanningView: View {
             }
         }
         
+        // MARK: 바가 왼쪽에서 이어지는 지, 오른쪽에서 이어지는 지 계산
         func calculateIsBarFromEnd(plan: planData) -> (Bool, Bool) {
             var result: (left: Bool, right: Bool) = (false, false)
             if dayNumsInWeek.first! > plan.startDate {
@@ -263,8 +287,7 @@ struct MonthlyPlanningView: View {
             
             HStack(spacing: 0) {
                 ForEach(Array(plansInWeekSecondLine.indices), id: \.self) { i in
-                    let isBarFromEnd: (Bool, Bool) = calculateIsBarFromEnd(plan: plansInWeekFirstLine[i])
-                    
+                    let isBarFromEnd: (Bool, Bool) = calculateIsBarFromEnd(plan: plansInWeekSecondLine[i])
                     barLeftPadding(plans: plansInWeekSecondLine, index: i, isBarFromEnd: isBarFromEnd)
                     ingredientBar(plan: plansInWeekSecondLine[i], index: i, isBarFromEnd: isBarFromEnd)
                     barRightPadding(plans: plansInWeekSecondLine, index: i, isBarFromEnd: isBarFromEnd)
@@ -369,32 +392,46 @@ extension MonthlyPlanningView {
     private func reducePlanData(plans: [planData]) -> [(planData, BarPosition)] {
         let nowMonthDates = Date.nowMonthDates()
         let lastDateNum = nowMonthDates.last!.day
-        var dict = Dictionary(uniqueKeysWithValues: (-7...lastDateNum+7).map { ($0, 0) })
+        // key는 -7 ~ 마지막일+7 까지의 Int형 정수, value는 (first: Bool, second: Bool)인 tuple로 이루어진 dictionary
+        // ex: { 1: (true, false), 2: (true, false)... }  (true가 가용한(비어있는) 상태)
+        var dict = Dictionary(uniqueKeysWithValues: (-7...lastDateNum+7).map { ($0, (first: true, second: true)) })
         
         var result: [(planData, BarPosition)] = []
         
-        for plan in plans {
-            var isPlanAccepted = true
-            var isFirstBar = true
+        // 시작일 순 정렬
+        let sortedPlans = plans.sorted{ $0.startDate < $1.startDate }
+        
+        for plan in sortedPlans {
+            var isPlanAcceptedOnFirstLine = true
+            var isPlanAcceptedOnSecondLine = true
             
             for i in Range<Int>(plan.startDate...plan.endDate) {
-                if dict[i] == 2 {
-                    isPlanAccepted = false
-                } else if dict[i] == 1 {
-                    isFirstBar = false
+                // plan의 모든 날짜를 순회하며 첫줄이나 둘째줄에 들어갈 수 있는 지 검사.
+                if !dict[i]!.first {
+                    isPlanAcceptedOnFirstLine = false
+                }
+                if !dict[i]!.second {
+                    isPlanAcceptedOnSecondLine = false
                 }
             }
             
-            if isPlanAccepted {
+            if isPlanAcceptedOnFirstLine {
+                // 첫 줄에 수용 가능하면, dictionary 상태를 false (수용불가능)으로 바꾸고, append
                 for i in Range<Int>(plan.startDate...plan.endDate) {
-                    dict[i]! += 1
+                    dict[i]!.first = false
                 }
-                if isFirstBar {
-                    result.append((plan, .first))
-                } else {
-                    result.append((plan, .second))
+                result.append((plan, .first))
+            } else if isPlanAcceptedOnSecondLine {
+                // 첫 줄에 가능한 지 우선 체크 후 둘째 줄을 체크
+                for i in Range<Int>(plan.startDate...plan.endDate) {
+                    dict[i]!.second = false
                 }
+                result.append((plan, .second))
             }
+//            print(plan.startDate, plan.endDate)
+//            for i in Range<Int>(-1...4) {
+//                print("\(i)일차 - ", dict[i]!)
+//            }
         }
         
         return result.sorted { $0.0.startDate < $1.0.startDate }    // startDate 순 정렬
