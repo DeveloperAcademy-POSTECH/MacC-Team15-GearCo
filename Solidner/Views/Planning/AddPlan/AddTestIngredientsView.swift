@@ -20,14 +20,8 @@ struct AddTestIngredientsView: View {
     
     private let selectedTypeBottomSpace: CGFloat = 25
     private let selectedTypeSpaceWhenDisappear: CGFloat = 30
-    private let scrollViewTopSpace: CGFloat = 16
-    
-    @State private var dummyFoldState: [Bool] = [false, false, false, false]
-    
-    private func toggleFoldState(foldStateList: inout [Bool], index: Int) {
-        foldStateList[index].toggle()
-    }
-    
+    private let dividerVerticalPadding: CGFloat = 10
+        
     // TODO: 형식 수정
     @State private var selectedIngredientPair: (first: String, second: String?)? = ("곡물", "유제품류")
     
@@ -62,56 +56,12 @@ struct AddTestIngredientsView: View {
             }
             
             ScrollView {
-                Spacer().frame(height: scrollViewTopSpace)
+                IngredientsBigDivision(divisionCase: .이상반응재료)
+//                IngredientsBigDivision(divisionCase: .자주사용한재료)
                 
-                ingredientsBigDivision(.이상반응재료)
+                ThickDivider().padding(.vertical, dividerVerticalPadding)
                 
-                ThickDivider()
-                
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("먹을 수 있는 재료")
-                        .font(.title2)
-                        .bold()
-                    Text("아이가 섭취할 수 있는 재료의\n전체 목록이에요")
-                        .padding(.top, 13)
-                        .padding(.bottom, 30)
-                    
-                    ForEach(dummyFoldState.indices, id: \.self) { index in
-                        HStack(spacing: 0) {
-                            Button {
-                                withAnimation(.spring()) {
-                                    toggleFoldState(foldStateList: &dummyFoldState, index: index)
-                                }
-                            } label: {
-                                Text("곡류")
-                                    .font(.system(size: 19, weight: .semibold))
-                                    .padding(.trailing, 6)
-                                Spacer()
-                                Image(systemName: dummyFoldState[index] ? "chevron.up" : "chevron.down")
-                                    .resizable()
-                                    .bold()
-                                    .frame(width: 18, height: 10)
-                            }.foregroundColor(.black)
-                                .toggleStyle(.automatic)
-                        }.buttonStyle(PlainButtonStyle())   // 깜빡임 제거
-                        
-                        if dummyFoldState[index] {
-                            Divider()
-                                .padding(.top, 24)
-                                .padding(.bottom, 20)
-                            Group {
-                                ingredientSelectRow(divisionCase: .이상반응재료).padding(.bottom, 30)
-                                ingredientSelectRow(divisionCase: .이상반응재료).padding(.bottom, 30)
-                                ingredientSelectRow(divisionCase: .이상반응재료).padding(.bottom, 30)
-                                ingredientSelectRow(divisionCase: .이상반응재료).padding(.bottom, 30)
-                            }.transition(.push(from: dummyFoldState[index] ? .bottom : .top))
-                        }
-
-                        ThickDivider()
-                    }
-                    
-                    
-                }.padding(.horizontal, viewHorizontalPadding)
+                IngredientsBigDivision(divisionCase: .먹을수있는재료)
             }
         }.background(Color.mainBackgroundColor)
     }
@@ -133,7 +83,7 @@ struct AddTestIngredientsView: View {
                 .background {
                     RoundedRectangle(cornerRadius: buttonBackgroundRadius)
                         .fill(Color.secondaryText)
-//                        .fill(Color.defaultText_wh)
+                    //                        .fill(Color.defaultText_wh)
                 }
         }
     }
@@ -181,16 +131,104 @@ enum DivisionCase: String {
     case 자주사용한재료 = "자주 사용한 재료"
 }
 
-struct ingredientsBigDivision: View {
+struct IngredientsBigDivision: View {
     let divisionCase: DivisionCase
     
-    let viewHorizontalPadding: CGFloat = 20
-    let titleBottomSpace: CGFloat = 24
-    let rowBetweenSpace: CGFloat = 30
-    let divisionBottomSpace: CGFloat = 26
+    private let titleTopSpace: CGFloat = 16
+    private let viewHorizontalPadding: CGFloat = 20
+    private let titleBottomSpace: CGFloat = 24
+    private let rowBetweenSpace: CGFloat = 30
+    private let divisionBottomSpace: CGFloat = 16
+    
+    // TODO: Dummy Data change
+    @State private var foldStates: [Bool] = [false, false, false, false]
+    
+    private func toggleFoldState(foldStateList: inout [Bool], index: Int) {
+        foldStateList[index].toggle()
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
+            switch divisionCase {
+            case .이상반응재료:
+                이상반응재료Division()
+            case .먹을수있는재료:
+                먹을수있는재료Division()
+            case .권장하지않는재료:
+                EmptyView()
+            case .자주사용한재료:
+                자주사용한재료Division()
+            }
+        }.padding(.horizontal, viewHorizontalPadding)
+    }
+    
+    private func 먹을수있는재료Division() -> some View {
+        return VStack(alignment: .leading, spacing: 0) {
+            Text("먹을 수 있는 재료")
+                .font(.title2)
+                .bold()
+            Text("아이가 섭취할 수 있는 재료의\n전체 목록이에요")
+                .padding(.top, 13)
+                .padding(.bottom, 30)
+            
+            ForEach(foldStates.indices, id: \.self) { index in
+                HStack(spacing: 0) {
+                    Button {
+                        withAnimation(.spring()) {
+                            toggleFoldState(foldStateList: &foldStates, index: index)
+                        }
+                    } label: {
+                        Text("곡류")
+                            .font(.system(size: 19, weight: .semibold))
+                            .padding(.trailing, 6)
+                        Spacer()
+                        Image(systemName: foldStates[index] ? "chevron.up" : "chevron.down")
+                            .resizable()
+                            .bold()
+                            .frame(width: 18, height: 10)
+                    }.foregroundColor(.black)
+                        .toggleStyle(.automatic)
+                }.buttonStyle(PlainButtonStyle())   // 깜빡임 제거
+                
+                if foldStates[index] {
+                    Divider()
+                        .padding(.top, 24)
+                        .padding(.bottom, 20)
+                    Group {
+                        ingredientSelectRow(divisionCase: .이상반응재료).padding(.bottom, 30)
+                        ingredientSelectRow(divisionCase: .이상반응재료).padding(.bottom, 30)
+                        ingredientSelectRow(divisionCase: .이상반응재료).padding(.bottom, 30)
+                        ingredientSelectRow(divisionCase: .이상반응재료).padding(.bottom, 30)
+                    }.transition(.push(from: foldStates[index] ? .bottom : .top))
+                }
+                
+                ThickDivider()
+            }
+        }
+    }
+    
+    private func 자주사용한재료Division() -> some View {
+        return VStack(alignment: .leading, spacing: 0) {
+            Spacer().frame(height: titleTopSpace)
+            Text("자주 사용한 재료")
+                .headerFont2()
+                .foregroundColor(.defaultText)
+            Spacer().frame(height: titleBottomSpace)
+            // TODO: 실제 데이터로 변경
+            ForEach(Range<Int>(1...4)) { i in
+                ingredientSelectRow(divisionCase: .자주사용한재료)
+                if(i != 4) {
+                    Spacer().frame(height: rowBetweenSpace)
+                } else {
+                    Spacer().frame(height: divisionBottomSpace)
+                }
+            }
+        }
+    }
+    
+    private func 이상반응재료Division() -> some View {
+        return VStack(alignment: .leading, spacing: 0) {
+            Spacer().frame(height: titleTopSpace)
             Text("이상 반응 재료")
                 .headerFont2()
                 .foregroundColor(.defaultText)
@@ -204,7 +242,7 @@ struct ingredientsBigDivision: View {
                     Spacer().frame(height: divisionBottomSpace)
                 }
             }
-        }.padding(.horizontal, viewHorizontalPadding)
+        }
     }
 }
 
@@ -220,14 +258,25 @@ func ingredientSelectRow(divisionCase: DivisionCase) -> some View {
         Text("재료명")
             .headerFont4()
         Spacer().frame(width: ingredientNameRightSpace)
-        Text("00/00")
-            .tagFont()
-            .foregroundColor(.defaultText_wh)
-            .symmetricBackground(HPad: dateTextHorizontalPadding,
-                                 VPad: dateTextVerticalPadding,
-                                 color: .accentColor1,
-                                 radius: dateBackgroundRadius)
-        
+        switch divisionCase {
+        case .이상반응재료:
+            Text("00/00")
+                .tagFont()
+                .foregroundColor(.defaultText_wh)
+                .symmetricBackground(HPad: dateTextHorizontalPadding,
+                                     VPad: dateTextVerticalPadding,
+                                     color: .accentColor1,
+                                     radius: dateBackgroundRadius)
+        case .자주사용한재료:
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundStyle(Color.accentColor1)
+                .scaledToFit()
+                .frame(width: 20)
+        case .먹을수있는재료:
+            EmptyView()
+        case .권장하지않는재료:
+            EmptyView()
+        }   // end of switch
         Spacer()
         
         ButtonComponents(.clickableTiny, disabledCondition: false) {
