@@ -54,8 +54,8 @@ enum TextLiterals {
     }
 
     enum PlanDetail {
-        static func dateRangeTitle(from: Date, to: Date) -> String { "\(from.month)/\(from.day)(\(from.weekDayKor)) ~\n \(to.day)일(\(to.weekDayKor)) 식단" }
-        
+        static func dateRangeTitle(from: Date, to: Date) -> String { "\(from.month).\(from.day).(\(from.weekDayKor)) ~ \(to.month).\(to.day).(\(to.weekDayKor)) 식단" }
+
         static var editPlan: String { "편집" }
         static var editComplete: String { "완료" }
 
