@@ -19,6 +19,11 @@ extension Image {
         case loginBg
         case soCuteNameBackground
         case tinyChevron
+        case editDetail
+        case rightChevronSmall
+        case ingredientsInStart
+        case userInfo
+        case calendar
     }
     
     init(assetName: ImageAssetName){

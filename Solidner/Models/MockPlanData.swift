@@ -7,9 +7,10 @@
 
 import Foundation
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct MealPlan: Identifiable, Hashable {
-    let id = UUID()
+    private(set) var id = UUID()
     private(set) var startDate: Date {
         willSet {
             endDate = newValue.add(.day, value: cycleGap.rawValue - 1)
@@ -37,6 +38,19 @@ struct MealPlan: Identifiable, Hashable {
     }
 }
 
+// Draggable을 위한
+extension MealPlan: Codable, Transferable {
+    static var transferRepresentation: some TransferRepresentation {
+        CodableRepresentation(contentType: .mealPlan)
+    }
+}
+
+
+extension UTType {
+    static var mealPlan: UTType { UTType(exportedAs: "co.gear.mealPlan") }
+}
+
+
 extension MealPlan {
     mutating func set(mealType: MealType) {
         self.mealType = mealType
@@ -55,7 +69,7 @@ extension MealPlan {
     }
 }
 
-enum MealType: Int, CaseIterable {
+enum MealType: Int, CaseIterable, Codable {
     case 아침, 점심, 저녁, 간식1, 간식2, 기타
 
     var description: String {
@@ -93,10 +107,16 @@ enum MealType: Int, CaseIterable {
     }
 }
 
-struct Ingredient: CustomStringConvertible, Identifiable, Hashable {
-    let id = UUID()
+extension MealType: Comparable {
+    static func < (lhs: MealType, rhs: MealType) -> Bool {
+        lhs.rawValue < rhs.rawValue
+    }
+}
+
+struct Ingredient: CustomStringConvertible, Identifiable, Hashable, Codable {
+    private(set) var id = UUID()
     let type: IngredientType
-    let ableMonth: Int = 6
+    private(set) var ableMonth: Int = 6
     private(set) var misMatches: [Ingredient] = []
     private(set) var alternatives: [Ingredient] = []
 
@@ -110,7 +130,7 @@ struct Ingredient: CustomStringConvertible, Identifiable, Hashable {
     }
 }
 
-enum IngredientType {
+enum IngredientType: Codable {
     case 곡물, 어육류, 노란채소, 녹색채소, 과일, 유제품, 기타채소, 기타
 
     var color: Color {
@@ -253,10 +273,10 @@ extension MealPlan {
 }
 
 extension Ingredient {
-    static var mockTestingIngredients: [Ingredient] = [
+    static var mocknewIngredients: [Ingredient] = [
         Mock.당근
     ]
-    static var mockTestedIngredients: [Ingredient] = [
+    static var mockoldIngredients: [Ingredient] = [
         Mock.쌀, Mock.소고기, Mock.청경채
     ]
 
