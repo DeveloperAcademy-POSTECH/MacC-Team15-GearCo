@@ -18,6 +18,11 @@ extension Image {
         case headerChevron
         case soCuteNameBackground
         case appsymbol
+        case editDetail
+        case rightChevronSmall
+        case ingredientsInStart
+        case userInfo
+        case calendar
     }
     
     init(assetName: ImageAssetName){
