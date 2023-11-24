@@ -10,11 +10,23 @@ import SwiftUI
 
 struct MealPlan: Identifiable, Hashable {
     let id = UUID()
-    let startDate: Date
-    let endDate: Date
-    let mealType: MealType
-    let newIngredients: [Ingredient]
-    let oldIngredients: [Ingredient]
+    private(set) var startDate: Date {
+        willSet {
+            endDate = newValue.add(.day, value: cycleGap.rawValue - 1)
+        }
+    }
+    private(set) var endDate: Date
+    private(set) var mealType: MealType
+    private(set) var newIngredients: [Ingredient]
+    private(set) var oldIngredients: [Ingredient]
+    var cycleGap: CycleGaps {
+        get {
+            CycleGaps(rawValue: Date.componentsBetweenDates(from: startDate, to: endDate).day! + 1)!
+        }
+        set {
+            endDate = startDate.add(.day, value: newValue.rawValue - 1)
+        }
+    }
 
     var dateString: String {
         "\(startDate.day)일(\(startDate.weekDayKor)) ~ \(endDate.day)일(\(endDate.weekDayKor))"
@@ -22,6 +34,24 @@ struct MealPlan: Identifiable, Hashable {
 
     var ingredientsString: String {
         oldIngredients.map { $0.description }.joined(separator: ", ")
+    }
+}
+
+extension MealPlan {
+    mutating func set(mealType: MealType) {
+        self.mealType = mealType
+    }
+
+    mutating func set(startDate: Date) {
+        self.startDate = startDate
+    }
+
+    mutating func remove(newIngredient ingredient: Ingredient) {
+        self.newIngredients.removeAll { $0 == ingredient }
+    }
+
+    mutating func remove(oldIngredient ingredient: Ingredient) {
+        self.oldIngredients.removeAll { $0 == ingredient }
     }
 }
 
@@ -114,7 +144,7 @@ extension MealPlan {
                 startDate: Date.date(year: 2023, month: 11, day: 14)!,
                 endDate: Date.date(year: 2023, month: 11, day: 16)!,
                 mealType: .아침,
-                newIngredients: [ingredient.소고기],
+                newIngredients: [ingredient.소고기, ingredient.당근],
                 oldIngredients: [ingredient.쌀]
             ),
             // 2nd
