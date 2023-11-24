@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct UserInfoUpdateView: View {
-    private let warningMessageTopPadding = 12.0
+    private let warningMessageTopPadding = 9.0
     private let warningMessageLeadingPadding = 6.0
     @State private var showBabyBirthDateModal = false
     @State private var showSolidStartDateModal = false
@@ -64,9 +64,9 @@ struct UserInfoUpdateView: View {
     private func userInfoUpdateList() -> some View {
         VStack(spacing: 40) {
             userInfoLabelAndItem(userInfoCase: .nickName)
-                .padding(.bottom, nickNameTextLimiter.hasReachedLimit ? -26 : 0)
+                .padding(.bottom, -26)
             userInfoLabelAndItem(userInfoCase: .babyName)
-                .padding(.bottom, babyNameTextLimiter.hasReachedLimit ? -26 : 0)
+                .padding(.bottom, -26)
             userInfoLabelAndItem(userInfoCase: .babyBirthDate)
             userInfoLabelAndItem(userInfoCase: .solidStartDate)
         }
@@ -89,34 +89,26 @@ struct UserInfoUpdateView: View {
     private func nickNameTextField() -> some View {
         VStack {
             TextFieldComponents().shortTextfield(placeHolder: "", value: $nickNameTextLimiter.value, isFocused: $isNicknameFocused)
-            if nickNameTextLimiter.hasReachedLimit {
-                withAnimation {
-                    HStack {
-                        Text(TextLiterals.NickName.warningMessage)
-                            .foregroundColor(Color.accentColor1)
-                            .inputErrorFont()
-                        .padding(.top, warningMessageTopPadding)
-                        .padding(.leading, warningMessageLeadingPadding)
-                        Spacer()
-                    }
-                }
+            HStack {
+                Text(TextLiterals.NickName.warningMessage)
+                    .foregroundColor(nickNameTextLimiter.hasReachedLimit ? .accentColor1 : .clear)
+                    .inputErrorFont()
+                    .padding(.top, warningMessageTopPadding)
+                    .padding(.leading, warningMessageLeadingPadding)
+                Spacer()
             }
         }
     }
     private func babyNameTextField() -> some View {
         VStack {
             TextFieldComponents().shortTextfield(placeHolder: "", value: $babyNameTextLimiter.value, isFocused: $isBabynameFocused)
-            if nickNameTextLimiter.hasReachedLimit {
-                withAnimation {
-                    HStack {
-                        Text(TextLiterals.NickName.warningMessage)
-                            .foregroundColor(Color.accentColor1)
-                            .inputErrorFont()
-                        .padding(.top, warningMessageTopPadding)
-                        .padding(.leading, warningMessageLeadingPadding)
-                        Spacer()
-                    }
-                }
+            HStack {
+                Text(TextLiterals.NickName.warningMessage)
+                    .foregroundColor(babyNameTextLimiter.hasReachedLimit ? .accentColor1 : .clear)
+                    .inputErrorFont()
+                    .padding(.top, warningMessageTopPadding)
+                    .padding(.leading, warningMessageLeadingPadding)
+                Spacer()
             }
         }
     }

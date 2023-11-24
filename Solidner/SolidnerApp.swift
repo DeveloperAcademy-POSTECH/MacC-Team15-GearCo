@@ -36,7 +36,7 @@ struct SolidnerApp: App {
 //            }
  //           MonthlyPlanningView()
             //SignInView().environmentObject(userOB)
-            MypageRootView().environmentObject(userOB)
+            UserInfoUpdateView().environmentObject(userOB)
         }
     }
 }
