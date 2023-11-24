@@ -58,7 +58,6 @@ struct PlanDetailView: View {
     }
 }
 
-
 // toolbar
 
 extension PlanDetailView {
@@ -88,6 +87,11 @@ extension PlanDetailView {
             }
         }
     }
+}
+
+// body
+
+extension PlanDetailView {
 
     private var header: some View {
         HStack(alignment: .top) {

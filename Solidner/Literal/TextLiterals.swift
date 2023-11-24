@@ -15,12 +15,12 @@ enum TextLiterals {
     // 일단 1의 방식으로 진행했습니다.
 
     enum StartPlan {
-        static var noWorriesJustStartHeaderText: String { "솔리너로\n걱정없는 이유식 계획" }
-        static var noWorriesJustStartDetailText: String { "이유식 구성에 어려움을 겪으셨나요?\n지금 바로 시작해보세요." }
-        static var goToPlanButtonText: String { "이유식 구성하기" }
-        static var selectStartDateModalHeaderText: String { "이제, 시작해볼까요!" }
-        static var selectStartDateModalDetailText: String { "첫 계획 시작일을 언제로 할까요?" }
-        static var startButtonLabel: String { "시작하기" }
+        static var noWorriesJustStartHeaderText: String { "솔리너로\n걱정없는 이유식 계획." }
+        static var noWorriesJustStartDetailText: String { "이유식 식단에 어려움을 겪으셨나요?\n지금 바로 시작해보세요" }
+        static var goToPlanButtonText: String { "이유식 계획하기" }
+        static var selectStartDateModalTitleText: String { "이제, 시작해볼까요?" }
+        static var selectStartDateModalHintText: String { "이유식의 첫 계획 시작일을 알려주세요" }
+        static func startButtonLabel(from: Date) -> String { "\(from.month)월 \(from.day)일부터 시작할게요" }
     }
 
     enum PlanList {
