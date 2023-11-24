@@ -166,7 +166,14 @@ enum TextLiterals {
         static var changeStartDateText: String { "시작일 변경" }
         static var changeStartDateDetailText: String { "아래 날짜부터 시작할 예정이에요." }
     }
-    
+
+    enum AddedIngredient {
+        static var newText: String { "NEW" }
+        static func reactionDateText(of date: Date) -> String { "\(date.month)/\(date.day)" }
+        static func canEatText(month: Int) -> String { "\(month)개월 +" }
+        static var deleteText: String { "삭제" }
+    }
+
     enum AgreeToTerms {
         static var bigTitle: String { "서비스 이용약관에\n동의해주세요" }
         static var smallTitle: String { "솔리너의 원활한 사용을 위해\n아래의 정보 제공에 동의해주세요." }
