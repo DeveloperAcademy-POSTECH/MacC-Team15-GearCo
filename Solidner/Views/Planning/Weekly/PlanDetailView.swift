@@ -37,11 +37,11 @@ struct PlanDetailView: View {
             if isWrongPlan {
                 WarningView()
             }
-            MealGroupView(
+            DraggableMealGroupView(
                 dateRange: dateRangeString,
                 displayDateInfo: DisplayDateInfoView(from: startDate, to: endDate),
-                mealPlans: mealPlans,
-                isInList: false
+                mealPlans: $mealPlans,
+                isEditMode: $isEditMode
             )
             Spacer()
             addMealButton
