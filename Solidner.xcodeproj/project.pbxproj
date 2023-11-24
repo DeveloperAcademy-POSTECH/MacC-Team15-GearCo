@@ -72,6 +72,8 @@
 		C3B4DB412B0DF18700772C2A /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = C3B4DB3E2B0DF18700772C2A /* Pretendard-Medium.otf */; };
 		C3B4DB472B0E84A500772C2A /* UIScreen+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B4DB462B0E84A500772C2A /* UIScreen+.swift */; };
 		C3B4DB492B0F22AF00772C2A /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B4DB482B0F22AF00772C2A /* BackgroundView.swift */; };
+		C3B4DB4C2B10B51300772C2A /* MypageRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B4DB4B2B10B51300772C2A /* MypageRootView.swift */; };
+		C3B4DB4E2B10BA2E00772C2A /* ViewDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B4DB4D2B10BA2E00772C2A /* ViewDivider.swift */; };
 		C3C6375D2AF90C2B006D464D /* SolidnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C6375C2AF90C2B006D464D /* SolidnerApp.swift */; };
 		C3C637612AF90C2C006D464D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3C637602AF90C2C006D464D /* Assets.xcassets */; };
 		C3C637642AF90C2C006D464D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3C637632AF90C2C006D464D /* Preview Assets.xcassets */; };
@@ -160,6 +162,8 @@
 		C3B4DB3E2B0DF18700772C2A /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		C3B4DB462B0E84A500772C2A /* UIScreen+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+.swift"; sourceTree = "<group>"; };
 		C3B4DB482B0F22AF00772C2A /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
+		C3B4DB4B2B10B51300772C2A /* MypageRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageRootView.swift; sourceTree = "<group>"; };
+		C3B4DB4D2B10BA2E00772C2A /* ViewDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDivider.swift; sourceTree = "<group>"; };
 		C3C637592AF90C2B006D464D /* Solidner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Solidner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3C6375C2AF90C2B006D464D /* SolidnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolidnerApp.swift; sourceTree = "<group>"; };
 		C3C637602AF90C2C006D464D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -230,6 +234,7 @@
 				C36942482AFF755F002465D4 /* BackButtonHeader.swift */,
 				C369424A2B00B350002465D4 /* TextFieldComponents.swift */,
 				C3B4DB482B0F22AF00772C2A /* BackgroundView.swift */,
+				C3B4DB4D2B10BA2E00772C2A /* ViewDivider.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -318,6 +323,14 @@
 				0EA6C61D2AFBE087004FF2AA /* MonthlyPlanningDummy.swift */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		C3B4DB4A2B10B4D600772C2A /* Mypage */ = {
+			isa = PBXGroup;
+			children = (
+				C3B4DB4B2B10B51300772C2A /* MypageRootView.swift */,
+			);
+			path = Mypage;
 			sourceTree = "<group>";
 		};
 		C3C637502AF90C2B006D464D = {
@@ -414,6 +427,7 @@
 		C3C637882AF90C5E006D464D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C3B4DB4A2B10B4D600772C2A /* Mypage */,
 				0EA6C6182AFBE05D004FF2AA /* Planning */,
 				0E18AD792AFBDCD20011ED4A /* Components */,
 				0E18AD692AFA7F180011ED4A /* Onboarding */,
@@ -639,6 +653,7 @@
 				B2746E412B05F9860083AB57 /* TitleAndActionButtonView.swift in Sources */,
 				B26732AA2B0232EE004AFF83 /* CycleGapSegmentedPicker.swift in Sources */,
 				C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */,
+				C3B4DB4E2B10BA2E00772C2A /* ViewDivider.swift in Sources */,
 				B2746E3D2B05DF900083AB57 /* StartDateSettingModal.swift in Sources */,
 				C3AD1BCC2B024FAC003BB3E0 /* FoodStartDateView.swift in Sources */,
 				C3AD1BD02B026CB5003BB3E0 /* OnboardingEndView.swift in Sources */,
@@ -657,6 +672,7 @@
 				C3C6375D2AF90C2B006D464D /* SolidnerApp.swift in Sources */,
 				B2D1DCD62B07466500D7B77B /* MealGroupView.swift in Sources */,
 				C336EE512B054AED0057D8B8 /* TermsWebView.swift in Sources */,
+				C3B4DB4C2B10B51300772C2A /* MypageRootView.swift in Sources */,
 				B2DE212E2B0DDA54006E42C7 /* PlanBatchSettingView.swift in Sources */,
 				C336EE532B054C820057D8B8 /* AgreeCase.swift in Sources */,
 				C3AD1BCA2B023FA1003BB3E0 /* BabyBirthDateView.swift in Sources */,

@@ -136,6 +136,7 @@ extension Date {
     /// `formatted(_ format: DateFormat) -> String` 함수에 사용되는 format 형식을 case로 재정의한 enum입니다.
     enum DateFormat: String {
         case yyyyMMdd_dot = "yyyy.MM.dd"
+        case yyyyMMdd_dotWithSpace = "yyyy. MM. dd"
         // 11/13
         case MMdd_slash = "MM/dd"
     }
