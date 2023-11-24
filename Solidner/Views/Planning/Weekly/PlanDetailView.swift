@@ -7,10 +7,10 @@
 /**
  -[x] 플랜에 대한 경고 필요
  -[ ] cell을 누르면 해당 meal에 대한 detail로 넘어간다
-## CRUD
+ ## CRUD
  -[ ] 끼니 추가 버튼으로 끼니 추가
-    -[ ] 6끼라면 버튼 disable 안함. 대신 끼니 추가 후 wrongplan 경고뷰가 나옴
- -[ ] 편집을 누르면 드래거블
+ -[ ] 6끼라면 버튼 disable 안함. 대신 끼니 추가 후 wrongplan 경고뷰가 나옴
+ -[x] 편집을 누르면 드래거블
  */
 import SwiftUI
 
@@ -22,7 +22,7 @@ struct PlanDetailView: View {
     @State private var isEditMode: Bool = false
     // TODO: - 나중에 어떻게 선언해야할지 고민 State? Binding? 계획이 바뀌었을 때, 바뀐 계획에 따라서 값이 바뀌어야함.
     private(set) var isWrongPlan: Bool = true
-    
+
     private let texts = TextLiterals.PlanDetail.self
     private enum K {
         static var wholeVStackSpacing: CGFloat { 26 }
@@ -32,20 +32,37 @@ struct PlanDetailView: View {
     }
 
     var body: some View {
-        VStack(spacing: K.wholeVStackSpacing) {
-            header
-            if isWrongPlan {
-                WarningView()
-            }
-            DraggableMealGroupView(
-                dateRange: dateRangeString,
-                displayDateInfo: DisplayDateInfoView(from: startDate, to: endDate),
-                mealPlans: $mealPlans,
-                isEditMode: $isEditMode
-            )
-            Spacer()
-            addMealButton
+        NavigationView {
+            ScrollView {
+                VStack(spacing: K.wholeVStackSpacing) {
+                    header
+                    if isWrongPlan { WarningView() }
+                    DraggableMealGroupView(
+                        dateRange: dateRangeString,
+                        displayDateInfo: DisplayDateInfoView(from: startDate, to: endDate),
+                        mealPlans: $mealPlans,
+                        isEditMode: $isEditMode
+                    )
+                    Spacer()
+                    addMealButton
+                }
+            }.navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Image(assetName: .headerChevron)
+                    }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            isEditMode.toggle()
+                        } label: {
+                            Text(isEditMode ? "편집" : "완료")
+                        }
+                    }
+                }
         }
+
+
+
     }
 
     private var header: some View {
@@ -53,28 +70,7 @@ struct PlanDetailView: View {
             Text(texts.dateRangeTitle(from: startDate, to: endDate))
                 .headerFont2()
             Spacer()
-            // TODO: - 나중에는 navi button으로 빠짐
-            Button {
-                isEditMode.toggle()
-            } label: {
-                Text(isEditMode ? texts.editComplete : texts.editPlan)
-            }
         }
-    }
-
-    // TODO: - Warning 정의 및 literal 정의
-
-    private var warningView: some View {
-        VStack {
-            // 어찌구 아이콘
-            Text(texts.existsDuplicatedMeal)
-        }
-        .padding()
-        .frame(maxWidth: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .foregroundStyle(Color.gray)
-        )
     }
 
     // TODO: - add meal action
