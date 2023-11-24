@@ -37,6 +37,12 @@ extension View {
 }
 
 extension View {
+    func responsibleFrame(width: CGFloat? = nil, height: CGFloat? = nil) -> some View {
+        self.frame(width: width?.deviceDependable(.width), height: height?.deviceDependable(.height))
+    }
+}
+
+extension View {
     /// Symmetric하게 padding을 넣고 싶을 때 사용
     /// - Parameters:
     ///   - horizontal: horizontal Padding값
@@ -136,5 +142,14 @@ struct RoundedCorner: Shape {
     func path(in rect: CGRect) -> Path {
         let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         return Path(path.cgPath)
+    }
+}
+
+extension View {
+    func withRoundedBackground(cornerRadius: CGFloat, color: Color) -> some View {
+        self.background(
+            RoundedRectangle(cornerRadius: cornerRadius)
+                .foregroundStyle(color)
+        )
     }
 }
