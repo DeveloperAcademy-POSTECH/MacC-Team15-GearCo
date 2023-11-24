@@ -34,8 +34,9 @@ struct SolidnerApp: App {
 //            } else {
 //                PlanListView()
 //            }
-            MonthlyPlanningView()
+ //           MonthlyPlanningView()
             //SignInView().environmentObject(userOB)
+            MypageRootView().environmentObject(userOB)
         }
     }
 }

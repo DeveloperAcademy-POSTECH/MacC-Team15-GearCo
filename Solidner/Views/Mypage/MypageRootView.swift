@@ -88,30 +88,30 @@ struct MypageRootView: View {
         case teamIntroduction = "서비스를 만든 사람들"
         case personalInfoTerms = "개인정보 처리약관"
         case serviceUseTerms = "서비스 이용약관"
-        case withdrawal = "회원 탈퇴"
+        case withdrawal = "탈퇴하기"
     }
-    private func myPageFunctionItem(mypageFuctionCase: MypageFunctionCase) -> some View {
-        return HStack {
-            Text(mypageFuctionCase.rawValue)
-                .headerFont4()
-                .foregroundColor(.secondaryText)
-            Spacer()
-            Button {
-                // 각 기능으로 네비게이션
-            } label: {
+    private func myPageFunctionButton(mypageFuctionCase: MypageFunctionCase) -> some View {
+        return Button {
+            // 각 뷰로 네비게이션
+        } label: {
+            HStack {
+                Text(mypageFuctionCase.rawValue)
+                    .headerFont4()
+                    .foregroundColor(mypageFuctionCase == .notificationSetting ||  mypageFuctionCase == .teamIntroduction ? .secondaryText : .tertinaryText)
+                Spacer()
                 Image(assetName: .mypageChevron)
             }
         }
     }
     private func myPageFunctionList() -> some View {
         return VStack(spacing: 32) {
-            myPageFunctionItem(mypageFuctionCase: .notificationSetting)
-            myPageFunctionItem(mypageFuctionCase: .teamIntroduction)
-            myPageFunctionItem(mypageFuctionCase: .personalInfoTerms)
-            myPageFunctionItem(mypageFuctionCase: .serviceUseTerms)
+            myPageFunctionButton(mypageFuctionCase: .notificationSetting)
+            myPageFunctionButton(mypageFuctionCase: .teamIntroduction)
+            myPageFunctionButton(mypageFuctionCase: .personalInfoTerms)
+            myPageFunctionButton(mypageFuctionCase: .serviceUseTerms)
             ViewDivider(dividerCase: .thick)
                 .padding(.top, -4)
-            myPageFunctionItem(mypageFuctionCase: .withdrawal)
+            myPageFunctionButton(mypageFuctionCase: .withdrawal)
                 .padding(.top, -4)
         }
     }

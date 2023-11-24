@@ -137,6 +137,7 @@ extension Date {
     enum DateFormat: String {
         case yyyyMMdd_dot = "yyyy.MM.dd"
         case yyyyMMdd_dotWithSpace = "yyyy. MM. dd"
+        case yyyyMMdd_fullKorean = "yyyy년 MM월 dd일"
         // 11/13
         case MMdd_slash = "MM/dd"
     }
