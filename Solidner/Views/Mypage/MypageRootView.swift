@@ -9,15 +9,39 @@ import SwiftUI
 
 struct MypageRootView: View {
     @EnvironmentObject var user: UserOB
+    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
+    @State private var stackPath: [MypageFunctionCase] = []
+    @State private var goForUserInfoUpdate = false
     var body: some View {
-        ZStack {
-            BackgroundView()
-            VStack(spacing: 0) {
-                BackButtonHeader(action: {
-                    //Navigate Back
-                }, title: "프로필")
-                viewBody()
-                    .padding(horizontal: 20, vertical: 39)
+        NavigationStack(path: $stackPath) {
+            ZStack {
+                BackgroundView()
+                VStack(spacing: 0) {
+                    BackButtonHeader(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }, title: "프로필")
+                    viewBody()
+                        .padding(horizontal: 20, vertical: 39)
+                }
+            }
+            .navigationBarBackButtonHidden(true)
+            .navigationBarHidden(true)
+            .navigationDestination(for: MypageFunctionCase.self) { value in
+                switch value {
+                case .notificationSetting:
+                    UserInfoUpdateView()
+                case .personalInfoTerms:
+                    UserInfoUpdateView()
+                case .serviceUseTerms:
+                    UserInfoUpdateView()
+                case .teamIntroduction:
+                    UserInfoUpdateView()
+                case .withdrawal:
+                    UserInfoUpdateView()
+                }
+            }
+            .navigationDestination(isPresented: $goForUserInfoUpdate) {
+                UserInfoUpdateView()
             }
         }
     }
@@ -42,7 +66,7 @@ struct MypageRootView: View {
                 .foregroundColor(.defaultText.opacity(0.8))
             Spacer()
             ButtonComponents(.tiny, title: "수정하기", disabledCondition: false, action: {
-                //회원정보 수정으로 Navigation
+                goForUserInfoUpdate = true
             })
         }
     }
@@ -83,7 +107,7 @@ struct MypageRootView: View {
         case babyBirthDate = "의 생일"
         case solidStartDate = "이유식 시작일"
     }
-    private enum MypageFunctionCase: String {
+    private enum MypageFunctionCase: String, Hashable {
         case notificationSetting = "알림 설정"
         case teamIntroduction = "서비스를 만든 사람들"
         case personalInfoTerms = "개인정보 처리약관"
@@ -91,9 +115,7 @@ struct MypageRootView: View {
         case withdrawal = "탈퇴하기"
     }
     private func myPageFunctionButton(mypageFuctionCase: MypageFunctionCase) -> some View {
-        return Button {
-            // 각 뷰로 네비게이션
-        } label: {
+        return NavigationLink(value: mypageFuctionCase) {
             HStack {
                 Text(mypageFuctionCase.rawValue)
                     .headerFont4()

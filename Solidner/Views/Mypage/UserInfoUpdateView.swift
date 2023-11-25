@@ -18,13 +18,14 @@ struct UserInfoUpdateView: View {
     @FocusState private var isNicknameFocused: Bool
     @FocusState private var isBabynameFocused: Bool
     @EnvironmentObject var user: UserOB
+    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     var body: some View {
         GeometryReader { _ in
             ZStack {
                 BackgroundView()
                 VStack(spacing: 0) {
                     BackButtonHeader(action: {
-                        //Navigate back
+                        presentationMode.wrappedValue.dismiss()
                     }, title: "회원 정보 수정")
                     viewBody()
                         .padding(horizontal: 20, top: 40, bottom: 6)
@@ -36,6 +37,8 @@ struct UserInfoUpdateView: View {
             babyNameTextLimiter.value = user.babyName
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
     }
     private func viewBody() -> some View {
         VStack(spacing: 0) {

@@ -27,6 +27,14 @@ struct BabyBirthDateView: View {
                     .padding(horizontal: 20, top: 32, bottom: 20)
             }
         }
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
+        .navigationDestination(isPresented: $navigationIsPresented) {
+            FoodStartDateView()
+        }
+        .navigationDestination(isPresented: $goBackToBabyNameView) {
+            NickNameView(nickNameViewCase: .babyName)
+        }
     }
     private func viewBody() -> some View {
         VStack(spacing: 0) {
@@ -43,14 +51,6 @@ struct BabyBirthDateView: View {
                 user.babyBirthDate = babyBirthDate
                 navigationIsPresented = true
             })
-        }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarHidden(true)
-        .navigationDestination(isPresented: $navigationIsPresented) {
-            FoodStartDateView()
-        }
-        .navigationDestination(isPresented: $goBackToBabyNameView) {
-            NickNameView(nickNameViewCase: .babyName)
         }
     }
 }
