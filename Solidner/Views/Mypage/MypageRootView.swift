@@ -31,9 +31,9 @@ struct MypageRootView: View {
                 case .notificationSetting:
                     UserInfoUpdateView()
                 case .personalInfoTerms:
-                    UserInfoUpdateView()
+                    TermsWebViewWithHeader(agreeCase: .personalInfo)
                 case .serviceUseTerms:
-                    UserInfoUpdateView()
+                    TermsWebViewWithHeader(agreeCase: .serviceUse)
                 case .teamIntroduction:
                     UserInfoUpdateView()
                 case .withdrawal:
@@ -110,7 +110,7 @@ struct MypageRootView: View {
     private enum MypageFunctionCase: String, Hashable {
         case notificationSetting = "알림 설정"
         case teamIntroduction = "서비스를 만든 사람들"
-        case personalInfoTerms = "개인정보 처리약관"
+        case personalInfoTerms = "개인정보 처리방침"
         case serviceUseTerms = "서비스 이용약관"
         case withdrawal = "탈퇴하기"
     }
@@ -129,8 +129,8 @@ struct MypageRootView: View {
         return VStack(spacing: 32) {
             myPageFunctionButton(mypageFuctionCase: .notificationSetting)
             myPageFunctionButton(mypageFuctionCase: .teamIntroduction)
-            myPageFunctionButton(mypageFuctionCase: .personalInfoTerms)
             myPageFunctionButton(mypageFuctionCase: .serviceUseTerms)
+            myPageFunctionButton(mypageFuctionCase: .personalInfoTerms)
             ViewDivider(dividerCase: .thick)
                 .padding(.top, -4)
             myPageFunctionButton(mypageFuctionCase: .withdrawal)

@@ -19,7 +19,7 @@ struct TermsWebView: UIViewRepresentable {
             return TextLiterals.TermsWeb.advertisingURL
         }
     }
-    var agreeCase: AgreeCase
+    let agreeCase: AgreeCase
     func makeUIView(context: Context) -> WKWebView {
         guard let url = URL(string: self.urlToLoad) else {
             return WKWebView()
@@ -39,4 +39,18 @@ struct TermsWebView_Previews: PreviewProvider {
     }
 }
 
+struct TermsWebViewWithHeader: View {
+    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
+    let agreeCase: AgreeCase
+    var body: some View {
+        VStack {
+            BackButtonHeader(action: {
+                presentationMode.wrappedValue.dismiss()
+            }, title: agreeCase.rawValue)
+            TermsWebView(agreeCase: agreeCase)
+        }
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
+    }
+}
 

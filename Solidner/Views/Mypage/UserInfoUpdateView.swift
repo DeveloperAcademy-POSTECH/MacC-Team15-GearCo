@@ -13,6 +13,8 @@ struct UserInfoUpdateView: View {
     @State private var showBabyBirthDateModal = false
     @State private var showSolidStartDateModal = false
     @State private var showAddMoreUserFYIModal = false
+    @State private var updatedBabyBirthDate = Date()
+    @State private var updatedSolidStartDate = Date()
     @StateObject private var nickNameTextLimiter = TextLimiterOB()
     @StateObject private var babyNameTextLimiter = TextLimiterOB()
     @FocusState private var isNicknameFocused: Bool
@@ -31,10 +33,51 @@ struct UserInfoUpdateView: View {
                         .padding(horizontal: 20, top: 40, bottom: 6)
                 }
             }
+            .sheet(isPresented: $showBabyBirthDateModal, content: {
+                if #available(iOS 16.4, *) {
+                    DateUpdateModalView(dateCase: .babyBirth, updatedDate: $updatedBabyBirthDate)
+                        .presentationDetents([.height(UIScreen.getHeight(498))])
+                        .presentationDragIndicator(.hidden)
+                        .presentationCornerRadius(28)
+                }
+                else {
+                    DateUpdateModalView(dateCase: .babyBirth, updatedDate: $updatedBabyBirthDate)
+                        .presentationDetents([.height(UIScreen.getHeight(498))])
+                        .presentationDragIndicator(.hidden)
+                }
+            })
+            .sheet(isPresented: $showSolidStartDateModal, content: {
+                if #available(iOS 16.4, *) {
+                    DateUpdateModalView(dateCase: .solidStart, updatedDate: $updatedSolidStartDate)
+                        .presentationDetents([.height(UIScreen.getHeight(498))])
+                        .presentationDragIndicator(.hidden)
+                        .presentationCornerRadius(28)
+                }
+                else {
+                    DateUpdateModalView(dateCase: .solidStart, updatedDate: $updatedSolidStartDate)
+                        .presentationDetents([.height(UIScreen.getHeight(498))])
+                        .presentationDragIndicator(.hidden)
+                }
+            })
+            .sheet(isPresented: $showAddMoreUserFYIModal, content: {
+                if #available(iOS 16.4, *) {
+                    AddMoreUserFYIModalView()
+                        .presentationDetents([.height(UIScreen.getHeight(415))])
+                        .presentationDragIndicator(.hidden)
+                        .presentationCornerRadius(28)
+                }
+                else {
+                    AddMoreUserFYIModalView()
+                        .presentationDetents([.height(UIScreen.getHeight(415))])
+                        .presentationDragIndicator(.hidden)
+                }
+            })
         }
         .onAppear {
             nickNameTextLimiter.value = user.nickName
             babyNameTextLimiter.value = user.babyName
+            updatedBabyBirthDate = user.babyBirthDate
+            updatedSolidStartDate = user.solidStartDate
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .navigationBarBackButtonHidden(true)
@@ -46,7 +89,7 @@ struct UserInfoUpdateView: View {
             Spacer()
             VStack {
                 Button(action: {
-                    
+                    showAddMoreUserFYIModal = true
                 }){
                     VStack(spacing: 3) {
                         Text("양육자, 아이 추가를 찾으시나요?")
@@ -59,7 +102,12 @@ struct UserInfoUpdateView: View {
                 }
             }
             ButtonComponents(.big, title: "수정 완료", disabledCondition: false) {
-                // AppStorage 정보 저장 및 데이터 업데이트 (서버, AppStorage)
+                user.babyName = babyNameTextLimiter.value
+                user.nickName = nickNameTextLimiter.value
+                user.babyBirthDate = updatedBabyBirthDate
+                user.solidStartDate = updatedSolidStartDate
+                //🔴 서버 유저정보 업데이트 코드 추가
+                presentationMode.wrappedValue.dismiss()
             }
             .padding(.top, 40)
         }
@@ -127,7 +175,7 @@ struct UserInfoUpdateView: View {
             }
         }){
             HStack {
-                Text(userInfoCase == . babyBirthDate ? user.babyBirthDate.formatted(.yyyyMMdd_fullKorean) : user.solidStartDate.formatted(.yyyyMMdd_fullKorean))
+                Text(userInfoCase == . babyBirthDate ? updatedBabyBirthDate.formatted(.yyyyMMdd_fullKorean) : updatedSolidStartDate.formatted(.yyyyMMdd_fullKorean))
                     .bodyFont2()
                     .foregroundColor(.defaultText)
                 Spacer()
