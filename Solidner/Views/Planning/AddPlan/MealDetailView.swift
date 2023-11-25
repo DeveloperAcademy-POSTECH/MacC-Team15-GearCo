@@ -17,9 +17,9 @@ struct MealDetailView: View {
     private(set) var isEditMode: Bool = true
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: K.VStack.defaultAlignment, spacing: K.VStack.rootSpacing) {
             ScrollView {
-                VStack(alignment: .leading, spacing: 26) {
+                VStack(alignment: .leading, spacing: K.VStack.inRootScrollSpacing) {
                     ingredientEditOrAdd
                     ThickDivider()
                     mealTypeSelectView
@@ -30,22 +30,37 @@ struct MealDetailView: View {
                         deleteMealPlan
                     }
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, K.defaultHorizontalPadding)
             }
             Group {
                 toastMessage
                 addMealPlanButton
             }
-            .padding(.horizontal, 20)
+            .padding(.horizontal, K.defaultHorizontalPadding)
         }
         .withClearBackground(color: .secondBgColor)
     }
 }
 
 extension MealDetailView {
+    private func VStackInComponent<Content: View>(@ViewBuilder item:@escaping () -> Content) -> some View {
+        return VStack(alignment: K.VStack.defaultAlignment, spacing: K.VStack.inComponentSpacing, content: item)
+    }
+
+    private func VStackInIngredientsComponent<Content: View>(@ViewBuilder item:@escaping () -> Content) -> some View {
+        return VStack(alignment: K.VStack.defaultAlignment, spacing: K.VStack.ingredientsComponentSpacing, content: item)
+    }
+
+    private func VStackInIngredients<Content: View>(@ViewBuilder item:@escaping () -> Content) -> some View {
+        return VStack(alignment: K.VStack.defaultAlignment, spacing: K.VStack.ingredientsSpacing, content: item)
+    }
+
+}
+
+extension MealDetailView {
     // MARK: - ingredientEditOrAdd
     private var ingredientEditOrAdd: some View {
-        VStack(spacing: 40) {
+        VStackInComponent {
             title
             newIngredientsView
             oldIngredientsView
@@ -65,14 +80,14 @@ extension MealDetailView {
     }
 
     private var newIngredientsView: some View {
-        VStack(spacing: 26) {
+        VStackInIngredientsComponent {
             testingIngredientAddView
             addedTestingIngredients
         }
     }
 
     private var oldIngredientsView: some View {
-        VStack(spacing: 26) {
+        VStackInIngredientsComponent {
             testedIngredientAddView
             addedTestedIngredients
         }
@@ -83,28 +98,35 @@ extension MealDetailView {
             Text(texts.viewInEditTitleText)
                 .customFont(.header2, color: .defaultText)
         }()
-        return HStack {
-            VStack(spacing: 16){
-                title
-                ColoredIngredientsText(mealPlan: mealOB.mealPlan, type: .chip)
-                    .padding(top: 5, leading: 10, bottom: 7, trailing: 10)
-                    .withRoundedBackground(cornerRadius: 4.87, color: .defaultText_wh)
-            }
-            Spacer()
+        return VStack(spacing: K.IngredientTitleAndChip.vStackSpacing){
+            title
+            ColoredIngredientsText(mealPlan: mealOB.mealPlan, type: .chip)
+                .padding(K.IngredientTitleAndChip.padding)
+                .withRoundedBackground(cornerRadius: K.IngredientTitleAndChip.backgroundCornerRadius, color: .defaultText_wh)
         }
-        .padding(.bottom, -10)
+        .padding(K.IngredientTitleAndChip.vstackPadding)
+        //        return HStack {
+        //            VStack(spacing: 16){
+        //                title
+        //                ColoredIngredientsText(mealPlan: mealOB.mealPlan, type: .chip)
+        //                    .padding(top: 5, leading: 10, bottom: 7, trailing: 10)
+        //                    .withRoundedBackground(cornerRadius: 4.87, color: .defaultText_wh)
+        //            }
+        //            Spacer()
+        //        }
+        //        .padding(.bottom, -10)
     }
 
     private var addedTestingIngredients: some View {
         addedIngredientsView(of: mealOB.tempMealPlan.newIngredients)
-//        VStack(spacing: 10) {
-//            ForEach(mealOB.tempMealPlan.newIngredients) { ingredient in
-//                AddedIngredientView(
-//                    type: isEditMode ? .new : .deletable,
-//                    ingredient: ingredient
-//                )
-//            }
-//        }
+        //        VStack(spacing: 10) {
+        //            ForEach(mealOB.tempMealPlan.newIngredients) { ingredient in
+        //                AddedIngredientView(
+        //                    type: isEditMode ? .new : .deletable,
+        //                    ingredient: ingredient
+        //                )
+        //            }
+        //        }
     }
 
     private var addedTestedIngredients: some View {
@@ -114,7 +136,7 @@ extension MealDetailView {
     // TODO: - type 어떻게 바꿀지 고민...
 
     private func addedIngredientsView(of ingredients: [Ingredient]) -> some View {
-        VStack(spacing: 10) {
+        VStackInIngredients {
             ForEach(ingredients) { ingredient in
                 AddedIngredientView(
                     type: .deletable,
@@ -155,16 +177,14 @@ extension MealDetailView {
 
 // MARK: - mealType
 extension MealDetailView {
-    private var mealTypeSelectView: some View {
-        VStack(spacing: 40) {
-            HStack {
-                TitleAndHintView(
-                    title: texts.mealTypeText,
-                    hint: texts.mealTypeHintText
-                )
-            }
 
-            .frame(maxWidth: .infinity)
+    private var mealTypeSelectView: some View {
+        VStackInComponent {
+            TitleAndHintView(
+                type: .leading14,
+                title: texts.mealTypeText,
+                hint: texts.mealTypeHintText
+            )
             mealTypeButtons
         }
     }
@@ -173,27 +193,8 @@ extension MealDetailView {
         let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
         return LazyVGrid(columns: columns) {
             ForEach(MealType.allCases, id: \.self) { mealType in
-                mealTypeButton(of: mealType)
+                MealTypeButton(mealOB: mealOB, mealType: mealType)
             }
-        }
-    }
-
-    private func mealTypeButton(of mealType: MealType) -> some View {
-        let isTypeSelected = mealOB.tempMealPlan.mealType == mealType
-        return Button {
-            mealOB.set(mealType: mealType)
-        } label: {
-            Text(mealType.description)
-                .customFont(.header6)
-                .foregroundStyle(isTypeSelected ? Color.defaultText_wh : Color.primeText)
-                .frame(maxWidth: .infinity)
-                .frame(height: 48)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(isTypeSelected ? Color.accentColor1 : Color.buttonBgColor,
-                              strokeBorder: Color.buttonStrokeColor,
-                              lineWidth: 1.5)
-                )
         }
     }
 }
@@ -202,14 +203,27 @@ extension MealDetailView {
 extension MealDetailView {
     @ViewBuilder
     private var mealCycle: some View {
-        TitleAndHintView(
-            title: texts.mealCycleText,
-            hint: texts.mealCycleHintText
-        )
-        startDateSelectView
-        mealPicker
-        Divider().padding(.vertical)
-        resultCycleText
+        VStackInComponent {
+            TitleAndHintView(
+                type: .leading14,
+                title: texts.mealCycleText,
+                hint: texts.mealCycleHintText
+            )
+            mealCycleContents
+        }
+    }
+
+    private var mealCycleContents: some View {
+        VStack(alignment: K.VStack.defaultAlignment, spacing: .zero) {
+            startDateSelectView
+                .padding(.bottom, 33)
+            mealPicker
+                .padding(.bottom, 36)
+            Divider()
+                .padding(.bottom, 20)
+            resultCycleText
+                .padding(.bottom, 90-26)
+        }
     }
 
     private var startDateSelectView: some View {
@@ -233,15 +247,17 @@ extension MealDetailView {
             items: CycleGaps.allCases,
             selection: $mealOB.cycleGap
         )
-        .padding(.vertical)
     }
 
     @ViewBuilder
     private var resultCycleText: some View {
-        Text(texts.fromToDateText(from: mealOB.tempMealPlan.startDate, to: mealOB.tempMealPlan.endDate))
-            .customFont(.header5, color: .primeText)
-        Text(texts.gapDetailText(mealOB.tempMealPlan.cycleGap.rawValue))
-            .customFont(.body1, color: K.MealCycle.resultCycleGapTextColor)
+        VStack(alignment: K.VStack.defaultAlignment, spacing: K.MealCycle.resultCycleVStackSpacing) {
+            Text(texts.fromToDateText(from: mealOB.tempMealPlan.startDate, to: mealOB.tempMealPlan.endDate))
+                .customFont(.header5, color: .primeText)
+            Text(texts.gapDetailText(mealOB.tempMealPlan.cycleGap.rawValue))
+                .customFont(.body1, color: K.MealCycle.resultCycleGapTextColor)
+        }
+
     }
 }
 
@@ -317,10 +333,54 @@ extension MealDetailView {
 }
 
 extension MealDetailView {
+    struct MealTypeButton: View {
+        @ObservedObject var mealOB: MealOB
+        let mealType: MealType
+        var isTypeSelected: Bool { mealOB.tempMealPlan.mealType == mealType }
+
+        var body: some View {
+            Button {
+                mealOB.set(mealType: mealType)
+            } label: {
+                Text(mealType.description)
+                    .customFont(.header6, color: K.textColor(when: isTypeSelected))
+                    .frame(maxWidth: .infinity)
+                    .frame(height: K.labelFrameHeight)
+                    .withRoundedBackground(
+                        cornerRadius: K.Background.cornerRadius,
+                        fill: K.Background.fill(when: isTypeSelected),
+                        strokeBorder: K.Background.strokeBorder,
+                        lineWidth: K.Background.lineWidth
+                    )
+            }
+        }
+    }
+}
+
+extension MealDetailView {
     private enum K {
+        static var defaultHorizontalPadding: CGFloat { 20 }
+        enum IngredientTitleAndChip {
+            static var vStackSpacing: CGFloat { 16 }
+            static var padding: EdgeInsets { .init(top: 5, leading: 10, bottom: 7, trailing: 10) }
+            static var backgroundCornerRadius: CGFloat { 4.87 }
+            static var vstackPadding: EdgeInsets { .init(top: 0, leading: 0, bottom: -10, trailing: 0) }
+        }
+
+        enum VStack {
+            static var defaultAlignment: HorizontalAlignment { .leading }
+            static var rootSpacing: CGFloat { 16 }
+            static var inRootScrollSpacing: CGFloat { 26 }
+            static var inComponentSpacing: CGFloat { 40 }
+            static var ingredientsComponentSpacing: CGFloat { 26 }
+            static var ingredientsSpacing: CGFloat { 10 }
+        }
+
         enum MealCycle {
             static var resultCycleGapTextColor: Color { .primeText.opacity(0.4) }
+            static var resultCycleVStackSpacing: CGFloat { 10 }
         }
+
         enum ToastMessage {
             static var hStackSpacing: CGFloat { 4.27 }
             static var hStackFrameHeight: CGFloat { 48 }
@@ -328,7 +388,6 @@ extension MealDetailView {
             static var backgroundCornerRadius: CGFloat { 12 }
             static var backgroundLineWidth: CGFloat { 1 }
         }
-
     }
 }
 
@@ -336,6 +395,24 @@ extension MealDetailView.TitleAndActionButtonView {
     private enum K {
         enum TitleAndActionButton {
             static var buttonTextColor: Color { .defaultText.opacity(0.8) }
+        }
+    }
+}
+
+extension MealDetailView.MealTypeButton {
+    private enum K {
+        static func textColor(when condition: Bool) -> Color {
+            if(condition) { Color.defaultText_wh }
+            else { Color.primeText }
+        }
+        static var labelFrameHeight: CGFloat { 48 }
+        enum Background {
+            static var cornerRadius: CGFloat { 12 }
+            static func fill(when condition: Bool) -> some ShapeStyle {
+                return condition ? Color.accentColor1 : Color.buttonBgColor
+            }
+            static var strokeBorder: some ShapeStyle { Color.buttonStrokeColor }
+            static var lineWidth: Double { 1.5 }
         }
     }
 }

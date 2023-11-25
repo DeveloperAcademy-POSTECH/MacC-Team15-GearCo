@@ -152,4 +152,14 @@ extension View {
                 .foregroundStyle(color)
         )
     }
+
+    func withRoundedBackground<Fill: ShapeStyle, Stroke: ShapeStyle>(cornerRadius: CGFloat, fill: Fill, strokeBorder: Stroke, lineWidth: Double) -> some View {
+        self.background(
+            RoundedRectangle(cornerRadius: cornerRadius)
+                .fill(fill,
+                      strokeBorder: strokeBorder,
+                      lineWidth: lineWidth
+                     )
+        )
+    }
 }
