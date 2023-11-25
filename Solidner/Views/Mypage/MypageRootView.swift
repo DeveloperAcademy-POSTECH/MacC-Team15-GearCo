@@ -29,7 +29,7 @@ struct MypageRootView: View {
             .navigationDestination(for: MypageFunctionCase.self) { value in
                 switch value {
                 case .notificationSetting:
-                    UserInfoUpdateView()
+                    NotificationSettingView()
                 case .personalInfoTerms:
                     TermsWebViewWithHeader(agreeCase: .personalInfo)
                 case .serviceUseTerms:

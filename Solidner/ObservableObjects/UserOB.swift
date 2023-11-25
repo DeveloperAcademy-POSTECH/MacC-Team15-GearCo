@@ -17,4 +17,5 @@ final class UserOB: ObservableObject {
     @AppStorage("solidStartDate") var solidStartDate = Date.date(year: 2023, month: 9, day: 22)!
     @AppStorage("planCycleGap") var planCycleGap = CycleGaps.three
     @AppStorage("displayDateType") var displayDateType = DisplayDateType.birth
+    @AppStorage("isAppAlarmOn") var isAppAlarmOn = true
 }
