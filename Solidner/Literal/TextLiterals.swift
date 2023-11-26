@@ -24,37 +24,19 @@ enum TextLiterals {
     }
 
     enum PlanList {
-        static func yyyymmHeaderText(date: Date) ->  String {
-            "\(date.year)년 \(date.month)월"
-        }
-
-        static func ddDateText(date: Date) -> String {
-            "\(date.day)일"
-        }
-
-        static func ddDateText(date: Int) -> String {
-            "\(date)일"
-        }
-
+        static func yyyymmHeaderText(date: Date) ->  String { "\(date.year)년 \(date.month)월" }
+        static func ddDateText(date: Date) -> String { "\(date.day)일" }
         static func dateRangeString(start: Date, end: Date) -> String {
             "\(start.day)일(\(start.weekDayKor)) ~ \(end.day)일(\(end.weekDayKor))"
         }
-
-        static func fromDateToDateText(from: Int, to: Int) -> String {
-            "\(from) ~ \(to)일차"
-        }
-
-        static var addIngredientText: String {
-            "재료 추가"
-        }
-
-        static var solidTotalSettingText: String {
-            "이유식 전체설정"
-        }
+        static func fromDateToDateText(from: Int, to: Int) -> String { "\(from) ~ \(to)일차" }
+        static var addIngredientText: String { "재료 추가" }
+        static var solidTotalSettingText: String { "이유식 전체설정" }
+        
     }
 
-    enum PlanDetail {
-        static func dateRangeTitle(from: Date, to: Date) -> String { "\(from.month).\(from.day).(\(from.weekDayKor)) ~ \(to.month).\(to.day).(\(to.weekDayKor)) 식단" }
+    enum PlanGroupDetail {
+        static func dateRangeTitle(from: Date, to: Date) -> String { "\(from.month).\(from.day).(\(from.weekDayKor)) ~ \n\(to.month).\(to.day).(\(to.weekDayKor)) 식단" }
 
         static var editPlan: String { "편집" }
         static var editComplete: String { "완료" }

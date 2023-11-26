@@ -23,10 +23,9 @@ struct PlanGroupDetailView: View {
     @State private var tempMealPlanGroup: MealPlanGroup
     @State private var isEditMode: Bool = false
     
-    private let texts = TextLiterals.PlanDetail.self
+    private let texts = TextLiterals.PlanGroupDetail.self
     let startDate: Date
     let mealPlanGroup: MealPlanGroup
-    
     
     init(mealPlanGroup: MealPlanGroup) {
         self.mealPlanGroup = mealPlanGroup
@@ -35,16 +34,19 @@ struct PlanGroupDetailView: View {
     }
     
     var body: some View {
-        VStack(spacing: .zero) {
+        RootVStack {
             viewHeader
             viewBody
         }
-        .withClearBackground(color: .secondBgColor)
-        .navigationBarBackButtonHidden()
     }
     
+    @ViewBuilder
     private var viewHeader: some View {
-        BackButtonAndRightHeader(rightButton: viewHeaderRightButton)
+        if isEditMode {
+            RightButtonOnlyHeader(rightButton: viewHeaderRightButton)
+        } else {
+            BackButtonAndRightHeader(rightButton: viewHeaderRightButton)
+        }
     }
     
     private var viewBody: some View {
@@ -53,12 +55,7 @@ struct PlanGroupDetailView: View {
                 VStack(spacing: K.wholeVStackSpacing) {
                     headerTitle
                     if isWrongPlan { WarningView() }
-                    DraggableMealGroupView(
-                        dateRange: dateRangeString,
-                        displayDateInfo: DisplayDateInfoView(from: startDate, to: endDate),
-                        mealPlans: $tempMealPlanGroup.mealPlans,
-                        isEditMode: $isEditMode
-                    )
+                    mealGroup
                     Spacer()
                 }
             }
@@ -74,13 +71,18 @@ struct PlanGroupDetailView: View {
     }
 }
 
+#warning("매직 스트링, 매직 넘버 제거")
+// MARK: - view header
+
 extension PlanGroupDetailView {
     private var viewHeaderRightButton: some View {
         Button {
             if isEditMode {
                 mealPlansOB.updateMealPlan(in: tempMealPlanGroup)
             }
-            isEditMode.toggle()
+            withAnimation {
+                isEditMode.toggle()
+            }
         } label: {
             Text(isEditMode ? "완료" : "편집")
                 .modify { view in
@@ -105,9 +107,20 @@ extension PlanGroupDetailView {
         }
     }
     
-    // TODO: - add meal action
+    private var mealGroup: some View {
+        DraggableMealGroupView(
+            dateRange: dateRangeString,
+            displayDateInfo: DisplayDateInfoView(from: startDate, to: endDate),
+            mealPlans: $tempMealPlanGroup.mealPlans,
+            isEditMode: $isEditMode
+        )
+    }
+    
     private var addMealButton: some View {
-        ButtonComponents(.big, title: texts.addMeal) {
+        ButtonComponents(
+            .big,
+            title: texts.addMeal
+        ) {
             isMealAdding = true
         }
         .buttonColor(Color.buttonBgColor)
@@ -132,7 +145,6 @@ struct PlanDetailView_Previews: PreviewProvider {
     static var previews: some View {
         let mealPlanGroup = MealPlanGroup(mealPlans: Array(MealPlan.mockMealsOne[0...3]))
         PlanGroupDetailView(mealPlanGroup: mealPlanGroup)
-//        PlanGroupDetailView(mealPlansOB: mealPlansOB)
             .environmentObject(UserOB())
             .environmentObject(MealPlansOB())
     }
