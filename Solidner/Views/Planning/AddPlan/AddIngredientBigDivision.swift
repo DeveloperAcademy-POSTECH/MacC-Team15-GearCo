@@ -95,7 +95,13 @@ struct IngredientsBigDivision: View {
                     } label: {
                         Text(type.description)
                             .font(.system(size: 19, weight: .semibold))
-                            .padding(.trailing, 6)
+                            .padding(.trailing, 2)
+                        if divisionCase == .권장하지않는재료 {
+                            Image(systemName: "xmark.shield.fill")
+                                .foregroundStyle(Color.ageColor)
+                                .scaledToFit()
+                                .frame(width: 23)
+                        }
                         Spacer()
                         Image(systemName: foldStates[type]! ? "chevron.up" : "chevron.down")
                             .resizable()
@@ -138,14 +144,10 @@ struct IngredientsBigDivision: View {
                 .foregroundColor(.defaultText)
             Spacer().frame(height: titleBottomSpace)
             HStack{Spacer()}
-            // TODO: 실제 데이터로 변경
-//            ForEach(Range<Int>(1...4)) { i in
-//                ingredientSelectRow(divisionCase: .자주사용한재료)
-//                if(i != 4) {
-//                    Spacer().frame(height: rowBetweenSpace)
-//                } else {
-//                    Spacer().frame(height: divisionBottomSpace)
-//                }
+            // TODO: 실제 데이터로 변경 및 필터링
+//            ForEach(ingredientData.keys.sorted(), id: \.self) { key in
+//                let data = ingredientData[key]!
+//                ingredientSelectRow(divisionCase: divisionCase, ingredient: data, selectedIngredientPair: $selectedIngredients).padding(.vertical, 15)
 //            }
         }
     }
@@ -158,14 +160,10 @@ struct IngredientsBigDivision: View {
                 .foregroundColor(.defaultText)
             Spacer().frame(height: titleBottomSpace)
             HStack{Spacer()}
-            // TODO: 실제 데이터로 변경
-//            ForEach(Range<Int>(1...4)) { i in
-//                ingredientSelectRow(divisionCase: .이상반응재료)
-//                if(i != 4) {
-//                    Spacer().frame(height: rowBetweenSpace)
-//                } else {
-//                    Spacer().frame(height: divisionBottomSpace)
-//                }
+            // TODO: 실제 데이터로 변경 및 필터링
+//            ForEach(ingredientData.keys.sorted(), id: \.self) { key in
+//                let data = ingredientData[key]!
+//                ingredientSelectRow(divisionCase: divisionCase, ingredient: data, selectedIngredientPair: $selectedIngredients).padding(.vertical, 15)
 //            }
         }
     }
