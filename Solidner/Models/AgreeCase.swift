@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-enum AgreeCase {
-    case serviceUse
-    case personalInfo
-    case advertising
+enum AgreeCase: String {
+    case serviceUse = "서비스 이용약관"
+    case personalInfo = "개인정보 처리약관"
+    case advertising = "광고성 정보수신 동의"
 }

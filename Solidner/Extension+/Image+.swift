@@ -18,6 +18,8 @@ extension Image {
         case loginTypo
         case loginBg
         case soCuteNameBackground
+        case appsymbol
+        case mypageChevron
         case tinyChevron
         case editDetail
         case rightChevronSmall
