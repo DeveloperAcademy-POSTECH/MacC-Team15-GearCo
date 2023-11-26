@@ -14,8 +14,8 @@ struct Ingredient: CustomStringConvertible, Identifiable, Hashable, Codable {
     let ableMonth: Int
     let description: String
     
-    private(set) var misMatches: [Ingredient] = []
-    private(set) var alternatives: [Ingredient] = []
+    var misMatches: [Ingredient] = []
+    var alternatives: [Ingredient] = []
 
     func setMisMatches(ingredients: [Ingredient]) -> Self {
         // TODO: 로직 변경
