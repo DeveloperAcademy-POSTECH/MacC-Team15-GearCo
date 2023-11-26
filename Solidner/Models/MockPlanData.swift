@@ -9,6 +9,41 @@ import Foundation
 import SwiftUI
 import UniformTypeIdentifiers
 
+struct MealPlanGroup: Hashable {
+    let solidDate: SolidDate
+    let mealPlans: [MealPlan]
+
+    var isWrong: Bool {
+        // 1. 해당 Group에서 테스트 재료가 2개 초과인 경우
+        // 2. 6끼 이상인 경우
+        // 3. 중복되는 끼니가 있는 경우
+        testingIngredientCount > 2 || mealPlans.count > 6 || occursDuplicatedMealType
+    }
+
+    private var testingIngredientCount: Int {
+        mealPlans.reduce(0) { partialResult, mealPlan in
+            partialResult + mealPlan.testingIngredients.count
+        }
+    }
+
+    private var occursDuplicatedMealType: Bool {
+        // mealType set의 count와 mealPlans의 count가 같지 않으면 중복된 끼니가 있다
+        Set(mealPlans.map { $0.mealType }).count != mealPlans.count
+    }
+}
+
+extension MealPlanGroup {
+    struct SolidDate: Hashable {
+        let startDate: Date
+        let endDate: Date
+
+        var description: String {
+            TextLiterals.PlanList.dateRangeString(start: startDate, end: endDate)
+        }
+    }
+}
+
+
 struct MealPlan: Identifiable, Hashable {
     private(set) var id = UUID()
     private(set) var startDate: Date {
