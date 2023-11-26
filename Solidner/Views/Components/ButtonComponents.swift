@@ -18,7 +18,7 @@ struct ButtonComponents: View {
     let disabledCondition: Bool
     let action: () -> Void
 
-    @State private var isClicked = false
+    @State private var isClicked: Bool
     @State private var titleColor: Color?
     func titleColor(_ color: Color) -> Self {
         var view = self
@@ -37,11 +37,12 @@ struct ButtonComponents: View {
         case big, small, tiny, clickableTiny
     }
 
-    init(_ buttonType: ButtonType = .small, title: String = "다음", disabledCondition: Bool = false, action: @escaping () -> Void = {}) {
+    init(_ buttonType: ButtonType = .small, title: String = "다음", disabledCondition: Bool = false, isClicked: Bool = false, action: @escaping () -> Void = {}) {
         self.buttonType = buttonType
         self.title = title
         self.disabledCondition = disabledCondition
         self.action = action
+        self.isClicked = isClicked
     }
 
     var body: some View {
