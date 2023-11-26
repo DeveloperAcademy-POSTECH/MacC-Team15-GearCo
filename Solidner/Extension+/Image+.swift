@@ -9,15 +9,16 @@ import SwiftUI
 
 extension Image {
     enum ImageAssetName: String {
+        case appsymbol
+        case check
         case checkOn
         case checkOff
+        case headerChevron
         case loginBackground
         case loginTypo
         case loginBg
-        case tinyChevron
-        case headerChevron
         case soCuteNameBackground
-        case appsymbol
+        case tinyChevron
         case editDetail
         case rightChevronSmall
         case ingredientsInStart

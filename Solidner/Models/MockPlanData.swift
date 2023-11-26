@@ -11,23 +11,30 @@ import UniformTypeIdentifiers
 
 struct MealPlan: Identifiable, Hashable {
     private(set) var id = UUID()
-    let startDate: Date
-    let endDate: Date
+    private(set) var startDate: Date {
+        willSet {
+            endDate = newValue.add(.day, value: cycleGap.rawValue - 1)
+        }
+    }
+    private(set) var endDate: Date
     private(set) var mealType: MealType
-    let testingIngredients: [Ingredient]
-    let testedIngredients: [Ingredient]
-
+    private(set) var newIngredients: [Ingredient]
+    private(set) var oldIngredients: [Ingredient]
+    var cycleGap: CycleGaps {
+        get {
+            CycleGaps(rawValue: Date.componentsBetweenDates(from: startDate, to: endDate).day! + 1)!
+        }
+        set {
+            endDate = startDate.add(.day, value: newValue.rawValue - 1)
+        }
+    }
 
     var dateString: String {
         "\(startDate.day)일(\(startDate.weekDayKor)) ~ \(endDate.day)일(\(endDate.weekDayKor))"
     }
 
     var ingredientsString: String {
-        testedIngredients.map { $0.description }.joined(separator: ", ")
-    }
-
-    mutating func set(mealType: MealType) {
-        self.mealType = mealType
+        oldIngredients.map { $0.description }.joined(separator: ", ")
     }
 }
 
@@ -43,6 +50,24 @@ extension UTType {
     static var mealPlan: UTType { UTType(exportedAs: "co.gear.mealPlan") }
 }
 
+
+extension MealPlan {
+    mutating func set(mealType: MealType) {
+        self.mealType = mealType
+    }
+
+    mutating func set(startDate: Date) {
+        self.startDate = startDate
+    }
+
+    mutating func remove(newIngredient ingredient: Ingredient) {
+        self.newIngredients.removeAll { $0 == ingredient }
+    }
+
+    mutating func remove(oldIngredient ingredient: Ingredient) {
+        self.oldIngredients.removeAll { $0 == ingredient }
+    }
+}
 
 enum MealType: Int, CaseIterable, Codable {
     case 아침, 점심, 저녁, 간식1, 간식2, 기타
@@ -139,66 +164,66 @@ extension MealPlan {
                 startDate: Date.date(year: 2023, month: 11, day: 14)!,
                 endDate: Date.date(year: 2023, month: 11, day: 16)!,
                 mealType: .아침,
-                testingIngredients: [ingredient.소고기],
-                testedIngredients: [ingredient.쌀]
+                newIngredients: [ingredient.소고기, ingredient.당근],
+                oldIngredients: [ingredient.쌀]
             ),
             // 2nd
             .init(
                 startDate: Date.date(year: 2023, month: 11, day: 17)!,
                 endDate: Date.date(year: 2023, month: 11, day: 20)!,
                 mealType: .아침,
-                testingIngredients: [ingredient.쌀],
-                testedIngredients: [ingredient.소고기, ingredient.사과, ingredient.브로콜리]
+                newIngredients: [ingredient.쌀],
+                oldIngredients: [ingredient.소고기, ingredient.사과, ingredient.브로콜리]
             ),
             .init(
                 startDate: Date.date(year: 2023, month: 11, day: 17)!,
                 endDate: Date.date(year: 2023, month: 11, day: 20)!,
                 mealType: .점심,
-                testingIngredients: [],
-                testedIngredients: [ingredient.쌀, ingredient.소고기, ingredient.단호박, ingredient.아스파라거스]
+                newIngredients: [],
+                oldIngredients: [ingredient.쌀, ingredient.소고기, ingredient.단호박, ingredient.아스파라거스]
             ),
             .init(
                 startDate: Date.date(year: 2023, month: 11, day: 17)!,
                 endDate: Date.date(year: 2023, month: 11, day: 20)!,
                 mealType: .저녁,
-                testingIngredients: [ingredient.땅콩],
-                testedIngredients: [ingredient.쌀, ingredient.소고기, ingredient.사과, ingredient.단호박]
+                newIngredients: [ingredient.땅콩],
+                oldIngredients: [ingredient.쌀, ingredient.소고기, ingredient.사과, ingredient.단호박]
             ),
             // 3rd 21~24
             .init(
                 startDate: Date.date(year: 2023, month: 11, day: 21)!,
                 endDate: Date.date(year: 2023, month: 11, day: 24)!,
                 mealType: .아침,
-                testingIngredients: [ingredient.쌀],
-                testedIngredients: [ingredient.소고기, ingredient.사과, ingredient.브로콜리]
+                newIngredients: [ingredient.쌀],
+                oldIngredients: [ingredient.소고기, ingredient.사과, ingredient.브로콜리]
             ),
             .init(
                 startDate: Date.date(year: 2023, month: 11, day: 21)!,
                 endDate: Date.date(year: 2023, month: 11, day: 24)!,
                 mealType: .점심,
-                testingIngredients: [ingredient.쌀],
-                testedIngredients: [ingredient.소고기, ingredient.단호박, ingredient.아스파라거스]
+                newIngredients: [ingredient.쌀],
+                oldIngredients: [ingredient.소고기, ingredient.단호박, ingredient.아스파라거스]
             ),
             .init(
                 startDate: Date.date(year: 2023, month: 11, day: 21)!,
                 endDate: Date.date(year: 2023, month: 11, day: 24)!,
                 mealType: .저녁,
-                testingIngredients: [],
-                testedIngredients: [ingredient.쌀, ingredient.소고기, ingredient.사과, ingredient.단호박]
+                newIngredients: [],
+                oldIngredients: [ingredient.쌀, ingredient.소고기, ingredient.사과, ingredient.단호박]
             ),
             .init(
                 startDate: Date.date(year: 2023, month: 11, day: 21)!,
                 endDate: Date.date(year: 2023, month: 11, day: 24)!,
                 mealType: .간식1,
-                testingIngredients: [],
-                testedIngredients: [ingredient.단호박]
+                newIngredients: [],
+                oldIngredients: [ingredient.단호박]
             ),
             .init(
                 startDate: Date.date(year: 2023, month: 11, day: 21)!,
                 endDate: Date.date(year: 2023, month: 11, day: 24)!,
                 mealType: .간식2,
-                testingIngredients: [],
-                testedIngredients: [ingredient.사과]
+                newIngredients: [],
+                oldIngredients: [ingredient.사과]
             )
         ]
     }
@@ -211,47 +236,47 @@ extension MealPlan {
                 startDate: Date.date(year: 2023, month: 11, day: 14)!,
                 endDate: Date.date(year: 2023, month: 11, day: 16)!,
                 mealType: .아침,
-                testingIngredients: [ingredient.소고기],
-                testedIngredients: [ingredient.쌀]
+                newIngredients: [ingredient.소고기],
+                oldIngredients: [ingredient.쌀]
             ),
             // 2nd
             .init(
                 startDate: Date.date(year: 2023, month: 11, day: 21)!,
                 endDate: Date.date(year: 2023, month: 11, day: 24)!,
                 mealType: .아침,
-                testingIngredients: [ingredient.쌀],
-                testedIngredients: [ingredient.소고기, ingredient.사과, ingredient.브로콜리]
+                newIngredients: [ingredient.쌀],
+                oldIngredients: [ingredient.소고기, ingredient.사과, ingredient.브로콜리]
             ),
             .init(
                 startDate: Date.date(year: 2023, month: 11, day: 22)!,
                 endDate: Date.date(year: 2023, month: 11, day: 25)!,
                 mealType: .점심,
-                testingIngredients: [],
-                testedIngredients: [ingredient.쌀, ingredient.소고기, ingredient.단호박, ingredient.아스파라거스]
+                newIngredients: [],
+                oldIngredients: [ingredient.쌀, ingredient.소고기, ingredient.단호박, ingredient.아스파라거스]
             ),
             .init(
                 startDate: Date.date(year: 2023, month: 11, day: 22)!,
                 endDate: Date.date(year: 2023, month: 11, day: 24)!,
                 mealType: .저녁,
-                testingIngredients: [],
-                testedIngredients: [ingredient.땅콩, ingredient.쌀, ingredient.소고기, ingredient.사과, ingredient.단호박]
+                newIngredients: [],
+                oldIngredients: [ingredient.땅콩, ingredient.쌀, ingredient.소고기, ingredient.사과, ingredient.단호박]
             ),
             .init(
                 startDate: Date.date(year: 2023, month: 11, day: 23)!,
                 endDate: Date.date(year: 2023, month: 11, day: 26)!,
                 mealType: .저녁,
-                testingIngredients: [],
-                testedIngredients: [ingredient.쌀, ingredient.소고기, ingredient.사과, ingredient.단호박]
+                newIngredients: [],
+                oldIngredients: [ingredient.쌀, ingredient.소고기, ingredient.사과, ingredient.단호박]
             )
         ]
     }
 }
 
 extension Ingredient {
-    static var mockTestingIngredients: [Ingredient] = [
+    static var mocknewIngredients: [Ingredient] = [
         Mock.당근
     ]
-    static var mockTestedIngredients: [Ingredient] = [
+    static var mockoldIngredients: [Ingredient] = [
         Mock.쌀, Mock.소고기, Mock.청경채
     ]
 

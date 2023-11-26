@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct StartDateSettingModal: View {
-    @ObservedObject var planOB: MealOB
+    @ObservedObject var mealOB: MealOB
     @State private var currentDate: Date
     @Environment(\.dismiss) private var dismiss
     private let texts = TextLiterals.MealDetail.self
 
-    init(planOB: MealOB) {
-        self.planOB = planOB
-        self._currentDate = State(initialValue: planOB.startDate)
+    init(mealOB: MealOB) {
+        self.mealOB = mealOB
+        self._currentDate = State(initialValue: mealOB.tempMealPlan.startDate)
     }
 
     var body: some View {
@@ -34,12 +34,12 @@ struct StartDateSettingModal: View {
     }
 
     private func setStartDate() {
-        planOB.set(startDate: currentDate)
+        mealOB.set(startDate: currentDate)
     }
 }
 
 struct StartDateSettingModal_Previews: PreviewProvider {
     static var previews: some View {
-        StartDateSettingModal(planOB: MealOB())
+        StartDateSettingModal(mealOB: MealOB(mealPlan: MealPlan.mockMealsOne.first!))
     }
 }

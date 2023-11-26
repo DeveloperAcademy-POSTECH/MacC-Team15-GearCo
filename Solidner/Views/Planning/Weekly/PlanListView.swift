@@ -187,19 +187,6 @@ extension PlanListView {
         }
     }
 
-    // 나중에 써먹을 코드.. 얼른 쓰고 지우겟읍니다.
-    //    func mealView(meal: MealPlan.Meal) -> some View {
-    //        HStack {
-    //            meal.ingredients.enumerated().reduce(Text("")) { partialResult, enumeration  in
-    //                let (index, ingredient) = (enumeration.offset, enumeration.element)
-    //                let additionalText = index == meal.ingredients.endIndex ? Text("") : Text(", ")
-    //                return partialResult + Text(ingredient.description)
-    //                    .foregroundColor(ingredient.isNew ? .blue : .black) + additionalText
-    //            }
-    //            Spacer()
-    //        }
-    //        .padding()
-    //    }
 }
 
 // MARK: - Structure - Solid Date

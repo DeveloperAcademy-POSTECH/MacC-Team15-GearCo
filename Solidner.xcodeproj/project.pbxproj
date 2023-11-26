@@ -24,10 +24,12 @@
 		B219F1272B0CE13000886087 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219F1262B0CE13000886087 /* View+.swift */; };
 		B24836202B011FFF00525A25 /* MealDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B248361F2B011FFF00525A25 /* MealDetailView.swift */; };
 		B24836222B012B8700525A25 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24836212B012B8700525A25 /* Date+.swift */; };
+		B25582022B10AAF200B34F34 /* CGFloat+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25582012B10AAF200B34F34 /* CGFloat+.swift */; };
+		B25582042B10BED500B34F34 /* AddedIngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25582032B10BED500B34F34 /* AddedIngredientView.swift */; };
+		B25582062B10C94600B34F34 /* ColoredIngredientsText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25582052B10C94600B34F34 /* ColoredIngredientsText.swift */; };
 		B2746E3B2B052A4D0083AB57 /* Shape+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E3A2B052A4D0083AB57 /* Shape+.swift */; };
 		B2746E3D2B05DF900083AB57 /* StartDateSettingModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E3C2B05DF900083AB57 /* StartDateSettingModal.swift */; };
 		B2746E3F2B05F5210083AB57 /* ThickDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E3E2B05F5210083AB57 /* ThickDivider.swift */; };
-		B2746E412B05F9860083AB57 /* TitleAndActionButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E402B05F9860083AB57 /* TitleAndActionButtonView.swift */; };
 		B2746E432B05FDC40083AB57 /* TitleAndHintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E422B05FDC40083AB57 /* TitleAndHintView.swift */; };
 		B29854B82B0DB38C009FBE33 /* ChangeMonthModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29854B72B0DB38C009FBE33 /* ChangeMonthModal.swift */; };
 		B29CF7882AFCCA5B00B54A3E /* PlanListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF7872AFCCA5B00B54A3E /* PlanListView.swift */; };
@@ -117,10 +119,12 @@
 		B219F1262B0CE13000886087 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		B248361F2B011FFF00525A25 /* MealDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailView.swift; sourceTree = "<group>"; };
 		B24836212B012B8700525A25 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		B25582012B10AAF200B34F34 /* CGFloat+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+.swift"; sourceTree = "<group>"; };
+		B25582032B10BED500B34F34 /* AddedIngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedIngredientView.swift; sourceTree = "<group>"; };
+		B25582052B10C94600B34F34 /* ColoredIngredientsText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColoredIngredientsText.swift; sourceTree = "<group>"; };
 		B2746E3A2B052A4D0083AB57 /* Shape+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Shape+.swift"; sourceTree = "<group>"; };
 		B2746E3C2B05DF900083AB57 /* StartDateSettingModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDateSettingModal.swift; sourceTree = "<group>"; };
 		B2746E3E2B05F5210083AB57 /* ThickDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThickDivider.swift; sourceTree = "<group>"; };
-		B2746E402B05F9860083AB57 /* TitleAndActionButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleAndActionButtonView.swift; sourceTree = "<group>"; };
 		B2746E422B05FDC40083AB57 /* TitleAndHintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleAndHintView.swift; sourceTree = "<group>"; };
 		B29854B72B0DB38C009FBE33 /* ChangeMonthModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeMonthModal.swift; sourceTree = "<group>"; };
 		B29CF7872AFCCA5B00B54A3E /* PlanListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanListView.swift; sourceTree = "<group>"; };
@@ -223,7 +227,6 @@
 			children = (
 				B2F7909D2B0DDC9900CB4F71 /* SolidnerSegmentedPicker.swift */,
 				B2746E3E2B05F5210083AB57 /* ThickDivider.swift */,
-				B2746E402B05F9860083AB57 /* TitleAndActionButtonView.swift */,
 				B2746E422B05FDC40083AB57 /* TitleAndHintView.swift */,
 				C36942462AFCD686002465D4 /* ButtonComponents.swift */,
 				C36942482AFF755F002465D4 /* BackButtonHeader.swift */,
@@ -279,6 +282,7 @@
 				B2746E3C2B05DF900083AB57 /* StartDateSettingModal.swift */,
 				0EA65EE12B0C846200E1C8D7 /* AddTestIngredientsView.swift */,
 				0EB0F4312B0F5F5A00A32DFB /* AddIngredientBigDivision.swift */,
+				B25582032B10BED500B34F34 /* AddedIngredientView.swift */,
 			);
 			path = AddPlan;
 			sourceTree = "<group>";
@@ -291,6 +295,7 @@
 				B2F790A72B0E28B400CB4F71 /* WarningView.swift */,
 				B2F790A92B0E37DA00CB4F71 /* DisplayDateInfoView.swift */,
 				B2D1DCD52B07466500D7B77B /* MealGroupView.swift */,
+				B25582052B10C94600B34F34 /* ColoredIngredientsText.swift */,
 				B2C2632E2B0F511A0032C488 /* DraggableMealGroupView.swift */,
 			);
 			path = Common;
@@ -440,6 +445,7 @@
 				C3B4DB342B0DEBA700772C2A /* Text+.swift */,
 				B219F1262B0CE13000886087 /* View+.swift */,
 				C3B4DB462B0E84A500772C2A /* UIScreen+.swift */,
+				B25582012B10AAF200B34F34 /* CGFloat+.swift */,
 			);
 			path = "Extension+";
 			sourceTree = "<group>";
@@ -612,8 +618,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B25582062B10C94600B34F34 /* ColoredIngredientsText.swift in Sources */,
 				0E18AD6D2AFA8DC50011ED4A /* UserOB.swift in Sources */,
 				B2746E3F2B05F5210083AB57 /* ThickDivider.swift in Sources */,
+				B25582042B10BED500B34F34 /* AddedIngredientView.swift in Sources */,
 				C3B4DB352B0DEBA700772C2A /* Text+.swift in Sources */,
 				B2746E3B2B052A4D0083AB57 /* Shape+.swift in Sources */,
 				0EA65EE22B0C846200E1C8D7 /* AddTestIngredientsView.swift in Sources */,
@@ -623,6 +631,7 @@
 				B2F7909E2B0DDC9900CB4F71 /* SolidnerSegmentedPicker.swift in Sources */,
 				B2F790A22B0DF30B00CB4F71 /* CycleGaps.swift in Sources */,
 				0EB0F4322B0F5F5A00A32DFB /* AddIngredientBigDivision.swift in Sources */,
+				B25582022B10AAF200B34F34 /* CGFloat+.swift in Sources */,
 				B2EFE9852B067FB200E3F94B /* MockPlanData.swift in Sources */,
 				B219F1212B0C915300886087 /* StartDateInitialSelectModal.swift in Sources */,
 				0E18AD6B2AFA7F670011ED4A /* SignInView.swift in Sources */,
@@ -636,7 +645,6 @@
 				C3AD1BC42B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift in Sources */,
 				C3C637982AF91EE0006D464D /* models_dummy.swift in Sources */,
 				0E18AD6F2AFA8F140011ED4A /* AppleLoginOB.swift in Sources */,
-				B2746E412B05F9860083AB57 /* TitleAndActionButtonView.swift in Sources */,
 				C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */,
 				B2746E3D2B05DF900083AB57 /* StartDateSettingModal.swift in Sources */,
 				C3AD1BCC2B024FAC003BB3E0 /* FoodStartDateView.swift in Sources */,

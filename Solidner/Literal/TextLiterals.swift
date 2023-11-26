@@ -142,31 +142,40 @@ enum TextLiterals {
     }
 
     enum MealDetail {
-        static var insertIngredientText: String { "재료 입력" }
-        static var insertIngredientHintText: String { "알러지 테스트를 위해 따로 입력해주세요." }
-        static var ingredientsDetailTitleText: String { "재료 디테일티비" }
-        static var newIngredientText: String { "처음 먹는 재료" }
-        static var testedIngredientText: String { "테스트 해본 재료" }
+        static var viewInAddTitleText: String { "재료 입력" }
+        static var viewInAddTitleHintText: String { "알러지 테스트를 위해 따로 입력해주세요" }
+        static var viewInEditTitleText: String { "재료 변경" }
+        static var newIngredientText: String { "새로운 재료" }
+        static var oldIngredientText: String { "먹어본 재료" }
         static func addOrEditIngredientText(isEditMode: Bool) -> String { isEditMode ? "재료 관리" : "재료 추가" }
         static var deleteText: String { "삭제" }
         static var mealTypeText: String { "식단 종류" }
-        static var mealTypeHintText: String { "새로운 재료가 추가된 식단은 아침을 권장해요." }
+        static var mealTypeHintText: String { "새로운 재료가 추가된 식단은 아침을 권장해요" }
         static var mealCycleText: String { "식단 주기" }
-        static var mealCycleHintText: String { "소아과 전문의는 2-3일의 주기를 권장해요." }
+        static var mealCycleHintText: String { "소아과 전문의는 2-3일의 주기를 권장해요" }
         static var startDateText: String { "시작일" }
         static var changeDateText: String { "날짜 변경" }
         static var gapText: String { "간격" }
         static func dateText(_ number: Int) -> String { "\(number)일" }
-        static func fromStartDate(_ startDate: Date) -> String { "\(startDate.formatted(.yyyyMMdd_dot)) ~ " }
-        static func gapDetailText(_ gap: Int) -> String { "총 \(gap)일간 먹어요." }
-        static var addMealPlanButtonText: String { "일정 추가하기" }
-        static var deleteMealPlanTitleText: String { "끼니 삭제" }
-        static var deleteMealPlanButtonText: String { "삭제하기" }
+        private static func dateYyyyMMdd_Dot_Space(_ date: Date) -> String { "\(date.year). \(date.month). \(date.day)." }
+        static func fromToDateText(from: Date, to: Date) -> String { "\(dateYyyyMMdd_Dot_Space(from)) ~ \(dateYyyyMMdd_Dot_Space(to))" }
+        static func gapDetailText(_ gap: Int) -> String { "총 \(gap)일간 먹어요" }
+        static func mealPlanBottomButtonText(isEditMode: Bool) -> String { isEditMode ? "저장" : "일정 추가하기" }
+        static var editCompleteText: String { "변경 완료! 캘린더에도 반영되었어요" }
+        static var deleteMealPlanTitleText: String { "일정 삭제" }
+        static var deleteMealPlanButtonText: String { "삭제" }
 
         static var changeStartDateText: String { "시작일 변경" }
         static var changeStartDateDetailText: String { "아래 날짜부터 시작할 예정이에요." }
     }
-    
+
+    enum AddedIngredient {
+        static var newText: String { "NEW" }
+        static func reactionDateText(of date: Date) -> String { "\(date.month)/\(date.day)" }
+        static func canEatText(month: Int) -> String { "\(month)개월 +" }
+        static var deleteText: String { "삭제" }
+    }
+
     enum AgreeToTerms {
         static var bigTitle: String { "서비스 이용약관에\n동의해주세요" }
         static var smallTitle: String { "솔리너의 원활한 사용을 위해\n아래의 정보 제공에 동의해주세요." }
