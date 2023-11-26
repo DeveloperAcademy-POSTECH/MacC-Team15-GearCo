@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddTestIngredientsView: View {
     // TODO: 전체적인 Padding 계층 및 Magic Number 수정 요함
+    private let ingredientData = IngredientData.shared.ingredients
     private let Texts = TextLiterals.AddIngredientsView.self
     
     // MARK: Padding&Spacing Magic Numbers
@@ -26,7 +27,7 @@ struct AddTestIngredientsView: View {
     private let reportButtonTopSpace: CGFloat = 20
         
     // 선택된 테스트 재료 2개
-    @State private var selectedIngredientPair: (first: Ingredient, second: Ingredient?)?
+    @State private var selectedIngredientPair: [Int] = []
     
     var body: some View {
         VStack(spacing: 0) {
@@ -44,11 +45,13 @@ struct AddTestIngredientsView: View {
             }.padding(.bottom, typeButtonsRowBottomPadding)
             
             // MARK: 선택된 재료 타입 확인 Row
-            if let pair = selectedIngredientPair {
+            if !selectedIngredientPair.isEmpty {
+                let firstIngredient: Ingredient = ingredientData[selectedIngredientPair[0]]!
                 HStack(spacing: typeButtonBetweenSpace) {
-                    selectedIngredientTypeBox(ingredient: pair.first)
-                    if let second = pair.second {
-                        selectedIngredientTypeBox(ingredient: second)
+                    selectedIngredientTypeBox(ingredient: firstIngredient)
+                    if selectedIngredientPair.count > 1 {
+                        let secondIngredient = ingredientData[selectedIngredientPair[1]]!
+                        selectedIngredientTypeBox(ingredient: secondIngredient)
                     }
                     Spacer()
                 }.padding(.leading, viewHorizontalPadding)
