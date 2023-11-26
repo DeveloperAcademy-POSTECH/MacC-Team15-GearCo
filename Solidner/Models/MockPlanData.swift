@@ -113,47 +113,47 @@ extension MealType: Comparable {
     }
 }
 
-struct Ingredient: CustomStringConvertible, Identifiable, Hashable, Codable {
-    private(set) var id = UUID()
-    let type: IngredientType
-    private(set) var ableMonth: Int = 6
-    private(set) var misMatches: [Ingredient] = []
-    private(set) var alternatives: [Ingredient] = []
-
-    var description: String { name }
-    var name: String
-
-    func setMisMatches(ingredients: [Ingredient]) -> Self {
-        var _self = self
-        _self.misMatches = ingredients
-        return _self
-    }
-}
-
-enum IngredientType: Codable {
-    case 곡물, 어육류, 노란채소, 녹색채소, 과일, 유제품, 기타채소, 기타
-
-    var color: Color {
-        switch self {
-        case .곡물:
-            return .grain
-        case .어육류:
-            return .greenVegitable
-        case .노란채소:
-            return .yellowVegitable
-        case .녹색채소:
-            return .greenVegitable
-        case .과일:
-            return .fruit
-        case .유제품:
-            return .dairy
-        case .기타채소:
-            return .etcVegitable
-        case .기타:
-            return .etcIngredient
-        }
-    }
-}
+//struct Ingredient: CustomStringConvertible, Identifiable, Hashable, Codable {
+//    private(set) var id = UUID()
+//    let type: IngredientType
+//    private(set) var ableMonth: Int = 6
+//    private(set) var misMatches: [Ingredient] = []
+//    private(set) var alternatives: [Ingredient] = []
+//
+//    var description: String { name }
+//    var name: String
+//
+//    func setMisMatches(ingredients: [Ingredient]) -> Self {
+//        var _self = self
+//        _self.misMatches = ingredients
+//        return _self
+//    }
+//}
+//
+//enum IngredientType: Codable {
+//    case 곡물, 어육류, 노란채소, 녹색채소, 과일, 유제품, 기타채소, 기타
+//
+//    var color: Color {
+//        switch self {
+//        case .곡물:
+//            return .grain
+//        case .어육류:
+//            return .greenVegitable
+//        case .노란채소:
+//            return .yellowVegitable
+//        case .녹색채소:
+//            return .greenVegitable
+//        case .과일:
+//            return .fruit
+//        case .유제품:
+//            return .dairy
+//        case .기타채소:
+//            return .etcVegitable
+//        case .기타:
+//            return .etcIngredient
+//        }
+//    }
+//}
 
 
 extension MealPlan {
