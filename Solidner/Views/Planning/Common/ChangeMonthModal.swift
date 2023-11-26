@@ -18,58 +18,34 @@ import SwiftUI
 struct ChangeMonthHalfModal: View {
     @Binding var selectedDate: Date
     let fromDate: Date
-    let saveAction: () -> Void
-
+    
+    // TODO: - 매직넘버 지우기
     var body: some View {
-        ChangeMonthModal(selectedDate: $selectedDate, fromDate: fromDate) {
-            saveAction()
-        }
-        .presentationDetents([.medium])
-        .modify { view in
-            if #available(iOS 16.4, *) {
-                view.presentationCornerRadius(25)
+        ChangeMonthModal(selectedDate: $selectedDate, fromDate: fromDate)
+            .presentationDetents([.height(429)])
+            .modify { view in
+                if #available(iOS 16.4, *) {
+                    view.presentationCornerRadius(25)
+                }
             }
-        }
     }
 }
 
 struct ChangeMonthModal: View {
+    @Environment(\.dismiss) private var dismiss
     @Binding var selectedDate: Date
     @State private var selectingDate: Date
     @State private var selectingYear: Int
-
+    
     @State private var saveAction: () -> Void
     func saveAction(_ action: @escaping () -> Void) -> Self {
         var view = self
         view._saveAction = State(initialValue: action)
         return view
     }
-
-    enum K {
-        // static var rootVStackSpacing: CGFloat { 30 }
-        static var rootVStackSpacing: CGFloat { 18 }
-        static var leftButtonIcon: String { "chevron.left" }
-        static var rightButtonIcon: String { "chevron.right" }
-        static var chevronColor: Color { Color.tertinaryText }
-
-        static var monthTitleColor: Color { Color.defaultText }
-        //TODO: - color 시스템 적용
-        static var selectedCurrentMonthCircleColor: Color { Color.accentColor1 }
-        static var selectedotherMonthCircleColor: Color { Color.primeText }
-
-        static var monthColumnNumber: Int { 4 }
-        static var monthVGridSpacing: CGFloat { 4 }
-        static var monthTextColor: Color { Color.defaultText }
-        static var disableTextColor: Color { .quarternaryText.opacity(0.8) }
-//        static var selectedMonthTextColor: Color { Color.defaultText_wh.opacity(0.8) }
-        static var selectedMonthTextColor: Color { Color.defaultText_wh }
-
-        static var monthButtonSize: CGFloat { 74 }
-
-        static var saveButtonBackgroundColor: Color { .primeText }
-    }
+    
     private let texts = TextLiterals.ChangeMonth.self
-
+    
     let fromDate: Date
     var toDate: Date {
         let threeMonthAfter = Date().add(.month, value: 3)
@@ -77,7 +53,7 @@ struct ChangeMonthModal: View {
         let twoMonthAfterLastDay = threeMonthAfterFirstDay.add(.day, value: -1)
         return twoMonthAfterLastDay
     }
-
+    
     init(selectedDate: Binding<Date>, fromDate: Date, action: @escaping () -> Void = {}) {
         self._selectedDate = selectedDate
         self._selectingDate = State(initialValue: selectedDate.wrappedValue)
@@ -85,13 +61,16 @@ struct ChangeMonthModal: View {
         self.fromDate = fromDate
         self._saveAction = State(initialValue: action)
     }
-
+    
     var body: some View {
         VStack(spacing: K.rootVStackSpacing) {
+            Spacer()
             monthTitleBar
             monthButtons
             saveButton
         }
+        .defaultHorizontalPadding()
+        .withClearBackground(color: .secondBgColor)
     }
 }
 
@@ -100,7 +79,7 @@ extension ChangeMonthModal {
     private var monthTitleBar: some View {
         let isFromDateBeforeCurrentYear = fromDate.year < selectingYear
         let isToDateAfterCurrentYear = toDate.year > selectingYear
-
+        
         return HStack {
             if isFromDateBeforeCurrentYear {
                 leftChevron
@@ -113,29 +92,29 @@ extension ChangeMonthModal {
             }
         }
     }
-
+    
     private var monthTitle: some View {
         Text(texts.currentYearText(of: selectingYear))
-            .headerFont2()
-            .foregroundStyle(K.monthTitleColor)
+            .customFont(.header2, color: K.monthTitleColor)
     }
-
+    
     private var leftChevron: some View {
         chevronView(direction: .left) {
             selectingYear -= 1
         }
     }
-
-
+    
+    
     private var rightChevron: some View {
         chevronView(direction: .right) {
             selectingYear += 1
         }
     }
-
+    
+    #warning("밖으로 빼든가 매직스트링 지우든가")
     enum Chevron {
         case left, right
-
+        
         var iconImage: some View {
             switch self {
             case .left:
@@ -145,7 +124,7 @@ extension ChangeMonthModal {
             }
         }
     }
-
+    
     private func chevronView(direction chevron: Chevron, action: @escaping ()->Void) -> some View {
         chevron.iconImage
             .bold()
@@ -163,7 +142,7 @@ extension ChangeMonthModal {
 extension ChangeMonthModal {
     private var monthButtons: some View {
         let columns: [GridItem] = Array(repeating: .init(.flexible()), count: K.monthColumnNumber)
-
+        
         return ZStack {
             LazyVGrid(columns: columns, spacing: K.monthVGridSpacing) {
                 ForEach(1..<13) { number in
@@ -172,7 +151,7 @@ extension ChangeMonthModal {
             }
         }
     }
-
+    
     private func monthButton(of number: Int) -> some View {
         let isSelectedCurrentMonth = Date().month == selectingDate.month && Date().year == selectingYear
         let isDisabled: Bool = {
@@ -188,10 +167,10 @@ extension ChangeMonthModal {
         let backgroundCircle = Circle()
             .foregroundStyle(selectedCircleColor)
             .frame(width: K.monthButtonSize, height:K.monthButtonSize)
-
+        
         return Button {
             withAnimation {
-                selectingDate = Date.date(year: selectingDate.year, month: number, day: 1)!
+                selectingDate = Date.date(year: selectingDate.year, month: number, day: selectedDate.day)!
             }
         } label: {
             Text(texts.monthText(of: number))
@@ -206,7 +185,7 @@ extension ChangeMonthModal {
         .frame(width: K.monthButtonSize, height:K.monthButtonSize)
         .disabled(isDisabled)
     }
-
+    
     private var saveButton: some View {
         let isDisabled = selectingDate.year != selectingYear
         return ButtonComponents(
@@ -214,17 +193,41 @@ extension ChangeMonthModal {
             title: texts.saveButtonText,
             disabledCondition: isDisabled) {
                 withAnimation {
+                    selectedDate = selectingDate
                     saveAction()
+                    dismiss()
                 }
             }
             .buttonColor(K.saveButtonBackgroundColor)
     }
 }
 
+extension ChangeMonthModal {
+    enum K {
+        // static var rootVStackSpacing: CGFloat { 30 }
+        static var rootVStackSpacing: CGFloat { 18 }
+        static var chevronColor: Color { Color.tertinaryText }
+        
+        static var monthTitleColor: Color { Color.defaultText }
+        //TODO: - color 시스템 적용
+        static var selectedCurrentMonthCircleColor: Color { Color.accentColor1 }
+        static var selectedotherMonthCircleColor: Color { Color.primeText }
+        
+        static var monthColumnNumber: Int { 4 }
+        static var monthVGridSpacing: CGFloat { 4 }
+        static var monthTextColor: Color { Color.defaultText }
+        static var disableTextColor: Color { .quarternaryText.opacity(0.8) }
+        //        static var selectedMonthTextColor: Color { Color.defaultText_wh.opacity(0.8) }
+        static var selectedMonthTextColor: Color { Color.defaultText_wh }
+        
+        static var monthButtonSize: CGFloat { 74 }
+        
+        static var saveButtonBackgroundColor: Color { .primeText }
+    }
+}
+
 struct ChangeMonthModal_Previews: PreviewProvider {
     static var previews: some View {
-        ChangeMonthModal(selectedDate: .constant(Date()), fromDate: Date.date(year: 2022, month: 12, day: 20)!).saveAction {
-            print("gk핳")
-        }
+        ChangeMonthModal(selectedDate: .constant(Date()), fromDate: Date.date(year: 2022, month: 12, day: 20)!)
     }
 }

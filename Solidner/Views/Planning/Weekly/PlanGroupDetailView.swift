@@ -71,7 +71,8 @@ struct PlanGroupDetailView: View {
     }
 }
 
-#warning("매직 스트링, 매직 넘버 제거")
+// TODO: - 매직 스트링, 매직 넘버 제거
+// #warning("매직 스트링, 매직 넘버 제거")
 // MARK: - view header
 
 extension PlanGroupDetailView {

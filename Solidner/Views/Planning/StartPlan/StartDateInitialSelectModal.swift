@@ -23,7 +23,8 @@ struct StartDateInitialSelectModal: View {
             startButton
         }
         .padding(.vertical, K.rootVStackHorizontalPadding)
-        .background(K.backgroundColor)
+        .defaultHorizontalPadding()
+        .withClearBackground(color: .secondBgColor)
     }
 
     private var titleAndHint: some View {
