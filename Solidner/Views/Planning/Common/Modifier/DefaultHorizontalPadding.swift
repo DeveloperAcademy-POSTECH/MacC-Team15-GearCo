@@ -10,7 +10,7 @@ import SwiftUI
 
 struct DefaultHorizontalPadding: ViewModifier {
     func body(content: Content) -> some View {
-        content.padding(.horizontal, ViewCommonConstants.horizontalPadding)
+        content.padding(.horizontal, 20)
     }
 }
 

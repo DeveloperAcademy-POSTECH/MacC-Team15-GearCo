@@ -7,12 +7,20 @@
 
 import SwiftUI
 
-struct RootVStack: View {
+struct RootVStack<C: View>: View {
+    @ViewBuilder let content: C
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(spacing: .zero) {
+            content
+        }
+        .navigationBarBackButtonHidden()
+        .withClearBackground(color: .secondBgColor)
     }
 }
 
 #Preview {
-    RootVStack()
+    RootVStack {
+        Text("haha")
+    }
 }
