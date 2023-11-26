@@ -10,6 +10,7 @@ import SwiftUI
 struct WithdrawalView: View {
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var user: UserOB
+    @State private var showWithdrawalModalView = false
     var body: some View {
         ZStack {
             BackgroundView()
@@ -29,6 +30,19 @@ struct WithdrawalView: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
+        .sheet(isPresented: $showWithdrawalModalView) {
+            if #available(iOS 16.4, *) {
+                WithdrawalModalView()
+                    .presentationDetents([.height(UIScreen.getHeight(637))])
+                    .presentationDragIndicator(.hidden)
+                    .presentationCornerRadius(28)
+            }
+            else {
+                WithdrawalModalView()
+                    .presentationDetents([.height(UIScreen.getHeight(637))])
+                    .presentationDragIndicator(.hidden)
+            }
+        }
     }
     private func viewBody() -> some View {
         VStack(spacing: 0) {
@@ -45,7 +59,7 @@ struct WithdrawalView: View {
             }
             Spacer()
             ButtonComponents().bigButton(title: "탈퇴하기", disabledCondition: false, action: {
-                // 모달 업
+                showWithdrawalModalView = true
             }, buttonColor: .buttonBgColor, titleColor: .secondaryText)
         }
     }

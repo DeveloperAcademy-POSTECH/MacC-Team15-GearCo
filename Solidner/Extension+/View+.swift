@@ -101,12 +101,12 @@ extension View {
     func symmetricBackground(HPad: CGFloat = 0,
                              VPad: CGFloat = 0,
                              color: Color = .clear,
-                             radius: CGFloat = 0)
+                             radius: CGFloat = 0, strokeColor: Color = .clear, lineWidth: CGFloat = 0)
     -> some View {
         self.padding(horizontal: HPad, vertical: VPad)
             .background {
                 RoundedRectangle(cornerRadius: radius)
-                    .fill(color)
+                    .fill(color, strokeBorder: strokeColor, lineWidth: lineWidth)
             }
     }
 

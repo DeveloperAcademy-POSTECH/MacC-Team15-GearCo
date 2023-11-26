@@ -38,7 +38,7 @@ struct SolidnerApp: App {
             //SignInView().environmentObject(userOB)
             //UserInfoUpdateView().environmentObject(userOB)
             //NickNameView(nickNameViewCase: .userName).environmentObject(userOB)
-            ServiceInfoView()
+            MypageRootView().environmentObject(userOB)
         }
     }
 }

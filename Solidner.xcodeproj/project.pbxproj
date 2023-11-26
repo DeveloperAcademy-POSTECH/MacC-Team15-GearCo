@@ -59,6 +59,7 @@
 		C3777C662B1250E3008B951A /* NotificationSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3777C652B1250E3008B951A /* NotificationSettingView.swift */; };
 		C3777C682B132BC1008B951A /* ServiceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3777C672B132BC1008B951A /* ServiceInfoView.swift */; };
 		C3777C6A2B135B80008B951A /* WithdrawalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3777C692B135B80008B951A /* WithdrawalView.swift */; };
+		C3777C6C2B136A55008B951A /* WithdrawalModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3777C6B2B136A55008B951A /* WithdrawalModalView.swift */; };
 		C3AD1BC42B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AD1BC32B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift */; };
 		C3AD1BC62B012DA6003BB3E0 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AD1BC52B012DA6003BB3E0 /* UIApplication+.swift */; };
 		C3AD1BC82B021660003BB3E0 /* SoCuteNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AD1BC72B021660003BB3E0 /* SoCuteNameView.swift */; };
@@ -161,6 +162,7 @@
 		C3777C652B1250E3008B951A /* NotificationSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingView.swift; sourceTree = "<group>"; };
 		C3777C672B132BC1008B951A /* ServiceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceInfoView.swift; sourceTree = "<group>"; };
 		C3777C692B135B80008B951A /* WithdrawalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalView.swift; sourceTree = "<group>"; };
+		C3777C6B2B136A55008B951A /* WithdrawalModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalModalView.swift; sourceTree = "<group>"; };
 		C3AD1BC32B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightHelperOB.swift; sourceTree = "<group>"; };
 		C3AD1BC52B012DA6003BB3E0 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
 		C3AD1BC72B021660003BB3E0 /* SoCuteNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoCuteNameView.swift; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 				C3777C652B1250E3008B951A /* NotificationSettingView.swift */,
 				C3777C672B132BC1008B951A /* ServiceInfoView.swift */,
 				C3777C692B135B80008B951A /* WithdrawalView.swift */,
+				C3777C6B2B136A55008B951A /* WithdrawalModalView.swift */,
 			);
 			path = Mypage;
 			sourceTree = "<group>";
@@ -650,6 +653,7 @@
 				B2746E3B2B052A4D0083AB57 /* Shape+.swift in Sources */,
 				0EA65EE22B0C846200E1C8D7 /* AddTestIngredientsView.swift in Sources */,
 				C3B4DB502B10EE8D00772C2A /* UserInfoUpdateView.swift in Sources */,
+				C3777C6C2B136A55008B951A /* WithdrawalModalView.swift in Sources */,
 				0EAFB7212B012A3D0075A384 /* MonthlyPlanningView.swift in Sources */,
 				B219F1272B0CE13000886087 /* View+.swift in Sources */,
 				C36942472AFCD687002465D4 /* ButtonComponents.swift in Sources */,
