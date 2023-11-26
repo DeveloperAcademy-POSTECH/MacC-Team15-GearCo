@@ -67,8 +67,14 @@ final class MealOB: ObservableObject {
     }
 
     #warning("meal - add plan 구현하기")
-    // TODO: add plan :) FB에 쓔우우웅?!
+    // TODO: add plan :) FB에 쓔우우웅?! + mealPlans에도 넣어야?!
     func addMealPlan() {
+        print(#function)
+    }
+    
+    #warning("meal - change plan 구현하기")
+    // TODO: change plan :) FB에 쓔우우웅?!
+    func changeMealPlan() {
         print(#function)
     }
     

@@ -124,6 +124,17 @@ enum TextLiterals {
     }
 
     enum MealDetail {
+        static func viewHeaderTitleText(from: Date, to: Date, isSingle: Bool) -> String {
+            func dateString(of date: Date) -> String {
+                return "\(date.month).\(date.day).(\(date.weekDayKor))"
+            }
+            if isSingle {
+                return "\(dateString(of: from)) 재료"
+            } else {
+                return "\(dateString(of: from)) ~ \(dateString(of: to)) 재료"
+            }
+            
+        }
         static var viewInAddTitleText: String { "재료 입력" }
         static var viewInAddTitleHintText: String { "알러지 테스트를 위해 따로 입력해주세요" }
         static var viewInEditTitleText: String { "재료 변경" }
@@ -149,6 +160,7 @@ enum TextLiterals {
 
         static var changeStartDateText: String { "시작일 변경" }
         static var changeStartDateDetailText: String { "아래 날짜부터 시작할 예정이에요." }
+        static var saveButtonText: String { "저장" }
     }
 
     enum AddedIngredient {
