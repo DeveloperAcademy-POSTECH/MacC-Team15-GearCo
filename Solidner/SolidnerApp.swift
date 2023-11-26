@@ -37,6 +37,9 @@ struct SolidnerApp: App {
 //            }
             AddTestIngredientsView().environmentObject(userOB)
             //SignInView().environmentObject(userOB)
+            //UserInfoUpdateView().environmentObject(userOB)
+            //NickNameView(nickNameViewCase: .userName).environmentObject(userOB)
+            MypageRootView().environmentObject(userOB)
         }
     }
 }
