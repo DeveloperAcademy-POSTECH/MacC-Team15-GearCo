@@ -42,7 +42,9 @@ struct NotificationSettingView: View {
     private func settingList() -> some View {
         VStack(spacing: 29) {
             settingLabelAndSwitch(settingCase: .appAlarm)
+            //🔴 서버 정보 전달 코드
             settingLabelAndSwitch(settingCase: .agreeToAd)
+            //🔴 서버 정보 전달 코드
         }
     }
     private func settingLabelAndSwitch(settingCase: SettingCase) -> some View {

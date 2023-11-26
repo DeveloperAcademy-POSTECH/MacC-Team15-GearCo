@@ -34,8 +34,8 @@ struct MypageRootView: View {
                     TermsWebViewWithHeader(agreeCase: .personalInfo)
                 case .serviceUseTerms:
                     TermsWebViewWithHeader(agreeCase: .serviceUse)
-                case .teamIntroduction:
-                    UserInfoUpdateView()
+                case .serviceInfo:
+                    ServiceInfoView()
                 case .withdrawal:
                     UserInfoUpdateView()
                 }
@@ -109,7 +109,7 @@ struct MypageRootView: View {
     }
     private enum MypageFunctionCase: String, Hashable {
         case notificationSetting = "알림 설정"
-        case teamIntroduction = "서비스를 만든 사람들"
+        case serviceInfo = "서비스 정보 및 문의"
         case personalInfoTerms = "개인정보 처리방침"
         case serviceUseTerms = "서비스 이용약관"
         case withdrawal = "탈퇴하기"
@@ -119,7 +119,7 @@ struct MypageRootView: View {
             HStack {
                 Text(mypageFuctionCase.rawValue)
                     .headerFont4()
-                    .foregroundColor(mypageFuctionCase == .notificationSetting ||  mypageFuctionCase == .teamIntroduction ? .secondaryText : .tertinaryText)
+                    .foregroundColor(mypageFuctionCase == .notificationSetting ||  mypageFuctionCase == .serviceInfo ? .secondaryText : .tertinaryText)
                 Spacer()
                 Image(assetName: .mypageChevron)
             }
@@ -128,7 +128,7 @@ struct MypageRootView: View {
     private func myPageFunctionList() -> some View {
         return VStack(spacing: 32) {
             myPageFunctionButton(mypageFuctionCase: .notificationSetting)
-            myPageFunctionButton(mypageFuctionCase: .teamIntroduction)
+            myPageFunctionButton(mypageFuctionCase: .serviceInfo)
             myPageFunctionButton(mypageFuctionCase: .serviceUseTerms)
             myPageFunctionButton(mypageFuctionCase: .personalInfoTerms)
             ViewDivider(dividerCase: .thick)

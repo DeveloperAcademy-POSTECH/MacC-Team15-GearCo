@@ -37,7 +37,8 @@ struct SolidnerApp: App {
  //           MonthlyPlanningView()
             //SignInView().environmentObject(userOB)
             //UserInfoUpdateView().environmentObject(userOB)
-            NickNameView(nickNameViewCase: .userName).environmentObject(userOB)
+            //NickNameView(nickNameViewCase: .userName).environmentObject(userOB)
+            ServiceInfoView()
         }
     }
 }
