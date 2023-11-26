@@ -58,6 +58,7 @@
 		C3777C642B1249D5008B951A /* AddMoreUserFYIModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3777C632B1249D5008B951A /* AddMoreUserFYIModalView.swift */; };
 		C3777C662B1250E3008B951A /* NotificationSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3777C652B1250E3008B951A /* NotificationSettingView.swift */; };
 		C3777C682B132BC1008B951A /* ServiceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3777C672B132BC1008B951A /* ServiceInfoView.swift */; };
+		C3777C6A2B135B80008B951A /* WithdrawalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3777C692B135B80008B951A /* WithdrawalView.swift */; };
 		C3AD1BC42B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AD1BC32B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift */; };
 		C3AD1BC62B012DA6003BB3E0 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AD1BC52B012DA6003BB3E0 /* UIApplication+.swift */; };
 		C3AD1BC82B021660003BB3E0 /* SoCuteNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AD1BC72B021660003BB3E0 /* SoCuteNameView.swift */; };
@@ -159,6 +160,7 @@
 		C3777C632B1249D5008B951A /* AddMoreUserFYIModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMoreUserFYIModalView.swift; sourceTree = "<group>"; };
 		C3777C652B1250E3008B951A /* NotificationSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingView.swift; sourceTree = "<group>"; };
 		C3777C672B132BC1008B951A /* ServiceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceInfoView.swift; sourceTree = "<group>"; };
+		C3777C692B135B80008B951A /* WithdrawalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalView.swift; sourceTree = "<group>"; };
 		C3AD1BC32B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightHelperOB.swift; sourceTree = "<group>"; };
 		C3AD1BC52B012DA6003BB3E0 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
 		C3AD1BC72B021660003BB3E0 /* SoCuteNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoCuteNameView.swift; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 				C3777C632B1249D5008B951A /* AddMoreUserFYIModalView.swift */,
 				C3777C652B1250E3008B951A /* NotificationSettingView.swift */,
 				C3777C672B132BC1008B951A /* ServiceInfoView.swift */,
+				C3777C692B135B80008B951A /* WithdrawalView.swift */,
 			);
 			path = Mypage;
 			sourceTree = "<group>";
@@ -654,6 +657,7 @@
 				B2F790A22B0DF30B00CB4F71 /* CycleGaps.swift in Sources */,
 				0EB0F4322B0F5F5A00A32DFB /* AddIngredientBigDivision.swift in Sources */,
 				B2EFE9852B067FB200E3F94B /* MockPlanData.swift in Sources */,
+				C3777C6A2B135B80008B951A /* WithdrawalView.swift in Sources */,
 				B219F1212B0C915300886087 /* StartDateInitialSelectModal.swift in Sources */,
 				0E18AD6B2AFA7F670011ED4A /* SignInView.swift in Sources */,
 				B2746E432B05FDC40083AB57 /* TitleAndHintView.swift in Sources */,

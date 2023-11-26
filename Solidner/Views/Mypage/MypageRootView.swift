@@ -12,6 +12,7 @@ struct MypageRootView: View {
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @State private var stackPath: [MypageFunctionCase] = []
     @State private var goForUserInfoUpdate = false
+    @State private var showLogoutAlert = false
     var body: some View {
         NavigationStack(path: $stackPath) {
             ZStack {
@@ -23,6 +24,24 @@ struct MypageRootView: View {
                     viewBody()
                         .padding(horizontal: 20, vertical: 39)
                 }
+            }
+            .alert(isPresented: $showLogoutAlert) {
+                Alert(
+                    title: Text("로그아웃"),
+                    message: Text("이 계정을 로그아웃 할까요?"),
+                    primaryButton: .destructive(
+                        Text("로그아웃"),
+                        action: {
+                            // 🔴 로그아웃 코드
+                        }
+                    ),
+                    secondaryButton: .default(
+                        Text("취소"),
+                        action: {
+                            
+                        }
+                    )
+                )
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)
@@ -37,7 +56,9 @@ struct MypageRootView: View {
                 case .serviceInfo:
                     ServiceInfoView()
                 case .withdrawal:
-                    UserInfoUpdateView()
+                    WithdrawalView()
+                case .logOut:
+                    MypageRootView()
                 }
             }
             .navigationDestination(isPresented: $goForUserInfoUpdate) {
@@ -112,6 +133,7 @@ struct MypageRootView: View {
         case serviceInfo = "서비스 정보 및 문의"
         case personalInfoTerms = "개인정보 처리방침"
         case serviceUseTerms = "서비스 이용약관"
+        case logOut = "로그아웃"
         case withdrawal = "탈퇴하기"
     }
     private func myPageFunctionButton(mypageFuctionCase: MypageFunctionCase) -> some View {
@@ -125,6 +147,19 @@ struct MypageRootView: View {
             }
         }
     }
+    private func logoutButton() -> some View {
+        return Button(action: {
+            showLogoutAlert = true
+        }, label: {
+            HStack {
+                Text(MypageFunctionCase.logOut.rawValue)
+                    .headerFont4()
+                    .foregroundColor(.tertinaryText)
+                Spacer()
+                Image(assetName: .mypageChevron)
+            }
+        })
+    }
     private func myPageFunctionList() -> some View {
         return VStack(spacing: 32) {
             myPageFunctionButton(mypageFuctionCase: .notificationSetting)
@@ -133,8 +168,9 @@ struct MypageRootView: View {
             myPageFunctionButton(mypageFuctionCase: .personalInfoTerms)
             ViewDivider(dividerCase: .thick)
                 .padding(.top, -4)
-            myPageFunctionButton(mypageFuctionCase: .withdrawal)
+            logoutButton()
                 .padding(.top, -4)
+            myPageFunctionButton(mypageFuctionCase: .withdrawal)
         }
     }
 }
