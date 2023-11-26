@@ -96,9 +96,33 @@ extension Date {
         return nowMonthDates.filter { $0.weekOfMonth == weekOfMonth }
     }
 
+    
+    /// component를 value만큼 더한 Date를 반환합니다.
+    /// self.add(.day, value: 1) -> self에 1 day를 더한 Date
+    /// - Parameters:
+    ///   - component: Calendar.Component. 예를 들면 .year, .month, .day
+    ///   - value: 원하는 값
+    /// - Returns: component를 value만큼 더한 Date
     func add(_ component: Calendar.Component, value: Int) -> Date {
         Calendar.current.date(byAdding: component, value: value, to: self)!
     }
+    
+    /// - Returns: Array of `self` 날짜가 포함된 달의 모든 날짜의 Date
+    func monthDates() -> [Date] {
+        let range = Calendar.current.range(of: .day, in: .month, for: self) ?? Range<Int>(1...1)
+        
+        let nowMonthFirstDay = Date.date(year: year, month: month, day: 1) ?? self
+        let nowMonthLastDay = Date.date(year: year, month: month + 1, day: 1)?.add(.day, value: -1) ?? self
+        
+        let resultDates = Date.range(from: nowMonthFirstDay, to: nowMonthLastDay)
+        
+        if resultDates.count <= 1 {
+            fatalError("시간 설정 오류. 기기의 시간을 확인해주세요.")
+        } else {
+            return resultDates
+        }
+    }
+    
 
     /// 아래의 day부터 weekDayOrdinal까지는
     /// Calendar 객체의 데이터를 Date의 Extension으로 포함시켜 Date 객체에서 바로 사용할 수 있게 합니다.

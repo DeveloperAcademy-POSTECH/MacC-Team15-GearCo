@@ -9,11 +9,12 @@
  -[x] 끼니 추가
  -[x] 리스트
  -[x] 헤더
- -[ ] 이유식/월령 바꾸기
- -[ ] 이유식 날짜 보이기
+ -[x] 이유식/월령 바꾸기
+ -[x] 이유식 날짜 보이기
  -[x] 셀 1개
  -[x] 그룹
- -[ ] 이상 반응 보이게
+ -[ ] date scroll에서 이상 반응 보이게
+ -[ ] read only 구현
  */
 // TODO: - date 각 년월일 들어가게 :)
 // TODO: - 문제있는 date만 표시될 수 있도록 새로운 struct를 선언해야 할까?
@@ -24,110 +25,135 @@ import SwiftUI
 
 struct PlanListView: View {
     @EnvironmentObject private var user: UserOB
+    @EnvironmentObject private var mealPlansOB: MealPlansOB
+    
     @State private var selectedDate = Date()
-    let mealPlans: [MealPlan]
+    @State private var isCurrentDateEditing = false
+    @State private var isWholeSettingEditing = false
+    
+    var mealPlans: [MealPlan] { mealPlansOB.filteredMealPlans }
+    var mealPlanGroups: [MealPlanGroup] { mealPlansOB.mealPlanGroups }
+    
     private let texts = TextLiterals.PlanList.self
-    private(set) var mealsDict = [SolidDate:[MealPlan]]()
-
-    init(mealPlans: [MealPlan] = MealPlan.mockMealsOne) {
-        self.mealPlans = mealPlans
-        mealsDict = Dictionary(grouping: mealPlans) { SolidDate(startDate: $0.startDate, endDate: $0.endDate) }
-    }
-
-    private enum K {
-        static var rootVStackSpacing: CGFloat { 26 }
-        static var defaultHorizontalPadding: CGFloat { 20 }
-
-        static var titleHStackSpacing: CGFloat { 4 }
-        static var titleTextColor: Color { .defaultText }
-        static var chevronDownSFSymbolName: String { "chevron.down" }
-        static var chevronDownColor: Color { .primeText }
-
-
-        static var dateHStackSpacing: CGFloat { 12 }
-        static var dateTextColor: Color { .secondaryText }
-        static var dateButtonWidth: CGFloat { 70 }
-        static var dateButtonHeight: CGFloat { 36 }
-        static var dateButtonCornerRadius: CGFloat { 12 }
-        static var dateButtonBackgroundColor: Color { .buttonBgColor }
-
-        static var mealGroupListVStackSpacing: CGFloat { 40 }
-
-        static var chevronRightSFSymbolName: String { "chevron.right" }
-        static var chevronRightColor: Color { .primeText }
-
-        static var solidTotalSettingTextColor: Color { .primeText }
-    }
-
+    
     var body: some View {
+        RootVStack {
+            viewHeader
+            viewBody
+        }
+    }
+    
+    private var viewHeader: some View {
+        return LeftRightButtonHeader(
+            leftButton: headerLeftButton,
+            rightButton: headerRightButton
+        )
+    }
+    
+    private var viewBody: some View {
         ScrollView {
             VStack(spacing: K.rootVStackSpacing) {
-                title
+                titleHeader
                 dateScroll
                 ThickDivider()
                 mealGroupList
                 ThickDivider()
                 totalSetting
             }
+            .defaultHorizontalPadding()
+        }
+        .sheet(isPresented: $isCurrentDateEditing) {
+            ChangeMonthHalfModal(
+                selectedDate: $selectedDate,
+                fromDate: user.babyBirthDate
+            )
+        }
+        .onChange(of: selectedDate) { value in
+            mealPlansOB.currentFilter = .month(date: value)
+            print(mealPlansOB.currentFilter)
         }
     }
 }
 
-// MARK: - title
+// MARK: - View Header
+
 extension PlanListView {
-    private var title: some View {
+#warning("Header Button 함수 구현하기")
+    private var headerLeftButton: some View {
         Button {
             print(#function)
         } label: {
+            Image(.userInfo)
+        }
+    }
+    
+    private var headerRightButton: some View {
+        Button {
+            print(#function)
+        } label: {
+            Image(.calendarInPlanList)
+        }
+    }
+}
+
+// MARK: - title Header
+
+extension PlanListView {
+    private var titleHeader: some View {
+        Button {
+            isCurrentDateEditing.toggle()
+        } label: {
             HStack(spacing: K.titleHStackSpacing) {
                 Text(texts.yyyymmHeaderText(date: selectedDate))
-                    .headerFont2().bold()
-                    .foregroundStyle(K.titleTextColor)
+                    .customFont(.header2, color: K.titleTextColor)
                 Image(systemName: K.chevronDownSFSymbolName)
                     .foregroundStyle(K.chevronDownColor)
                     .bold()
                 Spacer()
             }
         }
+        .padding(K.titlePadding)
     }
+}
 
-    // TODO: - date 각 년월일 들어가게 :)
-    // TODO: - 문제있는 date만 표시될 수 있도록 새로운 struct를 선언해야 할까?
-    // TODO: - date 버튼 눌렀을 때 화면 전환 action
+// MARK: - date Scroll
+
+extension PlanListView {
+#warning("이상있는 date에 노티하기")
     private var dateScroll: some View {
-        let endDateDay: Int = {
-            let nextMonthFirstDay = Date.date(year: selectedDate.year, month: (selectedDate.month + 1) % 12 + 1, day: 1)!
-            let currentMonthLastDay = nextMonthFirstDay.add(.day, value: -1)
-            return currentMonthLastDay.day
-        }()
         let spacer: some View = Spacer()
             .frame(width: K.defaultHorizontalPadding - K.dateHStackSpacing)
-
+        
         return ScrollView(.horizontal) {
             HStack(spacing: K.dateHStackSpacing) {
                 spacer
-                ForEach(Array(1..<endDateDay), id: \.self) { number in
-                    Button {
-                        print(#function)
-                    } label: {
-                        dateScrollLabel(of: number)
+                ForEach(selectedDate.monthDates(), id: \.self) { date in
+                    NavigationLink(value: date){
+                        dateScrollLabel(of: date)
                     }
                 }
                 spacer
+            }
+            .navigationDestination(for: Date.self) { date in
+                let mealPlans = mealPlansOB.getMealPlans(in: date)
+                if mealPlans.count != .zero {
+                    DailyPlanListView(date: date, mealPlans: mealPlans)
+                } else {
+                    MealDetailView(startDate: date, cycleGap: user.planCycleGap)
+                }
             }
         }
         .scrollIndicators(.hidden)
         .padding(.horizontal, -K.defaultHorizontalPadding)
     }
-
-    private func dateScrollLabel(of number: Int) -> some View {
-        Text(texts.ddDateText(date: number))
-            .headerFont6()
-            .foregroundStyle(Color.black)
+    
+    private func dateScrollLabel(of date: Date) -> some View {
+        Text(texts.ddDateText(date: date))
+            .customFont(.header6, color: .primeText)
             .frame(width: K.dateButtonWidth, height: K.dateButtonHeight)
-            .background(
-                RoundedRectangle(cornerRadius: K.dateButtonCornerRadius)
-                    .fill(K.dateButtonBackgroundColor)
+            .withRoundedBackground(
+                cornerRadius: K.dateButtonCornerRadius,
+                color: K.dateButtonBackgroundColor
             )
     }
 }
@@ -137,72 +163,85 @@ extension PlanListView {
 extension PlanListView {
     private var mealGroupList: some View {
         VStack(spacing: K.mealGroupListVStackSpacing) {
-            let mealDictKeys = Array(mealsDict.keys.sorted(by: { $0.startDate < $1.startDate }).enumerated())
-
-            ForEach(mealDictKeys, id: \.element) { index, solidDate in
-                if let meals = mealsDict[solidDate] {
+            ForEach(mealPlansOB.mealPlanGroups, id: \.self) { mealPlanGroup in
+                let (startDate, endDate) = (mealPlanGroup.solidDate.startDate, mealPlanGroup.solidDate.endDate)
+                NavigationLink(value: mealPlanGroup) {
                     MealGroupView(
-                        dateRange: solidDate.description,
-                        displayDateInfo: DisplayDateInfoView(
-                            from: solidDate.startDate,
-                            to: solidDate.endDate),
-                        mealPlans: meals,
-                        isTodayInDateRange: Date().isInBetween(from: solidDate.startDate, to: solidDate.endDate)
+                        mealPlanGroup: mealPlanGroup,
+                        isTodayInDateRange: Date().isInBetween(from: startDate, to: endDate)
                     )
                 }
             }
             addNewMealPlan
         }
+        .navigationDestination(for: MealPlanGroup.self) { mealPlanGroup in
+            PlanGroupDetailView(mealPlanGroup: mealPlanGroup)
+        }
     }
-
+    
+    @ViewBuilder
     private var addNewMealPlan: some View {
-        let newStartDate = mealPlans.sorted { $0.endDate > $1.endDate }.first?.endDate.add(.day, value: 1) ?? (Date.date(year: selectedDate.year, month: selectedDate.month, day: 1) ?? Date())
-        let newEndDate = newStartDate.add(.day, value: user.planCycleGap.rawValue - 1)
-        let dateRangeString = texts.dateRangeString(start: newStartDate, end: newEndDate)
-        return MealGroupView(
-            type: .addNew,
-            dateRange: dateRangeString,
-            displayDateInfo: DisplayDateInfoView(from: newStartDate, to: newEndDate)
-        )
+        let one = 1
+        let newStartDate = mealPlans.sorted { $0.endDate > $1.endDate }.first?.endDate.add(.day, value: one) ?? (Date.date(year: selectedDate.year, month: selectedDate.month, day: one) ?? Date())
+        if newStartDate.month != selectedDate.month {
+            EmptyView()
+        } else {
+            let newEndDate = newStartDate.add(.day, value: user.planCycleGap.rawValue - one)
+            AddNewMealView(startDate: newStartDate, endDate: newEndDate)
+        }
     }
 }
 
 // MARK: - totalSetting
-// TODO: - totalSetting으로 화면 전환
 
 extension PlanListView {
     private var totalSetting: some View {
         Button {
-            print(#function)
+            isWholeSettingEditing = true
         } label: {
             HStack {
                 Text(texts.solidTotalSettingText)
-                    .headerFont4()
-                    .foregroundStyle(K.solidTotalSettingTextColor)
+                    .customFont(.header4, color: K.solidTotalSettingTextColor)
                 Spacer()
                 Image(systemName: K.chevronRightSFSymbolName)
                     .foregroundStyle(K.chevronRightColor)
                     .bold()
             }
         }
-    }
-
-}
-
-// MARK: - Structure - Solid Date
-extension PlanListView {
-    struct SolidDate: Hashable {
-        let startDate: Date
-        let endDate: Date
-
-        var description: String {
-            TextLiterals.PlanList.dateRangeString(start: startDate, end: endDate)
+        .navigationDestination(isPresented: $isWholeSettingEditing) {
+            PlanBatchSettingView()
         }
     }
 }
 
-struct PlanListView_Previews: PreviewProvider {
-    static var previews: some View {
-        PlanListView(mealPlans: MealPlan.mockMealsOne).environmentObject(UserOB())
+extension PlanListView {
+    private enum K {
+        static var rootVStackSpacing: CGFloat { 26 }
+        static var defaultHorizontalPadding: CGFloat { 20 }
+        
+        static var titleHStackSpacing: CGFloat { 4 }
+        static var titlePadding: EdgeInsets { .init(top: 21, leading: 0, bottom: 0, trailing: 0) }
+        static var titleTextColor: Color { .defaultText }
+        static var chevronDownSFSymbolName: String { "chevron.down" }
+        static var chevronDownColor: Color { .primeText }
+        
+        
+        static var dateHStackSpacing: CGFloat { 12 }
+        static var dateTextColor: Color { .secondaryText }
+        static var dateButtonWidth: CGFloat { 70 }
+        static var dateButtonHeight: CGFloat { 36 }
+        static var dateButtonCornerRadius: CGFloat { 12 }
+        static var dateButtonBackgroundColor: Color { .buttonBgColor }
+        
+        static var mealGroupListVStackSpacing: CGFloat { 40 }
+        
+        static var chevronRightSFSymbolName: String { "chevron.right" }
+        static var chevronRightColor: Color { .primeText }
+        
+        static var solidTotalSettingTextColor: Color { .primeText }
     }
+}
+
+#Preview {
+    PlanListView().environmentObject(UserOB()).environmentObject(MealPlansOB())
 }
