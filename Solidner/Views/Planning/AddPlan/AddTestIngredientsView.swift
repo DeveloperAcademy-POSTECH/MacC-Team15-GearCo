@@ -26,8 +26,8 @@ struct AddTestIngredientsView: View {
     private let saveButtonTopSpace: CGFloat = 100
     private let reportButtonTopSpace: CGFloat = 20
         
-    // 선택된 테스트 재료 2개
-    @State private var selectedIngredientPair: [Int] = []
+    // 선택된 테스트 재료
+    @State private var selectedIngredients: [Int] = []
     
     var body: some View {
         VStack(spacing: 0) {
@@ -45,12 +45,12 @@ struct AddTestIngredientsView: View {
             }.padding(.bottom, typeButtonsRowBottomPadding)
             
             // MARK: 선택된 재료 타입 확인 Row
-            if !selectedIngredientPair.isEmpty {
-                let firstIngredient: Ingredient = ingredientData[selectedIngredientPair[0]]!
+            if !selectedIngredients.isEmpty {
+                let firstIngredient: Ingredient = ingredientData[selectedIngredients[0]]!
                 HStack(spacing: typeButtonBetweenSpace) {
                     selectedIngredientTypeBox(ingredient: firstIngredient)
-                    if selectedIngredientPair.count > 1 {
-                        let secondIngredient = ingredientData[selectedIngredientPair[1]]!
+                    if selectedIngredients.count > 1 {
+                        let secondIngredient = ingredientData[selectedIngredients[1]]!
                         selectedIngredientTypeBox(ingredient: secondIngredient)
                     }
                     Spacer()
@@ -61,16 +61,16 @@ struct AddTestIngredientsView: View {
             
             ScrollView {
                 IngredientsBigDivision(divisionCase: .이상반응재료,
-                                       selectedIngredientPair: $selectedIngredientPair)
+                                       selectedIngredientPair: $selectedIngredients)
 //                IngredientsBigDivision(divisionCase: .자주사용한재료)
                 
                 ThickDivider().padding(.vertical, divisionDividerVerticalPadding)
                 
                 IngredientsBigDivision(divisionCase: .먹을수있는재료,
-                                       selectedIngredientPair: $selectedIngredientPair)
+                                       selectedIngredientPair: $selectedIngredients)
                 Spacer().frame(height: divisionDividerVerticalPadding)
                 IngredientsBigDivision(divisionCase: .권장하지않는재료,
-                                       selectedIngredientPair: $selectedIngredientPair)
+                                       selectedIngredientPair: $selectedIngredients)
                 
                 Spacer().frame(height: reportButtonTopSpace)
                 reportButton

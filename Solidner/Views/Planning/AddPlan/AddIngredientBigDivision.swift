@@ -47,26 +47,18 @@ struct IngredientsBigDivision: View {
     
     // MARK: Property Wrapper, init, etc
     @EnvironmentObject var user: UserOB
-    @Binding var selectedIngredientPair: [Int]
+    @Binding var selectedIngredients: [Int]
     @State private var foldStates: [IngredientType: Bool]
     
     init(divisionCase: DivisionCase, selectedIngredientPair: Binding<[Int]>) {
         self.divisionCase = divisionCase
-        _selectedIngredientPair = selectedIngredientPair
+        _selectedIngredients = selectedIngredientPair
 
         var states: [IngredientType: Bool] = [:]
         for type in IngredientType.allCases {
             states[type] = false
         }
         _foldStates = State(initialValue: states)
-    }
-    
-    private func addIngredient(ingredient: Ingredient) {
-        if selectedIngredientPair.contains(ingredient.id) {
-            selectedIngredientPair.removeAll{$0 == ingredient.id}
-        } else if selectedIngredientPair.count < 2 {
-            selectedIngredientPair.append(ingredient.id)
-        }
     }
     
     private func toggleFoldState(foldStateList: inout [IngredientType: Bool], type: IngredientType) {
@@ -123,11 +115,9 @@ struct IngredientsBigDivision: View {
                             let data = ingredientData[key]!
                             let month = user.dateAfterBirth.month!
                             if divisionCase == .먹을수있는재료 && data.type == type && data.ableMonth <= month {
-                                ingredientSelectRow(divisionCase: divisionCase, ingredient: data)
-                                    .padding(.vertical, 15)
+                                ingredientSelectRow(divisionCase: divisionCase, ingredient: data, selectedIngredientPair: $selectedIngredients).padding(.vertical, 15)
                             } else if divisionCase == .권장하지않는재료 && data.type == type && data.ableMonth > month {
-                                ingredientSelectRow(divisionCase: divisionCase, ingredient: data)
-                                    .padding(.vertical, 15)
+                                ingredientSelectRow(divisionCase: divisionCase, ingredient: data, selectedIngredientPair: $selectedIngredients).padding(.vertical, 15)
                             }
                         }
                     }.transition(.push(from: foldStates[type]! ? .bottom : .top))
@@ -147,6 +137,7 @@ struct IngredientsBigDivision: View {
                 .headerFont2()
                 .foregroundColor(.defaultText)
             Spacer().frame(height: titleBottomSpace)
+            HStack{Spacer()}
             // TODO: 실제 데이터로 변경
 //            ForEach(Range<Int>(1...4)) { i in
 //                ingredientSelectRow(divisionCase: .자주사용한재료)
@@ -166,6 +157,7 @@ struct IngredientsBigDivision: View {
                 .headerFont2()
                 .foregroundColor(.defaultText)
             Spacer().frame(height: titleBottomSpace)
+            HStack{Spacer()}
             // TODO: 실제 데이터로 변경
 //            ForEach(Range<Int>(1...4)) { i in
 //                ingredientSelectRow(divisionCase: .이상반응재료)
@@ -178,12 +170,16 @@ struct IngredientsBigDivision: View {
         }
     }
     
-    func ingredientSelectRow(divisionCase: DivisionCase, ingredient: Ingredient) -> some View {
+    struct ingredientSelectRow: View {
         let dateTextHorizontalPadding: CGFloat = 5
         let dateTextVerticalPadding: CGFloat = 2.5
         let dateBackgroundRadius: CGFloat = 3.8
-        
         let ingredientNameRightSpace: CGFloat = 6
+        
+        let ingredientData = IngredientData.shared.ingredients
+        let divisionCase: DivisionCase
+        let ingredient: Ingredient
+        @Binding var selectedIngredientPair: [Int]
         
         var buttonDisableCondition: Bool {
             if selectedIngredientPair.contains(ingredient.id) {
@@ -194,42 +190,77 @@ struct IngredientsBigDivision: View {
             return true
         }
         
-        var isClicked: Bool = selectedIngredientPair.contains(ingredient.id)
+        @State private var isClicked: Bool
+
+        init(divisionCase: DivisionCase, ingredient: Ingredient, selectedIngredientPair: Binding<[Int]>) {
+            self.divisionCase = divisionCase
+            self.ingredient = ingredient
+            self._selectedIngredientPair = selectedIngredientPair
+            self._isClicked = State(initialValue: selectedIngredientPair.wrappedValue.contains(ingredient.id))
+        }
+
+        var isNotRecommended: Bool {
+            for id in selectedIngredientPair {
+                if let misIngredients = ingredientData[id]?.misMatches {
+                    for misIngredient in misIngredients {
+                        if ingredient.id == misIngredient.id {
+                            return true
+                        }
+                    }
+                }
+            }
+            return false
+        }
         
-        // TODO: 텍스트 수정
-        return HStack(spacing: 0) {
-            Text(ingredient.name)
-                .headerFont4()
-            Spacer().frame(width: ingredientNameRightSpace)
-            switch divisionCase {
-            case .이상반응재료:
-                Text("00/00")
-                    .tagFont()
-                    .foregroundColor(.defaultText_wh)
-                    .symmetricBackground(HPad: dateTextHorizontalPadding,
-                                         VPad: dateTextVerticalPadding,
-                                         color: .accentColor1,
-                                         radius: dateBackgroundRadius)
-            case .자주사용한재료:
-                Image(systemName: "exclamationmark.triangle.fill")
-                    .foregroundStyle(Color.accentColor1)
-                    .scaledToFit()
-                    .frame(width: 20)
-            case .먹을수있는재료:
-                EmptyView()
-            case .권장하지않는재료:
-                Text("\(ingredient.ableMonth)개월 +")
-                    .tagFont()
-                    .foregroundColor(.defaultText_wh)
-                    .symmetricBackground(HPad: dateTextHorizontalPadding,
-                                         VPad: dateTextVerticalPadding,
-                                         color: .ageColor,
-                                         radius: dateBackgroundRadius)
-            }   // end of switch
-            Spacer()
-            
-            ButtonComponents(.clickableTiny, disabledCondition: buttonDisableCondition, isClicked: isClicked) {
-                addIngredient(ingredient: ingredient)
+        private func addIngredient(ingredient: Ingredient) {
+            if selectedIngredientPair.contains(ingredient.id) {
+                selectedIngredientPair.removeAll{$0 == ingredient.id}
+            } else if selectedIngredientPair.count < 2 {
+                selectedIngredientPair.append(ingredient.id)
+            }
+        }
+        
+        var body: some View {
+            HStack(spacing: 0) {
+                Text(ingredient.name)
+                    .headerFont4()
+                Spacer().frame(width: ingredientNameRightSpace)
+                switch divisionCase {
+                case .이상반응재료:
+                    // TODO: 이상반응 시 날짜 확인
+                    EmptyView()
+//                    Text("00/00")
+//                        .tagFont()
+//                        .foregroundColor(.defaultText_wh)
+//                        .symmetricBackground(HPad: dateTextHorizontalPadding,
+//                                             VPad: dateTextVerticalPadding,
+//                                             color: .accentColor1,
+//                                             radius: dateBackgroundRadius)
+                case .자주사용한재료:
+                    EmptyView()
+                case .먹을수있는재료:
+                    EmptyView()
+                case .권장하지않는재료:
+                    Text("\(ingredient.ableMonth)개월 +")
+                        .tagFont()
+                        .foregroundColor(.defaultText_wh)
+                        .symmetricBackground(HPad: dateTextHorizontalPadding,
+                                             VPad: dateTextVerticalPadding,
+                                             color: .ageColor,
+                                             radius: dateBackgroundRadius)
+                }   // end of switch
+                Spacer().frame(width: ingredientNameRightSpace)
+                if isNotRecommended {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundStyle(Color.accentColor1)
+                        .scaledToFit()
+                        .frame(width: 20)
+                }
+                Spacer()
+                
+                ButtonComponents(.clickableTiny, disabledCondition: buttonDisableCondition, isClicked: isClicked) {
+                    addIngredient(ingredient: ingredient)
+                }
             }
         }
     }
