@@ -72,9 +72,9 @@ struct MonthlyPlanningView: View {
         }.background(Color(.lightGray))
             .onAppear {
                 reducedPlans = reducePlanData(plans: plans)
-                for plan in reducedPlans {
-                    print("plan :: \(plan.first.startDate)~\(plan.first.endDate) / \(plan.second)")
-                }
+//                for plan in reducedPlans {
+//                    print("plan :: \(plan.first.startDate)~\(plan.first.endDate) / \(plan.second)")
+//                }
             }
     }
     

@@ -16,7 +16,8 @@
 		0E18AD762AFAA3430011ED4A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD752AFAA3430011ED4A /* FirebaseAuth */; };
 		0E18AD782AFAA3430011ED4A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0E18AD772AFAA3430011ED4A /* FirebaseFirestore */; };
 		0E613A262B131B9B00AF75BF /* IngredientData.json in Resources */ = {isa = PBXBuildFile; fileRef = 0E613A252B131B9B00AF75BF /* IngredientData.json */; };
-		0E613A282B131CAF00AF75BF /* IngredientData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E613A272B131CAF00AF75BF /* IngredientData.swift */; };
+		0E613A282B131CAF00AF75BF /* Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E613A272B131CAF00AF75BF /* Ingredient.swift */; };
+		0E613A2A2B13315700AF75BF /* IngredientData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E613A292B13315700AF75BF /* IngredientData.swift */; };
 		0EA65EE22B0C846200E1C8D7 /* AddTestIngredientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA65EE12B0C846200E1C8D7 /* AddTestIngredientsView.swift */; };
 		0EAFB7212B012A3D0075A384 /* MonthlyPlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */; };
 		0EB0F4322B0F5F5A00A32DFB /* AddIngredientBigDivision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB0F4312B0F5F5A00A32DFB /* AddIngredientBigDivision.swift */; };
@@ -110,7 +111,8 @@
 		0E18AD6E2AFA8F140011ED4A /* AppleLoginOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginOB.swift; sourceTree = "<group>"; };
 		0E18AD702AFA94E10011ED4A /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		0E613A252B131B9B00AF75BF /* IngredientData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = IngredientData.json; sourceTree = "<group>"; };
-		0E613A272B131CAF00AF75BF /* IngredientData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientData.swift; sourceTree = "<group>"; };
+		0E613A272B131CAF00AF75BF /* Ingredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredient.swift; sourceTree = "<group>"; };
+		0E613A292B13315700AF75BF /* IngredientData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientData.swift; sourceTree = "<group>"; };
 		0EA65EE12B0C846200E1C8D7 /* AddTestIngredientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTestIngredientsView.swift; sourceTree = "<group>"; };
 		0EA6C61D2AFBE087004FF2AA /* MonthlyPlanningDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningDummy.swift; sourceTree = "<group>"; };
 		0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningView.swift; sourceTree = "<group>"; };
@@ -401,6 +403,7 @@
 				C36942502B01185C002465D4 /* TextLimiterOB.swift */,
 				C3AD1BC32B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift */,
 				B219F1242B0C974F00886087 /* MealOB.swift */,
+				0E613A292B13315700AF75BF /* IngredientData.swift */,
 			);
 			path = ObservableObjects;
 			sourceTree = "<group>";
@@ -412,7 +415,7 @@
 				C336EE522B054C820057D8B8 /* AgreeCase.swift */,
 				B2F790A12B0DF30B00CB4F71 /* CycleGaps.swift */,
 				B2F790A32B0DF40400CB4F71 /* DisplayDateType.swift */,
-				0E613A272B131CAF00AF75BF /* IngredientData.swift */,
+				0E613A272B131CAF00AF75BF /* Ingredient.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -625,6 +628,7 @@
 				B25582042B10BED500B34F34 /* AddedIngredientView.swift in Sources */,
 				C3B4DB352B0DEBA700772C2A /* Text+.swift in Sources */,
 				B2746E3B2B052A4D0083AB57 /* Shape+.swift in Sources */,
+				0E613A2A2B13315700AF75BF /* IngredientData.swift in Sources */,
 				0EA65EE22B0C846200E1C8D7 /* AddTestIngredientsView.swift in Sources */,
 				0EAFB7212B012A3D0075A384 /* MonthlyPlanningView.swift in Sources */,
 				B219F1272B0CE13000886087 /* View+.swift in Sources */,
@@ -646,7 +650,7 @@
 				C3AD1BC42B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift in Sources */,
 				0E18AD6F2AFA8F140011ED4A /* AppleLoginOB.swift in Sources */,
 				C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */,
-				0E613A282B131CAF00AF75BF /* IngredientData.swift in Sources */,
+				0E613A282B131CAF00AF75BF /* Ingredient.swift in Sources */,
 				B2746E3D2B05DF900083AB57 /* StartDateSettingModal.swift in Sources */,
 				C3AD1BCC2B024FAC003BB3E0 /* FoodStartDateView.swift in Sources */,
 				C3AD1BD02B026CB5003BB3E0 /* OnboardingEndView.swift in Sources */,
