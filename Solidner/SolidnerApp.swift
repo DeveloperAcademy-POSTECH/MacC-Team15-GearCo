@@ -24,6 +24,7 @@ struct SolidnerApp: App {
 
     var isPlanEmpty: Bool = true
     
+    @StateObject var ingredientData = IngredientData.shared
     @StateObject private var userOB = UserOB()
     var body: some Scene {
         WindowGroup {

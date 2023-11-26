@@ -8,6 +8,8 @@
 // TODO: - 새로운 재료는 accentColor1로 색 바꾸기
 // TODO: - mealGroup 눌렀을 때 action - PlanDetailView로 이동해야 함
 // TODO: - meal 눌렀을 때 action - MealDetailView로 이동해야 함
+// 사용되는 뷰
+//   PlanListView, DailyListView
 
 import SwiftUI
 
@@ -20,68 +22,40 @@ struct MealGroupView<Content>: View where Content: View {
     let dateRange: String
     let displayDateInfo: Content
     let mealPlans: [MealPlan]
-    let isInList: Bool
+    let isInPlanList: Bool
     let isTodayInDateRange: Bool
     let isWrongPlan: Bool
     private let texts = TextLiterals.MealGroup.self
-
-    private enum K {
-        static var wholeVStackSpacing: CGFloat { 16 }
-        // dateInformation
-        static var dayDisplayTextColor: Color { .defaultText.opacity(0.4) }
-        static var notiCircleColor: Color { .accentColor1 }
-        static var notiCircleSize: CGFloat { 6 }
-        static var dateInformationHStackSpacing: CGFloat { 6 }
-        // meal group
-        static var dividerInListPadding: CGFloat { 19 }
-        static var dividerNotInListPadding: CGFloat { -30 }
-        static var dividerHeight: CGFloat { 1.4 }
-
-        static var chevronRightSFSymbolName: String { "chevron.right" }
-        static var chevronColor: Color { .quarternaryText }
-
-        // mealview
-        static var mealViewPadding: CGFloat { 18 }
-        static var mealViewMinHeight: CGFloat { 64 }
-        static var mealViewTrailingPadding: CGFloat { 12 }
-        static var mealIconColor: Color { .accentColor2 }
-        static var testedIngredientTextColor: Color { .primeText }
-        // background
-        static var backgroundRectangleRadius: CGFloat { 12 }
-        static var backgroundStrokeNormalColor: Color { .listStrokeColor }
-        static var backgroundHighlightStrokeColor: Color { .accentColor1 }
-        static var backgroundStrokeLineWidth: Double { 2 }
-        static var addNewPlanHeight: Double { 64 }
-        static var addNewPlanBottomPadding: Double { 6 }
-        static var addNewPlanTextColor: Color { .defaultText.opacity(0.6) }
-    }
+    let action: () -> ()
 
     init(
         type: MealGroupViewType = .normal,
         dateRange: String,
         displayDateInfo: Content = EmptyView(),
         mealPlans: [MealPlan] = [],
-        isInList: Bool = true,
+        isInPlanList: Bool = true,
         isTodayInDateRange: Bool = false,
-        isWrongPlan: Bool = true
+        isWrongPlan: Bool = true,
+        action: @escaping () -> Void = {}
     ) {
         self.type = type
         self.dateRange = dateRange
         self.displayDateInfo = displayDateInfo
         self.mealPlans = mealPlans
-        self.isInList = isInList
+        self.isInPlanList = isInPlanList
         self.isTodayInDateRange = isTodayInDateRange
         self.isWrongPlan = isWrongPlan
+        self.action = action
     }
 
     var body: some View {
         VStack(spacing: K.wholeVStackSpacing) {
             dateInformation
-    // PlanListView에서는 전체가 눌린다.
-            if isInList {
+            if isInPlanList {
+                // PlanListView에서는 전체가 눌린다.
                 mealGroupInPlanList
             } else {
-    // DailyListView, PlanDetailView에서는 끼니 별로 눌린다.
+                // DailyListView에서는 끼니 별로 눌린다.
                 mealGroup
             }
         }
@@ -92,7 +66,8 @@ struct MealGroupView<Content>: View where Content: View {
 
 extension MealGroupView {
     private var dateInformation: some View {
-        let showNotiCircle = isInList && isWrongPlan
+        // planList이면서 wrong plan이라면 noti circle이 보인다.
+        let showNotiCircle = isInPlanList && isWrongPlan
         return HStack(alignment: .bottom, spacing: K.dateInformationHStackSpacing) {
             if showNotiCircle { notiCircle }
             Text(dateRange)
@@ -123,13 +98,10 @@ extension MealGroupView {
     private var mealGroupInPlanList: some View {
         Button {
             // TODO: - planDetailView로 이동해야 함
-            print(#function)
+            action()
         } label: {
-            if type == .normal {
-                mealGroup
-            } else {
-                addNewMealPlan
-            }
+            if type == .normal { mealGroup }
+            else { addNewMealPlan }
         }
     }
 
@@ -165,13 +137,13 @@ extension MealGroupView {
     private func mealView(of mealPlan: MealPlan) -> some View {
         // TODO: - meal 눌렀을 때 action - MealDetailView로 이동해야 함
         Button {
-            print(#function)
+            action()
         } label: {
             HStack {
                 mealIcon(of: mealPlan)
                 ingredientText(of: mealPlan)
                 Spacer()
-                if isInList == false {
+                if isInPlanList == false {
                     chevron
                 }
             }
@@ -183,18 +155,18 @@ extension MealGroupView {
             )
         }
         .frame(minHeight: K.mealViewMinHeight)
-        .disabled(isInList)
+        .disabled(isInPlanList)
     }
 
     private var mealDivider: some View {
         Rectangle()
-            .padding(.horizontal, isInList ? K.dividerInListPadding : K.dividerNotInListPadding )
+            .padding(.horizontal, isInPlanList ? K.dividerInListPadding : K.dividerNotInListPadding )
             .frame(height:K.dividerHeight)
             .foregroundStyle(K.backgroundStrokeNormalColor)
     }
 
     private var backgroundRectangle: some View {
-        let isStrokeHighlight = isInList && isTodayInDateRange
+        let isStrokeHighlight = isInPlanList && isTodayInDateRange
         return RoundedRectangle(cornerRadius: K.backgroundRectangleRadius)
             .fill(.white,
                   strokeBorder: isStrokeHighlight ? K.backgroundHighlightStrokeColor : K.backgroundStrokeNormalColor,
@@ -222,4 +194,38 @@ extension MealGroupView {
             .foregroundStyle(K.chevronColor)
             .bold()
     }
+}
+
+extension MealGroupView {
+    private enum K {
+        static var wholeVStackSpacing: CGFloat { 16 }
+        // dateInformation
+        static var dayDisplayTextColor: Color { .defaultText.opacity(0.4) }
+        static var notiCircleColor: Color { .accentColor1 }
+        static var notiCircleSize: CGFloat { 6 }
+        static var dateInformationHStackSpacing: CGFloat { 6 }
+        // meal group
+        static var dividerInListPadding: CGFloat { 19 }
+        static var dividerNotInListPadding: CGFloat { -30 }
+        static var dividerHeight: CGFloat { 1.4 }
+
+        static var chevronRightSFSymbolName: String { "chevron.right" }
+        static var chevronColor: Color { .quarternaryText }
+
+        // mealview
+        static var mealViewPadding: CGFloat { 18 }
+        static var mealViewMinHeight: CGFloat { 64 }
+        static var mealViewTrailingPadding: CGFloat { 12 }
+        static var mealIconColor: Color { .accentColor2 }
+        static var testedIngredientTextColor: Color { .primeText }
+        // background
+        static var backgroundRectangleRadius: CGFloat { 12 }
+        static var backgroundStrokeNormalColor: Color { .listStrokeColor }
+        static var backgroundHighlightStrokeColor: Color { .accentColor1 }
+        static var backgroundStrokeLineWidth: Double { 2 }
+        static var addNewPlanHeight: Double { 64 }
+        static var addNewPlanBottomPadding: Double { 6 }
+        static var addNewPlanTextColor: Color { .defaultText.opacity(0.6) }
+    }
+
 }

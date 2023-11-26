@@ -86,7 +86,7 @@ extension DailyPlanListView {
                             from: solidDate.startDate,
                             to: solidDate.endDate),
                         mealPlans: meals,
-                        isInList: false
+                        isInPlanList: false
                     )
                 }
             }

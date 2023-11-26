@@ -85,6 +85,16 @@ extension Text {
 }
 
 extension Text {
+    func foreground(color: Color) -> Text {
+        if #available(iOS 17.0, *) {
+            return self.foregroundStyle(color)
+        } else {
+            return self.foregroundColor(color)
+        }
+    }
+}
+
+extension Text {
     enum HeaderFontType {
         case one, two, three, four, five, six
     }
@@ -103,6 +113,76 @@ extension Text {
             return AnyView(self.headerFont5())
         case .six:
             return AnyView(self.headerFont6())
+        }
+    }
+}
+//
+extension Text {
+    enum CustomFontType {
+        case header1, header2, header3, header4, header5, header6
+        case body1, body2, body3
+        case button
+        case clickableText1, clickableText2
+        case toast
+        case inputError
+        case tag
+        case dayDisplay1, dayDisplay2
+        case weekDisplay1, weekDisplay2, weekDisplay3
+    }
+
+    func customFont(_ type: CustomFontType?, color: Color? = nil) -> some View {
+        if let type {
+            let returnText: some View = {
+                switch type {
+                case .header1:
+                    return AnyView(headerFont1())
+                case .header2:
+                    return AnyView(headerFont2())
+                case .header3:
+                    return AnyView(headerFont3())
+                case .header4:
+                    return AnyView(headerFont4())
+                case .header5:
+                    return AnyView(headerFont5())
+                case .header6:
+                    return AnyView(headerFont6())
+                case .body1:
+                    return AnyView(bodyFont1())
+                case .body2:
+                    return AnyView(bodyFont2())
+                case .body3:
+                    return AnyView(bodyFont3())
+                case .button:
+                    return AnyView(buttonFont())
+                case .clickableText1:
+                    return AnyView(clickableTextFont1())
+                case .clickableText2:
+                    return AnyView(clickableTextFont2())
+                case .toast:
+                    return AnyView(toastFont())
+                case .inputError:
+                    return AnyView(inputErrorFont())
+                case .tag:
+                    return AnyView(tagFont())
+                case .dayDisplay1:
+                    return AnyView(dayDisplayFont1())
+                case .dayDisplay2:
+                    return AnyView(dayDisplayFont2())
+                case .weekDisplay1:
+                    return AnyView(weekDisplayFont1())
+                case .weekDisplay2:
+                    return AnyView(weekDisplayFont2())
+                case .weekDisplay3:
+                    return AnyView(weekDisplayFont3())
+                }
+            }()
+            if let color {
+                return AnyView(returnText.foregroundStyle(color))
+            } else {
+                return AnyView(returnText)
+            }
+        } else {
+            return AnyView(self)
         }
     }
 }
