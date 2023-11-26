@@ -78,6 +78,12 @@ enum TextLiterals {
 
         static var deleteAllCalendarsText: String { "전체 일정 삭제" }
         static var deleteAllCalendarsButtonText: String { "삭제" }
+        enum Alert {
+            static var title: String { "전체 일정 삭제" }
+            static var description: String { "전체 이유식 일정을 삭제할까요?" }
+            static var leftButtonText: String { "취소" }
+            static var rightButtonText: String { "삭제" }
+        }
     }
 
     enum ChangeMonth {
