@@ -21,21 +21,37 @@ struct SolidnerApp: App {
     // Firebase Setup.
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @AppStorage("isOnboardingOn") var isOnboardingOn = true
-
-    var isPlanEmpty: Bool = true
     
+    @StateObject private var mealPlansOB = MealPlansOB(mealPlans: MealPlan.mockMealsOne)
     @StateObject private var userOB = UserOB()
+    
     var body: some Scene {
         WindowGroup {
-//            if isOnboardingOn {
-//                AgreeToTermsView().environmentObject(userOB)
-//            } else if isPlanEmpty {
-//                StartPlanView()
-//            } else {
-//                PlanListView()
-//            }
-            MonthlyPlanningView()
-            //SignInView().environmentObject(userOB)
+            let isPlanEmpty = mealPlansOB.mealPlans.isEmpty
+            
+            #warning("이거 더 좋은 방법으로 정리해줄 사람~~")
+            if isOnboardingOn {
+                //                    SignInView()
+                NavigationStack {
+                    AgreeToTermsView()
+                }
+                .environmentObject(userOB)
+            } else if isPlanEmpty {
+                NavigationStack {
+                    StartPlanView()
+                }
+                .environmentObject(userOB)
+                .environmentObject(mealPlansOB)
+            } else {
+                NavigationStack {
+                    PlanListView()
+                }
+                .environmentObject(userOB)
+                .environmentObject(mealPlansOB)
+                //                    MonthlyPlanningView()
+            }
+            
         }
     }
 }
+
