@@ -24,7 +24,7 @@ struct SolidnerApp: App {
 
     var isPlanEmpty: Bool = true
     
-    @StateObject var ingredientData = IngredientData.shared
+    let ingredientData = IngredientData.shared
     @StateObject private var userOB = UserOB()
     var body: some Scene {
         WindowGroup {
@@ -35,7 +35,7 @@ struct SolidnerApp: App {
 //            } else {
 //                PlanListView()
 //            }
-            MonthlyPlanningView()
+            AddTestIngredientsView().environmentObject(userOB)
             //SignInView().environmentObject(userOB)
         }
     }

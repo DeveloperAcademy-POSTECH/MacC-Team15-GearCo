@@ -19,15 +19,14 @@ struct AddTestIngredientsView: View {
     private let typeButtonBetweenSpace: CGFloat = 10
     
     private let selectedTypeBottomSpace: CGFloat = 25
-    private let selectedTypeSpaceWhenDisappear: CGFloat = 30
     private let divisionDividerVerticalPadding: CGFloat = 10
     
     private let saveButtonBottomSpace: CGFloat = 40
     private let saveButtonTopSpace: CGFloat = 100
     private let reportButtonTopSpace: CGFloat = 20
         
-    // TODO: 형식 수정
-    @State private var selectedIngredientPair: (first: String, second: String?)? = ("곡물", "유제품류")
+    // 선택된 테스트 재료 2개
+    @State private var selectedIngredientPair: (first: Ingredient, second: Ingredient?)?
     
     var body: some View {
         VStack(spacing: 0) {
@@ -47,27 +46,28 @@ struct AddTestIngredientsView: View {
             // MARK: 선택된 재료 타입 확인 Row
             if let pair = selectedIngredientPair {
                 HStack(spacing: typeButtonBetweenSpace) {
-                    selectedIngredientTypeBox(typeText: pair.first)
+                    selectedIngredientTypeBox(ingredient: pair.first)
                     if let second = pair.second {
-                        selectedIngredientTypeBox(typeText: second)
+                        selectedIngredientTypeBox(ingredient: second)
                     }
                     Spacer()
                 }.padding(.leading, viewHorizontalPadding)
                 
                 Spacer().frame(height: selectedTypeBottomSpace)
-            } else {
-                Spacer().frame(height: selectedTypeSpaceWhenDisappear)
             }
             
             ScrollView {
-                IngredientsBigDivision(divisionCase: .이상반응재료)
+                IngredientsBigDivision(divisionCase: .이상반응재료,
+                                       selectedIngredientPair: $selectedIngredientPair)
 //                IngredientsBigDivision(divisionCase: .자주사용한재료)
                 
                 ThickDivider().padding(.vertical, divisionDividerVerticalPadding)
                 
-                IngredientsBigDivision(divisionCase: .먹을수있는재료)
+                IngredientsBigDivision(divisionCase: .먹을수있는재료,
+                                       selectedIngredientPair: $selectedIngredientPair)
                 Spacer().frame(height: divisionDividerVerticalPadding)
-                IngredientsBigDivision(divisionCase: .권장하지않는재료)
+                IngredientsBigDivision(divisionCase: .권장하지않는재료,
+                                       selectedIngredientPair: $selectedIngredientPair)
                 
                 Spacer().frame(height: reportButtonTopSpace)
                 reportButton
@@ -151,18 +151,18 @@ struct AddTestIngredientsView: View {
 /// 선택된 재료들의 구분을 표시하는 블럭을 return합니다.
 /// - Parameter typeText: 표시될 text
 /// - Returns: 선택된 재료 확인 box
-func selectedIngredientTypeBox(typeText: String) -> some View {
+func selectedIngredientTypeBox(ingredient: Ingredient) -> some View {
     let horizontalPadding: CGFloat = 12
     let verticalPadding: CGFloat = 7
     let cornerRadius: CGFloat = 6
     
     // TODO: 재료 타입에 따른 color가 되도록 수정
-    return Text("\(typeText)")
+    return Text("\(ingredient.name)")
         .bodyFont3()
         .foregroundColor(.secondaryText)
         .symmetricBackground(HPad: horizontalPadding,
                              VPad: verticalPadding,
-                             color: .grain,
+                             color: ingredient.type.color,
                              radius: cornerRadius)
 }
 
