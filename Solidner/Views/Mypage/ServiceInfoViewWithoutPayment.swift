@@ -1,5 +1,5 @@
 //
-//  TeamIntroductionView.swift
+//  ServiceInfoViewWithoutPayment.swift
 //  Solidner
 //
 //  Created by 황지우2 on 11/26/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ServiceInfoView: View {
+struct ServiceInfoViewWithoutPayment: View {
     private let appAppleID = "6473099677"
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     var body: some View {
@@ -20,12 +20,12 @@ struct ServiceInfoView: View {
                 viewBody()
                     .padding(horizontal: 20, top: 32, bottom: 30)
             }
-//            .background {
-//                Image(.buyMeACoffeeBg)
-//                    .resizable()
-//                    .edgesIgnoringSafeArea(.all)
-//                    .frame(width: UIScreen.getWidth(390), height: UIScreen.getWidth(844))
-//            }
+            .background {
+                Image(.buyMeACoffeeBg)
+                    .resizable()
+                    .edgesIgnoringSafeArea(.all)
+                    .frame(width: UIScreen.getWidth(390), height: UIScreen.getWidth(844))
+            }
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
@@ -42,7 +42,7 @@ struct ServiceInfoView: View {
             communicationLinkList()
                 .padding(.top, 22)
             Spacer()
-//            donationItem()
+            donationItem()
         }
     }
     private func donationItem() -> some View {
@@ -151,8 +151,9 @@ struct ServiceInfoView: View {
         case serviceQNA = "솔리너에게 문의하기"
         case appReview = "리뷰 남기러 가기"
     }
+
 }
 
 #Preview {
-    ServiceInfoView()
+    ServiceInfoViewWithoutPayment()
 }
