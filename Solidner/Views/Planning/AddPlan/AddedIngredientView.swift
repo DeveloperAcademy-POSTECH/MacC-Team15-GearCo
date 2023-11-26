@@ -92,16 +92,16 @@ struct AddedIngredientView: View {
 }
 
 
-struct AddedIngredientView_PreviewProvider: PreviewProvider {
-    static var previews: some View {
-        VStack(spacing: 20) {
-            AddedIngredientView(type: .new, ingredient: .init(type: .어육류, name: "소고기"))
-            AddedIngredientView(type: .age, ingredient: .init(type: .어육류, name: "소고기"))
-            AddedIngredientView(type: .adverseReactionDate, ingredient: .init(type: .어육류, name: "소고기"))
-            AddedIngredientView(type: .deletable, ingredient: .init(type: .어육류, name: "소고기"))
-            AddedIngredientView(type: .mismatch, ingredient: .init(type: .어육류, name: "소고기"))
-        }
-        .padding()
-        .background(Color.secondBgColor)
-    }
-}
+//struct AddedIngredientView_PreviewProvider: PreviewProvider {
+//    static var previews: some View {
+//        VStack(spacing: 20) {
+//            AddedIngredientView(type: .new, ingredient: .init(type: .어육류, name: "소고기"))
+//            AddedIngredientView(type: .age, ingredient: .init(type: .어육류, name: "소고기"))
+//            AddedIngredientView(type: .adverseReactionDate, ingredient: .init(type: .어육류, name: "소고기"))
+//            AddedIngredientView(type: .deletable, ingredient: .init(type: .어육류, name: "소고기"))
+//            AddedIngredientView(type: .mismatch, ingredient: .init(type: .어육류, name: "소고기"))
+//        }
+//        .padding()
+//        .background(Color.secondBgColor)
+//    }
+//}
