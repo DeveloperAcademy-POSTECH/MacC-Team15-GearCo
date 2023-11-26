@@ -30,6 +30,7 @@ struct PlanListView: View {
     @State private var selectedDate = Date()
     @State private var isCurrentDateEditing = false
     @State private var isWholeSettingEditing = false
+    @State private var isMyPageOpenning = false
     
     var mealPlans: [MealPlan] { mealPlansOB.filteredMealPlans }
     var mealPlanGroups: [MealPlanGroup] { mealPlansOB.mealPlanGroups }
@@ -81,9 +82,12 @@ extension PlanListView {
 #warning("Header Button 함수 구현하기")
     private var headerLeftButton: some View {
         Button {
-            print(#function)
+            isMyPageOpenning = true
         } label: {
             Image(.userInfo)
+        }
+        .navigationDestination(isPresented: $isMyPageOpenning) {
+            MypageRootView()
         }
     }
     

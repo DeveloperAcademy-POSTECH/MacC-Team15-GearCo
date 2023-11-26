@@ -12,34 +12,50 @@ import SwiftUI
 struct StartPlanView: View {
     private let texts = TextLiterals.StartPlan.self
     @State private var isStartTapped = false
-
+    @State private var isMyPageOpenning = false
+    
     var body: some View {
-        NavigationView {
-            VStack(spacing: .zero) {
-                Spacer().frame(height: K.topSpacerHeight)
-                ingredientsImage
-                titleAndHint
-                goToPlanButton
-            }
-            .toolbar {
-                toolbarItemLeading
-                toolbarItemTrailing
-            }
+        RootVStack {
+            viewHeader
+            viewBody
+        }
+    }
+    
+    var viewHeader: some View {
+        LeftRightButtonHeader(
+            leftButton: viewHeaderLeftButton,
+            rightButton: viewHeaderRightButton
+        )
+    }
+    
+    var viewBody: some View {
+        VStack(spacing: .zero) {
+            Spacer()
+            ingredientsImage
+            titleAndHint
+            goToPlanButton
+            Spacer()
         }
     }
 
-    private var toolbarItemLeading: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            Image(assetName: .userInfo)
+    private var viewHeaderLeftButton: some View {
+        Button {
+            isMyPageOpenning = true
+        } label: {
+            Image(.userInfo)
+        }
+        .navigationDestination(isPresented: $isMyPageOpenning) {
+            MypageRootView()
         }
     }
 
-    private var toolbarItemTrailing: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            Image(assetName: .calendar)
+    private var viewHeaderRightButton: some View {
+        Button { } label: {
+            Image(.calendarInPlanList).opacity(0.2)
         }
+        .disabled(true)
     }
-
+    
     private var ingredientsImage: some View {
         Image(assetName: .ingredientsInStart)
             .padding(.bottom, K.ingredientsImagePaddingBottom)
