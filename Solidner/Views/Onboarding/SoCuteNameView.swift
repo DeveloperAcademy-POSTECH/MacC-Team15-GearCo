@@ -22,7 +22,10 @@ struct SoCuteNameView: View {
                 .padding(top: 0, leading: 20, bottom: 20, trailing: 20)
         }
         .background(
-            Image(assetName: .soCuteNameBackground).ignoresSafeArea()
+            Image(assetName: .soCuteNameBackground)
+                .resizable()
+                .frame(width: UIScreen.getWidth(390))
+                .ignoresSafeArea()
         )
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now()) {

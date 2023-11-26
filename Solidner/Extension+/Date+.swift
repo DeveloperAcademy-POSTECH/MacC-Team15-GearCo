@@ -31,7 +31,7 @@ extension Date {
     ///   - endDate: 끝 시간. Date형
     /// - Returns: 시간차를 기록한 DateComponents
     static func componentsBetweenDates(from startDate: Date, to endDate: Date) -> DateComponents {
-        Calendar.current.dateComponents([.day, .hour, .minute], from: startDate, to: endDate)
+        Calendar.current.dateComponents([.month, .day, .hour, .minute], from: startDate, to: endDate)
     }
     
     /// 두 Date 객체를 포함한, 그 사이의 Date들의 리스트를 반환합니다.
@@ -109,8 +109,6 @@ extension Date {
     
     /// - Returns: Array of `self` 날짜가 포함된 달의 모든 날짜의 Date
     func monthDates() -> [Date] {
-        let range = Calendar.current.range(of: .day, in: .month, for: self) ?? Range<Int>(1...1)
-        
         let nowMonthFirstDay = Date.date(year: year, month: month, day: 1) ?? self
         let nowMonthLastDay = Date.date(year: year, month: month + 1, day: 1)?.add(.day, value: -1) ?? self
         
@@ -160,6 +158,8 @@ extension Date {
     /// `formatted(_ format: DateFormat) -> String` 함수에 사용되는 format 형식을 case로 재정의한 enum입니다.
     enum DateFormat: String {
         case yyyyMMdd_dot = "yyyy.MM.dd"
+        case yyyyMMdd_dotWithSpace = "yyyy. MM. dd"
+        case yyyyMMdd_fullKorean = "yyyy년 MM월 dd일"
         // 11/13
         case MMdd_slash = "MM/dd"
     }

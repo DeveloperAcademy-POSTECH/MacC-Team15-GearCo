@@ -23,6 +23,7 @@ struct SolidnerApp: App {
     @AppStorage("isOnboardingOn") var isOnboardingOn = true
     
     @StateObject private var mealPlansOB = MealPlansOB(mealPlans: MealPlan.mockMealsOne)
+    let ingredientData = IngredientData.shared
     @StateObject private var userOB = UserOB()
     
     var body: some Scene {
@@ -50,7 +51,8 @@ struct SolidnerApp: App {
                 .environmentObject(mealPlansOB)
                 //                    MonthlyPlanningView()
             }
-            
+            // AddTestIngredientsView().environmentObject(userOB)   
+            // MypageRootView().environmentObject(userOB)
         }
     }
 }

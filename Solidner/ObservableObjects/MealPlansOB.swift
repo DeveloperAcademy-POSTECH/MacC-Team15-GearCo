@@ -24,7 +24,7 @@ final class MealPlansOB: ObservableObject {
     }
     @Published private(set) var filteredMealPlans: [MealPlan] = []
     
-    init(mealPlans: [MealPlan] = MealPlan.mockMealsTwo, 
+    init(mealPlans: [MealPlan] = MealPlan.mockMealsOne, 
          currentFilter: MealPlanFilter = .month(date:Date())) {
         #warning("meal plan 파베에서 받아오는 함수 구현해야 함")
         let sortedMealPlan = mealPlans.sorted { $0.startDate < $1.startDate }

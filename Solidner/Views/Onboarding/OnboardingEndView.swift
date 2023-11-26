@@ -20,7 +20,7 @@ struct OnboardingEndView: View {
     }
     private func viewBody() -> some View {
         return VStack(spacing: 0) {
-            Image(assetName: .appsymbol)
+            Image(.appsymbol)
             OnboardingTitles(alignmentCase: .center, bigTitle: TextLiterals.OnboardingEnd.bigTitle, smallTitle: TextLiterals.OnboardingEnd.smallTitle)
                 .padding(.top, 95)
             Spacer()
