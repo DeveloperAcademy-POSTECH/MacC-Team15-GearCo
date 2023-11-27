@@ -86,28 +86,21 @@ final class MealOB: ObservableObject {
     }
 
     #warning("meal - add plan 구현하기")
-    // TODO: add plan :) FB에 쓔우우웅?! + mealPlans에도 넣어야?!
+    // TODO: mealPlans에도 같이 업데이트가 필요.
     func addMealPlan(user: UserOB) {
-        firebaseManager.saveMealPlan(self, user: user) { result in
-            switch result {
-            case .success:
-                print("식단 계획이 성공적으로 저장되었습니다.")
-            case .failure(let error):
-                print("오류 발생: \(error.localizedDescription)")
-            }
-        }
+        firebaseManager.saveMealPlan(self, user: user)
     }
     
     #warning("meal - change plan 구현하기")
     // TODO: change plan :) FB에 쓔우우웅?!
-    func changeMealPlan() {
-        print(#function)
+    func changeMealPlan(user: UserOB) {
+        firebaseManager.saveMealPlan(self, mealPlan: self.mealPlan, user: user)
     }
     
     #warning("meal - delete plan 구현하기")
     // TODO: delete plan :) FB에 쓔우우웅?!
     func deleteMealPlan() {
-        print(#function)
+        
     }
 }
 

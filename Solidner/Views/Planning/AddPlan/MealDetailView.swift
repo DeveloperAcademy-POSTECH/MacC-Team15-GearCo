@@ -360,7 +360,7 @@ extension MealDetailView {
         ) {
             if isEditMode {
                 isSaveButtonTapped = true
-                mealOB.changeMealPlan()
+                mealOB.changeMealPlan(user: user)
             }
             else { mealOB.addMealPlan(user: user) }
         }
