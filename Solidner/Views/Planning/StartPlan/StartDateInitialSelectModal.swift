@@ -40,8 +40,12 @@ struct StartDateInitialSelectModal: View {
     private var datePicker: some View {
         let dateRange = {
             let today = Date()
-            let oneYearAfter = Date.date(year: today.year + 1, month: today.month, day: today.day)!
-            return user.babyBirthDate...oneYearAfter
+//            let oneYearAfter = Date.date(year: today.year + 1, month: today.month, day: today.day)!
+            let firstDateOfThisMonth = Date.date(year: today.year, month: today.month, day: 1)!
+            let lastDate = firstDateOfThisMonth
+                .add(.month, value: +2)
+                .add(.day, value: -1)
+            return max(user.babyBirthDate, firstDateOfThisMonth)...lastDate
         }()
 
         return DatePicker(
