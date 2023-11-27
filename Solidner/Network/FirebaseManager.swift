@@ -72,15 +72,19 @@ extension FirebaseManager {
         }
     }
     
-    func deleteMealPlan(_ mealPlan: MealPlan, user: UserOB) {
-        let planDocRef = getColRef(.Plan).getDocRef(user.email, id: mealPlan.id.uuidString)
-        
-        planDocRef.delete { err in
-            if let err = err {
-                print("MealPlan 삭제 실패 - \(err)")
-            } else {
-                print("MealPlan 삭제 완료. - \(user.email)_\(mealPlan.id.uuidString)")
+    func deleteMealPlan(_ mealPlan: MealPlan?, user: UserOB) {
+        if let mealPlan {
+            let planDocRef = getColRef(.Plan).getDocRef(user.email, id: mealPlan.id.uuidString)
+            
+            planDocRef.delete { err in
+                if let err = err {
+                    print("MealPlan 삭제 실패 - \(err)")
+                } else {
+                    print("MealPlan 삭제 완료. - \(user.email)_\(mealPlan.id.uuidString)")
+                }
             }
+        } else {
+            print("MealPlan 삭제 실패 - 계획이 정상적으로 존재하지 않는 상태입니다.")
         }
     }
 }

@@ -99,8 +99,8 @@ final class MealOB: ObservableObject {
     
     #warning("meal - delete plan 구현하기")
     // TODO: delete plan :) FB에 쓔우우웅?!
-    func deleteMealPlan() {
-        
+    func deleteMealPlan(user: UserOB) {
+        firebaseManager.deleteMealPlan(self.mealPlan, user: user)
     }
 }
 
