@@ -13,80 +13,69 @@
 
 import SwiftUI
 
-struct MealGroupView<Content>: View where Content: View {
-    enum MealGroupViewType {
-        case normal, addNew
-    }
-    let type: MealGroupViewType
+// MARK: - MealGroupView
 
-    let dateRange: String
-    let displayDateInfo: Content
-    let mealPlans: [MealPlan]
+struct MealGroupView: View {
+    let mealPlanGroup: MealPlanGroup
+    
     let isInPlanList: Bool
     let isTodayInDateRange: Bool
-    let isWrongPlan: Bool
+    
     private let texts = TextLiterals.MealGroup.self
     let action: () -> ()
 
     init(
-        type: MealGroupViewType = .normal,
-        dateRange: String,
-        displayDateInfo: Content = EmptyView(),
-        mealPlans: [MealPlan] = [],
+        mealPlanGroup: MealPlanGroup,
         isInPlanList: Bool = true,
         isTodayInDateRange: Bool = false,
-        isWrongPlan: Bool = true,
         action: @escaping () -> Void = {}
     ) {
-        self.type = type
-        self.dateRange = dateRange
-        self.displayDateInfo = displayDateInfo
-        self.mealPlans = mealPlans
+        self.mealPlanGroup = mealPlanGroup
         self.isInPlanList = isInPlanList
         self.isTodayInDateRange = isTodayInDateRange
-        self.isWrongPlan = isWrongPlan
         self.action = action
     }
 
     var body: some View {
         VStack(spacing: K.wholeVStackSpacing) {
             dateInformation
-            if isInPlanList {
-                // PlanListView에서는 전체가 눌린다.
-                mealGroupInPlanList
-            } else {
-                // DailyListView에서는 끼니 별로 눌린다.
-                mealGroup
-            }
+            mealGroup
+        }
+        .navigationDestination(for: MealPlan.self) { mealPlan in
+            MealDetailView(mealPlan: mealPlan, cycleGap: mealPlan.cycleGap)
         }
     }
-}
-
-// MARK: - date Information
-
-extension MealGroupView {
+    
     private var dateInformation: some View {
         // planList이면서 wrong plan이라면 noti circle이 보인다.
         let showNotiCircle = isInPlanList && isWrongPlan
         return HStack(alignment: .bottom, spacing: K.dateInformationHStackSpacing) {
             if showNotiCircle { notiCircle }
             Text(dateRange)
-                .dayDisplayFont1()
-                .foregroundStyle(K.dayDisplayTextColor)
+                .customFont(.dayDisplay1, color: K.dayDisplayTextColor)
             Spacer()
-            displayDateInfo
+            DisplayDateInfoView(from: startDate, to: endDate)
         }
     }
+}
 
+extension MealGroupView {
+    var dateRange: String { mealPlanGroup.solidDate.description }
+    var startDate: Date { mealPlanGroup.solidDate.startDate }
+    var endDate: Date { mealPlanGroup.solidDate.endDate }
+    var mealPlans: [MealPlan] { mealPlanGroup.sortedMealPlans }
+    var isWrongPlan: Bool { mealPlanGroup.isWrong }
+}
+
+// MARK: - date Information
+
+extension MealGroupView {
     private var notiCircle: some View {
         VStack {
             Spacer()
             Circle()
-                .frame(
-                    width: K.notiCircleSize,
-                    height: K.notiCircleSize
-                )
-                .foregroundStyle(K.notiCircleColor)
+                .frame(width: K.notiCircleSize, height: K.notiCircleSize)
+                .foregroundStyle(Color.accentColor1)
             Spacer()
         }
     }
@@ -95,20 +84,11 @@ extension MealGroupView {
 // MARK: - meal group
 
 extension MealGroupView {
-    private var mealGroupInPlanList: some View {
-        Button {
-            // TODO: - planDetailView로 이동해야 함
-            action()
-        } label: {
-            if type == .normal { mealGroup }
-            else { addNewMealPlan }
-        }
-    }
-
     private var mealGroup: some View {
         VStack(spacing: .zero) {
             let lastIndex = mealPlans.indices.last
-            ForEach(Array(mealPlans.sorted(by: { $0.mealType.rawValue < $1.mealType.rawValue }).enumerated()), id:\.element) { index, mealPlan in
+            let sortedMealPlans = Array(mealPlans.sorted(by: { $0.mealType.rawValue < $1.mealType.rawValue }).enumerated())
+            ForEach(sortedMealPlans, id:\.element) { index, mealPlan in
                 mealView(of: mealPlan)
                 if index != lastIndex {
                     mealDivider
@@ -119,58 +99,45 @@ extension MealGroupView {
         .clipped()
     }
 
-    private var addNewMealPlan: some View {
-        HStack {
-            Text(texts.addIngredientText)
-                .headerFont5()
-                .foregroundStyle(K.addNewPlanTextColor)
-            Spacer()
-            chevron
-        }
-        .padding()
-        .foregroundStyle(K.addNewPlanTextColor)
-        .frame(height: K.addNewPlanHeight)
-        .padding(.bottom, K.addNewPlanBottomPadding)
-        .background(backgroundRectangle)
-    }
 
     private func mealView(of mealPlan: MealPlan) -> some View {
-        // TODO: - meal 눌렀을 때 action - MealDetailView로 이동해야 함
-        Button {
-            action()
-        } label: {
+        // PlanListView에서는 전체가 눌린다.
+        // DailyListView에서는 끼니 별로 눌린다.
+
+        NavigationLink(value: mealPlan) {
             HStack {
                 mealIcon(of: mealPlan)
-                ingredientText(of: mealPlan)
+                ColoredIngredientsText(mealPlan: mealPlan, type: .cell)
                 Spacer()
                 if isInPlanList == false {
-                    chevron
+                    Image(.rightChevronSmall)
                 }
             }
             .padding(
-                top: K.mealViewPadding,
-                leading: K.mealViewPadding,
-                bottom: K.mealViewPadding,
-                trailing: K.mealViewTrailingPadding
+                top: K.MealView.padding,
+                leading: K.MealView.padding,
+                bottom: K.MealView.padding,
+                trailing: K.MealView.trailingPadding
             )
+            .frame(minHeight: K.MealView.minHeight)
+            
         }
-        .frame(minHeight: K.mealViewMinHeight)
         .disabled(isInPlanList)
     }
 
     private var mealDivider: some View {
         Rectangle()
-            .padding(.horizontal, isInPlanList ? K.dividerInListPadding : K.dividerNotInListPadding )
-            .frame(height:K.dividerHeight)
-            .foregroundStyle(K.backgroundStrokeNormalColor)
+            .padding(.horizontal, isInPlanList ? K.Divider.inListPadding : K.Divider.notInListPadding )
+            .frame(height:K.Divider.height)
+            .foregroundStyle(K.Background.strokeNormalColor)
     }
 
     private var backgroundRectangle: some View {
         let isStrokeHighlight = isInPlanList && isTodayInDateRange
-        return RoundedRectangle(cornerRadius: K.backgroundRectangleRadius)
+        return RoundedRectangle(cornerRadius: K.Background.rectangleRadius)
             .fill(.white,
-                  strokeBorder: isStrokeHighlight ? K.backgroundHighlightStrokeColor : K.backgroundStrokeNormalColor,
-                  lineWidth: K.backgroundStrokeLineWidth)
+                  strokeBorder: isStrokeHighlight ? K.Background.highlightStrokeColor : K.Background.strokeNormalColor,
+                  lineWidth: K.Background.strokeLineWidth)
     }
 }
 
@@ -180,52 +147,106 @@ extension MealGroupView {
     private func mealIcon(of mealPlan: MealPlan) -> some View {
         Image(systemName: mealPlan.mealType.icon)
             .font(.body)
-            .foregroundStyle(K.mealIconColor)
-    }
-
-    private func ingredientText(of mealPlan: MealPlan) -> some View {
-        Text(mealPlan.ingredientsString)
-            .headerFont5()
-            .foregroundStyle(K.testedIngredientTextColor)
-    }
-
-    private var chevron: some View {
-        Image(systemName: K.chevronRightSFSymbolName)
-            .foregroundStyle(K.chevronColor)
-            .bold()
+            .foregroundStyle(Color.accentColor2)
     }
 }
 
-extension MealGroupView {
-    private enum K {
-        static var wholeVStackSpacing: CGFloat { 16 }
-        // dateInformation
-        static var dayDisplayTextColor: Color { .defaultText.opacity(0.4) }
-        static var notiCircleColor: Color { .accentColor1 }
-        static var notiCircleSize: CGFloat { 6 }
-        static var dateInformationHStackSpacing: CGFloat { 6 }
-        // meal group
-        static var dividerInListPadding: CGFloat { 19 }
-        static var dividerNotInListPadding: CGFloat { -30 }
-        static var dividerHeight: CGFloat { 1.4 }
+// MARK: - AddNewMealView
 
-        static var chevronRightSFSymbolName: String { "chevron.right" }
-        static var chevronColor: Color { .quarternaryText }
-
-        // mealview
-        static var mealViewPadding: CGFloat { 18 }
-        static var mealViewMinHeight: CGFloat { 64 }
-        static var mealViewTrailingPadding: CGFloat { 12 }
-        static var mealIconColor: Color { .accentColor2 }
-        static var testedIngredientTextColor: Color { .primeText }
-        // background
-        static var backgroundRectangleRadius: CGFloat { 12 }
-        static var backgroundStrokeNormalColor: Color { .listStrokeColor }
-        static var backgroundHighlightStrokeColor: Color { .accentColor1 }
-        static var backgroundStrokeLineWidth: Double { 2 }
-        static var addNewPlanHeight: Double { 64 }
-        static var addNewPlanBottomPadding: Double { 6 }
-        static var addNewPlanTextColor: Color { .defaultText.opacity(0.6) }
+struct AddNewMealView: View {
+    var startDate: Date
+    var endDate: Date
+    @State private var isMealAdding: Bool = false
+    
+    var body: some View {
+        Button {
+            isMealAdding = true
+        } label: {
+            VStack(spacing: K.wholeVStackSpacing) {
+                dateInformation
+                addIngredientButton
+            }
+            .padding(.bottom, K.AddNewPlan.bottomPadding)
+        }
+        .navigationDestination(isPresented: $isMealAdding) {
+            MealDetailView(startDate: startDate, endDate: endDate)
+        }
     }
+    
+    private var dateInformation: some View {
+        let dateRange = TextLiterals.PlanList.dateRangeString(start: startDate, end: endDate)
 
+        return HStack(alignment: .bottom, spacing: K.dateInformationHStackSpacing) {
+            Text(dateRange)
+                .customFont(.dayDisplay1, color: K.dayDisplayTextColor)
+            Spacer()
+            DisplayDateInfoView(from: startDate, to: endDate)
+        }
+    }
+    
+    private var addIngredientButton: some View {
+        HStack {
+            Text(TextLiterals.MealGroup.addIngredientText)
+                .customFont(.header5, color: K.AddNewPlan.textColor)
+            Spacer()
+            Image(.rightChevronSmall)
+        }
+        .padding()
+        .frame(height: K.AddNewPlan.height)
+        .foregroundStyle(K.AddNewPlan.textColor)
+        .withRoundedBackground(
+            cornerRadius: K.Background.rectangleRadius,
+            fill: Color.defaultText_wh,
+            strokeBorder: K.Background.strokeNormalColor,
+            lineWidth: K.Background.strokeLineWidth
+        )
+    }
+    
+    private var chevron: some View {
+        Image(.rightChevronSmall)
+            .foregroundStyle(K.Chevron.color)
+    }
+}
+
+
+fileprivate enum K {
+    static var wholeVStackSpacing: CGFloat { 16 }
+  
+    // mealview
+    enum MealView {
+        static var padding: CGFloat { 18 }
+        static var minHeight: CGFloat { 64 }
+        static var trailingPadding: CGFloat { 12 }
+    }
+    // background
+    
+    // dateInformation
+    static var dayDisplayTextColor: Color { .defaultText.opacity(0.4) }
+    static var notiCircleSize: CGFloat { 6 }
+    static var dateInformationHStackSpacing: CGFloat { 6 }
+
+    // meal group
+    enum Divider {
+        static var inListPadding: CGFloat { 19 }
+        static var notInListPadding: CGFloat { -30 }
+        static var height: CGFloat { 1.4 }
+    }
+    
+    enum Chevron {
+        static var rightSFSymbolName: String { "chevron.right" }
+        static var color: Color { .quarternaryText }
+    }
+    
+    enum Background {
+        static var rectangleRadius: CGFloat { 12 }
+        static var strokeNormalColor: Color { .listStrokeColor }
+        static var highlightStrokeColor: Color { .accentColor1 }
+        static var strokeLineWidth: Double { 2 }
+    }
+    enum AddNewPlan {
+        static var textColor: Color { .defaultText.opacity(0.6) }
+        static var height: Double { 64 }
+        static var bottomPadding: Double { 6 }
+    }
+    
 }

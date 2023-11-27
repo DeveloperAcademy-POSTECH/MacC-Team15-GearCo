@@ -24,37 +24,19 @@ enum TextLiterals {
     }
 
     enum PlanList {
-        static func yyyymmHeaderText(date: Date) ->  String {
-            "\(date.year)년 \(date.month)월"
-        }
-
-        static func ddDateText(date: Date) -> String {
-            "\(date.day)일"
-        }
-
-        static func ddDateText(date: Int) -> String {
-            "\(date)일"
-        }
-
+        static func yyyymmHeaderText(date: Date) ->  String { "\(date.year)년 \(date.month)월" }
+        static func ddDateText(date: Date) -> String { "\(date.day)일" }
         static func dateRangeString(start: Date, end: Date) -> String {
             "\(start.day)일(\(start.weekDayKor)) ~ \(end.day)일(\(end.weekDayKor))"
         }
-
-        static func fromDateToDateText(from: Int, to: Int) -> String {
-            "\(from) ~ \(to)일차"
-        }
-
-        static var addIngredientText: String {
-            "재료 추가"
-        }
-
-        static var solidTotalSettingText: String {
-            "이유식 전체설정"
-        }
+        static func fromDateToDateText(from: Int, to: Int) -> String { "\(from) ~ \(to)일차" }
+        static var addIngredientText: String { "재료 추가" }
+        static var solidTotalSettingText: String { "이유식 전체설정" }
+        
     }
 
-    enum PlanDetail {
-        static func dateRangeTitle(from: Date, to: Date) -> String { "\(from.month).\(from.day).(\(from.weekDayKor)) ~ \(to.month).\(to.day).(\(to.weekDayKor)) 식단" }
+    enum PlanGroupDetail {
+        static func dateRangeTitle(from: Date, to: Date) -> String { "\(from.month).\(from.day).(\(from.weekDayKor)) ~ \n\(to.month).\(to.day).(\(to.weekDayKor)) 식단" }
 
         static var editPlan: String { "편집" }
         static var editComplete: String { "완료" }
@@ -96,6 +78,12 @@ enum TextLiterals {
 
         static var deleteAllCalendarsText: String { "전체 일정 삭제" }
         static var deleteAllCalendarsButtonText: String { "삭제" }
+        enum Alert {
+            static var title: String { "전체 일정 삭제" }
+            static var description: String { "전체 이유식 일정을 삭제할까요?" }
+            static var leftButtonText: String { "취소" }
+            static var rightButtonText: String { "삭제" }
+        }
     }
 
     enum ChangeMonth {
@@ -142,6 +130,17 @@ enum TextLiterals {
     }
 
     enum MealDetail {
+        static func viewHeaderTitleText(from: Date, to: Date, isSingle: Bool) -> String {
+            func dateString(of date: Date) -> String {
+                return "\(date.month).\(date.day).(\(date.weekDayKor))"
+            }
+            if isSingle {
+                return "\(dateString(of: from)) 재료"
+            } else {
+                return "\(dateString(of: from)) ~ \(dateString(of: to)) 재료"
+            }
+            
+        }
         static var viewInAddTitleText: String { "재료 입력" }
         static var viewInAddTitleHintText: String { "알러지 테스트를 위해 따로 입력해주세요" }
         static var viewInEditTitleText: String { "재료 변경" }
@@ -167,6 +166,7 @@ enum TextLiterals {
 
         static var changeStartDateText: String { "시작일 변경" }
         static var changeStartDateDetailText: String { "아래 날짜부터 시작할 예정이에요." }
+        static var saveButtonText: String { "저장" }
     }
 
     enum AddedIngredient {

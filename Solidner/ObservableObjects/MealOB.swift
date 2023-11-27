@@ -8,72 +8,77 @@
 import SwiftUI
 
 final class MealOB: ObservableObject {
-    let mealPlan: MealPlan
-    // TODO: renaming 필요할듯
-    @Published private(set) var tempMealPlan: MealPlan
-//    @Published private(set) var tempNewIngredients: [Ingredient] = []
-//    @Published private(set) var testedIngredients: [Ingredient] = []
-//    @Published private(set) var mealType: MealType?
-//    @Published private(set) var startDate: Date
-//    // TODO: cycleGap은 default 값을 받아와야 합니다.
-    @Published var cycleGap: CycleGaps = .three {
-        willSet {
-            tempMealPlan.cycleGap = newValue
-        }
+    static let mock: MealOB = MealOB(mealPlan: MealPlan.mockMealsOne.first!, cycleGap: .three)
+    
+    let mealPlan: MealPlan?
+    @Published private(set) var tempNewIngredients: [Ingredient] = []
+    @Published private(set) var tempOldIngredients: [Ingredient] = []
+    @Published private(set) var mealType: MealType?
+    @Published private(set) var startDate: Date
+    @Published var cycleGap: CycleGaps
+    
+    var isAddButtonDisabled: Bool {
+        mealPlan == nil && ((tempNewIngredients.count == 0 && tempOldIngredients.count == 0 ) || mealType == nil)
     }
 
     var endDate: Date {
-        tempMealPlan.endDate
+        startDate.add(.day, value: cycleGap.rawValue - 1)
     }
 
-    init(mealPlan: MealPlan) {
+    // Edit일 때 initializer
+    init(mealPlan: MealPlan, cycleGap: CycleGaps) {
         self.mealPlan = mealPlan
-        self.tempMealPlan = mealPlan
+        self.startDate = mealPlan.startDate
+        self.tempNewIngredients = mealPlan.newIngredients
+        self.tempOldIngredients = mealPlan.oldIngredients
+        self.mealType = mealPlan.mealType
         self.cycleGap = mealPlan.cycleGap
     }
-
-//    init(testingIngredients: [Ingredient] = Ingredient.mockTestingIngredients,
-//         testedIngredients: [Ingredient] = Ingredient.mockTestedIngredients,
-//         startDate: Date = Date()) {
-//        self.tempNewIngredients = testingIngredients
-//        self.testedIngredients = testedIngredients
-//        self.startDate = startDate
-//    }
+    
+    // Add일 때 initializer
+    init(startDate: Date, cycleGap: CycleGaps) {
+        self.mealPlan = nil
+        self.startDate = startDate
+        self.mealType = nil
+        self.cycleGap = cycleGap
+    }
 
     func set(mealType: MealType) {
         print(#function)
         withAnimation {
-//            self.mealType = mealType
-            self.tempMealPlan.set(mealType: mealType)
+            self.mealType = mealType
         }
     }
 
     func set(startDate date: Date) {
         withAnimation {
-//            self.startDate = startDate
-            tempMealPlan.set(startDate: date)
-            
+            print(#function)
+            self.startDate = date
         }
     }
 
     func delete(ingredient: Ingredient, in testType: IngredientTestType) {
         switch testType {
-//            case .old:
-//                testedIngredients.removeAll { $0 == ingredient }
-//            case .new:
-//                testingIngredients.removeAll { $0 == ingredient }
         case .old:
-            tempMealPlan.remove(oldIngredient: ingredient)
+            tempOldIngredients.removeAll { $0 == ingredient }
         case .new:
-            tempMealPlan.remove(newIngredient: ingredient)
+            tempNewIngredients.removeAll { $0 == ingredient }
         }
     }
 
-    // TODO: add plan :) FB에 쓔우우웅?!
+    #warning("meal - add plan 구현하기")
+    // TODO: add plan :) FB에 쓔우우웅?! + mealPlans에도 넣어야?!
     func addMealPlan() {
         print(#function)
     }
-
+    
+    #warning("meal - change plan 구현하기")
+    // TODO: change plan :) FB에 쓔우우웅?!
+    func changeMealPlan() {
+        print(#function)
+    }
+    
+    #warning("meal - delete plan 구현하기")
     // TODO: delete plan :) FB에 쓔우우웅?!
     func deleteMealPlan() {
         print(#function)

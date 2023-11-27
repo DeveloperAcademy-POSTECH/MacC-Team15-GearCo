@@ -37,7 +37,7 @@ struct ColoredIngredientsText: View {
         if(newIngredients.count == 0) {
             return K.emptyText
         } else {
-            return K.commaText
+            return K.commaText.foreground(color: normalColor)
         }
     }
 
@@ -64,20 +64,7 @@ extension ColoredIngredientsText {
         mealPlan: MealPlan,
         accentColor: Color = .accentColor1,
         normalColor: Color = .defaultText,
-        textType: Text.CustomFontType = .header5
-    ) {
-        self.newIngredients = mealPlan.newIngredients
-        self.oldIngredients = mealPlan.oldIngredients
-        self.accentColor = accentColor
-        self.normalColor = normalColor
-        self._textType = State(initialValue: textType)
-    }
-
-    init(
-        mealPlan: MealPlan,
-        accentColor: Color = .accentColor1,
-        normalColor: Color = .defaultText,
-        type: ColoredIngredientsTextType
+        type: ColoredIngredientsTextType = .cell
     ) {
         self.newIngredients = mealPlan.newIngredients
         self.oldIngredients = mealPlan.oldIngredients

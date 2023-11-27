@@ -9,17 +9,76 @@ import Foundation
 import SwiftUI
 import UniformTypeIdentifiers
 
+struct MealPlanGroup: Hashable {
+    var solidDate: SolidDate
+    var mealPlans: [MealPlan]
+    var sortedMealPlans: [MealPlan] {
+        mealPlans.sorted { $0.mealType < $1.mealType }
+    }
+
+    init(solidDate: SolidDate, mealPlans: [MealPlan]) {
+        self.solidDate = solidDate
+        self.mealPlans = mealPlans
+    }
+    
+    var isWrong: Bool {
+        // 1. 해당 Group에서 테스트 재료가 2개 초과인 경우
+        // 2. 6끼 이상인 경우
+        // 3. 중복되는 끼니가 있는 경우
+        testingIngredientCount > 2 || mealPlans.count > 6 || occursDuplicatedMealType
+    }
+
+    private var testingIngredientCount: Int {
+        mealPlans.reduce(0) { partialResult, mealPlan in
+            partialResult + mealPlan.newIngredients.count
+        }
+    }
+
+    private var occursDuplicatedMealType: Bool {
+        // mealType set의 count와 mealPlans의 count가 같지 않으면 중복된 끼니가 있다
+        Set(mealPlans.map { $0.mealType }).count != mealPlans.count
+    }
+}
+
+extension MealPlanGroup {
+    init(startDate: Date = Date(), endDate: Date = Date(), mealPlans: [MealPlan] = []) {
+        self.solidDate = .init(startDate: startDate, endDate: endDate)
+        self.mealPlans = mealPlans
+    }
+}
+
+extension MealPlanGroup {
+    static func build(with mealPlans: [MealPlan]) -> [MealPlanGroup] {
+        let mealsDict = Dictionary(grouping: mealPlans) { SolidDate(startDate: $0.startDate, endDate: $0.endDate) }
+        return mealsDict.reduce(into: [MealPlanGroup]()) { partialResult, element in
+            let (solidDate, mealPlans) = element
+            partialResult.append(MealPlanGroup(solidDate: solidDate, mealPlans: mealPlans))
+        }
+    }
+}
+
+extension MealPlanGroup {
+    struct SolidDate: Hashable {
+        let startDate: Date
+        let endDate: Date
+
+        var description: String {
+            TextLiterals.PlanList.dateRangeString(start: startDate, end: endDate)
+        }
+    }
+}
+
 struct MealPlan: Identifiable, Hashable {
-    private(set) var id = UUID()
-    private(set) var startDate: Date {
+    var id = UUID()
+    var startDate: Date {
         willSet {
             endDate = newValue.add(.day, value: cycleGap.rawValue - 1)
         }
     }
-    private(set) var endDate: Date
-    private(set) var mealType: MealType
-    private(set) var newIngredients: [Ingredient]
-    private(set) var oldIngredients: [Ingredient]
+    var endDate: Date
+    var mealType: MealType
+    var newIngredients: [Ingredient]
+    var oldIngredients: [Ingredient]
     var cycleGap: CycleGaps {
         get {
             CycleGaps(rawValue: Date.componentsBetweenDates(from: startDate, to: endDate).day! + 1)!
@@ -27,6 +86,22 @@ struct MealPlan: Identifiable, Hashable {
         set {
             endDate = startDate.add(.day, value: newValue.rawValue - 1)
         }
+    }
+    
+    init(startDate: Date, endDate: Date, mealType: MealType, newIngredients: [Ingredient], oldIngredients: [Ingredient]) {
+        self.startDate = startDate
+        self.endDate = endDate
+        self.mealType = mealType
+        self.newIngredients = newIngredients
+        self.oldIngredients = oldIngredients
+    }
+    
+    init(startDate: Date, endDate: Date) {
+        self.startDate = startDate
+        self.endDate = endDate
+        self.mealType = .아침
+        self.newIngredients = []
+        self.oldIngredients = []
     }
 
     var dateString: String {

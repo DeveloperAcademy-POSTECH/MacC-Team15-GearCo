@@ -11,18 +11,22 @@ import SwiftUI
 
 struct PlanBatchSettingView: View {
     @EnvironmentObject private var user: UserOB
-    private enum K {
-        static var rootVStackSpacing: CGFloat { 40 }
-        static var titleColor: Color { .defaultText }
-        static var hintColor: Color { .defaultText.opacity(0.4) }
-        static var titleHintSpacing: CGFloat { 14 }
-
-        static var displayDateTypeTopPadding: CGFloat { -7 }
-        static var deleteWholeCalendarButtonTextColor: Color { .defaultText.opacity(0.8) }
-    }
+    @EnvironmentObject private var mealPlansOB: MealPlansOB
     private let texts = TextLiterals.PlanBatchSetting.self
-
+    @State private var isAlertShowing = false
+    
     var body: some View {
+        RootVStack {
+            viewHeader
+            viewBody
+        }
+    }
+   
+    private var viewHeader: some View {
+        BackButtonOnlyHeader()
+    }
+    
+    private var viewBody: some View {
         VStack(alignment: .leading, spacing: K.rootVStackSpacing) {
             settingTitle
             solidCycleGapSelectionView
@@ -32,8 +36,20 @@ struct PlanBatchSettingView: View {
             Spacer()
             deleteWholeCalendarView
         }
+        .alert(
+            texts.Alert.title,
+            isPresented: $isAlertShowing
+        ) {
+            Button(texts.Alert.leftButtonText, role: .cancel) { }
+            Button(texts.Alert.rightButtonText, role: .destructive) {
+                mealPlansOB.deleteAllPlans()
+            }
+        } message: {
+            Text(texts.Alert.description)
+        }
+        .defaultHorizontalPadding()
     }
-
+    
     private var settingTitle: some View {
         TitleAndHintView(
             title: texts.labelText,
@@ -61,14 +77,26 @@ struct PlanBatchSettingView: View {
             Spacer()
             ButtonComponents(.tiny,
                              title: texts.deleteAllCalendarsButtonText) {
-                print(#function)
+                isAlertShowing = true
             }
         }
     }
 }
 
+extension PlanBatchSettingView {
+    private enum K {
+        static var rootVStackSpacing: CGFloat { 40 }
+        static var titleColor: Color { .defaultText }
+        static var hintColor: Color { .defaultText.opacity(0.4) }
+        static var titleHintSpacing: CGFloat { 14 }
+
+        static var displayDateTypeTopPadding: CGFloat { -7 }
+        static var deleteWholeCalendarButtonTextColor: Color { .defaultText.opacity(0.8) }
+    }
+}
+
 struct PlanBatchSettingView_Previews: PreviewProvider {
     static var previews: some View {
-        PlanBatchSettingView().environmentObject(UserOB())
+        PlanBatchSettingView().environmentObject(UserOB()).environmentObject(MealPlansOB())
     }
 }

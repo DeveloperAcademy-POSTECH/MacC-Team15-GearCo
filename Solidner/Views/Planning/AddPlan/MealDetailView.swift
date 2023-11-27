@@ -8,16 +8,54 @@
 import SwiftUI
 
 struct MealDetailView: View {
-    @StateObject private var mealOB = MealOB(mealPlan: MealPlan.mockMealsOne.first!)
-    private let texts = TextLiterals.MealDetail.self
+    @StateObject private var mealOB: MealOB
     @State private var showSettingStartDate: Bool = false
     @State private var isSaveButtonTapped: Bool = false
-
-    // TODO: 나중에 let으로 바꿀 것
-    private(set) var isEditMode: Bool = true
-
+    @State private var isDeleteButtonTapped: Bool = false
+    
+    private let texts = TextLiterals.MealDetail.self
+    let isEditMode: Bool
+    
+    // meal cell을 눌러서 들어온 경우 - 끼니 편집
+    init(mealPlan: MealPlan, cycleGap: CycleGaps) {
+        self._mealOB = StateObject(wrappedValue: MealOB(mealPlan: mealPlan, cycleGap: cycleGap))
+        self.isEditMode = true
+    }
+    
+    // from Daily Plan List View - 끼니 추가
+    init(startDate: Date, cycleGap: CycleGaps) {
+        self._mealOB = StateObject(wrappedValue: MealOB(startDate: startDate, cycleGap: cycleGap))
+        self.isEditMode = false
+    }
+    
+    // from Plan Group Detail View - 끼니 추가
+    init(startDate: Date, endDate: Date) {
+        let cycleGap = CycleGaps(rawValue:Date.componentsBetweenDates(from: endDate, to: startDate).day! + 1) ?? .three
+        self._mealOB = StateObject(wrappedValue: MealOB(startDate: startDate, cycleGap: cycleGap))
+        self.isEditMode = false
+    }
+    
     var body: some View {
-        VStack(alignment: K.VStack.defaultAlignment, spacing: K.VStack.rootSpacing) {
+        RootVStack {
+            viewHeader
+            viewBody
+        }
+    }
+    
+    @ViewBuilder
+    private var viewHeader: some View {
+        let isSingle = mealOB.cycleGap == .one
+        BackButtonAndTitleHeader(
+            title: texts.viewHeaderTitleText(
+                from: mealOB.startDate,
+                to: mealOB.endDate,
+                isSingle: isSingle
+            )
+        )
+    }
+    
+    private var viewBody: some View {
+        VStack(alignment: .leading, spacing: K.VStack.rootSpacing) {
             ScrollView {
                 VStack(alignment: .leading, spacing: K.VStack.inRootScrollSpacing) {
                     ingredientEditOrAdd
@@ -30,45 +68,43 @@ struct MealDetailView: View {
                         deleteMealPlan
                     }
                 }
-                .padding(.horizontal, K.defaultHorizontalPadding)
+                .defaultHorizontalPadding()
             }
             Group {
-                toastMessage
+                if isSaveButtonTapped { toastMessage }
                 addMealPlanButton
             }
-            .padding(.horizontal, K.defaultHorizontalPadding)
+            .defaultHorizontalPadding()
         }
-        .withClearBackground(color: .secondBgColor)
     }
 }
 
 extension MealDetailView {
     private func VStackInComponent<Content: View>(@ViewBuilder item:@escaping () -> Content) -> some View {
-        return VStack(alignment: K.VStack.defaultAlignment, spacing: K.VStack.inComponentSpacing, content: item)
+        return VStack(alignment: .leading, spacing: K.VStack.inComponentSpacing, content: item)
     }
 
     private func VStackInIngredientsComponent<Content: View>(@ViewBuilder item:@escaping () -> Content) -> some View {
-        return VStack(alignment: K.VStack.defaultAlignment, spacing: K.VStack.ingredientsComponentSpacing, content: item)
+        return VStack(alignment: .leading, spacing: K.VStack.ingredientsComponentSpacing, content: item)
     }
 
     private func VStackInIngredients<Content: View>(@ViewBuilder item:@escaping () -> Content) -> some View {
-        return VStack(alignment: K.VStack.defaultAlignment, spacing: K.VStack.ingredientsSpacing, content: item)
+        return VStack(alignment: .leading, spacing: K.VStack.ingredientsSpacing, content: item)
     }
-
 }
 
 extension MealDetailView {
     // MARK: - ingredientEditOrAdd
     private var ingredientEditOrAdd: some View {
         VStackInComponent {
-            title
+            titleHeader
             newIngredientsView
             oldIngredientsView
         }
     }
 
     @ViewBuilder
-    private var title: some View {
+    private var titleHeader: some View {
         if (isEditMode) {
             titleAndIngredientsChip
         } else {
@@ -93,32 +129,38 @@ extension MealDetailView {
         }
     }
 
+    #warning("ingredientChip 편집 모드일 때 오른쪽 chip을 제대로 바꿔야..")
+    @ViewBuilder
     private var titleAndIngredientsChip: some View {
         let title: some View = {
             Text(texts.viewInEditTitleText)
                 .customFont(.header2, color: .defaultText)
         }()
-        return VStack(spacing: K.IngredientTitleAndChip.vStackSpacing){
-            title
-            ColoredIngredientsText(mealPlan: mealOB.mealPlan, type: .chip)
-                .padding(K.IngredientTitleAndChip.padding)
-                .withRoundedBackground(cornerRadius: K.IngredientTitleAndChip.backgroundCornerRadius, color: .defaultText_wh)
+        if let mealPlan = mealOB.mealPlan {
+            VStack(alignment: .leading, spacing: K.IngredientTitleAndChip.vStackSpacing){
+                title
+                ColoredIngredientsText(mealPlan: mealPlan, type: .chip)
+                    .padding(K.IngredientTitleAndChip.padding)
+                    .withRoundedBackground(cornerRadius: K.IngredientTitleAndChip.backgroundCornerRadius, color: .defaultText_wh)
+            }
+            .padding(K.IngredientTitleAndChip.vstackPadding)
+            //        return HStack {
+            //            VStack(spacing: 16){
+            //                title
+            //                ColoredIngredientsText(mealPlan: mealOB.mealPlan, type: .chip)
+            //                    .padding(top: 5, leading: 10, bottom: 7, trailing: 10)
+            //                    .withRoundedBackground(cornerRadius: 4.87, color: .defaultText_wh)
+            //            }
+            //            Spacer()
+            //        }
+            //        .padding(.bottom, -10)
+        } else {
+            EmptyView()
         }
-        .padding(K.IngredientTitleAndChip.vstackPadding)
-        //        return HStack {
-        //            VStack(spacing: 16){
-        //                title
-        //                ColoredIngredientsText(mealPlan: mealOB.mealPlan, type: .chip)
-        //                    .padding(top: 5, leading: 10, bottom: 7, trailing: 10)
-        //                    .withRoundedBackground(cornerRadius: 4.87, color: .defaultText_wh)
-        //            }
-        //            Spacer()
-        //        }
-        //        .padding(.bottom, -10)
     }
 
     private var addedTestingIngredients: some View {
-        addedIngredientsView(of: mealOB.tempMealPlan.newIngredients)
+        addedIngredientsView(of: mealOB.tempNewIngredients)
         //        VStack(spacing: 10) {
         //            ForEach(mealOB.tempMealPlan.newIngredients) { ingredient in
         //                AddedIngredientView(
@@ -130,11 +172,11 @@ extension MealDetailView {
     }
 
     private var addedTestedIngredients: some View {
-        addedIngredientsView(of: mealOB.tempMealPlan.oldIngredients)
+        addedIngredientsView(of: mealOB.tempOldIngredients)
     }
 
     // TODO: - type 어떻게 바꿀지 고민...
-
+    #warning("chip 제대로 바꾸기..")
     private func addedIngredientsView(of ingredients: [Ingredient]) -> some View {
         VStackInIngredients {
             ForEach(ingredients) { ingredient in
@@ -162,12 +204,14 @@ extension MealDetailView {
             }
     }
 
+    #warning("올바른 callback 함수 구현 - addNewIngredient")
     // TODO: 올바른 callback 함수 구현 - addNewIngredient
     //       -> 재료 추가 화면 띄우기
     private func addNewIngredient() {
         print(#function)
     }
-
+    
+    #warning("올바른 callback 함수 구현 - addNewIngredient")
     // TODO: 올바른 callback 함수 구현 - addOtherIngredient
     //       -> 재료 추가 화면 띄우기
     private func addOtherIngredient() {
@@ -177,7 +221,6 @@ extension MealDetailView {
 
 // MARK: - mealType
 extension MealDetailView {
-
     private var mealTypeSelectView: some View {
         VStackInComponent {
             TitleAndHintView(
@@ -193,7 +236,7 @@ extension MealDetailView {
         let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 3)
         return LazyVGrid(columns: columns) {
             ForEach(MealType.allCases, id: \.self) { mealType in
-                MealTypeButton(mealOB: mealOB, mealType: mealType)
+                mealTypeButton(mealType: mealType)
             }
         }
     }
@@ -213,10 +256,12 @@ extension MealDetailView {
         }
     }
 
+    // TODO: - 매직넘버 지우기
+//    #warning("매직 넘버 지우기")
     private var mealCycleContents: some View {
-        VStack(alignment: K.VStack.defaultAlignment, spacing: .zero) {
+        VStack(alignment: .leading, spacing: .zero) {
             startDateSelectView
-                .padding(.bottom, 33)
+                .padding(.bottom, 32)
             mealPicker
                 .padding(.bottom, 36)
             Divider()
@@ -235,12 +280,16 @@ extension MealDetailView {
                 }
                 .sheet(isPresented: $showSettingStartDate) {
                     StartDateSettingModal(mealOB: mealOB)
-                        .presentationDetents([.medium])
+                        .presentationDetents([.height(475)])
+                        .modify { view in
+                            if #available(iOS 16.4, *) {
+                                view.presentationCornerRadius(25)
+                            }
+                        }
                 }
         }
     }
 
-    // TODO: Custom Picker 만들기
     private var mealPicker: some View {
         SolidnerSegmentedPicker(
             label: texts.gapText,
@@ -251,28 +300,38 @@ extension MealDetailView {
 
     @ViewBuilder
     private var resultCycleText: some View {
-        VStack(alignment: K.VStack.defaultAlignment, spacing: K.MealCycle.resultCycleVStackSpacing) {
-            Text(texts.fromToDateText(from: mealOB.tempMealPlan.startDate, to: mealOB.tempMealPlan.endDate))
+        VStack(alignment: .leading, spacing: K.MealCycle.resultCycleVStackSpacing) {
+            Text(texts.fromToDateText(from: mealOB.startDate, to: mealOB.endDate))
                 .customFont(.header5, color: .primeText)
-            Text(texts.gapDetailText(mealOB.tempMealPlan.cycleGap.rawValue))
+            Text(texts.gapDetailText(mealOB.cycleGap.rawValue))
                 .customFont(.body1, color: K.MealCycle.resultCycleGapTextColor)
         }
 
     }
 }
 
+// TODO: - 매직 스트링 지우기
+//#warning("매직 스트링 지우기")
 // MARK: - Delete meal plan
 extension MealDetailView {
     private var deleteMealPlan: some View {
         TitleAndActionButtonView(
             title: texts.deleteMealPlanTitleText,
             buttonLabel: texts.deleteMealPlanButtonText) {
-                print(#function)
+                isDeleteButtonTapped = true
+            }
+            .alert("일정 삭제", isPresented: $isDeleteButtonTapped) {
+                Button("삭제", role: .destructive) {
+                    mealOB.deleteMealPlan()
+                }
+            } message: {
+                Text("해당 끼니 일정을 삭제할까요?")
             }
     }
 }
 
 // MARK: - toast Message
+// TODO: - taost Message는 나타난지 3초 이후에 사라짐.
 extension MealDetailView {
     private var toastMessage: some View {
         HStack(spacing: K.ToastMessage.hStackSpacing) {
@@ -283,22 +342,27 @@ extension MealDetailView {
         }
         .padding(.leading, K.ToastMessage.hStackPaddingLeading)
         .frame(height: K.ToastMessage.hStackFrameHeight)
-        .background(
-            RoundedRectangle(cornerRadius: K.ToastMessage.backgroundCornerRadius)
-                .fill(
-                    Color.defaultText_wh,
-                    strokeBorder: Color.listStrokeColor,
-                    lineWidth: K.ToastMessage.backgroundLineWidth
-                )
+        .withRoundedBackground(
+            cornerRadius: K.ToastMessage.backgroundCornerRadius,
+            fill: Color.defaultText_wh,
+            strokeBorder: Color.listStrokeColor, 
+            lineWidth: K.ToastMessage.backgroundLineWidth
         )
-
     }
 }
 // MARK: - addPlanButton
 extension MealDetailView {
     private var addMealPlanButton: some View {
-        ButtonComponents(.big, title: texts.mealPlanBottomButtonText(isEditMode: isEditMode)) {
-            mealOB.addMealPlan()
+        ButtonComponents(
+            .big,
+            title: texts.mealPlanBottomButtonText(isEditMode: isEditMode),
+            disabledCondition: mealOB.isAddButtonDisabled && !isEditMode
+        ) {
+            if isEditMode {
+                isSaveButtonTapped = true
+                mealOB.changeMealPlan()
+            }
+            else { mealOB.addMealPlan() }
         }
     }
 }
@@ -330,36 +394,30 @@ extension MealDetailView {
             }
         }
     }
-}
-
-extension MealDetailView {
-    struct MealTypeButton: View {
-        @ObservedObject var mealOB: MealOB
-        let mealType: MealType
-        var isTypeSelected: Bool { mealOB.tempMealPlan.mealType == mealType }
-
-        var body: some View {
-            Button {
-                mealOB.set(mealType: mealType)
-            } label: {
-                Text(mealType.description)
-                    .customFont(.header6, color: K.textColor(when: isTypeSelected))
-                    .frame(maxWidth: .infinity)
-                    .frame(height: K.labelFrameHeight)
-                    .withRoundedBackground(
-                        cornerRadius: K.Background.cornerRadius,
-                        fill: K.Background.fill(when: isTypeSelected),
-                        strokeBorder: K.Background.strokeBorder,
-                        lineWidth: K.Background.lineWidth
-                    )
-            }
+    
+    private func mealTypeButton(mealType: MealType) -> some View {
+        let isTypeSelected = mealOB.mealType == mealType
+        
+        return Button {
+            mealOB.set(mealType: mealType)
+        } label: {
+            Text(mealType.description)
+                .customFont(.header6, color: K.textColor(when: isTypeSelected))
+                .frame(maxWidth: .infinity)
+                .frame(height: K.labelFrameHeight)
+                .withRoundedBackground(
+                    cornerRadius: K.Background.cornerRadius,
+                    fill: K.Background.fill(when: isTypeSelected),
+                    strokeBorder: K.Background.strokeBorder,
+                    lineWidth: K.Background.lineWidth
+                )
         }
+        
     }
 }
 
 extension MealDetailView {
     private enum K {
-        static var defaultHorizontalPadding: CGFloat { 20 }
         enum IngredientTitleAndChip {
             static var vStackSpacing: CGFloat { 16 }
             static var padding: EdgeInsets { .init(top: 5, leading: 10, bottom: 7, trailing: 10) }
@@ -368,7 +426,6 @@ extension MealDetailView {
         }
 
         enum VStack {
-            static var defaultAlignment: HorizontalAlignment { .leading }
             static var rootSpacing: CGFloat { 16 }
             static var inRootScrollSpacing: CGFloat { 26 }
             static var inComponentSpacing: CGFloat { 40 }
@@ -388,19 +445,7 @@ extension MealDetailView {
             static var backgroundCornerRadius: CGFloat { 12 }
             static var backgroundLineWidth: CGFloat { 1 }
         }
-    }
-}
-
-extension MealDetailView.TitleAndActionButtonView {
-    private enum K {
-        enum TitleAndActionButton {
-            static var buttonTextColor: Color { .defaultText.opacity(0.8) }
-        }
-    }
-}
-
-extension MealDetailView.MealTypeButton {
-    private enum K {
+        
         static func textColor(when condition: Bool) -> Color {
             if(condition) { Color.defaultText_wh }
             else { Color.primeText }
@@ -417,8 +462,16 @@ extension MealDetailView.MealTypeButton {
     }
 }
 
+extension MealDetailView.TitleAndActionButtonView {
+    private enum K {
+        enum TitleAndActionButton {
+            static var buttonTextColor: Color { .defaultText.opacity(0.8) }
+        }
+    }
+}
+
 struct MealDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MealDetailView()
+        MealDetailView(mealPlan: MealPlan.mockMealsOne.first!, cycleGap: .two)
     }
 }
