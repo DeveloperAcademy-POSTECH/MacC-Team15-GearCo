@@ -50,20 +50,25 @@ struct AddTestIngredientsView: View {
             
             ScrollView {
                 if viewType == .new {
-                    IngredientsBigDivision(case: .이상반응재료,
-                                           ingredients: $selectedIngredients)
+                    // TODO: 추후 이상반응 기능 추가 시 활성화
+//                    IngredientsBigDivision(case: .이상반응재료,
+//                                           ingredients: $selectedIngredients,
+//                                           viewType: viewType)
                 } else {
                     IngredientsBigDivision(case: .자주사용한재료,
-                                           ingredients: $selectedIngredients)
+                                           ingredients: $selectedIngredients,
+                                           viewType: viewType)
                 }
                 
                 ThickDivider().padding(.vertical, divisionDividerVerticalPadding)
                 
                 IngredientsBigDivision(case: .먹을수있는재료,
-                                       ingredients: $selectedIngredients)
+                                       ingredients: $selectedIngredients,
+                                       viewType: viewType)
                 Spacer().frame(height: divisionDividerVerticalPadding)
                 IngredientsBigDivision(case: .권장하지않는재료,
-                                       ingredients: $selectedIngredients)
+                                       ingredients: $selectedIngredients,
+                                       viewType: viewType)
                 
                 Spacer().frame(height: reportButtonTopSpace)
                 reportButton
@@ -95,13 +100,16 @@ extension AddTestIngredientsView {
     private var selectedIngredientRow: some View {
         if !selectedIngredients.isEmpty {
             return AnyView(
-                HStack(spacing: typeButtonBetweenSpace) {
-                    ForEach(selectedIngredients.indices, id: \.self) { i in
-                        let data = ingredientData[selectedIngredients[i]]!
-                        selectedIngredientTypeBox(ingredient: data)
-                    }
-                    Spacer()
-                }.padding(.leading, viewHorizontalPadding).padding(.bottom, selectedTypeBottomSpace)
+                VStack(alignment: .leading, spacing: 0) {
+                    ScrollView(.horizontal) {
+                        HStack(spacing: typeButtonBetweenSpace) {
+                            ForEach(selectedIngredients.indices, id: \.self) { i in
+                                let data = ingredientData[selectedIngredients[i]]!
+                                selectedIngredientTypeBox(ingredient: data)
+                            }
+                        }
+                    }.padding(.leading, viewHorizontalPadding).padding(.bottom, selectedTypeBottomSpace)
+                }
             )
         }
         return AnyView(EmptyView())
