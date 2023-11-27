@@ -11,14 +11,14 @@ final class MealOB: ObservableObject {
     static let mock: MealOB = MealOB(mealPlan: MealPlan.mockMealsOne.first!, cycleGap: .three)
     
     let mealPlan: MealPlan?
-    @Published private(set) var tempNewIngredients: [Ingredient] = []
-    @Published private(set) var tempOldIngredients: [Ingredient] = []
+    @Published private(set) var newIngredients: [Ingredient] = []
+    @Published private(set) var oldIngredients: [Ingredient] = []
     @Published private(set) var mealType: MealType?
     @Published private(set) var startDate: Date
     @Published var cycleGap: CycleGaps
     
     var isAddButtonDisabled: Bool {
-        mealPlan == nil && ((tempNewIngredients.count == 0 && tempOldIngredients.count == 0 ) || mealType == nil)
+        mealPlan == nil && ((newIngredients.count == 0 && oldIngredients.count == 0 ) || mealType == nil)
     }
 
     var endDate: Date {
@@ -29,8 +29,8 @@ final class MealOB: ObservableObject {
     init(mealPlan: MealPlan, cycleGap: CycleGaps) {
         self.mealPlan = mealPlan
         self.startDate = mealPlan.startDate
-        self.tempNewIngredients = mealPlan.newIngredients
-        self.tempOldIngredients = mealPlan.oldIngredients
+        self.newIngredients = mealPlan.newIngredients
+        self.oldIngredients = mealPlan.oldIngredients
         self.mealType = mealPlan.mealType
         self.cycleGap = mealPlan.cycleGap
     }
@@ -60,9 +60,26 @@ final class MealOB: ObservableObject {
     func delete(ingredient: Ingredient, in testType: IngredientTestType) {
         switch testType {
         case .old:
-            tempOldIngredients.removeAll { $0 == ingredient }
+            oldIngredients.removeAll { $0 == ingredient }
         case .new:
-            tempNewIngredients.removeAll { $0 == ingredient }
+            newIngredients.removeAll { $0 == ingredient }
+        }
+    }
+    
+    func clearIngredient(in testType: IngredientTestType) {
+        switch testType {
+        case .old:
+            oldIngredients = []
+        case .new:
+            newIngredients = []
+        }
+    }
+    func addIngredient(ingredient: Ingredient, in testType: IngredientTestType) {
+        switch testType {
+        case .old:
+            oldIngredients.append(ingredient)
+        case .new:
+            newIngredients.append(ingredient)
         }
     }
 

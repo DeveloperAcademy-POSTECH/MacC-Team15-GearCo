@@ -13,7 +13,7 @@ struct MealDetailView: View {
     @State private var isSaveButtonTapped: Bool = false
     @State private var isDeleteButtonTapped: Bool = false
     
-    @State private var showAddNewIngredientView: Bool = false
+    @State var showAddNewIngredientView: Bool = false
     
     private let texts = TextLiterals.MealDetail.self
     private let firebaseManager = FirebaseManager.shared
@@ -166,7 +166,7 @@ extension MealDetailView {
     }
 
     private var addedTestingIngredients: some View {
-        addedIngredientsView(of: mealOB.tempNewIngredients)
+        addedIngredientsView(of: mealOB.newIngredients)
         //        VStack(spacing: 10) {
         //            ForEach(mealOB.tempMealPlan.newIngredients) { ingredient in
         //                AddedIngredientView(
@@ -178,7 +178,7 @@ extension MealDetailView {
     }
 
     private var addedTestedIngredients: some View {
-        addedIngredientsView(of: mealOB.tempOldIngredients)
+        addedIngredientsView(of: mealOB.oldIngredients)
     }
 
     // TODO: - type 어떻게 바꿀지 고민...
@@ -200,7 +200,7 @@ extension MealDetailView {
             buttonLabel: texts.addOrEditIngredientText(isEditMode: isEditMode)) {
                 showAddNewIngredientView = true
             }.navigationDestination(isPresented: $showAddNewIngredientView) {
-                AddTestIngredientsView(.isTesting)
+                AddTestIngredientsView(.new)
                     .environmentObject(mealOB)
             }
     }
@@ -211,7 +211,7 @@ extension MealDetailView {
             buttonLabel: texts.addOrEditIngredientText(isEditMode: isEditMode)) {
                 showAddNewIngredientView = true
             }.navigationDestination(isPresented: $showAddNewIngredientView) {
-                AddTestIngredientsView(.isNormal)
+                AddTestIngredientsView(.old)
                     .environmentObject(mealOB)
             }
     }

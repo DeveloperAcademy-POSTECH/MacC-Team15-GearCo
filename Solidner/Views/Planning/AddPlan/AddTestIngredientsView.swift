@@ -29,9 +29,10 @@ struct AddTestIngredientsView: View {
     private let reportButtonTopSpace: CGFloat = 20
     
     // init property
-    let addIngredientViewType: AddIngredientViewType
+    let addIngredientViewType: MealOB.IngredientTestType
+    @Environment(\.dismiss) private var dismiss
     
-    init(_ addIngredientViewType: AddIngredientViewType) {
+    init(_ addIngredientViewType: MealOB.IngredientTestType) {
         self.addIngredientViewType = addIngredientViewType
     }
     
@@ -46,29 +47,10 @@ struct AddTestIngredientsView: View {
             BackButtonAndTitleHeader(title: Texts.testViewTitle)
             
             // MARK: 검색, 재료 타입 버튼
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: typeButtonBetweenSpace) {
-                    searchButton
-                    ForEach(TempIngredientType.allCases, id: \.self) { ingredientType in
-                        ingredientTypeButton(ingredientType.rawValue)
-                    }
-                }.padding(.leading, viewHorizontalPadding)
-            }.padding(.bottom, typeButtonsRowBottomPadding)
+            searchAndIngredientTypeButtonsRow
             
             // MARK: 선택된 재료 타입 확인 Row
-            if !selectedIngredients.isEmpty {
-                let firstIngredient: Ingredient = ingredientData[selectedIngredients[0]]!
-                HStack(spacing: typeButtonBetweenSpace) {
-                    selectedIngredientTypeBox(ingredient: firstIngredient)
-                    if selectedIngredients.count > 1 {
-                        let secondIngredient = ingredientData[selectedIngredients[1]]!
-                        selectedIngredientTypeBox(ingredient: secondIngredient)
-                    }
-                    Spacer()
-                }.padding(.leading, viewHorizontalPadding)
-                
-                Spacer().frame(height: selectedTypeBottomSpace)
-            }
+            selectedIngredientRow
             
             ScrollView {
                 IngredientsBigDivision(divisionCase: .이상반응재료,
@@ -87,10 +69,44 @@ struct AddTestIngredientsView: View {
                 reportButton
                 
                 Spacer().frame(height: saveButtonTopSpace)
-                ButtonComponents(.big).padding(.horizontal, viewHorizontalPadding)
+                ButtonComponents(.big, title: "저장") {
+                    saveSelectedTestIngredient()
+                }.padding(.horizontal, viewHorizontalPadding)
                 Spacer().frame(height: saveButtonBottomSpace)
             }
         }.background(Color.mainBackgroundColor).toolbar(.hidden)
+    }
+}
+
+// MARK: View Components
+extension AddTestIngredientsView {
+    private var searchAndIngredientTypeButtonsRow: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: typeButtonBetweenSpace) {
+                searchButton
+                ForEach(TempIngredientType.allCases, id: \.self) { ingredientType in
+                    ingredientTypeButton(ingredientType.rawValue)
+                }
+            }.padding(.leading, viewHorizontalPadding)
+        }.padding(.bottom, typeButtonsRowBottomPadding)
+    }
+    
+    private var selectedIngredientRow: some View {
+        if !selectedIngredients.isEmpty {
+            let firstIngredient: Ingredient = ingredientData[selectedIngredients[0]]!
+            return AnyView(
+                HStack(spacing: typeButtonBetweenSpace) {
+                selectedIngredientTypeBox(ingredient: firstIngredient)
+                if selectedIngredients.count > 1 {
+                    let secondIngredient = ingredientData[selectedIngredients[1]]!
+                    selectedIngredientTypeBox(ingredient: secondIngredient)
+                }
+                Spacer()
+            }.padding(.leading, viewHorizontalPadding)
+                .padding(.bottom, selectedTypeBottomSpace)
+               )
+        }
+        return AnyView(EmptyView())
     }
     
     private var reportButton: some View {
@@ -150,6 +166,40 @@ struct AddTestIngredientsView: View {
         }
     }
     
+    /// 선택된 재료들의 구분을 표시하는 블럭을 return합니다.
+    /// - Parameter typeText: 표시될 text
+    /// - Returns: 선택된 재료 확인 box
+    func selectedIngredientTypeBox(ingredient: Ingredient) -> some View {
+        let horizontalPadding: CGFloat = 12
+        let verticalPadding: CGFloat = 7
+        let cornerRadius: CGFloat = 6
+        
+        // TODO: 재료 타입에 따른 color가 되도록 수정
+        return Text("\(ingredient.name)")
+            .bodyFont3()
+            .foregroundColor(.secondaryText)
+            .symmetricBackground(HPad: horizontalPadding,
+                                 VPad: verticalPadding,
+                                 color: ingredient.type.color,
+                                 radius: cornerRadius)
+    }
+}
+
+// MARK: Functions
+extension AddTestIngredientsView {
+
+    private func saveSelectedTestIngredient() {
+        mealOB.clearIngredient(in: addIngredientViewType)
+        for i in selectedIngredients {
+            let ingredient = ingredientData[i]!
+            mealOB.addIngredient(ingredient: ingredient, in: addIngredientViewType)
+        }
+        
+        dismiss()
+    }
+}
+
+extension AddTestIngredientsView {
     // MARK: IngredientType
     enum TempIngredientType: String, CaseIterable {
         case 이상반응재료 = "이상 반응 재료"
@@ -162,26 +212,3 @@ struct AddTestIngredientsView: View {
     }
 }
 
-/// 선택된 재료들의 구분을 표시하는 블럭을 return합니다.
-/// - Parameter typeText: 표시될 text
-/// - Returns: 선택된 재료 확인 box
-func selectedIngredientTypeBox(ingredient: Ingredient) -> some View {
-    let horizontalPadding: CGFloat = 12
-    let verticalPadding: CGFloat = 7
-    let cornerRadius: CGFloat = 6
-    
-    // TODO: 재료 타입에 따른 color가 되도록 수정
-    return Text("\(ingredient.name)")
-        .bodyFont3()
-        .foregroundColor(.secondaryText)
-        .symmetricBackground(HPad: horizontalPadding,
-                             VPad: verticalPadding,
-                             color: ingredient.type.color,
-                             radius: cornerRadius)
-}
-
-//struct AddTestIngredientsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AddTestIngredientsView()
-//    }
-//}
