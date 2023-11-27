@@ -30,7 +30,7 @@ struct MealDetailView: View {
     
     // from Plan Group Detail View - 끼니 추가
     init(startDate: Date, endDate: Date) {
-        let cycleGap = CycleGaps(rawValue:Date.componentsBetweenDates(from: endDate, to: startDate).day! + 1) ?? .three
+        let cycleGap = CycleGaps(rawValue:Date.componentsBetweenDates(from: startDate, to: endDate).day! + 1) ?? .three
         self._mealOB = StateObject(wrappedValue: MealOB(startDate: startDate, cycleGap: cycleGap))
         self.isEditMode = false
     }
