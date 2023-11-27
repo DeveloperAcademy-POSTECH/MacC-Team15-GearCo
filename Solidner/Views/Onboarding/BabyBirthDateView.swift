@@ -13,27 +13,21 @@ struct BabyBirthDateView: View {
     private let datePickerTopPadding = 86.0
     @State private var babyBirthDate = Date()
     @State private var navigationIsPresented = false
-    @State private var goBackToBabyNameView = false
     @EnvironmentObject var user: UserOB
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     var body: some View {
         ZStack {
             BackgroundView()
             VStack(spacing: 0) {
-               BackButtonHeader {
-                   goBackToBabyNameView = true
-               }
+                BackButtonOnlyHeader()
                 viewBody()
-                    .padding(horizontal: 20, top: 32, bottom: 20)
+                    .padding(horizontal: 20, top: 15.88, bottom: 20)
             }
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
         .navigationDestination(isPresented: $navigationIsPresented) {
             FoodStartDateView()
-        }
-        .navigationDestination(isPresented: $goBackToBabyNameView) {
-            NickNameView(nickNameViewCase: .babyName)
         }
     }
     private func viewBody() -> some View {

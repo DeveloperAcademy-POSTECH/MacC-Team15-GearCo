@@ -15,9 +15,7 @@ struct WithdrawalView: View {
         ZStack {
             BackgroundView()
             VStack(spacing: 0){
-                BackButtonHeader(action: {
-                    presentationMode.wrappedValue.dismiss()
-                }, title: "회원 탈퇴")
+                BackButtonAndTitleHeader(title: "회원 탈퇴")
                 viewBody()
                     .padding(horizontal: 20, top: 0, bottom: 6)
             }

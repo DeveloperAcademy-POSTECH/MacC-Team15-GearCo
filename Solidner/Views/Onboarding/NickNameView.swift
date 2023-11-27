@@ -26,11 +26,9 @@ struct NickNameView: View {
             ZStack {
                 BackgroundView()
                 VStack(spacing: 0) {
-                    BackButtonHeader {
-                        presentationMode.wrappedValue.dismiss()
-                    }
+                    BackButtonOnlyHeader()
                     viewBody()
-                        .padding(horizontal: 20, top: 31, bottom: 20)
+                        .padding(horizontal: 20, top: 14.88, bottom: 20)
                 }
                 .onAppear (perform : UIApplication.shared.hideKeyboard)
             }

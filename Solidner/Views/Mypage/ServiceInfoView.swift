@@ -14,11 +14,9 @@ struct ServiceInfoView: View {
         ZStack {
             BackgroundView()
             VStack(spacing: 0) {
-                BackButtonHeader(action: {
-                    presentationMode.wrappedValue.dismiss()
-                }, title: "서비스 정보 및 문의")
+                BackButtonAndTitleHeader(title: "서비스 정보 및 문의")
                 viewBody()
-                    .padding(horizontal: 20, top: 32, bottom: 30)
+                    .padding(horizontal: 20, top: 15.88, bottom: 30)
             }
 //            .background {
 //                Image(.buyMeACoffeeBg)

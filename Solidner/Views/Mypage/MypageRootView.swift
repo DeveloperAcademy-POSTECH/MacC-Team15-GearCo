@@ -17,11 +17,9 @@ struct MypageRootView: View {
         ZStack {
             BackgroundView()
             VStack(spacing: 0) {
-                BackButtonHeader(action: {
-                    presentationMode.wrappedValue.dismiss()
-                }, title: "프로필")
+                BackButtonAndTitleHeader(title: "프로필")
                 viewBody()
-                    .padding(horizontal: 20, vertical: 39)
+                    .padding(horizontal: 20, top: 22.8, bottom: 0)
             }
         }
         .alert(isPresented: $showLogoutAlert) {
@@ -44,22 +42,6 @@ struct MypageRootView: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
-        //            .navigationDestination(for: MypageFunctionCase.self) { value in
-        //                switch value {
-        //                case .notificationSetting:
-        //                    NotificationSettingView()
-        //                case .personalInfoTerms:
-        //                    TermsWebViewWithHeader(agreeCase: .personalInfo)
-        //                case .serviceUseTerms:
-        //                    TermsWebViewWithHeader(agreeCase: .serviceUse)
-        //                case .serviceInfo:
-        //                    ServiceInfoView()
-        //                case .withdrawal:
-        //                    WithdrawalView()
-        //                case .logOut:
-        //                    MypageRootView()
-        //                }
-        //            }
         .navigationDestination(isPresented: $goForUserInfoUpdate) {
             UserInfoUpdateView()
         }
