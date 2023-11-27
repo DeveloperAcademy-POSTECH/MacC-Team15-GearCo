@@ -14,6 +14,7 @@ struct MealDetailView: View {
     @State private var isDeleteButtonTapped: Bool = false
     
     @State var showAddNewIngredientView: Bool = false
+    @State var showAddOldIngredientView: Bool = false
     
     private let texts = TextLiterals.MealDetail.self
     private let firebaseManager = FirebaseManager.shared
@@ -209,8 +210,8 @@ extension MealDetailView {
         TitleAndActionButtonView(
             title: texts.oldIngredientText,
             buttonLabel: texts.addOrEditIngredientText(isEditMode: isEditMode)) {
-                showAddNewIngredientView = true
-            }.navigationDestination(isPresented: $showAddNewIngredientView) {
+                showAddOldIngredientView = true
+            }.navigationDestination(isPresented: $showAddOldIngredientView) {
                 AddTestIngredientsView(.old)
                     .environmentObject(mealOB)
             }
@@ -275,8 +276,7 @@ extension MealDetailView {
                 title: texts.startDateText,
                 buttonLabel: texts.changeDateText) {
                     showSettingStartDate = true
-                }
-                .sheet(isPresented: $showSettingStartDate) {
+                }.sheet(isPresented: $showSettingStartDate) {
                     StartDateSettingModal(mealOB: mealOB)
                         .presentationDetents([.height(475)])
                         .modify { view in

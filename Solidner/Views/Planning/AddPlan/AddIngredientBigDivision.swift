@@ -50,7 +50,7 @@ struct IngredientsBigDivision: View {
     @Binding var selectedIngredients: [Int]
     @State private var foldStates: [IngredientType: Bool]
     
-    init(divisionCase: DivisionCase, selectedIngredientPair: Binding<[Int]>) {
+    init(case divisionCase: DivisionCase, ingredients selectedIngredientPair: Binding<[Int]>) {
         self.divisionCase = divisionCase
         _selectedIngredients = selectedIngredientPair
 

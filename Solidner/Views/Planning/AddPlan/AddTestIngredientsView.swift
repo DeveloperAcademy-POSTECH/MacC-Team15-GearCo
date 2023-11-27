@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-enum AddIngredientViewType {
-    case isTesting
-    case isNormal
-}
-
 struct AddTestIngredientsView: View {
     // TODO: 전체적인 Padding 계층 및 Magic Number 수정 요함
     private let ingredientData = IngredientData.shared.ingredients
@@ -28,18 +23,19 @@ struct AddTestIngredientsView: View {
     private let saveButtonTopSpace: CGFloat = 100
     private let reportButtonTopSpace: CGFloat = 20
     
-    // init property
-    let addIngredientViewType: MealOB.IngredientTestType
-    @Environment(\.dismiss) private var dismiss
-    
-    init(_ addIngredientViewType: MealOB.IngredientTestType) {
-        self.addIngredientViewType = addIngredientViewType
-    }
     
     @EnvironmentObject var mealOB: MealOB
     
+    // init property
+    let viewType: MealOB.IngredientTestType
+    @Environment(\.dismiss) private var dismiss
     // 선택된 테스트 재료
     @State private var selectedIngredients: [Int] = []
+    
+    init(_ addIngredientViewType: MealOB.IngredientTestType) {
+        self.viewType = addIngredientViewType
+    }
+    
     
     // MARK: body
     var body: some View {
@@ -53,17 +49,21 @@ struct AddTestIngredientsView: View {
             selectedIngredientRow
             
             ScrollView {
-                IngredientsBigDivision(divisionCase: .이상반응재료,
-                                       selectedIngredientPair: $selectedIngredients)
-//                IngredientsBigDivision(divisionCase: .자주사용한재료)
+                if viewType == .new {
+                    IngredientsBigDivision(case: .이상반응재료,
+                                           ingredients: $selectedIngredients)
+                } else {
+                    IngredientsBigDivision(case: .자주사용한재료,
+                                           ingredients: $selectedIngredients)
+                }
                 
                 ThickDivider().padding(.vertical, divisionDividerVerticalPadding)
                 
-                IngredientsBigDivision(divisionCase: .먹을수있는재료,
-                                       selectedIngredientPair: $selectedIngredients)
+                IngredientsBigDivision(case: .먹을수있는재료,
+                                       ingredients: $selectedIngredients)
                 Spacer().frame(height: divisionDividerVerticalPadding)
-                IngredientsBigDivision(divisionCase: .권장하지않는재료,
-                                       selectedIngredientPair: $selectedIngredients)
+                IngredientsBigDivision(case: .권장하지않는재료,
+                                       ingredients: $selectedIngredients)
                 
                 Spacer().frame(height: reportButtonTopSpace)
                 reportButton
@@ -75,6 +75,7 @@ struct AddTestIngredientsView: View {
                 Spacer().frame(height: saveButtonBottomSpace)
             }
         }.background(Color.mainBackgroundColor).toolbar(.hidden)
+            .onAppear { initSelectedIngredient() }
     }
 }
 
@@ -93,18 +94,15 @@ extension AddTestIngredientsView {
     
     private var selectedIngredientRow: some View {
         if !selectedIngredients.isEmpty {
-            let firstIngredient: Ingredient = ingredientData[selectedIngredients[0]]!
             return AnyView(
                 HStack(spacing: typeButtonBetweenSpace) {
-                selectedIngredientTypeBox(ingredient: firstIngredient)
-                if selectedIngredients.count > 1 {
-                    let secondIngredient = ingredientData[selectedIngredients[1]]!
-                    selectedIngredientTypeBox(ingredient: secondIngredient)
-                }
-                Spacer()
-            }.padding(.leading, viewHorizontalPadding)
-                .padding(.bottom, selectedTypeBottomSpace)
-               )
+                    ForEach(selectedIngredients.indices, id: \.self) { i in
+                        let data = ingredientData[selectedIngredients[i]]!
+                        selectedIngredientTypeBox(ingredient: data)
+                    }
+                    Spacer()
+                }.padding(.leading, viewHorizontalPadding).padding(.bottom, selectedTypeBottomSpace)
+            )
         }
         return AnyView(EmptyView())
     }
@@ -187,15 +185,28 @@ extension AddTestIngredientsView {
 
 // MARK: Functions
 extension AddTestIngredientsView {
-
+    
     private func saveSelectedTestIngredient() {
-        mealOB.clearIngredient(in: addIngredientViewType)
+        mealOB.clearIngredient(in: viewType)
         for i in selectedIngredients {
             let ingredient = ingredientData[i]!
-            mealOB.addIngredient(ingredient: ingredient, in: addIngredientViewType)
+            mealOB.addIngredient(ingredient: ingredient, in: viewType)
         }
         
         dismiss()
+    }
+    
+    private func initSelectedIngredient() {
+        switch viewType {
+        case .new:
+            for ingredient in mealOB.newIngredients {
+                selectedIngredients.append(ingredient.id)
+            }
+        case .old:
+            for ingredient in mealOB.oldIngredients {
+                selectedIngredients.append(ingredient.id)
+            }
+        }
     }
 }
 
