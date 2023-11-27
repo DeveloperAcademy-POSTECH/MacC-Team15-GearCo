@@ -186,7 +186,11 @@ extension PlanListView {
     @ViewBuilder
     private var addNewMealPlan: some View {
         let one = 1
-        let newStartDate = mealPlans.sorted { $0.endDate > $1.endDate }.first?.endDate.add(.day, value: one) ?? (Date.date(year: selectedDate.year, month: selectedDate.month, day: one) ?? Date())
+        let newStartDate: Date = {
+            let nextDateOfLastPlan = mealPlans.sorted { $0.endDate > $1.endDate }.first?.endDate.add(.day, value: one)
+            let firstOfThisMonth = Date.date(year: selectedDate.year, month: selectedDate.month, day: one)!
+            return max(user.solidStartDate, (nextDateOfLastPlan ?? firstOfThisMonth))
+        }()
         if newStartDate.month != selectedDate.month {
             EmptyView()
         } else {
