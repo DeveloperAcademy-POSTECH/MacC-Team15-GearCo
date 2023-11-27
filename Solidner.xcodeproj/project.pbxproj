@@ -708,7 +708,6 @@
 				0E18AD712AFA94E10011ED4A /* FirebaseManager.swift in Sources */,
 				C3AD1BC62B012DA6003BB3E0 /* UIApplication+.swift in Sources */,
 				C3AD1BC42B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift in Sources */,
-				C3C637982AF91EE0006D464D /* models_dummy.swift in Sources */,
 				C3777C662B1250E3008B951A /* NotificationSettingView.swift in Sources */,
 				0E18AD6F2AFA8F140011ED4A /* AppleLoginOB.swift in Sources */,
 				C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */,

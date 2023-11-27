@@ -21,40 +21,38 @@ struct AgreeToTermsView: View {
     @State private var navigationIsPresented = false
     @EnvironmentObject var user: UserOB
     var body: some View {
-        NavigationStack {
-            ZStack {
-                BackgroundView()
-                VStack(spacing: 0) {
-                    OnboardingTitles(bigTitle: TextLiterals.AgreeToTerms.bigTitle, smallTitle: TextLiterals.AgreeToTerms.smallTitle)
-                    Spacer()
-                    VStack(spacing: termsButtonsSpacing) {
-                        agreeButton(agreeCase: .serviceUse)
-                        agreeButton(agreeCase: .personalInfo)
-                        agreeButton(agreeCase: .advertising)
-                    }
-                    ButtonComponents(.big, disabledCondition: disabledCondition, action: {
-                        user.isAgreeToAdvertising = isAgreeToAdvertising
-                        navigationIsPresented = true
-                    })
-                    .padding(.top, bigButtonTopPadding)
+        ZStack {
+            BackgroundView()
+            VStack(spacing: 0) {
+                OnboardingTitles(bigTitle: TextLiterals.AgreeToTerms.bigTitle, smallTitle: TextLiterals.AgreeToTerms.smallTitle)
+                Spacer()
+                VStack(spacing: termsButtonsSpacing) {
+                    agreeButton(agreeCase: .serviceUse)
+                    agreeButton(agreeCase: .personalInfo)
+                    agreeButton(agreeCase: .advertising)
                 }
-                .padding(horizontal: 20, top: 76, bottom: 20)
+                ButtonComponents(.big, disabledCondition: disabledCondition, action: {
+                    user.isAgreeToAdvertising = isAgreeToAdvertising
+                    navigationIsPresented = true
+                })
+                .padding(.top, bigButtonTopPadding)
             }
-            .navigationDestination(isPresented: $navigationIsPresented) {
-                NickNameView(nickNameViewCase: .userName)
-            }
-            .sheet(isPresented: $openServiceUseTerms) {
-                TermsWebView(agreeCase: .serviceUse)
-                    .presentationDragIndicator(.visible)
-            }
-            .sheet(isPresented: $openPersonalInfoTerms) {
-                TermsWebView(agreeCase: .personalInfo)
-                    .presentationDragIndicator(.visible)
-            }
-            .sheet(isPresented: $openAdvertisingTerms) {
-                TermsWebView(agreeCase: .advertising)
-                    .presentationDragIndicator(.visible)
-            }
+            .padding(horizontal: 20, top: 76, bottom: 20)
+        }
+        .navigationDestination(isPresented: $navigationIsPresented) {
+            NickNameView(nickNameViewCase: .userName)
+        }
+        .sheet(isPresented: $openServiceUseTerms) {
+            TermsWebView(agreeCase: .serviceUse)
+                .presentationDragIndicator(.visible)
+        }
+        .sheet(isPresented: $openPersonalInfoTerms) {
+            TermsWebView(agreeCase: .personalInfo)
+                .presentationDragIndicator(.visible)
+        }
+        .sheet(isPresented: $openAdvertisingTerms) {
+            TermsWebView(agreeCase: .advertising)
+                .presentationDragIndicator(.visible)
         }
     }
     private var disabledCondition: Bool {
