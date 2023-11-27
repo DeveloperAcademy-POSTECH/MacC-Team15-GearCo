@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+enum AddIngredientViewType {
+    case isTesting
+    case isNormal
+}
+
 struct AddTestIngredientsView: View {
     // TODO: 전체적인 Padding 계층 및 Magic Number 수정 요함
     private let ingredientData = IngredientData.shared.ingredients
@@ -14,25 +19,31 @@ struct AddTestIngredientsView: View {
     
     // MARK: Padding&Spacing Magic Numbers
     private let viewHorizontalPadding: CGFloat = 20
-    
     private let headerBottomPadding: CGFloat = 20
     private let typeButtonsRowBottomPadding: CGFloat = 17
     private let typeButtonBetweenSpace: CGFloat = 10
-    
     private let selectedTypeBottomSpace: CGFloat = 25
     private let divisionDividerVerticalPadding: CGFloat = 10
-    
     private let saveButtonBottomSpace: CGFloat = 40
     private let saveButtonTopSpace: CGFloat = 100
     private let reportButtonTopSpace: CGFloat = 20
-        
+    
+    // init property
+    let addIngredientViewType: AddIngredientViewType
+    
+    init(_ addIngredientViewType: AddIngredientViewType) {
+        self.addIngredientViewType = addIngredientViewType
+    }
+    
+    @EnvironmentObject var mealOB: MealOB
+    
     // 선택된 테스트 재료
     @State private var selectedIngredients: [Int] = []
     
+    // MARK: body
     var body: some View {
         VStack(spacing: 0) {
-            BackButtonHeader(title: Texts.testViewTitle)
-                .padding(.bottom, headerBottomPadding)
+            BackButtonAndTitleHeader(title: Texts.testViewTitle)
             
             // MARK: 검색, 재료 타입 버튼
             ScrollView(.horizontal, showsIndicators: false) {
@@ -79,7 +90,7 @@ struct AddTestIngredientsView: View {
                 ButtonComponents(.big).padding(.horizontal, viewHorizontalPadding)
                 Spacer().frame(height: saveButtonBottomSpace)
             }
-        }.background(Color.mainBackgroundColor)
+        }.background(Color.mainBackgroundColor).toolbar(.hidden)
     }
     
     private var reportButton: some View {
@@ -169,8 +180,8 @@ func selectedIngredientTypeBox(ingredient: Ingredient) -> some View {
                              radius: cornerRadius)
 }
 
-struct AddTestIngredientsView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddTestIngredientsView()
-    }
-}
+//struct AddTestIngredientsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AddTestIngredientsView()
+//    }
+//}

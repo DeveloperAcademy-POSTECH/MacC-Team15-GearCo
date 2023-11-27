@@ -13,7 +13,10 @@ struct MealDetailView: View {
     @State private var isSaveButtonTapped: Bool = false
     @State private var isDeleteButtonTapped: Bool = false
     
+    @State private var showAddNewIngredientView: Bool = false
+    
     private let texts = TextLiterals.MealDetail.self
+    private let firebaseManager = FirebaseManager.shared
     let isEditMode: Bool
     
     // meal cell을 눌러서 들어온 경우 - 끼니 편집
@@ -30,15 +33,18 @@ struct MealDetailView: View {
     
     // from Plan Group Detail View - 끼니 추가
     init(startDate: Date, endDate: Date) {
-        let cycleGap = CycleGaps(rawValue:Date.componentsBetweenDates(from: endDate, to: startDate).day! + 1) ?? .three
+        let cycleGap = CycleGaps(rawValue: Date.componentsBetweenDates(from: endDate, to: startDate).day! + 1) ?? .three
         self._mealOB = StateObject(wrappedValue: MealOB(startDate: startDate, cycleGap: cycleGap))
         self.isEditMode = false
     }
     
     var body: some View {
-        RootVStack {
-            viewHeader
-            viewBody
+        #warning("임시 NavigationStack. 추후 뷰 연결 시 NavigationStack을 삭제할 것.")
+        NavigationStack {
+            RootVStack {
+                viewHeader
+                viewBody
+            }
         }
     }
     
@@ -192,7 +198,10 @@ extension MealDetailView {
         TitleAndActionButtonView(
             title: texts.newIngredientText,
             buttonLabel: texts.addOrEditIngredientText(isEditMode: isEditMode)) {
-                addNewIngredient()
+                showAddNewIngredientView = true
+            }.navigationDestination(isPresented: $showAddNewIngredientView) {
+                AddTestIngredientsView(.isTesting)
+                    .environmentObject(mealOB)
             }
     }
 
@@ -200,22 +209,11 @@ extension MealDetailView {
         TitleAndActionButtonView(
             title: texts.oldIngredientText,
             buttonLabel: texts.addOrEditIngredientText(isEditMode: isEditMode)) {
-                addOtherIngredient()
+                showAddNewIngredientView = true
+            }.navigationDestination(isPresented: $showAddNewIngredientView) {
+                AddTestIngredientsView(.isNormal)
+                    .environmentObject(mealOB)
             }
-    }
-
-    #warning("올바른 callback 함수 구현 - addNewIngredient")
-    // TODO: 올바른 callback 함수 구현 - addNewIngredient
-    //       -> 재료 추가 화면 띄우기
-    private func addNewIngredient() {
-        print(#function)
-    }
-    
-    #warning("올바른 callback 함수 구현 - addNewIngredient")
-    // TODO: 올바른 callback 함수 구현 - addOtherIngredient
-    //       -> 재료 추가 화면 띄우기
-    private func addOtherIngredient() {
-        print(#function)
     }
 }
 
