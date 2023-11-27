@@ -17,6 +17,8 @@ final class MealOB: ObservableObject {
     @Published private(set) var startDate: Date
     @Published var cycleGap: CycleGaps
     
+    private let firebaseManager = FirebaseManager.shared
+    
     var isAddButtonDisabled: Bool {
         mealPlan == nil && ((newIngredients.count == 0 && oldIngredients.count == 0 ) || mealType == nil)
     }
@@ -85,8 +87,15 @@ final class MealOB: ObservableObject {
 
     #warning("meal - add plan 구현하기")
     // TODO: add plan :) FB에 쓔우우웅?! + mealPlans에도 넣어야?!
-    func addMealPlan() {
-        print(#function)
+    func addMealPlan(user: UserOB) {
+        firebaseManager.saveMealPlan(self, user: user) { result in
+            switch result {
+            case .success:
+                print("식단 계획이 성공적으로 저장되었습니다.")
+            case .failure(let error):
+                print("오류 발생: \(error.localizedDescription)")
+            }
+        }
     }
     
     #warning("meal - change plan 구현하기")

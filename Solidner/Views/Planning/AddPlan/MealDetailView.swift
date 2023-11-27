@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MealDetailView: View {
+    @EnvironmentObject var user: UserOB
     @StateObject private var mealOB: MealOB
     @State private var showSettingStartDate: Bool = false
     @State private var isSaveButtonTapped: Bool = false
@@ -17,7 +18,7 @@ struct MealDetailView: View {
     @State var showAddOldIngredientView: Bool = false
     
     private let texts = TextLiterals.MealDetail.self
-    private let firebaseManager = FirebaseManager.shared
+
     let isEditMode: Bool
     
     // meal cell을 눌러서 들어온 경우 - 끼니 편집
@@ -348,6 +349,7 @@ extension MealDetailView {
         )
     }
 }
+
 // MARK: - addPlanButton
 extension MealDetailView {
     private var addMealPlanButton: some View {
@@ -360,7 +362,7 @@ extension MealDetailView {
                 isSaveButtonTapped = true
                 mealOB.changeMealPlan()
             }
-            else { mealOB.addMealPlan() }
+            else { mealOB.addMealPlan(user: user) }
         }
     }
 }
