@@ -11,10 +11,11 @@ import SwiftUI
 
 struct StartDateInitialSelectModal: View {
     private let texts = TextLiterals.StartPlan.self
-    @State private var currentDate = Date()
+    @Binding var currentDate: Date
     @EnvironmentObject var user: UserOB
+    @Binding var isPlanStarting: Bool
     @Environment(\.dismiss) private var dismiss
-
+    
     var body: some View {
         VStack(spacing: .zero) {
             Spacer()
@@ -40,8 +41,12 @@ struct StartDateInitialSelectModal: View {
     private var datePicker: some View {
         let dateRange = {
             let today = Date()
-            let oneYearAfter = Date.date(year: today.year + 1, month: today.month, day: today.day)!
-            return user.babyBirthDate...oneYearAfter
+//            let oneYearAfter = Date.date(year: today.year + 1, month: today.month, day: today.day)!
+            let firstDateOfThisMonth = Date.date(year: today.year, month: today.month, day: 1)!
+            let lastDate = firstDateOfThisMonth
+                .add(.month, value: +2)
+                .add(.day, value: -1)
+            return max(user.babyBirthDate, firstDateOfThisMonth)...lastDate
         }()
 
         return DatePicker(
@@ -62,7 +67,7 @@ struct StartDateInitialSelectModal: View {
         ButtonComponents(
             .big,
             title: texts.startButtonLabel(from: currentDate)) {
-                // 다음 action
+                isPlanStarting = true
                 dismiss()
             }
             .padding(.bottom, K.startButtonPaddingBottom)
@@ -84,6 +89,6 @@ extension StartDateInitialSelectModal {
 
 struct StartDateInitialSelectModal_Previews: PreviewProvider {
     static var previews: some View {
-        StartDateInitialSelectModal().environmentObject(UserOB())
+        StartDateInitialSelectModal(currentDate: .constant(Date()), isPlanStarting: .constant(false)).environmentObject(UserOB())
     }
 }

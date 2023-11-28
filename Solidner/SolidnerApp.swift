@@ -30,7 +30,7 @@ struct SolidnerApp: App {
         WindowGroup {
             let isPlanEmpty = mealPlansOB.mealPlans.isEmpty
             
-//            #warning("이거 더 좋은 방법으로 정리해줄 사람~~")
+            #warning("이거 더 좋은 방법으로 정리해줄 사람~~")
 //            if isOnboardingOn {
 //                //                    SignInView()
 //                NavigationStack {
@@ -51,10 +51,12 @@ struct SolidnerApp: App {
 //                .environmentObject(mealPlansOB)
 //                //                    MonthlyPlanningView()
 //            }
-            // AddTestIngredientsView().environmentObject(userOB)   
+
             // MypageRootView().environmentObject(userOB)
-            ReportIngredientModalView()
-            .environmentObject(userOB)
+            
+            MealDetailView(startDate: Date(), cycleGap: userOB.planCycleGap)
+                .environmentObject(userOB)
+                .environmentObject(mealPlansOB)
         }
     }
 }

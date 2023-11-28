@@ -11,8 +11,10 @@ import SwiftUI
 
 struct StartPlanView: View {
     private let texts = TextLiterals.StartPlan.self
+    @State private var startDate = Date()
     @State private var isStartTapped = false
     @State private var isMyPageOpenning = false
+    @State private var isPlanStarting = false
     
     var body: some View {
         RootVStack {
@@ -36,6 +38,12 @@ struct StartPlanView: View {
             goToPlanButton
             Spacer()
         }
+        .navigationDestination(isPresented: $isMyPageOpenning) {
+            MypageRootView()
+        }
+        .navigationDestination(isPresented: $isPlanStarting) {
+            MealDetailView(startDate: startDate, cycleGap: .three)
+        }
     }
 
     private var viewHeaderLeftButton: some View {
@@ -43,9 +51,6 @@ struct StartPlanView: View {
             isMyPageOpenning = true
         } label: {
             Image(.userInfo)
-        }
-        .navigationDestination(isPresented: $isMyPageOpenning) {
-            MypageRootView()
         }
     }
 
@@ -94,7 +99,10 @@ struct StartPlanView: View {
     }
 
     private var modal: some View {
-        StartDateInitialSelectModal()
+        StartDateInitialSelectModal(
+            currentDate: $startDate,
+            isPlanStarting: $isPlanStarting
+        )
             .presentationDetents([.height(K.modalHeight)])
             .modify { view in
                 if #available(iOS 16.4, *) {

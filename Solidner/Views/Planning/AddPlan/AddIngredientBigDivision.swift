@@ -49,16 +49,18 @@ struct IngredientsBigDivision: View {
     @EnvironmentObject var user: UserOB
     @Binding var selectedIngredients: [Int]
     @State private var foldStates: [IngredientType: Bool]
+    let viewType: MealOB.IngredientTestType
     
-    init(divisionCase: DivisionCase, selectedIngredientPair: Binding<[Int]>) {
+    init(case divisionCase: DivisionCase, ingredients selectedIngredients: Binding<[Int]>, viewType: MealOB.IngredientTestType) {
         self.divisionCase = divisionCase
-        _selectedIngredients = selectedIngredientPair
-
+        self.viewType = viewType
+        
+        self._selectedIngredients = selectedIngredients
         var states: [IngredientType: Bool] = [:]
         for type in IngredientType.allCases {
             states[type] = false
         }
-        _foldStates = State(initialValue: states)
+        self._foldStates = State(initialValue: states)
     }
     
     private func toggleFoldState(foldStateList: inout [IngredientType: Bool], type: IngredientType) {
@@ -79,7 +81,10 @@ struct IngredientsBigDivision: View {
             }
         }.padding(.horizontal, viewHorizontalPadding)
     }
-    
+}
+
+// MARK: Division View
+extension IngredientsBigDivision {
     private func 먹을수있는권장하지않는Division() -> some View {
         return VStack(alignment: .leading, spacing: 0) {
             Spacer().frame(height: titleTopSpace)
@@ -121,9 +126,11 @@ struct IngredientsBigDivision: View {
                             let data = ingredientData[key]!
                             let month = user.dateAfterBirth.month!
                             if divisionCase == .먹을수있는재료 && data.type == type && data.ableMonth <= month {
-                                ingredientSelectRow(divisionCase: divisionCase, ingredient: data, selectedIngredientPair: $selectedIngredients).padding(.vertical, 15)
+                                ingredientSelectRow(case: divisionCase, ingredient: data,
+                                                    selected: $selectedIngredients, viewType: viewType).padding(.vertical, 15)
                             } else if divisionCase == .권장하지않는재료 && data.type == type && data.ableMonth > month {
-                                ingredientSelectRow(divisionCase: divisionCase, ingredient: data, selectedIngredientPair: $selectedIngredients).padding(.vertical, 15)
+                                ingredientSelectRow(case: divisionCase, ingredient: data,
+                                                    selected: $selectedIngredients, viewType: viewType).padding(.vertical, 15)
                             }
                         }
                     }.transition(.push(from: foldStates[type]! ? .bottom : .top))
@@ -167,7 +174,10 @@ struct IngredientsBigDivision: View {
 //            }
         }
     }
-    
+}
+
+// MARK: 재료 하나하나의 Row (ingredientSelectRow)
+extension IngredientsBigDivision {
     struct ingredientSelectRow: View {
         let dateTextHorizontalPadding: CGFloat = 5
         let dateTextVerticalPadding: CGFloat = 2.5
@@ -177,12 +187,14 @@ struct IngredientsBigDivision: View {
         let ingredientData = IngredientData.shared.ingredients
         let divisionCase: DivisionCase
         let ingredient: Ingredient
-        @Binding var selectedIngredientPair: [Int]
+        
+        @Binding var selectedIngredients: [Int]
+        let viewType: MealOB.IngredientTestType
         
         var buttonDisableCondition: Bool {
-            if selectedIngredientPair.contains(ingredient.id) {
+            if selectedIngredients.contains(ingredient.id) {
                 return false
-            } else if selectedIngredientPair.count < 2 {
+            } else if viewType == .old || selectedIngredients.count < 2 {
                 return false
             }
             return true
@@ -190,15 +202,17 @@ struct IngredientsBigDivision: View {
         
         @State private var isClicked: Bool
 
-        init(divisionCase: DivisionCase, ingredient: Ingredient, selectedIngredientPair: Binding<[Int]>) {
+        init(case divisionCase: DivisionCase, ingredient: Ingredient,
+             selected selectedIngredients: Binding<[Int]>, viewType: MealOB.IngredientTestType) {
             self.divisionCase = divisionCase
             self.ingredient = ingredient
-            self._selectedIngredientPair = selectedIngredientPair
-            self._isClicked = State(initialValue: selectedIngredientPair.wrappedValue.contains(ingredient.id))
+            self._selectedIngredients = selectedIngredients
+            self._isClicked = State(initialValue: selectedIngredients.wrappedValue.contains(ingredient.id))
+            self.viewType = viewType
         }
 
         var isNotRecommended: Bool {
-            for id in selectedIngredientPair {
+            for id in selectedIngredients {
                 if let misIngredients = ingredientData[id]?.misMatches {
                     for misIngredient in misIngredients {
                         if ingredient.id == misIngredient.id {
@@ -211,10 +225,10 @@ struct IngredientsBigDivision: View {
         }
         
         private func addIngredient(ingredient: Ingredient) {
-            if selectedIngredientPair.contains(ingredient.id) {
-                selectedIngredientPair.removeAll{$0 == ingredient.id}
-            } else if selectedIngredientPair.count < 2 {
-                selectedIngredientPair.append(ingredient.id)
+            if selectedIngredients.contains(ingredient.id) {
+                selectedIngredients.removeAll{$0 == ingredient.id}
+            } else if viewType == .old || selectedIngredients.count < 2 {
+                selectedIngredients.append(ingredient.id)
             }
         }
         
@@ -263,4 +277,3 @@ struct IngredientsBigDivision: View {
         }
     }
 }
-

@@ -14,72 +14,105 @@ struct AddTestIngredientsView: View {
     
     // MARK: Padding&Spacing Magic Numbers
     private let viewHorizontalPadding: CGFloat = 20
-    
     private let headerBottomPadding: CGFloat = 20
     private let typeButtonsRowBottomPadding: CGFloat = 17
     private let typeButtonBetweenSpace: CGFloat = 10
-    
     private let selectedTypeBottomSpace: CGFloat = 25
     private let divisionDividerVerticalPadding: CGFloat = 10
-    
     private let saveButtonBottomSpace: CGFloat = 40
     private let saveButtonTopSpace: CGFloat = 100
     private let reportButtonTopSpace: CGFloat = 20
-        
+    
+    
+    @EnvironmentObject var mealOB: MealOB
+    
+    // init property
+    let viewType: MealOB.IngredientTestType
+    @Environment(\.dismiss) private var dismiss
     // 선택된 테스트 재료
     @State private var selectedIngredients: [Int] = []
     
+    init(_ addIngredientViewType: MealOB.IngredientTestType) {
+        self.viewType = addIngredientViewType
+    }
+    
+    
+    // MARK: body
     var body: some View {
         VStack(spacing: 0) {
-            BackButtonHeader(title: Texts.testViewTitle)
-                .padding(.bottom, headerBottomPadding)
+            BackButtonAndTitleHeader(title: Texts.testViewTitle)
             
             // MARK: 검색, 재료 타입 버튼
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: typeButtonBetweenSpace) {
-                    searchButton
-                    ForEach(TempIngredientType.allCases, id: \.self) { ingredientType in
-                        ingredientTypeButton(ingredientType.rawValue)
-                    }
-                }.padding(.leading, viewHorizontalPadding)
-            }.padding(.bottom, typeButtonsRowBottomPadding)
+            searchAndIngredientTypeButtonsRow
             
             // MARK: 선택된 재료 타입 확인 Row
-            if !selectedIngredients.isEmpty {
-                let firstIngredient: Ingredient = ingredientData[selectedIngredients[0]]!
-                HStack(spacing: typeButtonBetweenSpace) {
-                    selectedIngredientTypeBox(ingredient: firstIngredient)
-                    if selectedIngredients.count > 1 {
-                        let secondIngredient = ingredientData[selectedIngredients[1]]!
-                        selectedIngredientTypeBox(ingredient: secondIngredient)
-                    }
-                    Spacer()
-                }.padding(.leading, viewHorizontalPadding)
-                
-                Spacer().frame(height: selectedTypeBottomSpace)
-            }
+            selectedIngredientRow
             
             ScrollView {
-                IngredientsBigDivision(divisionCase: .이상반응재료,
-                                       selectedIngredientPair: $selectedIngredients)
-//                IngredientsBigDivision(divisionCase: .자주사용한재료)
+                if viewType == .new {
+                    // TODO: 추후 이상반응 기능 추가 시 활성화
+//                    IngredientsBigDivision(case: .이상반응재료,
+//                                           ingredients: $selectedIngredients,
+//                                           viewType: viewType)
+                } else {
+                    IngredientsBigDivision(case: .자주사용한재료,
+                                           ingredients: $selectedIngredients,
+                                           viewType: viewType)
+                }
                 
                 ThickDivider().padding(.vertical, divisionDividerVerticalPadding)
                 
-                IngredientsBigDivision(divisionCase: .먹을수있는재료,
-                                       selectedIngredientPair: $selectedIngredients)
+                IngredientsBigDivision(case: .먹을수있는재료,
+                                       ingredients: $selectedIngredients,
+                                       viewType: viewType)
                 Spacer().frame(height: divisionDividerVerticalPadding)
-                IngredientsBigDivision(divisionCase: .권장하지않는재료,
-                                       selectedIngredientPair: $selectedIngredients)
+                IngredientsBigDivision(case: .권장하지않는재료,
+                                       ingredients: $selectedIngredients,
+                                       viewType: viewType)
                 
                 Spacer().frame(height: reportButtonTopSpace)
                 reportButton
                 
                 Spacer().frame(height: saveButtonTopSpace)
-                ButtonComponents(.big).padding(.horizontal, viewHorizontalPadding)
+                ButtonComponents(.big, title: "저장") {
+                    saveSelectedTestIngredient()
+                }.padding(.horizontal, viewHorizontalPadding)
                 Spacer().frame(height: saveButtonBottomSpace)
             }
-        }.background(Color.mainBackgroundColor)
+        }.background(Color.mainBackgroundColor).toolbar(.hidden)
+            .onAppear { initSelectedIngredient() }
+    }
+}
+
+// MARK: View Components
+extension AddTestIngredientsView {
+    private var searchAndIngredientTypeButtonsRow: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: typeButtonBetweenSpace) {
+                searchButton
+                ForEach(TempIngredientType.allCases, id: \.self) { ingredientType in
+                    ingredientTypeButton(ingredientType.rawValue)
+                }
+            }.padding(.leading, viewHorizontalPadding)
+        }.padding(.bottom, typeButtonsRowBottomPadding)
+    }
+    
+    private var selectedIngredientRow: some View {
+        if !selectedIngredients.isEmpty {
+            return AnyView(
+                VStack(alignment: .leading, spacing: 0) {
+                    ScrollView(.horizontal) {
+                        HStack(spacing: typeButtonBetweenSpace) {
+                            ForEach(selectedIngredients.indices, id: \.self) { i in
+                                let data = ingredientData[selectedIngredients[i]]!
+                                selectedIngredientTypeBox(ingredient: data)
+                            }
+                        }
+                    }.padding(.leading, viewHorizontalPadding).padding(.bottom, selectedTypeBottomSpace)
+                }
+            )
+        }
+        return AnyView(EmptyView())
     }
     
     private var reportButton: some View {
@@ -139,6 +172,53 @@ struct AddTestIngredientsView: View {
         }
     }
     
+    /// 선택된 재료들의 구분을 표시하는 블럭을 return합니다.
+    /// - Parameter typeText: 표시될 text
+    /// - Returns: 선택된 재료 확인 box
+    func selectedIngredientTypeBox(ingredient: Ingredient) -> some View {
+        let horizontalPadding: CGFloat = 12
+        let verticalPadding: CGFloat = 7
+        let cornerRadius: CGFloat = 6
+        
+        // TODO: 재료 타입에 따른 color가 되도록 수정
+        return Text("\(ingredient.name)")
+            .bodyFont3()
+            .foregroundColor(.secondaryText)
+            .symmetricBackground(HPad: horizontalPadding,
+                                 VPad: verticalPadding,
+                                 color: ingredient.type.color,
+                                 radius: cornerRadius)
+    }
+}
+
+// MARK: Functions
+extension AddTestIngredientsView {
+    
+    private func saveSelectedTestIngredient() {
+        mealOB.clearIngredient(in: viewType)
+        for i in selectedIngredients {
+            let ingredient = ingredientData[i]!
+            mealOB.addIngredient(ingredient: ingredient, in: viewType)
+        }
+        
+        dismiss()
+    }
+    
+    private func initSelectedIngredient() {
+        switch viewType {
+        case .new:
+            for ingredient in mealOB.newIngredients {
+                selectedIngredients.append(ingredient.id)
+            }
+        case .old:
+            for ingredient in mealOB.oldIngredients {
+                selectedIngredients.append(ingredient.id)
+            }
+        }
+    }
+}
+
+extension AddTestIngredientsView {
     // MARK: IngredientType
     enum TempIngredientType: String, CaseIterable {
         case 이상반응재료 = "이상 반응 재료"
@@ -151,26 +231,3 @@ struct AddTestIngredientsView: View {
     }
 }
 
-/// 선택된 재료들의 구분을 표시하는 블럭을 return합니다.
-/// - Parameter typeText: 표시될 text
-/// - Returns: 선택된 재료 확인 box
-func selectedIngredientTypeBox(ingredient: Ingredient) -> some View {
-    let horizontalPadding: CGFloat = 12
-    let verticalPadding: CGFloat = 7
-    let cornerRadius: CGFloat = 6
-    
-    // TODO: 재료 타입에 따른 color가 되도록 수정
-    return Text("\(ingredient.name)")
-        .bodyFont3()
-        .foregroundColor(.secondaryText)
-        .symmetricBackground(HPad: horizontalPadding,
-                             VPad: verticalPadding,
-                             color: ingredient.type.color,
-                             radius: cornerRadius)
-}
-
-struct AddTestIngredientsView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddTestIngredientsView()
-    }
-}
