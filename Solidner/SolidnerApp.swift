@@ -28,7 +28,8 @@ struct SolidnerApp: App {
     
     var body: some Scene {
         WindowGroup {
-            let isPlanEmpty = mealPlansOB.mealPlans.isEmpty
+//            let isPlanEmpty = mealPlansOB.mealPlans.isEmpty
+            let isPlanEmpty = false
             
             #warning("이거 더 좋은 방법으로 정리해줄 사람~~")
 //            if isOnboardingOn {
