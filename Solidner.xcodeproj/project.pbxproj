@@ -708,7 +708,6 @@
 				0E18AD712AFA94E10011ED4A /* FirebaseManager.swift in Sources */,
 				C3AD1BC62B012DA6003BB3E0 /* UIApplication+.swift in Sources */,
 				C3AD1BC42B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift in Sources */,
-				C3C637982AF91EE0006D464D /* models_dummy.swift in Sources */,
 				C3777C662B1250E3008B951A /* NotificationSettingView.swift in Sources */,
 				0E18AD6F2AFA8F140011ED4A /* AppleLoginOB.swift in Sources */,
 				C3C637942AF91EB0006D464D /* common_dummy.swift in Sources */,
@@ -908,12 +907,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Solidner/Solidner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Solidner/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = PAQ92DM7XD;
+				DEVELOPMENT_TEAM = PAQ92DM7XD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Solidner/Info.plist;
@@ -931,7 +928,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jeckmu.Solidner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Solidner Debug";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -945,12 +941,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Solidner/Solidner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Solidner/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = PAQ92DM7XD;
+				DEVELOPMENT_TEAM = PAQ92DM7XD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Solidner/Info.plist;
@@ -968,7 +962,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jeckmu.Solidner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Solidner Debug";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
