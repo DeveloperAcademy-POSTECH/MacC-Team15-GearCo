@@ -5,7 +5,7 @@
 //  Created by sei on 11/26/23.
 //
 
-import Foundation
+import SwiftUI
 
 enum MealPlanFilter {
     case all
@@ -18,7 +18,8 @@ enum MealPlanFilter {
 final class MealPlansOB: ObservableObject {
     
     private let firebaseManager = FirebaseManager.shared
-    let user: UserOB
+    private var email: String = "jwlee010222@gmail.com"
+//    @AppStorage("email") private var email: String = "jwlee010222@gmail.com"
     
     // TODO: - init할 때 모든 플랜을 서버에서 갖고 와요.
     @Published private(set) var mealPlans: [MealPlan] = [] {
@@ -28,10 +29,8 @@ final class MealPlansOB: ObservableObject {
     }
     @Published private(set) var filteredMealPlans: [MealPlan] = []
     
-    init(user: UserOB, currentFilter: MealPlanFilter = .month(date:Date())) {
-        self.user = user
-        self.loadAllPlans(user: self.user)
-        
+    init(currentFilter: MealPlanFilter = .month(date:Date())) {
+        // View 측에서 task로 loadAllPlans() 호출 바람
         let sortedMealPlan = mealPlans.sorted { $0.startDate < $1.startDate }
         self.mealPlans = sortedMealPlan
         self.filteredMealPlans = sortedMealPlan
@@ -65,11 +64,13 @@ final class MealPlansOB: ObservableObject {
     
     
     /// 앱 실행 시 (MealPlansOB Init 시) DB에서 모든 Plan 정보를 fetch.
+    /// MealPlansOB 객체 초기화 이후 필수적으로 task로 호출해야 함.
     /// - Parameter user: UserOB의 객체.
-    private func loadAllPlans(user: UserOB) {
-        let email = user.email
-        
-        self.mealPlans = firebaseManager.loadAllPlans(email: email)
+    func loadAllPlans() async {
+        let plans = await firebaseManager.loadAllPlans(email: email)
+        await MainActor.run {
+            self.mealPlans = plans
+        }
     }
     
     /// updatedItem을 순회하며 id를 기준으로 mealPlans를 업데이트 하는 함수

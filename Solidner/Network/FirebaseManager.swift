@@ -29,22 +29,26 @@ final class FirebaseManager {
     }
 }
 
-extension CollectionReference {
-    func getDocRef(_ email: String, id: String?) -> DocumentReference {
-        if let id {
-            return self.document("\(email)_\(id)")
-        }
-        return self.document("\(email)")
-    }
-}
-
 // MARK: MealPlansOB 관련
 extension FirebaseManager {
     
-    func loadAllPlans(email: String) -> [MealPlan] {
+    func loadAllPlans(email: String) async -> [MealPlan] {
         var result: [MealPlan] = []
         let planColRef = getColRef(.Plan)
         
+        do {
+            let querySnapshot = try await planColRef.whereField("email", isEqualTo: email).getDocumentsAsync()
+            for document in querySnapshot.documents {
+                result.append(parseDataToMealPlan(data: document.data()))
+            }
+            print("MealPlansOB 초기화 - 모든 계획을 불러오는 데 성공했습니다.")
+        } catch {
+            print("MealPlansOB 초기화 실패! 모든 계획을 성공적으로 불러오지 못했습니다. - \(error)")
+        }
+        
+        return result
+        
+        // func to parse querydata to MealPlan object.
         func parseDataToMealPlan(data: [String: Any]) -> MealPlan {
             let id = UUID(uuidString: data["planID"] as? String ?? "") ?? UUID()
             let startDate = (data["startDate"] as? Timestamp ?? Timestamp()).dateValue()
@@ -75,22 +79,6 @@ extension FirebaseManager {
             
             return MealPlan(id: id, startDate: startDate, endDate: endDate, mealType: mealType, newIngredients: newIngredients, oldIngredients: oldIngredients)
         }
-        
-        planColRef.whereField("email", isEqualTo: email).getDocuments { querySnapshot, err in
-            if let err {
-                print("MealPlansOB 초기화 실패! 모든 계획을 성공적으로 불러오지 못했습니다. - \(err)")
-            } else {
-                if let querySnapshot {
-                    for document in querySnapshot.documents {
-                        result.append(parseDataToMealPlan(data: document.data()))
-                    }
-                    print("MealPlansOB 초기화 - 모든 계획을 불러오는 데 성공했습니다.")
-                } else {
-                    print("MealPlansOB 초기화 - 아직 생성한 계획이 없거나, 계획을 모두 불러오는 데 실패했습니다.")
-                }
-            }
-        }
-        return result
     }
 }
 
@@ -146,3 +134,4 @@ extension FirebaseManager {
         }
     }
 }
+

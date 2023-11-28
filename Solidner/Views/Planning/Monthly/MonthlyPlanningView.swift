@@ -16,37 +16,39 @@ struct MonthlyPlanningView: View {
     
     private let nowMonthWeekNums = Date.nowMonthWeeks()
     
-    // Dummy struct
-    struct planData {
+    struct PlanData {
         var startDate: Int
         var endDate: Int
     }
     // MARK: 이전 달의 데이터와 이후 달의 데이터는 -2, 33 등과 같이 표현할 것.
-    let plans: [planData] =
-    [
-     planData(startDate: -1, endDate: 1),
-     planData(startDate: 2, endDate: 4),
-     planData(startDate: 2, endDate: 3),
-     planData(startDate: 5, endDate: 7),
-     planData(startDate: 8, endDate: 10),
-     planData(startDate: 9, endDate: 11),
-     planData(startDate: 13, endDate: 14),
-     planData(startDate: 11, endDate: 12),
-     planData(startDate: 16, endDate: 19),
-     planData(startDate: 16, endDate: 18),
-     planData(startDate: 19, endDate: 22),
-     planData(startDate: 19, endDate: 22),
-     planData(startDate: 21, endDate: 24),
-     planData(startDate: 21, endDate: 24),
-     planData(startDate: 23, endDate: 26),
-     planData(startDate: 24, endDate: 25),
-     planData(startDate: 26, endDate: 27),
-     planData(startDate: 29, endDate: 30),
-     planData(startDate: 29, endDate: 31),
-     planData(startDate: 27, endDate: 32)
-    ]
+//    let plans: [planData] =
+//    [
+//     planData(startDate: -1, endDate: 1),
+//     planData(startDate: 2, endDate: 4),
+//     planData(startDate: 2, endDate: 3),
+//     planData(startDate: 5, endDate: 7),
+//     planData(startDate: 8, endDate: 10),
+//     planData(startDate: 9, endDate: 11),
+//     planData(startDate: 13, endDate: 14),
+//     planData(startDate: 11, endDate: 12),
+//     planData(startDate: 16, endDate: 19),
+//     planData(startDate: 16, endDate: 18),
+//     planData(startDate: 19, endDate: 22),
+//     planData(startDate: 19, endDate: 22),
+//     planData(startDate: 21, endDate: 24),
+//     planData(startDate: 21, endDate: 24),
+//     planData(startDate: 23, endDate: 26),
+//     planData(startDate: 24, endDate: 25),
+//     planData(startDate: 26, endDate: 27),
+//     planData(startDate: 29, endDate: 30),
+//     planData(startDate: 29, endDate: 31),
+//     planData(startDate: 27, endDate: 32)
+//    ]
     
-    @State private var reducedPlans: [(first: planData, second: BarPosition)] = []
+    @EnvironmentObject var user: UserOB
+    @EnvironmentObject var mealPlansOB: MealPlansOB
+    
+    @State private var reducedPlans: [(first: PlanData, second: BarPosition)] = []
     
     var body: some View {
         VStack(spacing: 0) {
@@ -71,10 +73,12 @@ struct MonthlyPlanningView: View {
             }
         }.background(Color(.lightGray))
             .onAppear {
+                var plans: [PlanData] = []
+                for plan in mealPlansOB.filteredMealPlans {
+                    let plan = PlanData(startDate: plan.startDate.day, endDate: plan.endDate.day)
+                    plans.append(plan)
+                }
                 reducedPlans = reducePlanData(plans: plans)
-//                for plan in reducedPlans {
-//                    print("plan :: \(plan.first.startDate)~\(plan.first.endDate) / \(plan.second)")
-//                }
             }
     }
     
@@ -91,13 +95,13 @@ struct MonthlyPlanningView: View {
         let barHorizontalPadding = screenWidth * (10/390)
         let endPadding = barHorizontalPadding + rowHorizontalPadding
         
-        let plansInWeek: [(data: planData, position: BarPosition)]
+        let plansInWeek: [(data: PlanData, position: BarPosition)]
         = reducePlanDataInWeek(weekOfMonth: weekOfMonth, reducedPlans: reducedPlans)
         
-        var plansInWeekFirstLine: [planData] {
+        var plansInWeekFirstLine: [PlanData] {
             plansInWeek.filter { $0.position == .first }.map { $0.data }
         }
-        var plansInWeekSecondLine: [planData] {
+        var plansInWeekSecondLine: [PlanData] {
             plansInWeek.filter { $0.position == .second }.map { $0.data }
         }
         
@@ -107,7 +111,7 @@ struct MonthlyPlanningView: View {
         
         
         // MARK: 바 길이 계산
-        func calculateBarWidth(plan: planData, isBarFromEnd: (left: Bool, right: Bool)) -> CGFloat {
+        func calculateBarWidth(plan: PlanData, isBarFromEnd: (left: Bool, right: Bool)) -> CGFloat {
             var cycle: CGFloat {
                 if isBarFromEnd.left {
                     return CGFloat(plan.endDate - weekDates.first!.day + 1)
@@ -147,7 +151,7 @@ struct MonthlyPlanningView: View {
         }
         
         // MARK: 재료 바 한 개 return 함수
-        func ingredientBar(plan: planData, index: Int, isBarFromEnd: (left: Bool, right: Bool)) -> some View {
+        func ingredientBar(plan: PlanData, index: Int, isBarFromEnd: (left: Bool, right: Bool)) -> some View {
             let barWidth: CGFloat = calculateBarWidth(plan: plan, isBarFromEnd: isBarFromEnd)
             let barRadius: CGFloat = 4
                         
@@ -173,7 +177,7 @@ struct MonthlyPlanningView: View {
         }
         
         // MARK: 바 한 개 왼쪽, 오른쪽 공간 계산
-        func barLeftPadding(plans: [planData], index: Int, isBarFromEnd: (left: Bool, right: Bool)) -> some View {
+        func barLeftPadding(plans: [PlanData], index: Int, isBarFromEnd: (left: Bool, right: Bool)) -> some View {
             
             switch plans.count {
             case 0:
@@ -229,7 +233,7 @@ struct MonthlyPlanningView: View {
                 }
             }
         }
-        func barRightPadding(plans: [planData], index: Int, isBarFromEnd: (left: Bool, right: Bool)) -> some View {
+        func barRightPadding(plans: [PlanData], index: Int, isBarFromEnd: (left: Bool, right: Bool)) -> some View {
             switch plans.count {
             case 0:
                 return AnyView(EmptyView())
@@ -259,7 +263,7 @@ struct MonthlyPlanningView: View {
         }
         
         // MARK: 바가 왼쪽에서 이어지는 지, 오른쪽에서 이어지는 지 계산
-        func calculateIsBarFromEnd(plan: planData) -> (Bool, Bool) {
+        func calculateIsBarFromEnd(plan: PlanData) -> (Bool, Bool) {
             var result: (left: Bool, right: Bool) = (false, false)
             if dayNumsInWeek.first! > plan.startDate {
                 result.left = true
@@ -389,14 +393,14 @@ extension MonthlyPlanningView {
         case second = 2
     }
     
-    private func reducePlanData(plans: [planData]) -> [(planData, BarPosition)] {
+    private func reducePlanData(plans: [PlanData]) -> [(PlanData, BarPosition)] {
         let nowMonthDates = Date.nowMonthDates()
         let lastDateNum = nowMonthDates.last!.day
         // key는 -7 ~ 마지막일+7 까지의 Int형 정수, value는 (first: Bool, second: Bool)인 tuple로 이루어진 dictionary
         // ex: { 1: (true, false), 2: (true, false)... }  (true가 가용한(비어있는) 상태)
         var dict = Dictionary(uniqueKeysWithValues: (-7...lastDateNum+7).map { ($0, (first: true, second: true)) })
         
-        var result: [(planData, BarPosition)] = []
+        var result: [(PlanData, BarPosition)] = []
         
         // 시작일 순 정렬
         let sortedPlans = plans.sorted{ $0.startDate < $1.startDate }
@@ -438,10 +442,10 @@ extension MonthlyPlanningView {
     }
     
     private func reducePlanDataInWeek(weekOfMonth: Int,
-                                      reducedPlans: [(first: planData, second: BarPosition)])
-    -> [(planData, BarPosition)] {
+                                      reducedPlans: [(first: PlanData, second: BarPosition)])
+    -> [(PlanData, BarPosition)] {
         let dayNumsInWeek: [Int] = Date.weekDates(weekOfMonth).map{ $0.day }
-        var result: [(planData, BarPosition)] = []
+        var result: [(PlanData, BarPosition)] = []
         
         for plan in reducedPlans.sorted(by: { $0.0.startDate < $1.0.startDate }) {
             if dayNumsInWeek.contains(plan.first.startDate) ||

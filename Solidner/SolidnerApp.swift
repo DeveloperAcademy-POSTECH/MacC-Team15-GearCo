@@ -24,11 +24,10 @@ struct SolidnerApp: App {
     
     let ingredientData = IngredientData.shared
     @StateObject private var userOB = UserOB()
-    @StateObject private var mealPlansOB = MealPlansOB()
     
     var body: some Scene {
         WindowGroup {
-            let isPlanEmpty = mealPlansOB.mealPlans.isEmpty
+//            let isPlanEmpty = mealPlansOB.mealPlans.isEmpty
             
             #warning("이거 더 좋은 방법으로 정리해줄 사람~~")
 //            if isOnboardingOn {
@@ -54,9 +53,7 @@ struct SolidnerApp: App {
             
             // MypageRootView().environmentObject(userOB)
             
-            MonthlyPlanningView()
-                .environmentObject(userOB)
-                .environmentObject(mealPlansOB)
+            MainView().environmentObject(userOB)
         }
     }
 }
