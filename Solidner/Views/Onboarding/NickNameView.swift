@@ -17,7 +17,6 @@ struct NickNameView: View {
     @StateObject private var keyboardHeightHelper = KeyboardHeightHelperOB()
     @FocusState private var isFocused: Bool
     @EnvironmentObject var user: UserOB
-    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @State private var babyNameViewIsPresented = false
     @State private var navigationIsPresented = false
     
@@ -26,11 +25,9 @@ struct NickNameView: View {
             ZStack {
                 BackgroundView()
                 VStack(spacing: 0) {
-                    BackButtonHeader {
-                        presentationMode.wrappedValue.dismiss()
-                    }
+                    BackButtonOnlyHeader()
                     viewBody()
-                        .padding(horizontal: 20, top: 31, bottom: 20)
+                        .padding(horizontal: 20, top: 14.88, bottom: 20)
                 }
                 .onAppear (perform : UIApplication.shared.hideKeyboard)
             }
@@ -50,6 +47,7 @@ struct NickNameView: View {
         return VStack(spacing: 0) {
             OnboardingTitles(bigTitle: nickNameViewCase == .userName ? TextLiterals.NickName.bigUserNameTitle : TextLiterals.NickName.bigBabyNameTitle , smallTitle: "", isSmallTitleExist: false)
             TextFieldComponents().shortTextfield(placeHolder: TextLiterals.NickName.placeHolder, value: $textLimiter.value, isFocused: $isFocused)
+
                 .padding(.top, textFieldTopPadding)
             if textLimiter.hasReachedLimit {
                 withAnimation {

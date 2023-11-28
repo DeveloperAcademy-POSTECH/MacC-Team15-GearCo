@@ -8,37 +8,45 @@
 import SwiftUI
 
 struct MealDetailView: View {
-    @StateObject private var mealOB: MealOB
+    @EnvironmentObject var user: UserOB
+    @ObservedObject private var mealOB: MealOB
     @State private var showSettingStartDate: Bool = false
     @State private var isSaveButtonTapped: Bool = false
     @State private var isDeleteButtonTapped: Bool = false
     
+    @State var showAddNewIngredientView: Bool = false
+    @State var showAddOldIngredientView: Bool = false
+    
     private let texts = TextLiterals.MealDetail.self
+
     let isEditMode: Bool
     
     // meal cell을 눌러서 들어온 경우 - 끼니 편집
     init(mealPlan: MealPlan, cycleGap: CycleGaps) {
-        self._mealOB = StateObject(wrappedValue: MealOB(mealPlan: mealPlan, cycleGap: cycleGap))
+        self._mealOB = ObservedObject(wrappedValue: MealOB(mealPlan: mealPlan, cycleGap: cycleGap))
         self.isEditMode = true
     }
     
     // from Daily Plan List View - 끼니 추가
     init(startDate: Date, cycleGap: CycleGaps) {
-        self._mealOB = StateObject(wrappedValue: MealOB(startDate: startDate, cycleGap: cycleGap))
+        self._mealOB = ObservedObject(wrappedValue: MealOB(startDate: startDate, cycleGap: cycleGap))
         self.isEditMode = false
     }
     
     // from Plan Group Detail View - 끼니 추가
     init(startDate: Date, endDate: Date) {
         let cycleGap = CycleGaps(rawValue:Date.componentsBetweenDates(from: startDate, to: endDate).day! + 1) ?? .three
-        self._mealOB = StateObject(wrappedValue: MealOB(startDate: startDate, cycleGap: cycleGap))
+        self._mealOB = ObservedObject(wrappedValue: MealOB(startDate: startDate, cycleGap: cycleGap))
         self.isEditMode = false
     }
     
     var body: some View {
-        RootVStack {
-            viewHeader
-            viewBody
+        #warning("임시 NavigationStack. 추후 뷰 연결 시 NavigationStack을 삭제할 것.")
+        NavigationStack {
+            RootVStack {
+                viewHeader
+                viewBody
+            }
         }
     }
     
@@ -160,7 +168,7 @@ extension MealDetailView {
     }
 
     private var addedTestingIngredients: some View {
-        addedIngredientsView(of: mealOB.tempNewIngredients)
+        addedIngredientsView(of: mealOB.newIngredients)
         //        VStack(spacing: 10) {
         //            ForEach(mealOB.tempMealPlan.newIngredients) { ingredient in
         //                AddedIngredientView(
@@ -172,7 +180,7 @@ extension MealDetailView {
     }
 
     private var addedTestedIngredients: some View {
-        addedIngredientsView(of: mealOB.tempOldIngredients)
+        addedIngredientsView(of: mealOB.oldIngredients)
     }
 
     // TODO: - type 어떻게 바꿀지 고민...
@@ -192,7 +200,10 @@ extension MealDetailView {
         TitleAndActionButtonView(
             title: texts.newIngredientText,
             buttonLabel: texts.addOrEditIngredientText(isEditMode: isEditMode)) {
-                addNewIngredient()
+                showAddNewIngredientView = true
+            }.navigationDestination(isPresented: $showAddNewIngredientView) {
+                AddTestIngredientsView(.new)
+                    .environmentObject(mealOB)
             }
     }
 
@@ -200,22 +211,11 @@ extension MealDetailView {
         TitleAndActionButtonView(
             title: texts.oldIngredientText,
             buttonLabel: texts.addOrEditIngredientText(isEditMode: isEditMode)) {
-                addOtherIngredient()
+                showAddOldIngredientView = true
+            }.navigationDestination(isPresented: $showAddOldIngredientView) {
+                AddTestIngredientsView(.old)
+                    .environmentObject(mealOB)
             }
-    }
-
-    #warning("올바른 callback 함수 구현 - addNewIngredient")
-    // TODO: 올바른 callback 함수 구현 - addNewIngredient
-    //       -> 재료 추가 화면 띄우기
-    private func addNewIngredient() {
-        print(#function)
-    }
-    
-    #warning("올바른 callback 함수 구현 - addNewIngredient")
-    // TODO: 올바른 callback 함수 구현 - addOtherIngredient
-    //       -> 재료 추가 화면 띄우기
-    private func addOtherIngredient() {
-        print(#function)
     }
 }
 
@@ -277,8 +277,7 @@ extension MealDetailView {
                 title: texts.startDateText,
                 buttonLabel: texts.changeDateText) {
                     showSettingStartDate = true
-                }
-                .sheet(isPresented: $showSettingStartDate) {
+                }.sheet(isPresented: $showSettingStartDate) {
                     StartDateSettingModal(mealOB: mealOB)
                         .presentationDetents([.height(475)])
                         .modify { view in
@@ -322,7 +321,7 @@ extension MealDetailView {
             }
             .alert("일정 삭제", isPresented: $isDeleteButtonTapped) {
                 Button("삭제", role: .destructive) {
-                    mealOB.deleteMealPlan()
+                    mealOB.deleteMealPlan(user: user)
                 }
             } message: {
                 Text("해당 끼니 일정을 삭제할까요?")
@@ -350,6 +349,7 @@ extension MealDetailView {
         )
     }
 }
+
 // MARK: - addPlanButton
 extension MealDetailView {
     private var addMealPlanButton: some View {
@@ -360,9 +360,9 @@ extension MealDetailView {
         ) {
             if isEditMode {
                 isSaveButtonTapped = true
-                mealOB.changeMealPlan()
+                mealOB.changeMealPlan(user: user)
             }
-            else { mealOB.addMealPlan() }
+            else { mealOB.addMealPlan(user: user) }
         }
     }
 }

@@ -26,6 +26,7 @@ struct BackButtonHeader: View {
             })
             Spacer()
         }
+        //.frame(height: 54)
         .overlay {
             Text(title)
                 .headerFont5()
