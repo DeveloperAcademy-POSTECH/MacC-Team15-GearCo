@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct WithdrawalView: View {
-    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var user: UserOB
     @State private var showWithdrawalModalView = false
     var body: some View {

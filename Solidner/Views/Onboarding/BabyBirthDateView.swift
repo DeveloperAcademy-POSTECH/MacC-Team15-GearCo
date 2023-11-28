@@ -14,7 +14,6 @@ struct BabyBirthDateView: View {
     @State private var babyBirthDate = Date()
     @State private var navigationIsPresented = false
     @EnvironmentObject var user: UserOB
-    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     var body: some View {
         ZStack {
             BackgroundView()

@@ -30,29 +30,31 @@ struct SolidnerApp: App {
         WindowGroup {
             let isPlanEmpty = mealPlansOB.mealPlans.isEmpty
             
-            #warning("이거 더 좋은 방법으로 정리해줄 사람~~")
-            if isOnboardingOn {
-                //                    SignInView()
-                NavigationStack {
-                    AgreeToTermsView()
-                }
-                .environmentObject(userOB)
-            } else if isPlanEmpty {
-                NavigationStack {
-                    StartPlanView()
-                }
-                .environmentObject(userOB)
-                .environmentObject(mealPlansOB)
-            } else {
-                NavigationStack {
-                    PlanListView()
-                }
-                .environmentObject(userOB)
-                .environmentObject(mealPlansOB)
-                //                    MonthlyPlanningView()
-            }
+//            #warning("이거 더 좋은 방법으로 정리해줄 사람~~")
+//            if isOnboardingOn {
+//                //                    SignInView()
+//                NavigationStack {
+//                    AgreeToTermsView()
+//                }
+//                .environmentObject(userOB)
+//            } else if isPlanEmpty {
+//                NavigationStack {
+//                    StartPlanView()
+//                }
+//                .environmentObject(userOB)
+//                .environmentObject(mealPlansOB)
+//            } else {
+//                NavigationStack {
+//                    PlanListView()
+//                }
+//                .environmentObject(userOB)
+//                .environmentObject(mealPlansOB)
+//                //                    MonthlyPlanningView()
+//            }
             // AddTestIngredientsView().environmentObject(userOB)   
             // MypageRootView().environmentObject(userOB)
+            ReportIngredientModalView()
+            .environmentObject(userOB)
         }
     }
 }

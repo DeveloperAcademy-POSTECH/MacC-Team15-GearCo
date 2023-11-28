@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MypageRootView: View {
     @EnvironmentObject var user: UserOB
-    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @State private var stackPath: [MypageFunctionCase] = []
     @State private var goForUserInfoUpdate = false
     @State private var showLogoutAlert = false

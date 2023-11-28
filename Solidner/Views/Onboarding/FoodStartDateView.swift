@@ -12,7 +12,6 @@ struct FoodStartDateView: View {
     @State private var solidStartDate = Date()
     @State private var navigationIsPresented = false
     @EnvironmentObject var user: UserOB
-    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     var body: some View {
         ZStack {
             BackgroundView()

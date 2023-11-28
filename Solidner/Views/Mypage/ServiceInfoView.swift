@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ServiceInfoView: View {
     private let appAppleID = "6473099677"
-    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     var body: some View {
         ZStack {
             BackgroundView()
