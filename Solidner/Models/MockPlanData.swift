@@ -69,7 +69,7 @@ extension MealPlanGroup {
 }
 
 struct MealPlan: Identifiable, Hashable {
-    var id = UUID()
+    var id: UUID
     var startDate: Date {
         willSet {
             endDate = newValue.add(.day, value: cycleGap.rawValue - 1)
@@ -88,7 +88,8 @@ struct MealPlan: Identifiable, Hashable {
         }
     }
     
-    init(startDate: Date, endDate: Date, mealType: MealType, newIngredients: [Ingredient], oldIngredients: [Ingredient]) {
+    init(id: UUID, startDate: Date, endDate: Date, mealType: MealType, newIngredients: [Ingredient], oldIngredients: [Ingredient]) {
+        self.id = id
         self.startDate = startDate
         self.endDate = endDate
         self.mealType = mealType
@@ -96,13 +97,14 @@ struct MealPlan: Identifiable, Hashable {
         self.oldIngredients = oldIngredients
     }
     
-    init(startDate: Date, endDate: Date) {
-        self.startDate = startDate
-        self.endDate = endDate
-        self.mealType = .아침
-        self.newIngredients = []
-        self.oldIngredients = []
-    }
+//    init(startDate: Date, endDate: Date) {
+//        self.id = UUID()
+//        self.startDate = startDate
+//        self.endDate = endDate
+//        self.mealType = .아침
+//        self.newIngredients = []
+//        self.oldIngredients = []
+//    }
 
     var dateString: String {
         "\(startDate.day)일(\(startDate.weekDayKor)) ~ \(endDate.day)일(\(endDate.weekDayKor))"

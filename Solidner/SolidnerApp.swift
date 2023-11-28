@@ -22,9 +22,9 @@ struct SolidnerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @AppStorage("isOnboardingOn") var isOnboardingOn = true
     
-    @StateObject private var mealPlansOB = MealPlansOB(mealPlans: MealPlan.mockMealsOne)
     let ingredientData = IngredientData.shared
     @StateObject private var userOB = UserOB()
+    @StateObject private var mealPlansOB = MealPlansOB()
     
     var body: some Scene {
         WindowGroup {
@@ -54,7 +54,7 @@ struct SolidnerApp: App {
             
             // MypageRootView().environmentObject(userOB)
             
-            MealDetailView(startDate: Date(), cycleGap: userOB.planCycleGap)
+            MonthlyPlanningView()
                 .environmentObject(userOB)
                 .environmentObject(mealPlansOB)
         }

@@ -16,6 +16,10 @@ enum MealPlanFilter {
 }
 
 final class MealPlansOB: ObservableObject {
+    
+    private let firebaseManager = FirebaseManager.shared
+    let user: UserOB
+    
     // TODO: - init할 때 모든 플랜을 서버에서 갖고 와요.
     @Published private(set) var mealPlans: [MealPlan] = [] {
         didSet {
@@ -24,9 +28,10 @@ final class MealPlansOB: ObservableObject {
     }
     @Published private(set) var filteredMealPlans: [MealPlan] = []
     
-    init(mealPlans: [MealPlan] = MealPlan.mockMealsOne, 
-         currentFilter: MealPlanFilter = .month(date:Date())) {
-        #warning("meal plan 파베에서 받아오는 함수 구현해야 함")
+    init(user: UserOB, currentFilter: MealPlanFilter = .month(date:Date())) {
+        self.user = user
+        self.loadAllPlans(user: self.user)
+        
         let sortedMealPlan = mealPlans.sorted { $0.startDate < $1.startDate }
         self.mealPlans = sortedMealPlan
         self.filteredMealPlans = sortedMealPlan
@@ -56,6 +61,15 @@ final class MealPlansOB: ObservableObject {
     
     func updateMealPlan(in group: MealPlanGroup?) {
         if let group { updatePlans(using: group.mealPlans) }
+    }
+    
+    
+    /// 앱 실행 시 (MealPlansOB Init 시) DB에서 모든 Plan 정보를 fetch.
+    /// - Parameter user: UserOB의 객체.
+    private func loadAllPlans(user: UserOB) {
+        let email = user.email
+        
+        self.mealPlans = firebaseManager.loadAllPlans(email: email)
     }
     
     /// updatedItem을 순회하며 id를 기준으로 mealPlans를 업데이트 하는 함수
