@@ -15,10 +15,12 @@ struct MonthlyPlanningView: View {
     private let weekDayKorList = ["일", "월", "화", "수", "목", "금", "토"]
     
     private let nowMonthWeekNums = Date.nowMonthWeeks()
-    
+        
     struct PlanData {
-        var startDate: Int
-        var endDate: Int
+        var startDate: Date
+        var endDate: Date
+        var startDay: Int
+        var endDay: Int
     }
     // MARK: 이전 달의 데이터와 이후 달의 데이터는 -2, 33 등과 같이 표현할 것.
 //    let plans: [planData] =
@@ -72,12 +74,25 @@ struct MonthlyPlanningView: View {
                 }.clipped().padding(.horizontal, 16)
             }
         }.background(Color(.lightGray))
-            .onAppear {
+            .task {
+                if mealPlansOB.isLoaded {
+                    var plans: [PlanData] = []
+                    for plan in mealPlansOB.filteredMealPlans {
+                        let plan = PlanData(startDate: plan.startDate, endDate: plan.endDate,
+                                            startDay: plan.startDate.day, endDay: plan.endDate.day)
+                        plans.append(plan)
+                    }
+                    adjustPlanDataDays(plans: &plans)
+                    reducedPlans = reducePlanData(plans: plans)
+                }
+            }.onChange(of: mealPlansOB.isLoaded) { newValue in
                 var plans: [PlanData] = []
                 for plan in mealPlansOB.filteredMealPlans {
-                    let plan = PlanData(startDate: plan.startDate.day, endDate: plan.endDate.day)
+                    let plan = PlanData(startDate: plan.startDate, endDate: plan.endDate,
+                                        startDay: plan.startDate.day, endDay: plan.endDate.day)
                     plans.append(plan)
                 }
+                adjustPlanDataDays(plans: &plans)
                 reducedPlans = reducePlanData(plans: plans)
             }
     }
@@ -114,29 +129,29 @@ struct MonthlyPlanningView: View {
         func calculateBarWidth(plan: PlanData, isBarFromEnd: (left: Bool, right: Bool)) -> CGFloat {
             var cycle: CGFloat {
                 if isBarFromEnd.left {
-                    return CGFloat(plan.endDate - weekDates.first!.day + 1)
+                    return CGFloat(plan.endDay - weekDates.first!.day + 1)
                 } else if isBarFromEnd.right {
-                    return CGFloat(weekDates.last!.day - plan.startDate + 1)
+                    return CGFloat(weekDates.last!.day - plan.startDay + 1)
                 } else {
-                    return CGFloat(plan.endDate - plan.startDate + 1)
+                    return CGFloat(plan.endDay - plan.startDay + 1)
                 }
             }
             var result: CGFloat = 0
             
-            if dayNumsInWeek.contains(plan.startDate) &&
-                dayNumsInWeek.contains(plan.endDate) {
+            if dayNumsInWeek.contains(plan.startDay) &&
+                dayNumsInWeek.contains(plan.endDay) {
                 result = (mainDaySectionWidth * cycle) - (barHorizontalPadding * 2)
             } else if isBarFromEnd.left {
                 if dayNumsInWeek.first! == 1 {  // 1일 이전부터 이어지는 바
                     // 빈 날의 공간 + plan의 마지막 날까지
-                    let weekDay = CGFloat(weekDates.first!.weekday + plan.endDate - 1)
+                    let weekDay = CGFloat(weekDates.first!.weekday + plan.endDay - 1)
                     result = (mainDaySectionWidth * weekDay) - barHorizontalPadding * 2 + endPadding
                 } else {
                     result = (mainDaySectionWidth * cycle) - barHorizontalPadding * 2 + endPadding
                 }
             } else if isBarFromEnd.right {
                 if dayNumsInWeek.last! == monthDates.last!.day {    // 월말 이후까지 이어지는 바
-                    let weekDay = monthDates[plan.startDate-1].weekday // 요일
+                    let weekDay = monthDates[plan.startDay-1].weekday // 요일
                     let dayGap = CGFloat(7 - weekDay + 1)
                     result = (mainDaySectionWidth * dayGap) - barHorizontalPadding + rowHorizontalPadding
                 } else {
@@ -192,9 +207,9 @@ struct MonthlyPlanningView: View {
                     // 시작일과(plan 1개이므로 index=0) 그 주의 첫 번째 날의 차이를 빼어 빈 날짜가 며칠인지 계산
                     if dayNumsInWeek.first! == 1 {
                         // 주의 시작일이 1일일 때
-                        dayGap = CGFloat(plans[0].startDate - 1 + weekDates.first!.weekday - 1)
+                        dayGap = CGFloat(plans[0].startDay - 1 + weekDates.first!.weekday - 1)
                     } else {
-                        dayGap = CGFloat(plans[0].startDate - dayNumsInWeek.first!)
+                        dayGap = CGFloat(plans[0].startDay - dayNumsInWeek.first!)
                     }
                     let width = mainDaySectionWidth * dayGap + endPadding
                     return AnyView(Spacer().frame(width: width))
@@ -204,28 +219,28 @@ struct MonthlyPlanningView: View {
                     return AnyView(EmptyView())
                 } else if isBarFromEnd.right {  // 오른쪽으로 붙여야 하면
                     // 2개 이상일 때 오른쪽으로 붙여야 한다는 것은 index = 1이상
-                    let prevEndDate = plans[index-1].endDate
-                    let dayGap = CGFloat(plans[index].startDate - prevEndDate - 1)
+                    let prevEndDate = plans[index-1].endDay
+                    let dayGap = CGFloat(plans[index].startDay - prevEndDate - 1)
                     let width = mainDaySectionWidth * dayGap + barHorizontalPadding * 2
                     return AnyView(Spacer().frame(width: width))
                 } else {    // 어느 쪽으로도 붙이지 않을 때
                     var width: CGFloat
                     if dayNumsInWeek.first! == 1 {  // 주의 시작일이 1일일 때
                         if index == 0 { // 첫 블록이라면
-                            let dayGap = CGFloat(plans[0].startDate - 1 + weekDates.first!.weekday - 1)
+                            let dayGap = CGFloat(plans[0].startDay - 1 + weekDates.first!.weekday - 1)
                             width = mainDaySectionWidth * dayGap + endPadding
                         } else {    // 첫 블록이 아니라면 (왼쪽 패딩이므로, 마지막 블록인 지는 관심 없음.)
-                            let prevEndDate = plans[index-1].endDate
-                            let dayGap = CGFloat(plans[index].startDate - prevEndDate - 1)
+                            let prevEndDate = plans[index-1].endDay
+                            let dayGap = CGFloat(plans[index].startDay - prevEndDate - 1)
                             width = mainDaySectionWidth * dayGap + barHorizontalPadding * 2
                         }
                     } else {    // 첫 주가 아닐 때
                         if index == 0 { // 첫 블록이라면
-                            let dayGap = CGFloat(plans[0].startDate - dayNumsInWeek.first!)
+                            let dayGap = CGFloat(plans[0].startDay - dayNumsInWeek.first!)
                             width = mainDaySectionWidth * dayGap + endPadding
                         } else {    // 첫 블록이 아니라면 (왼쪽 패딩이므로, 마지막 블록인 지는 관심 없음.)
-                            let prevEndDate = plans[index-1].endDate
-                            let dayGap = CGFloat(plans[index].startDate - prevEndDate - 1)
+                            let prevEndDate = plans[index-1].endDay
+                            let dayGap = CGFloat(plans[index].startDay - prevEndDate - 1)
                             width = mainDaySectionWidth * dayGap + barHorizontalPadding * 2
                         }
                     }
@@ -265,9 +280,9 @@ struct MonthlyPlanningView: View {
         // MARK: 바가 왼쪽에서 이어지는 지, 오른쪽에서 이어지는 지 계산
         func calculateIsBarFromEnd(plan: PlanData) -> (Bool, Bool) {
             var result: (left: Bool, right: Bool) = (false, false)
-            if dayNumsInWeek.first! > plan.startDate {
+            if dayNumsInWeek.first! > plan.startDay {
                 result.left = true
-            } else if dayNumsInWeek.last! < plan.endDate {
+            } else if dayNumsInWeek.last! < plan.endDay {
                 result.right = true
             }
             
@@ -393,6 +408,24 @@ extension MonthlyPlanningView {
         case second = 2
     }
     
+    private func adjustPlanDataDays(plans: inout [PlanData]) {
+        let nowMonthFirstDate = Date.nowMonthDates().first!
+        let nextMonthFirstDate = Date.nowMonthDates().last!.add(.day, value: 1)
+        
+        for i in plans.indices {
+            var plan = plans[i]
+            
+            if plan.endDate.timeIntervalSince1970 > nextMonthFirstDate.timeIntervalSince1970 {
+                plan.endDay += Date.nowMonthDates().count
+            }
+            if plan.startDate.timeIntervalSince1970 < nowMonthFirstDate.timeIntervalSince1970 {
+                plan.startDay -= nowMonthFirstDate.add(.day, value: -1).monthDates().count
+            }
+            
+            plans[i] = plan
+        }
+    }
+    
     private func reducePlanData(plans: [PlanData]) -> [(PlanData, BarPosition)] {
         let nowMonthDates = Date.nowMonthDates()
         let lastDateNum = nowMonthDates.last!.day
@@ -403,13 +436,25 @@ extension MonthlyPlanningView {
         var result: [(PlanData, BarPosition)] = []
         
         // 시작일 순 정렬
-        let sortedPlans = plans.sorted{ $0.startDate < $1.startDate }
+        let sortedPlans = plans.sorted{ $0.startDay < $1.startDay }
         
         for plan in sortedPlans {
             var isPlanAcceptedOnFirstLine = true
             var isPlanAcceptedOnSecondLine = true
             
-            for i in Range<Int>(plan.startDate...plan.endDate) {
+//            var start = plan.startDay
+//            var end = plan.endDay
+//            
+//            // 다음 달이면
+//            if plan.endDate.timeIntervalSince1970 > nowMonthDates.last!.timeIntervalSince1970 {
+//                end += lastDateNum
+//            }
+//            if plan.startDate.timeIntervalSince1970 < nowMonthDates.first!.timeIntervalSince1970 {
+//                start -= plan.startDate.monthDates().last!.day
+//            }
+            
+            print(plan.startDay, plan.endDay)
+            for i in Range<Int>(plan.startDay...plan.endDay) {
                 // plan의 모든 날짜를 순회하며 첫줄이나 둘째줄에 들어갈 수 있는 지 검사.
                 if !dict[i]!.first {
                     isPlanAcceptedOnFirstLine = false
@@ -421,13 +466,13 @@ extension MonthlyPlanningView {
             
             if isPlanAcceptedOnFirstLine {
                 // 첫 줄에 수용 가능하면, dictionary 상태를 false (수용불가능)으로 바꾸고, append
-                for i in Range<Int>(plan.startDate...plan.endDate) {
+                for i in Range<Int>(plan.startDay...plan.endDay) {
                     dict[i]!.first = false
                 }
                 result.append((plan, .first))
             } else if isPlanAcceptedOnSecondLine {
                 // 첫 줄에 가능한 지 우선 체크 후 둘째 줄을 체크
-                for i in Range<Int>(plan.startDate...plan.endDate) {
+                for i in Range<Int>(plan.startDay...plan.endDay) {
                     dict[i]!.second = false
                 }
                 result.append((plan, .second))
@@ -438,7 +483,7 @@ extension MonthlyPlanningView {
 //            }
         }
         
-        return result.sorted { $0.0.startDate < $1.0.startDate }    // startDate 순 정렬
+        return result.sorted { $0.0.startDay < $1.0.startDay }    // startDate 순 정렬
     }
     
     private func reducePlanDataInWeek(weekOfMonth: Int,
@@ -447,13 +492,13 @@ extension MonthlyPlanningView {
         let dayNumsInWeek: [Int] = Date.weekDates(weekOfMonth).map{ $0.day }
         var result: [(PlanData, BarPosition)] = []
         
-        for plan in reducedPlans.sorted(by: { $0.0.startDate < $1.0.startDate }) {
-            if dayNumsInWeek.contains(plan.first.startDate) ||
-                dayNumsInWeek.contains(plan.first.endDate) {
+        for plan in reducedPlans.sorted(by: { $0.0.startDay < $1.0.startDay }) {
+            if dayNumsInWeek.contains(plan.first.startDay) ||
+                dayNumsInWeek.contains(plan.first.endDay) {
                 result.append(plan)
             }
         }
-        return result.sorted { $0.0.startDate < $1.0.startDate }    // startDate 순 정렬
+        return result.sorted { $0.0.startDay < $1.0.startDay }    // startDate 순 정렬
     }
 }
 

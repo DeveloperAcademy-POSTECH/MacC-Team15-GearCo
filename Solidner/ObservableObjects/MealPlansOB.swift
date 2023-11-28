@@ -18,10 +18,10 @@ enum MealPlanFilter {
 final class MealPlansOB: ObservableObject {
     
     private let firebaseManager = FirebaseManager.shared
-    private var email: String = "jwlee010222@gmail.com"
-//    @AppStorage("email") private var email: String = "jwlee010222@gmail.com"
+//    private var email: String = "jwlee010222@gmail.com"
+    @AppStorage("email") private var email: String = "jwlee010222@gmail.com"
     
-    // TODO: - init할 때 모든 플랜을 서버에서 갖고 와요.
+    @Published var isLoaded: Bool = false
     @Published private(set) var mealPlans: [MealPlan] = [] {
         didSet {
             applyFilter()
@@ -70,6 +70,7 @@ final class MealPlansOB: ObservableObject {
         let plans = await firebaseManager.loadAllPlans(email: email)
         await MainActor.run {
             self.mealPlans = plans
+            self.isLoaded = true
         }
     }
     
