@@ -8,7 +8,7 @@
 import SwiftUI
 import Firebase
 
-class FirebaseManager {
+final class FirebaseManager {
     enum CollectionName: String {
         case User
         case Plan

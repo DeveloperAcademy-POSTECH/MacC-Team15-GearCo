@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MealDetailView: View {
     @EnvironmentObject var user: UserOB
-    @StateObject private var mealOB: MealOB
+    @ObservedObject private var mealOB: MealOB
     @State private var showSettingStartDate: Bool = false
     @State private var isSaveButtonTapped: Bool = false
     @State private var isDeleteButtonTapped: Bool = false
@@ -23,20 +23,20 @@ struct MealDetailView: View {
     
     // meal cell을 눌러서 들어온 경우 - 끼니 편집
     init(mealPlan: MealPlan, cycleGap: CycleGaps) {
-        self._mealOB = StateObject(wrappedValue: MealOB(mealPlan: mealPlan, cycleGap: cycleGap))
+        self._mealOB = ObservedObject(wrappedValue: MealOB(mealPlan: mealPlan, cycleGap: cycleGap))
         self.isEditMode = true
     }
     
     // from Daily Plan List View - 끼니 추가
     init(startDate: Date, cycleGap: CycleGaps) {
-        self._mealOB = StateObject(wrappedValue: MealOB(startDate: startDate, cycleGap: cycleGap))
+        self._mealOB = ObservedObject(wrappedValue: MealOB(startDate: startDate, cycleGap: cycleGap))
         self.isEditMode = false
     }
     
     // from Plan Group Detail View - 끼니 추가
     init(startDate: Date, endDate: Date) {
         let cycleGap = CycleGaps(rawValue: Date.componentsBetweenDates(from: endDate, to: startDate).day! + 1) ?? .three
-        self._mealOB = StateObject(wrappedValue: MealOB(startDate: startDate, cycleGap: cycleGap))
+        self._mealOB = ObservedObject(wrappedValue: MealOB(startDate: startDate, cycleGap: cycleGap))
         self.isEditMode = false
     }
     
@@ -321,7 +321,7 @@ extension MealDetailView {
             }
             .alert("일정 삭제", isPresented: $isDeleteButtonTapped) {
                 Button("삭제", role: .destructive) {
-                    mealOB.deleteMealPlan()
+                    mealOB.deleteMealPlan(user: user)
                 }
             } message: {
                 Text("해당 끼니 일정을 삭제할까요?")

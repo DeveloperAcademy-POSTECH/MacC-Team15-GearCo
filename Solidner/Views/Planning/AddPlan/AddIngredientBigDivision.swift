@@ -55,12 +55,12 @@ struct IngredientsBigDivision: View {
         self.divisionCase = divisionCase
         self.viewType = viewType
         
-        _selectedIngredients = selectedIngredients
+        self._selectedIngredients = selectedIngredients
         var states: [IngredientType: Bool] = [:]
         for type in IngredientType.allCases {
             states[type] = false
         }
-        _foldStates = State(initialValue: states)
+        self._foldStates = State(initialValue: states)
     }
     
     private func toggleFoldState(foldStateList: inout [IngredientType: Bool], type: IngredientType) {
