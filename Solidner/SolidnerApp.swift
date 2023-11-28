@@ -51,7 +51,7 @@ struct SolidnerApp: App {
 //                .environmentObject(mealPlansOB)
 //                //                    MonthlyPlanningView()
 //            }
-            
+
             // MypageRootView().environmentObject(userOB)
             
             MealDetailView(startDate: Date(), cycleGap: userOB.planCycleGap)

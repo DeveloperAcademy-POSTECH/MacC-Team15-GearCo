@@ -52,7 +52,7 @@ struct BackButtonAndTitleHeader: View {
     
     var body: some View {
         Header(.backButtonAndTitle, title: title)
-            .padding(top: .zero, leading: K.backButtonPadding, bottom: .zero, trailing: 0)
+            .padding(top: .zero, leading: K.backButtonPadding/2, bottom: .zero, trailing: K.backButtonPadding/2)
     }
 }
 
