@@ -196,11 +196,11 @@ extension ChangeMonthModal {
             .big,
             title: texts.saveButtonText,
             disabledCondition: isDisabled) {
-                withAnimation {
+//                withAnimation {
                     selectedDate = selectingDate
                     saveAction()
                     dismiss()
-                }
+//                }
             }
             .buttonColor(K.saveButtonBackgroundColor)
             .padding(.bottom, 6)

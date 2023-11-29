@@ -51,7 +51,6 @@ struct ColoredIngredientsText: View {
         return ingredients.enumerated().reduce(K.emptyText) { partialResult, enumeration in
             let (index, ingredient) = (enumeration.offset, enumeration.element)
             let ingredientsText = Text(ingredient.name).foreground(color: accentColor)
-            print(index, lastIndex)
             let additionalText = ((index == lastIndex) ? K.emptyText : K.commaText).foreground(color: normalColor)
             return partialResult + ingredientsText + additionalText
         }

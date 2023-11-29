@@ -73,7 +73,6 @@ struct PlanListView: View {
         }
         .onChange(of: selectedDate) { value in
             mealPlansOB.currentFilter = .month(date: value)
-            print(mealPlansOB.currentFilter)
         }
         .navigationDestination(isPresented: $isMyPageOpenning) {
             MypageRootView()
