@@ -502,15 +502,16 @@ extension MonthlyPlanningView {
     
     private func adjustPlanDataDays(plans: inout [PlanData]) {
         let nowMonthFirstDate = selectedMonthDate.monthDates().first!
+//        let nextMonthFirstDate = Date.date(year: nowMonthFirstDate.year, month: nowMonthFirstDate.month + 1, day: 1)
         let nextMonthFirstDate = selectedMonthDate.monthDates().last!.add(.day, value: 1)
         
         for i in plans.indices {
             var plan = plans[i]
             
-            if plan.mealPlan.endDate.timeIntervalSince1970 > nextMonthFirstDate.timeIntervalSince1970 {
+            if plan.mealPlan.endDate.timeIntervalSince1970 >= nextMonthFirstDate.timeIntervalSince1970 {
                 plan.endDay += Date.nowMonthDates().count
             }
-            if plan.mealPlan.startDate.timeIntervalSince1970 < nowMonthFirstDate.timeIntervalSince1970 {
+            if plan.mealPlan.startDate.timeIntervalSince1970 <= nowMonthFirstDate.timeIntervalSince1970 {
                 plan.startDay -= nowMonthFirstDate.add(.day, value: -1).monthDates().count
             }
             
