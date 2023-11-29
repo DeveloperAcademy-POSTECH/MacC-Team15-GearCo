@@ -13,8 +13,6 @@ struct MonthlyPlanningView: View {
     
     private let lightGray = Color(#colorLiteral(red: 0.8797428608, green: 0.8797428012, blue: 0.8797428608, alpha: 1)) // #D9D9D9
     private let weekDayKorList = ["일", "월", "화", "수", "목", "금", "토"]
-    
-    private let nowMonthWeekNums = Date.nowMonthWeeks()
         
     struct PlanData {
         var mealPlan: MealPlan
@@ -28,6 +26,7 @@ struct MonthlyPlanningView: View {
     
     @State private var reducedPlans: [(first: PlanData, second: BarPosition)] = []
     @State private var selectedMonthDate: Date = Date()
+    @State private var nowMonthWeekNums = Date.nowMonthWeeks()
     
     @State private var showChangeMonthModal = false
     @State private var isMyPageOpenning = false
@@ -56,6 +55,7 @@ struct MonthlyPlanningView: View {
             .task {
                 if mealPlansOB.isLoaded {
                     var plans: [PlanData] = []
+                    mealPlansOB.currentFilter = .month(date: selectedMonthDate)
                     for plan in mealPlansOB.filteredMealPlans {
                         let newPlan = PlanData(mealPlan: plan, startDay: plan.startDate.day, endDay: plan.endDate.day)
                         plans.append(newPlan)
@@ -63,7 +63,8 @@ struct MonthlyPlanningView: View {
                     adjustPlanDataDays(plans: &plans)
                     reducedPlans = reducePlanData(plans: plans)
                 }
-            }.onChange(of: mealPlansOB.isLoaded) { newValue in
+            }.onChange(of: mealPlansOB.filteredMealPlans) { value in
+                print(selectedMonthDate.month)
                 var plans: [PlanData] = []
                 for plan in mealPlansOB.filteredMealPlans {
                     let newPlan = PlanData(mealPlan: plan, startDay: plan.startDate.day, endDay: plan.endDate.day)
@@ -71,6 +72,10 @@ struct MonthlyPlanningView: View {
                 }
                 adjustPlanDataDays(plans: &plans)
                 reducedPlans = reducePlanData(plans: plans)
+                print(reducedPlans)
+            }.onChange(of: selectedMonthDate) { newValue in
+                mealPlansOB.currentFilter = .month(date: newValue)
+                nowMonthWeekNums = selectedMonthDate.monthWeeks()
             }.sheet(isPresented: $showChangeMonthModal) {
                 ChangeMonthHalfModal(selectedDate: $selectedMonthDate, fromDate: user.solidStartDate)
             }
@@ -99,9 +104,9 @@ struct MonthlyPlanningView: View {
             plansInWeek.filter { $0.position == .second }.map { $0.data }
         }
         
-        let weekDates = Date.weekDates(weekOfMonth)
+        let weekDates = selectedMonthDate.weekDates(weekOfMonth)
         let dayNumsInWeek: [Int] = weekDates.map{ $0.day }
-        let monthDates = Date.nowMonthDates()
+        let monthDates = selectedMonthDate.monthDates()
         
         
         // MARK: 바 길이 계산
@@ -300,7 +305,7 @@ struct MonthlyPlanningView: View {
         let dayNumberRowFrameHeight = screenWidth * (60/390)
         let dayNumberGap = screenWidth * (6/390)
         let rowHorizontalPadding = screenWidth * (4/390)
-        let thisWeekDates: [Date] = Date.weekDates(weekOfMonth)
+        let thisWeekDates: [Date] = selectedMonthDate.weekDates(weekOfMonth)
         
         func rowLeftEndSpacer() -> some View {
             if weekOfMonth == nowMonthWeekNums.first! {
@@ -433,8 +438,8 @@ extension MonthlyPlanningView {
     }
     
     private func adjustPlanDataDays(plans: inout [PlanData]) {
-        let nowMonthFirstDate = Date.nowMonthDates().first!
-        let nextMonthFirstDate = Date.nowMonthDates().last!.add(.day, value: 1)
+        let nowMonthFirstDate = selectedMonthDate.monthDates().first!
+        let nextMonthFirstDate = selectedMonthDate.monthDates().last!.add(.day, value: 1)
         
         for i in plans.indices {
             var plan = plans[i]
@@ -466,7 +471,6 @@ extension MonthlyPlanningView {
             var isPlanAcceptedOnFirstLine = true
             var isPlanAcceptedOnSecondLine = true
             
-            print(plan.startDay, plan.endDay)
             for i in Range<Int>(plan.startDay...plan.endDay) {
                 // plan의 모든 날짜를 순회하며 첫줄이나 둘째줄에 들어갈 수 있는 지 검사.
                 if !dict[i]!.first {
@@ -498,7 +502,7 @@ extension MonthlyPlanningView {
     private func reducePlanDataInWeek(weekOfMonth: Int,
                                       reducedPlans: [(first: PlanData, second: BarPosition)])
     -> [(PlanData, BarPosition)] {
-        let dayNumsInWeek: [Int] = Date.weekDates(weekOfMonth).map{ $0.day }
+        let dayNumsInWeek: [Int] = selectedMonthDate.weekDates(weekOfMonth).map{ $0.day }
         var result: [(PlanData, BarPosition)] = []
         
         for plan in reducedPlans.sorted(by: { $0.0.startDay < $1.0.startDay }) {
