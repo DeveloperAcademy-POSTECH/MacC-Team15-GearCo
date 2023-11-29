@@ -13,6 +13,7 @@ struct MainView: View {
     
     var body: some View {
         MonthlyPlanningView()
+//        PlanListView()
             .environmentObject(mealPlansOB)
             .task {
                 await mealPlansOB.loadAllPlans()

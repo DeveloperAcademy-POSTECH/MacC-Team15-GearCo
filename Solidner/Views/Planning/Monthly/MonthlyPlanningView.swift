@@ -17,48 +17,27 @@ struct MonthlyPlanningView: View {
     private let nowMonthWeekNums = Date.nowMonthWeeks()
         
     struct PlanData {
-        var startDate: Date
-        var endDate: Date
+        var mealPlan: MealPlan
         var startDay: Int
         var endDay: Int
     }
     // MARK: 이전 달의 데이터와 이후 달의 데이터는 -2, 33 등과 같이 표현할 것.
-//    let plans: [planData] =
-//    [
-//     planData(startDate: -1, endDate: 1),
-//     planData(startDate: 2, endDate: 4),
-//     planData(startDate: 2, endDate: 3),
-//     planData(startDate: 5, endDate: 7),
-//     planData(startDate: 8, endDate: 10),
-//     planData(startDate: 9, endDate: 11),
-//     planData(startDate: 13, endDate: 14),
-//     planData(startDate: 11, endDate: 12),
-//     planData(startDate: 16, endDate: 19),
-//     planData(startDate: 16, endDate: 18),
-//     planData(startDate: 19, endDate: 22),
-//     planData(startDate: 19, endDate: 22),
-//     planData(startDate: 21, endDate: 24),
-//     planData(startDate: 21, endDate: 24),
-//     planData(startDate: 23, endDate: 26),
-//     planData(startDate: 24, endDate: 25),
-//     planData(startDate: 26, endDate: 27),
-//     planData(startDate: 29, endDate: 30),
-//     planData(startDate: 29, endDate: 31),
-//     planData(startDate: 27, endDate: 32)
-//    ]
     
     @EnvironmentObject var user: UserOB
     @EnvironmentObject var mealPlansOB: MealPlansOB
     
     @State private var reducedPlans: [(first: PlanData, second: BarPosition)] = []
+    @State private var selectedMonthDate: Date = Date()
+    
+    @State private var showChangeMonthModal = false
+    @State private var isMyPageOpenning = false
     
     var body: some View {
         VStack(spacing: 0) {
-            // MARK: 임시로 대충 헤더 자리 비워두기
-            Spacer().frame(height: 70)
+            monthlyHeader.padding(.bottom, 16)
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
-                    calendarCurrentYearMonth.padding(.bottom, 15)
+                    calendarCurrentYearMonth.padding(.bottom, 26)
                     VStack(spacing: 0) {
                         calendarWeekDayRow
                         ForEach(nowMonthWeekNums, id: \.self) { num in
@@ -68,19 +47,18 @@ struct MonthlyPlanningView: View {
                         Spacer()
                     }.background {
                         RoundedRectangle(cornerRadius: 12)
-                            .foregroundColor(.white)
+                            .foregroundColor(.defaultText_wh)
                     }
                     Spacer()
                 }.clipped().padding(.horizontal, 16)
             }
-        }.background(Color(.lightGray))
+        }.background(Color.secondBgColor)
             .task {
                 if mealPlansOB.isLoaded {
                     var plans: [PlanData] = []
                     for plan in mealPlansOB.filteredMealPlans {
-                        let plan = PlanData(startDate: plan.startDate, endDate: plan.endDate,
-                                            startDay: plan.startDate.day, endDay: plan.endDate.day)
-                        plans.append(plan)
+                        let newPlan = PlanData(mealPlan: plan, startDay: plan.startDate.day, endDay: plan.endDate.day)
+                        plans.append(newPlan)
                     }
                     adjustPlanDataDays(plans: &plans)
                     reducedPlans = reducePlanData(plans: plans)
@@ -88,12 +66,13 @@ struct MonthlyPlanningView: View {
             }.onChange(of: mealPlansOB.isLoaded) { newValue in
                 var plans: [PlanData] = []
                 for plan in mealPlansOB.filteredMealPlans {
-                    let plan = PlanData(startDate: plan.startDate, endDate: plan.endDate,
-                                        startDay: plan.startDate.day, endDay: plan.endDate.day)
-                    plans.append(plan)
+                    let newPlan = PlanData(mealPlan: plan, startDay: plan.startDate.day, endDay: plan.endDate.day)
+                    plans.append(newPlan)
                 }
                 adjustPlanDataDays(plans: &plans)
                 reducedPlans = reducePlanData(plans: plans)
+            }.sheet(isPresented: $showChangeMonthModal) {
+                ChangeMonthHalfModal(selectedDate: $selectedMonthDate, fromDate: user.solidStartDate)
             }
     }
     
@@ -173,16 +152,15 @@ struct MonthlyPlanningView: View {
             return VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     Text("고기고기고기")
-                        .font(.system(size: 10))
-                        .bold()
-                        .foregroundColor(.white)
+                        .weekDisplayFont3()
+                        .foregroundColor(.defaultText_wh)
                         .padding(.leading, 7)
                     Spacer()
                 }
             }.frame(width: barWidth, height: ingredientBarHeight)
             .background {
                 Rectangle()
-                    .foregroundColor(Color.pink.opacity(0.5))
+                    .foregroundColor(.accentColor1)
                     .if(!isBarFromEnd.left) { view in
                         view.leftCornerRadius(barRadius)
                     }.if(!isBarFromEnd.right) { view in
@@ -344,17 +322,37 @@ struct MonthlyPlanningView: View {
                 rowLeftEndSpacer()
                 ForEach(thisWeekDates, id: \.self) { date in
                     VStack(spacing: 0) {
-                        Text("\(date.day)")
-                            .font(.system(size: 11))
+                        Text("\(Date.componentsBetweenDates(from: user.solidStartDate, to: date).day!)")
+                            .dayDisplayFont1()
+                            .foregroundStyle(Color.tertinaryText)
                             .padding(.bottom, dayNumberGap)
                         Text("\(date.day)")
-                            .font(.system(size: 17))
+                            .dayDisplayFont2()
+                            .foregroundStyle(Color.tertinaryText)
                     }.frame(width: mainDaySectionWidth)
                 }
                 rowRightEndSpacer()
             }.frame(height: dayNumberRowFrameHeight)
             calendarDivider
         }
+    }
+    
+    private var monthlyHeader: some View {
+        LeftRightButtonHeader(
+            leftButton: Button {
+                isMyPageOpenning = true
+            } label: {
+                Image(.userInfo)
+            }
+            .navigationDestination(isPresented: $isMyPageOpenning) {
+                MypageRootView()
+            },
+            rightButton: Button {
+                print(#function)
+            } label: {
+                Image(.calendarInPlanList)
+            }
+        )
     }
     
     private var calendarWeekDayRow: some View {
@@ -368,20 +366,20 @@ struct MonthlyPlanningView: View {
                 ForEach(weekDayKorList.indices, id: \.self) { i in
                     if i == 0 {
                         Text(weekDayKorList[i])
-                            .font(.system(size: 10))
-                            .bold()
+                            .weekDisplayFont2()
+                            .foregroundStyle(Color.tertinaryText)
                             .frame(width: mainDaySectionWidth)
                             .padding(.leading, mainHorizontalPadding)
                     } else if i == 6 {
                         Text(weekDayKorList[i])
-                            .font(.system(size: 10))
-                            .bold()
+                            .weekDisplayFont2()
+                            .foregroundStyle(Color.tertinaryText)
                             .frame(width: mainDaySectionWidth)
                             .padding(.trailing, mainHorizontalPadding)
                     } else {
                         Text(weekDayKorList[i])
-                            .font(.system(size: 10))
-                            .bold()
+                            .weekDisplayFont2()
+                            .foregroundStyle(Color.tertinaryText)
                             .frame(width: mainDaySectionWidth)
                     }
                 }
@@ -391,13 +389,39 @@ struct MonthlyPlanningView: View {
     }
     
     private var calendarDivider: some View {
-        Rectangle().frame(height: 1).foregroundColor(.black)
+        Rectangle().frame(height: 1).foregroundColor(.listStrokeColor)
     }
     
     private var calendarCurrentYearMonth: some View {
-        HStack {
-            Text("2023년 10월").font(.title).bold()
+        var solidAndBirthDateText: String {
+            if user.displayDateType == .birth {
+                return "생후 \(Date.componentsBetweenDates(from: user.babyBirthDate, to: Date()).day!)일차"
+            } else {
+                return "이유식 진행 \(Date.componentsBetweenDates(from: user.solidStartDate, to: Date()).day!)일차"
+            }
+        }
+        
+        return HStack(spacing: 0) {
+            Button {
+                showChangeMonthModal = true
+            } label: {
+                Text("\(selectedMonthDate.year.description)년 \(selectedMonthDate.month)월")
+                    .headerFont2()
+                    .foregroundStyle(Color.defaultText)
+                    .padding(.trailing, 2)
+                Image(systemName: "chevron.down")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20)
+                    .foregroundStyle(Color.defaultText)
+            }
+            
             Spacer()
+            
+            Text(solidAndBirthDateText)
+                .bodyFont3()
+                .foregroundStyle(Color.primeText)
+                .symmetricBackground(HPad: 12, VPad: 7.5, color: Color.buttonBgColor, radius: 8)
         }
     }
 }
@@ -415,10 +439,10 @@ extension MonthlyPlanningView {
         for i in plans.indices {
             var plan = plans[i]
             
-            if plan.endDate.timeIntervalSince1970 > nextMonthFirstDate.timeIntervalSince1970 {
+            if plan.mealPlan.endDate.timeIntervalSince1970 > nextMonthFirstDate.timeIntervalSince1970 {
                 plan.endDay += Date.nowMonthDates().count
             }
-            if plan.startDate.timeIntervalSince1970 < nowMonthFirstDate.timeIntervalSince1970 {
+            if plan.mealPlan.startDate.timeIntervalSince1970 < nowMonthFirstDate.timeIntervalSince1970 {
                 plan.startDay -= nowMonthFirstDate.add(.day, value: -1).monthDates().count
             }
             
@@ -441,17 +465,6 @@ extension MonthlyPlanningView {
         for plan in sortedPlans {
             var isPlanAcceptedOnFirstLine = true
             var isPlanAcceptedOnSecondLine = true
-            
-//            var start = plan.startDay
-//            var end = plan.endDay
-//            
-//            // 다음 달이면
-//            if plan.endDate.timeIntervalSince1970 > nowMonthDates.last!.timeIntervalSince1970 {
-//                end += lastDateNum
-//            }
-//            if plan.startDate.timeIntervalSince1970 < nowMonthDates.first!.timeIntervalSince1970 {
-//                start -= plan.startDate.monthDates().last!.day
-//            }
             
             print(plan.startDay, plan.endDay)
             for i in Range<Int>(plan.startDay...plan.endDay) {
@@ -477,10 +490,6 @@ extension MonthlyPlanningView {
                 }
                 result.append((plan, .second))
             }
-//            print(plan.startDate, plan.endDate)
-//            for i in Range<Int>(-1...4) {
-//                print("\(i)일차 - ", dict[i]!)
-//            }
         }
         
         return result.sorted { $0.0.startDay < $1.0.startDay }    // startDate 순 정렬
