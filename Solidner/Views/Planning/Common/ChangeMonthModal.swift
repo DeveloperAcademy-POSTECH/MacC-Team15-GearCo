@@ -64,9 +64,10 @@ struct ChangeMonthModal: View {
     
     var body: some View {
         VStack(spacing: K.rootVStackSpacing) {
-            Spacer()
+            Spacer().frame(height: 30)
             monthTitleBar
             monthButtons
+            Spacer()
             saveButton
         }
         .defaultHorizontalPadding()

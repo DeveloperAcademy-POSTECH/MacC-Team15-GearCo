@@ -141,12 +141,12 @@ extension PlanGroupDetailView {
     }
 }
 
-struct PlanDetailView_Previews: PreviewProvider {
-    static var mealPlansOB = MealPlansOB(mealPlans: MealPlan.mockMealsOne)
-    static var previews: some View {
-        let mealPlanGroup = MealPlanGroup(mealPlans: Array(MealPlan.mockMealsOne[0...3]))
-        PlanGroupDetailView(mealPlanGroup: mealPlanGroup)
-            .environmentObject(UserOB())
-            .environmentObject(MealPlansOB())
-    }
-}
+//struct PlanDetailView_Previews: PreviewProvider {
+//    static var mealPlansOB = MealPlansOB(mealPlans: MealPlan.mockMealsOne)
+//    static var previews: some View {
+//        let mealPlanGroup = MealPlanGroup(mealPlans: Array(MealPlan.mockMealsOne[0...3]))
+//        PlanGroupDetailView(mealPlanGroup: mealPlanGroup)
+//            .environmentObject(UserOB())
+//            .environmentObject(MealPlansOB())
+//    }
+//}
