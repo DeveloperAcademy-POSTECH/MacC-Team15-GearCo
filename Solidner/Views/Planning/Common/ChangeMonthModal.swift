@@ -170,7 +170,7 @@ extension ChangeMonthModal {
         
         return Button {
             withAnimation {
-                selectingDate = Date.date(year: selectingDate.year, month: number, day: selectedDate.day)!
+                selectingDate = Date.date(year: selectingYear, month: number, day: selectedDate.day)!
             }
         } label: {
             Text(texts.monthText(of: number))
