@@ -63,7 +63,7 @@ extension Text {
         self.font(.custom(FontWeightCase.bold.rawValue, size: 11))
     }
     func dayDisplayFont1() -> some View {
-        self.font(.custom(FontWeightCase.semiBold.rawValue, size: 11))
+        self.font(.custom(FontWeightCase.semiBold.rawValue, size: 18))
     }
     func dayDisplayFont2() -> some View {
         self.font(.custom(FontWeightCase.semiBold.rawValue, size: 17))

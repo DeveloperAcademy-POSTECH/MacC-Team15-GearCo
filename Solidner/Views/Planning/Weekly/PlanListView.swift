@@ -27,6 +27,8 @@ struct PlanListView: View {
     @EnvironmentObject private var user: UserOB
     @EnvironmentObject private var mealPlansOB: MealPlansOB
     
+    @Binding var showWeekly: Bool
+    
     @State private var selectedDate = Date()
     @State private var isCurrentDateEditing = false
     @State private var isWholeSettingEditing = false
@@ -71,7 +73,6 @@ struct PlanListView: View {
         }
         .onChange(of: selectedDate) { value in
             mealPlansOB.currentFilter = .month(date: value)
-            print(mealPlansOB.currentFilter)
         }
         .navigationDestination(isPresented: $isMyPageOpenning) {
             MypageRootView()
@@ -88,9 +89,7 @@ struct PlanListView: View {
 }
 
 // MARK: - View Header
-
 extension PlanListView {
-
     private var headerLeftButton: some View {
         Button {
             isMyPageOpenning = true
@@ -98,10 +97,9 @@ extension PlanListView {
             Image(.userInfo)
         }
     }
-    #warning("Header right Button 함수 구현하기 -> monthly planner 나와라 얍")
     private var headerRightButton: some View {
         Button {
-            print(#function)
+            showWeekly = false
         } label: {
             Image(.calendarInPlanList)
         }
@@ -109,7 +107,6 @@ extension PlanListView {
 }
 
 // MARK: - title Header
-
 extension PlanListView {
     private var titleHeader: some View {
         Button {
@@ -129,7 +126,6 @@ extension PlanListView {
 }
 
 // MARK: - date Scroll
-
 extension PlanListView {
     private var dateScroll: some View {
         let spacer: some View = Spacer()
@@ -178,7 +174,6 @@ extension PlanListView {
 }
 
 // MARK: - meal Group List
-
 extension PlanListView {
     private var mealGroupList: some View {
         VStack(spacing: K.mealGroupListVStackSpacing) {
@@ -216,7 +211,6 @@ extension PlanListView {
 }
 
 // MARK: - totalSetting
-
 extension PlanListView {
     private var totalSetting: some View {
         Button {
@@ -263,8 +257,4 @@ extension PlanListView {
         
         static var solidTotalSettingTextColor: Color { .primeText }
     }
-}
-
-#Preview {
-    PlanListView().environmentObject(UserOB()).environmentObject(MealPlansOB())
 }

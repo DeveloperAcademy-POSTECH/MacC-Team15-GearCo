@@ -10,14 +10,19 @@ import SwiftUI
 struct MainView: View {
     @EnvironmentObject var user: UserOB
     @StateObject private var mealPlansOB = MealPlansOB()
+    @State private var showWeekly = true
     
     var body: some View {
-        MonthlyPlanningView()
-//        PlanListView()
-            .environmentObject(mealPlansOB)
-            .task {
-                await mealPlansOB.loadAllPlans()
+        Group {
+            if showWeekly {
+                PlanListView(showWeekly: $showWeekly)
+            } else {
+                MonthlyPlanningView(showWeekly: $showWeekly)
             }
+        }.environmentObject(mealPlansOB)
+        .task {
+            await mealPlansOB.loadAllPlans()
+        }
     }
 }
 

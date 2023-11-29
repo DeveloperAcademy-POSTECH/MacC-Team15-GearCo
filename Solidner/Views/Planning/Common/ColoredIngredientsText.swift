@@ -27,6 +27,7 @@ struct ColoredIngredientsText: View {
     var body: some View {
         (newIngredientsText + bridgeText + oldIngredientsText)
             .customFont(textType)
+            .lineLimit(1)
     }
 
     private var newIngredientsText: Text {
@@ -49,8 +50,7 @@ struct ColoredIngredientsText: View {
         let lastIndex = ingredients.endIndex - 1
         return ingredients.enumerated().reduce(K.emptyText) { partialResult, enumeration in
             let (index, ingredient) = (enumeration.offset, enumeration.element)
-            let ingredientsText = Text(ingredient.description).foreground(color: accentColor)
-            print(index, lastIndex)
+            let ingredientsText = Text(ingredient.name).foreground(color: accentColor)
             let additionalText = ((index == lastIndex) ? K.emptyText : K.commaText).foreground(color: normalColor)
             return partialResult + ingredientsText + additionalText
         }
@@ -82,13 +82,13 @@ extension ColoredIngredientsText {
     }
 }
 
-struct ColoredIngredientsText_PreviewProvider: PreviewProvider {
-    static var previews: some View {
-        Group {
-            ColoredIngredientsText(mealPlan: .mockMealsOne[0])
-            ColoredIngredientsText(mealPlan: .mockMealsOne[1])
-            ColoredIngredientsText(mealPlan: .mockMealsOne[2])
-                .customFont(.body3)
-        }
-    }
-}
+//struct ColoredIngredientsText_PreviewProvider: PreviewProvider {
+//    static var previews: some View {
+//        Group {
+//            ColoredIngredientsText(mealPlan: .mockMealsOne[0])
+//            ColoredIngredientsText(mealPlan: .mockMealsOne[1])
+//            ColoredIngredientsText(mealPlan: .mockMealsOne[2])
+//                .customFont(.body3)
+//        }
+//    }
+//}

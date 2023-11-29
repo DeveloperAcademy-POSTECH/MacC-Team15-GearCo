@@ -25,6 +25,8 @@ struct MonthlyPlanningView: View {
     @EnvironmentObject var mealPlansOB: MealPlansOB
     let ingredientData = IngredientData.shared
     
+    @Binding var showWeekly: Bool
+    
     @State private var reducedPlans: [(first: PlanData, second: BarPosition)] = []
     @State private var selectedMonthDate: Date = Date()
     @State private var nowMonthWeekNums = Date.nowMonthWeeks()
@@ -380,7 +382,7 @@ struct MonthlyPlanningView: View {
                                 .padding(.bottom, dayNumberGap)
                         } else {
                             Text("\(Date.componentsBetweenDates(from: user.solidStartDate, to: date).day!)")
-                                .dayDisplayFont1()
+                                .weekDisplayFont1()
                                 .foregroundStyle(Color.tertinaryText)
                                 .frame(height: solidDayNumberFrameHeight)
                                 .padding(.bottom, dayNumberGap)
@@ -414,7 +416,7 @@ struct MonthlyPlanningView: View {
                 MypageRootView()
             },
             rightButton: Button {
-                print(#function)
+                showWeekly = true
             } label: {
                 Image(.calendarInPlanList)
             }
@@ -500,15 +502,16 @@ extension MonthlyPlanningView {
     
     private func adjustPlanDataDays(plans: inout [PlanData]) {
         let nowMonthFirstDate = selectedMonthDate.monthDates().first!
+//        let nextMonthFirstDate = Date.date(year: nowMonthFirstDate.year, month: nowMonthFirstDate.month + 1, day: 1)
         let nextMonthFirstDate = selectedMonthDate.monthDates().last!.add(.day, value: 1)
         
         for i in plans.indices {
             var plan = plans[i]
             
-            if plan.mealPlan.endDate.timeIntervalSince1970 > nextMonthFirstDate.timeIntervalSince1970 {
+            if plan.mealPlan.endDate.timeIntervalSince1970 >= nextMonthFirstDate.timeIntervalSince1970 {
                 plan.endDay += Date.nowMonthDates().count
             }
-            if plan.mealPlan.startDate.timeIntervalSince1970 < nowMonthFirstDate.timeIntervalSince1970 {
+            if plan.mealPlan.startDate.timeIntervalSince1970 <= nowMonthFirstDate.timeIntervalSince1970 {
                 plan.startDay -= nowMonthFirstDate.add(.day, value: -1).monthDates().count
             }
             
@@ -576,8 +579,8 @@ extension MonthlyPlanningView {
     }
 }
 
-struct MonthlyPlanningView_Previews: PreviewProvider {
-    static var previews: some View {
-        MonthlyPlanningView()
-    }
-}
+//struct MonthlyPlanningView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MonthlyPlanningView()
+//    }
+//}

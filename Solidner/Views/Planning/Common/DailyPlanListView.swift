@@ -28,7 +28,8 @@ struct DailyPlanListView: View {
 
     init(
         date: Date = Date(),
-        mealPlans: [MealPlan] = MealPlan.mockMealsOne,
+//        mealPlans: [MealPlan] = [MealPlan.mockMealsOne],
+        mealPlans: [MealPlan] = [],
         isWrongPlan: Bool = false
     ) {
         self.date = date
@@ -123,12 +124,12 @@ extension DailyPlanListView {
     }
 }
 
-struct DailyPlanListView_Previews: PreviewProvider {
-    static var previews: some View {
-        DailyPlanListView(
-            date: Date(),
-            mealPlans: MealPlan.mockMealsOne,
-            isWrongPlan: true
-        ).environmentObject(UserOB())
-    }
-}
+//struct DailyPlanListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DailyPlanListView(
+//            date: Date(),
+//            mealPlans: MealPlan.mockMealsOne,
+//            isWrongPlan: true
+//        ).environmentObject(UserOB())
+//    }
+//}

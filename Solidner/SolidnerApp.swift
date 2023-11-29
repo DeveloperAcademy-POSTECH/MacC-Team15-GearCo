@@ -42,19 +42,19 @@ struct SolidnerApp: App {
 //                .environmentObject(userOB)
 //                .environmentObject(mealPlansOB)
 //            } else {
-                NavigationStack {
-                    PlanListView()
-                }
-                .environmentObject(userOB)
-                .environmentObject(mealPlansOB)
+//                NavigationStack {
+//                    PlanListView()
+//                }
+//                .environmentObject(userOB)
+//                .environmentObject(mealPlansOB)
 //                //                    MonthlyPlanningView()
 //            }
 
             // MypageRootView().environmentObject(userOB)
             
             NavigationStack {
-                MainView().environmentObject(userOB)
-            }
+                MainView()
+            }.environmentObject(userOB)
         }
     }
 }

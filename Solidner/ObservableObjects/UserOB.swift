@@ -31,7 +31,8 @@ final class UserOB: ObservableObject {
     /// 생후 얼마가 지났는 지 불러옴.
     /// `UserOB.dateAfterBirth.day / UserOB.dateAfterBirth.month` 와 같은 형식으로 사용.
     var dateAfterBirth: DateComponents {
-        Date.componentsBetweenDates(from: babyBirthDate, to: Date())
+//        Date.componentsBetweenDates(from: babyBirthDate, to: Date())
+        Calendar.current.dateComponents([.month, .day, .hour, .minute], from: babyBirthDate, to: Date())
     }
     @AppStorage("isAppAlarmOn") var isAppAlarmOn = true
 }

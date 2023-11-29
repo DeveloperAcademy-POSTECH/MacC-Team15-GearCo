@@ -41,7 +41,6 @@ struct MealDetailView: View {
     }
     
     var body: some View {
-    #warning("임시 NavigationStack. 추후 뷰 연결 시 NavigationStack을 삭제할 것.")
         RootVStack {
             viewHeader
             viewBody
@@ -468,8 +467,8 @@ extension MealDetailView.TitleAndActionButtonView {
     }
 }
 
-struct MealDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        MealDetailView(mealPlan: MealPlan.mockMealsOne.first!, cycleGap: .two)
-    }
-}
+//struct MealDetailView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MealDetailView(mealPlan: MealPlan.mockMealsOne.first!, cycleGap: .two)
+//    }
+//}
