@@ -17,9 +17,13 @@ struct DailyPlanListView: View {
     let date: Date
     let mealPlans: [MealPlan]
     var mealPlanGroups: [MealPlanGroup] {
-        MealPlanGroup.build(with: mealPlans).sorted { $0.solidDate.startDate < $1.solidDate.startDate }
+        MealPlanGroup.build(with: mealPlans).sorted { mealPlanGroup1, mealPlanGroup2 in
+            // 시작일, 끼니 종류 기준
+            mealPlanGroup1.solidDate.startDate < mealPlanGroup2.solidDate.startDate &&
+            (mealPlanGroup1.mealPlans.first?.mealType) ?? MealType.간식2 < (mealPlanGroup2.mealPlans.first?.mealType) ?? MealType.간식2 }
     }
-    // TODO: - 나중에 어떻게 선언해야할지 고민 State? Binding? 계획이 바뀌었을 때, 바뀐 계획에 따라서 값이 바뀌어야함.
+    
+    // TODO: - 계획이 바뀌었을 때, 바뀐 계획에 따라서 값이 바뀌는지 확인하기
     let isWrongPlan: Bool
 
     init(
@@ -44,6 +48,8 @@ extension DailyPlanListView {
     private var viewHeader: some View {
         BackButtonOnlyHeader()
     }
+    
+    // MARK: - view body
     
     private var viewBody: some View {
         VStack(spacing: K.rootVStackSpacing) {
@@ -92,6 +98,7 @@ extension DailyPlanListView {
     }
 }
 
+// MARK: - add meal plan button
 extension DailyPlanListView {
     private var addMealPlanButton: some View {
         ButtonComponents(.big,
