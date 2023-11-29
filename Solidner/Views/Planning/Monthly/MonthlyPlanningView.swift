@@ -182,7 +182,7 @@ struct MonthlyPlanningView: View {
                 for (index, ingredient) in newIngredients.enumerated() {
                     if index == 0 {
                         res += ingredient.name
-                    } else {
+                    } else if index == 1 {
                         res += ", \(ingredient.name)"
                     }
                 }

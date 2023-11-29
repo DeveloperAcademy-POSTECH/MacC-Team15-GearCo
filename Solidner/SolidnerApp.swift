@@ -53,7 +53,9 @@ struct SolidnerApp: App {
             
             // MypageRootView().environmentObject(userOB)
             
-            MainView().environmentObject(userOB)
+            NavigationStack {
+                MainView().environmentObject(userOB)
+            }
         }
     }
 }
