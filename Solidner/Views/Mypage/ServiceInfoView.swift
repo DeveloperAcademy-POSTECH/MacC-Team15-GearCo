@@ -9,16 +9,13 @@ import SwiftUI
 
 struct ServiceInfoView: View {
     private let appAppleID = "6473099677"
-    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     var body: some View {
         ZStack {
             BackgroundView()
             VStack(spacing: 0) {
-                BackButtonHeader(action: {
-                    presentationMode.wrappedValue.dismiss()
-                }, title: "서비스 정보 및 문의")
+                BackButtonAndTitleHeader(title: "서비스 정보 및 문의")
                 viewBody()
-                    .padding(horizontal: 20, top: 32, bottom: 30)
+                    .padding(horizontal: 20, top: 15.88, bottom: 30)
             }
 //            .background {
 //                Image(.buyMeACoffeeBg)

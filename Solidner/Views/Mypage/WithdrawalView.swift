@@ -8,16 +8,13 @@
 import SwiftUI
 
 struct WithdrawalView: View {
-    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var user: UserOB
     @State private var showWithdrawalModalView = false
     var body: some View {
         ZStack {
             BackgroundView()
             VStack(spacing: 0){
-                BackButtonHeader(action: {
-                    presentationMode.wrappedValue.dismiss()
-                }, title: "회원 탈퇴")
+                BackButtonAndTitleHeader(title: "회원 탈퇴")
                 viewBody()
                     .padding(horizontal: 20, top: 0, bottom: 6)
             }

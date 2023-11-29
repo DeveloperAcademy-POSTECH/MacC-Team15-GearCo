@@ -14,11 +14,9 @@ struct NotificationSettingView: View {
         ZStack {
             BackgroundView()
             VStack(spacing: 0) {
-                BackButtonHeader(action: {
-                    presentationMode.wrappedValue.dismiss()
-                }, title: "알림 설정")
+                BackButtonAndTitleHeader(title: "알림 설정")
                 viewBody()
-                    .padding(horizontal: 20, top: 32, bottom: 0)
+                    .padding(horizontal: 20, top: 15.88, bottom: 0)
             }
         }
         .navigationBarBackButtonHidden(true)

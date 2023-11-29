@@ -26,11 +26,9 @@ struct UserInfoUpdateView: View {
             ZStack {
                 BackgroundView()
                 VStack(spacing: 0) {
-                    BackButtonHeader(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }, title: "회원 정보 수정")
+                    BackButtonAndTitleHeader(title: "회원정보 수정")
                     viewBody()
-                        .padding(horizontal: 20, top: 40, bottom: 6)
+                        .padding(horizontal: 20, top: 26.88, bottom: 6)
                 }
             }
             .sheet(isPresented: $showBabyBirthDateModal, content: {

@@ -15,7 +15,10 @@ struct TextFieldComponents: View {
     @FocusState var isFocused: Bool
     
     var body: some View {
-        shortTextfield(placeHolder: TextLiterals.ViewComponents.placeHolderMessage, value: $value, isFocused: $isFocused)
+        VStack {
+            shortTextfield(placeHolder: TextLiterals.ViewComponents.placeHolderMessage, value: $value, isFocused: $isFocused)
+            longTextfield(value: $value, isFocused: $isFocused)
+        }
     }
     
     func shortTextfield(placeHolder: String, value: Binding<String>, isFocused: FocusState<Bool>.Binding) -> some View {
@@ -27,6 +30,20 @@ struct TextFieldComponents: View {
             .padding(horizontal: textFieldHorizontalPadding, vertical: textFieldVerticalPadding)
             .background(Color.buttonBgColor)
             .cornerRadius(textFieldCornerRadius)
+    }
+    func longTextfield(placeHolder: String = "필요한 재료가 많다면 쉼표(,)로 구분하여 기입해요", value: Binding<String>, isFocused: FocusState<Bool>.Binding) -> some View {
+        VStack{
+            TextField("", text: value, prompt: Text(placeHolder).foregroundColor(Color.placeHolderColor), axis: .vertical)
+                .font(.custom(Text.FontWeightCase.medium.rawValue, size: 15))
+                .foregroundColor(.defaultText)
+                .focused(isFocused)
+                .tint(Color.accentColor1)
+            Spacer()
+        }
+        .padding(horizontal: textFieldHorizontalPadding, vertical: textFieldVerticalPadding)
+        .frame(height: 165)
+        .background(Color.buttonBgColor)
+        .cornerRadius(textFieldCornerRadius)
     }
 }
 

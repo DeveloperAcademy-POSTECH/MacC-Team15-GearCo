@@ -128,5 +128,35 @@ final class MealPlansOB: ObservableObject {
     }
 
     #warning("특정 달에 문제 있는 plan 날짜를 반환하는 함수")
+    func getWrongPlanDates(date: Date) -> [DateAndPlanStatus] {
+        let currentMonthMealPlans = getCurrentMonthMealPlans(of: date)
+        return date.monthDates().map {
+            DateAndPlanStatus(date: $0, isPlanWrong: isWrongPlan(at: $0, in: currentMonthMealPlans))
+        }
+    }
+    
+    private func getCurrentMonthMealPlans(of date: Date) -> [MealPlan] {
+        let monthDates = date.monthDates()
+        if let theFirstDay = monthDates.first, let theLastDay = monthDates.last {
+             
+            return mealPlans.filter {
+                theFirstDay.isInBetween(from: $0.startDate, to: $0.endDate) ||
+                $0.startDate >= theFirstDay && $0.endDate <= theLastDay ||
+                theLastDay.isInBetween(from: $0.startDate, to: $0.endDate) }
+        }
+        return []
+    }
+    
+    private func isWrongPlan(at date: Date, in plans: [MealPlan]) -> Bool {
+        let relatedPlans = plans.filter { date.isInBetween(from: $0.startDate, to: $0.endDate) }
         
+        return WrongPlanChecker.isWrongPlan(relatedPlans)
+    }
+}
+
+struct DateAndPlanStatus: Identifiable {
+    let date: Date
+    let isPlanWrong: Bool
+    
+    var id: Date { date }
 }
