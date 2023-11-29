@@ -16,13 +16,14 @@
 import SwiftUI
 
 struct ChangeMonthHalfModal: View {
+    @EnvironmentObject private var user: UserOB
     @Binding var selectedDate: Date
     let fromDate: Date
     
     // TODO: - 매직넘버 지우기
     var body: some View {
-        ChangeMonthModal(selectedDate: $selectedDate, fromDate: fromDate)
-            .presentationDetents([.height(429)])
+        ChangeMonthModal(selectedDate: $selectedDate, fromDate: user.solidStartDate)
+            .presentationDetents([.height(395)])
             .modify { view in
                 if #available(iOS 16.4, *) {
                     view.presentationCornerRadius(25)
@@ -64,7 +65,7 @@ struct ChangeMonthModal: View {
     
     var body: some View {
         VStack(spacing: K.rootVStackSpacing) {
-            Spacer().frame(height: 30)
+            Spacer().frame(height: 34)
             monthTitleBar
             monthButtons
             Spacer()
@@ -86,11 +87,12 @@ extension ChangeMonthModal {
                 leftChevron
             }
             Spacer()
-            monthTitle
-            Spacer()
             if isToDateAfterCurrentYear {
                 rightChevron
             }
+        }
+        .overlay {
+            monthTitle
         }
     }
     
@@ -112,7 +114,7 @@ extension ChangeMonthModal {
         }
     }
     
-    #warning("밖으로 빼든가 매직스트링 지우든가")
+    #warning("밖으로 빼든가 매직스트링 지우든가 svg를 불러오든가")
     enum Chevron {
         case left, right
         
@@ -151,6 +153,7 @@ extension ChangeMonthModal {
                 }
             }
         }
+//        .padding(.bottom, 12)
     }
     
     private func monthButton(of number: Int) -> some View {
@@ -171,7 +174,7 @@ extension ChangeMonthModal {
         
         return Button {
             withAnimation {
-                selectingDate = Date.date(year: selectingDate.year, month: number, day: selectedDate.day)!
+                selectingDate = Date.date(year: selectingYear, month: number, day: selectedDate.day)!
             }
         } label: {
             Text(texts.monthText(of: number))
@@ -200,16 +203,17 @@ extension ChangeMonthModal {
                 }
             }
             .buttonColor(K.saveButtonBackgroundColor)
+            .padding(.bottom, 6)
     }
 }
 
 extension ChangeMonthModal {
     enum K {
-        // static var rootVStackSpacing: CGFloat { 30 }
-        static var rootVStackSpacing: CGFloat { 18 }
+//         static var rootVStackSpacing: CGFloat { 30 }
+        static var rootVStackSpacing: CGFloat { 25 }
         static var chevronColor: Color { Color.tertinaryText }
         
-        static var monthTitleColor: Color { Color.defaultText }
+        static var monthTitleColor: Color { Color.defaultText.opacity(0.8) }
         //TODO: - color 시스템 적용
         static var selectedCurrentMonthCircleColor: Color { Color.accentColor1 }
         static var selectedotherMonthCircleColor: Color { Color.primeText }
@@ -218,7 +222,6 @@ extension ChangeMonthModal {
         static var monthVGridSpacing: CGFloat { 4 }
         static var monthTextColor: Color { Color.defaultText }
         static var disableTextColor: Color { .quarternaryText.opacity(0.8) }
-        //        static var selectedMonthTextColor: Color { Color.defaultText_wh.opacity(0.8) }
         static var selectedMonthTextColor: Color { Color.defaultText_wh }
         
         static var monthButtonSize: CGFloat { 74 }
