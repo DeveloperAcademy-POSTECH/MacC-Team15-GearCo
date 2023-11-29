@@ -68,6 +68,7 @@ struct ChangeMonthModal: View {
             Spacer().frame(height: 34)
             monthTitleBar
             monthButtons
+            Spacer()
             saveButton
         }
         .defaultHorizontalPadding()

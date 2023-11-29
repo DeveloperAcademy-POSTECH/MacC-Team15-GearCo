@@ -15,6 +15,8 @@ final class FirebaseManager {
     }
     
     static let shared = FirebaseManager()
+    #warning("ingredientData의 fetch가 선행되어야 함. 나중에 비동기로 순차 처리 되도록 주의할 것.")
+    let ingredientData = IngredientData.shared.ingredients
     private let db = Firestore.firestore()
     private init() {}
     
@@ -27,12 +29,56 @@ final class FirebaseManager {
     }
 }
 
-extension CollectionReference {
-    func getDocRef(_ email: String, id: String?) -> DocumentReference {
-        if let id {
-            return self.document("\(email)_\(id)")
+// MARK: MealPlansOB 관련
+extension FirebaseManager {
+    
+    func loadAllPlans(email: String) async -> [MealPlan] {
+        var result: [MealPlan] = []
+        let planColRef = getColRef(.Plan)
+        
+        do {
+            let querySnapshot = try await planColRef.whereField("email", isEqualTo: email).getDocumentsAsync()
+            for document in querySnapshot.documents {
+                result.append(parseDataToMealPlan(data: document.data()))
+            }
+            print("MealPlansOB 초기화 - 모든 계획을 불러오는 데 성공했습니다.")
+        } catch {
+            print("MealPlansOB 초기화 실패! 모든 계획을 성공적으로 불러오지 못했습니다. - \(error)")
         }
-        return self.document("\(email)")
+        
+        return result
+        
+        // func to parse querydata to MealPlan object.
+        func parseDataToMealPlan(data: [String: Any]) -> MealPlan {
+            let id = UUID(uuidString: data["planID"] as? String ?? "") ?? UUID()
+            let startDate = (data["startDate"] as? Timestamp ?? Timestamp()).dateValue()
+            let endDate = (data["endDate"] as? Timestamp ?? Timestamp()).dateValue()
+            let mealType = MealType(rawValue: data["mealType"] as? Int ?? 0) ?? .아침
+            var newIngredients: [Ingredient] {
+                var res: [Ingredient] = []
+                let newIngredientIDs = data["newIngredients"] as? [Int] ?? []
+                
+                for id in newIngredientIDs {
+                    if let ingredient = ingredientData[id] {
+                        res.append(ingredient)
+                    }
+                }
+                return res
+            }
+            var oldIngredients: [Ingredient] {
+                var res: [Ingredient] = []
+                let oldIngredientIDs = data["oldIngredients"] as? [Int] ?? []
+                
+                for id in oldIngredientIDs {
+                    if let ingredient = ingredientData[id] {
+                        res.append(ingredient)
+                    }
+                }
+                return res
+            }
+            
+            return MealPlan(id: id, startDate: startDate, endDate: endDate, mealType: mealType, newIngredients: newIngredients, oldIngredients: oldIngredients)
+        }
     }
 }
 
@@ -88,3 +134,4 @@ extension FirebaseManager {
         }
     }
 }
+

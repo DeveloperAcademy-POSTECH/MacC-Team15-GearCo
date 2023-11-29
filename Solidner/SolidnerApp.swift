@@ -22,15 +22,12 @@ struct SolidnerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @AppStorage("isOnboardingOn") var isOnboardingOn = true
     
-    @StateObject private var mealPlansOB = MealPlansOB(mealPlans: MealPlan.mockMealsOne)
     let ingredientData = IngredientData.shared
     @StateObject private var userOB = UserOB()
     
     var body: some Scene {
         WindowGroup {
-//            let isPlanEmpty = mealPlansOB.mealPlans.isEmpty
-            let isPlanEmpty = false
-            
+            let isPlanEmpty = false            
             #warning("이거 더 좋은 방법으로 정리해줄 사람~~")
 //            if isOnboardingOn {
 //                //                    SignInView()
@@ -55,9 +52,9 @@ struct SolidnerApp: App {
 
             // MypageRootView().environmentObject(userOB)
             
-//            MealDetailView(startDate: Date(), cycleGap: userOB.planCycleGap)
-//                .environmentObject(userOB)
-//                .environmentObject(mealPlansOB)
+            NavigationStack {
+                MainView().environmentObject(userOB)
+            }
         }
     }
 }
