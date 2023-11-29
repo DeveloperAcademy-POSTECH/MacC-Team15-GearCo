@@ -468,8 +468,8 @@ extension MealDetailView.TitleAndActionButtonView {
     }
 }
 
-struct MealDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        MealDetailView(mealPlan: MealPlan.mockMealsOne.first!, cycleGap: .two)
-    }
-}
+//struct MealDetailView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MealDetailView(mealPlan: MealPlan.mockMealsOne.first!, cycleGap: .two)
+//    }
+//}

@@ -8,7 +8,7 @@
 import SwiftUI
 
 final class MealOB: ObservableObject {
-    static let mock: MealOB = MealOB(mealPlan: MealPlan.mockMealsOne.first!, cycleGap: .three)
+//    static let mock: MealOB = MealOB(mealPlan: MealPlan.mockMealsOne.first!, cycleGap: .three)
     
     let mealPlan: MealPlan?
     @Published private(set) var newIngredients: [Ingredient] = []
