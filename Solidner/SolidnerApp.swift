@@ -45,19 +45,19 @@ struct SolidnerApp: App {
 //                .environmentObject(userOB)
 //                .environmentObject(mealPlansOB)
 //            } else {
-//                NavigationStack {
-//                    PlanListView()
-//                }
-//                .environmentObject(userOB)
-//                .environmentObject(mealPlansOB)
+                NavigationStack {
+                    PlanListView()
+                }
+                .environmentObject(userOB)
+                .environmentObject(mealPlansOB)
 //                //                    MonthlyPlanningView()
 //            }
 
             // MypageRootView().environmentObject(userOB)
             
-            MealDetailView(startDate: Date(), cycleGap: userOB.planCycleGap)
-                .environmentObject(userOB)
-                .environmentObject(mealPlansOB)
+//            MealDetailView(startDate: Date(), cycleGap: userOB.planCycleGap)
+//                .environmentObject(userOB)
+//                .environmentObject(mealPlansOB)
         }
     }
 }
