@@ -14,15 +14,16 @@ struct MonthlyPlanningView: View {
     private let lightGray = Color(#colorLiteral(red: 0.8797428608, green: 0.8797428012, blue: 0.8797428608, alpha: 1)) // #D9D9D9
     private let weekDayKorList = ["일", "월", "화", "수", "목", "금", "토"]
         
+    // 이전 달의 데이터와 이후 달의 데이터는 -2, 33 등과 같이 표현됨.
     struct PlanData {
         var mealPlan: MealPlan
         var startDay: Int
         var endDay: Int
     }
-    // MARK: 이전 달의 데이터와 이후 달의 데이터는 -2, 33 등과 같이 표현할 것.
     
     @EnvironmentObject var user: UserOB
     @EnvironmentObject var mealPlansOB: MealPlansOB
+    let ingredientData = IngredientData.shared
     
     @State private var reducedPlans: [(first: PlanData, second: BarPosition)] = []
     @State private var selectedMonthDate: Date = Date()
@@ -33,6 +34,29 @@ struct MonthlyPlanningView: View {
     
     var body: some View {
         VStack(spacing: 0) {
+            #warning("테스트 데이터 생성용 버튼")
+            Button {
+                let sDate = user.solidStartDate.add(.day, value: Int.random(in: 0...90))
+                let meal: MealOB = MealOB(startDate: sDate, cycleGap: CycleGaps(rawValue: Int.random(in: 1...4))!)
+                meal.set(mealType: MealType(rawValue: Int.random(in: 0...5))!)
+                for _ in Range<Int>(0...Int.random(in: 0...2)) {
+                    meal.addIngredient(ingredient: ingredientData.ingredients.randomElement()!.value, in: .new)
+                }
+                for _ in Range<Int>(0...Int.random(in: 0...5)) {
+                    meal.addIngredient(ingredient: ingredientData.ingredients.randomElement()!.value, in: .old)
+                }
+                FirebaseManager.shared.saveMealPlan(meal, user: user)
+            } label: {
+                HStack {
+                    Image(systemName: "lasso.and.sparkles")
+                        .foregroundStyle(Color.pink)
+                        .frame(width: 40)
+                    Text("랜덤 이유식 계획 생성 - 테스트용")
+                        .bodyFont2()
+                        .foregroundColor(Color.pink)
+                }
+            }
+
             monthlyHeader.padding(.bottom, 16)
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
@@ -64,7 +88,6 @@ struct MonthlyPlanningView: View {
                     reducedPlans = reducePlanData(plans: plans)
                 }
             }.onChange(of: mealPlansOB.filteredMealPlans) { value in
-                print(selectedMonthDate.month)
                 var plans: [PlanData] = []
                 for plan in mealPlansOB.filteredMealPlans {
                     let newPlan = PlanData(mealPlan: plan, startDay: plan.startDate.day, endDay: plan.endDate.day)
@@ -72,7 +95,6 @@ struct MonthlyPlanningView: View {
                 }
                 adjustPlanDataDays(plans: &plans)
                 reducedPlans = reducePlanData(plans: plans)
-                print(reducedPlans)
             }.onChange(of: selectedMonthDate) { newValue in
                 mealPlansOB.currentFilter = .month(date: newValue)
                 nowMonthWeekNums = selectedMonthDate.monthWeeks()
@@ -153,10 +175,23 @@ struct MonthlyPlanningView: View {
         func ingredientBar(plan: PlanData, index: Int, isBarFromEnd: (left: Bool, right: Bool)) -> some View {
             let barWidth: CGFloat = calculateBarWidth(plan: plan, isBarFromEnd: isBarFromEnd)
             let barRadius: CGFloat = 4
+            
+            var newIngredientText: String {
+                var res = ""
+                let newIngredients = plan.mealPlan.newIngredients
+                for (index, ingredient) in newIngredients.enumerated() {
+                    if index == 0 {
+                        res += ingredient.name
+                    } else {
+                        res += ", \(ingredient.name)"
+                    }
+                }
+                return res
+            }
                         
             return VStack(spacing: 0) {
                 HStack(spacing: 0) {
-                    Text("고기고기고기")
+                    Text(newIngredientText)
                         .weekDisplayFont3()
                         .foregroundColor(.defaultText_wh)
                         .padding(.leading, 7)
@@ -301,10 +336,16 @@ struct MonthlyPlanningView: View {
     }
     
     private func calendarDayNumberRow(weekOfMonth: Int) -> some View {
-        let mainDaySectionWidth = screenWidth * (50/390)
-        let dayNumberRowFrameHeight = screenWidth * (60/390)
-        let dayNumberGap = screenWidth * (6/390)
-        let rowHorizontalPadding = screenWidth * (4/390)
+        let mainDaySectionWidth = 50.responsibleWidth
+        let dayNumberRowFrameHeight = 60.responsibleWidth
+        let dayNumberGap = 6.responsibleWidth
+        let rowHorizontalPadding = 4.responsibleWidth
+        
+        let todayCircleDiameter = 8.responsibleWidth
+        let solidDayNumberFrameHeight = 13.responsibleWidth
+        let todayBackgroundHeight = 45.responsibleWidth
+        let todayBackgroundWidth = 32.responsibleWidth
+        
         let thisWeekDates: [Date] = selectedMonthDate.weekDates(weekOfMonth)
         
         func rowLeftEndSpacer() -> some View {
@@ -322,19 +363,39 @@ struct MonthlyPlanningView: View {
             }
         }
         
+        #warning("이상 있는 날짜 분기처리")
+
         return VStack(spacing: 0) {
             HStack(alignment: .center, spacing: 0) {
                 rowLeftEndSpacer()
                 ForEach(thisWeekDates, id: \.self) { date in
+                    let isToday = (date.day == Date().day && date.month == Date().month && date.year == Date().year)
                     VStack(spacing: 0) {
-                        Text("\(Date.componentsBetweenDates(from: user.solidStartDate, to: date).day!)")
-                            .dayDisplayFont1()
-                            .foregroundStyle(Color.tertinaryText)
-                            .padding(.bottom, dayNumberGap)
+                        if isToday {
+                            Circle()
+                                .scaledToFit()
+                                .frame(width: todayCircleDiameter)
+                                .foregroundStyle(Color.defaultText_wh)
+                                .frame(height: solidDayNumberFrameHeight)
+                                .padding(.bottom, dayNumberGap)
+                        } else {
+                            Text("\(Date.componentsBetweenDates(from: user.solidStartDate, to: date).day!)")
+                                .dayDisplayFont1()
+                                .foregroundStyle(Color.tertinaryText)
+                                .frame(height: solidDayNumberFrameHeight)
+                                .padding(.bottom, dayNumberGap)
+                        }
                         Text("\(date.day)")
                             .dayDisplayFont2()
-                            .foregroundStyle(Color.tertinaryText)
+                            .foregroundStyle(isToday ? Color.defaultText_wh : Color.tertinaryText)
                     }.frame(width: mainDaySectionWidth)
+                        .if(isToday) { view in
+                            view.background {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color.accentColor2)
+                                    .frame(width: todayBackgroundWidth, height: todayBackgroundHeight)
+                            }
+                        }
                 }
                 rowRightEndSpacer()
             }.frame(height: dayNumberRowFrameHeight)
