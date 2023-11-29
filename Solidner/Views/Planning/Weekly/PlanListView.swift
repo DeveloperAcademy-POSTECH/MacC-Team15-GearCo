@@ -73,24 +73,32 @@ struct PlanListView: View {
             mealPlansOB.currentFilter = .month(date: value)
             print(mealPlansOB.currentFilter)
         }
+        .navigationDestination(isPresented: $isMyPageOpenning) {
+            MypageRootView()
+        }
+        .navigationDestination(for: Date.self) { date in
+            let mealPlans = mealPlansOB.getMealPlans(in: date)
+            if mealPlans.count != .zero {
+                DailyPlanListView(date: date, mealPlans: mealPlans)
+            } else {
+                MealDetailView(startDate: date, cycleGap: user.planCycleGap)
+            }
+        }
     }
 }
 
 // MARK: - View Header
 
 extension PlanListView {
-#warning("Header Button 함수 구현하기")
+
     private var headerLeftButton: some View {
         Button {
             isMyPageOpenning = true
         } label: {
             Image(.userInfo)
         }
-        .navigationDestination(isPresented: $isMyPageOpenning) {
-            MypageRootView()
-        }
     }
-    
+    #warning("Header right Button 함수 구현하기 -> monthly planner 나와라 얍")
     private var headerRightButton: some View {
         Button {
             print(#function)
@@ -123,7 +131,6 @@ extension PlanListView {
 // MARK: - date Scroll
 
 extension PlanListView {
-#warning("이상있는 date에 노티하기")
     private var dateScroll: some View {
         let spacer: some View = Spacer()
             .frame(width: K.defaultHorizontalPadding - K.dateHStackSpacing)
@@ -131,34 +138,42 @@ extension PlanListView {
         return ScrollView(.horizontal) {
             HStack(spacing: K.dateHStackSpacing) {
                 spacer
-                ForEach(selectedDate.monthDates(), id: \.self) { date in
+                ForEach(mealPlansOB.getWrongPlanDates(date: selectedDate)) { dateAndStatus in
+                    let date = dateAndStatus.date
                     NavigationLink(value: date){
-                        dateScrollLabel(of: date)
+                        dateScrollLabel(of: dateAndStatus)
                     }
                 }
                 spacer
-            }
-            .navigationDestination(for: Date.self) { date in
-                let mealPlans = mealPlansOB.getMealPlans(in: date)
-                if mealPlans.count != .zero {
-                    DailyPlanListView(date: date, mealPlans: mealPlans)
-                } else {
-                    MealDetailView(startDate: date, cycleGap: user.planCycleGap)
-                }
             }
         }
         .scrollIndicators(.hidden)
         .padding(.horizontal, -K.defaultHorizontalPadding)
     }
     
-    private func dateScrollLabel(of date: Date) -> some View {
-        Text(texts.ddDateText(date: date))
-            .customFont(.header6, color: .primeText)
+//    private func dateScrollLabel(of date: Date, _ isWrong: Bool) -> some View {
+    private func dateScrollLabel(of dateAndStatus: DateAndPlanStatus) -> some View {
+        let (date, isWrong) = (dateAndStatus.date, dateAndStatus.isPlanWrong)
+        return HStack{
+            if isWrong { notiCircle }
+            Text(texts.ddDateText(date: date))
+                .customFont(.header6, color: .primeText)
+        }
             .frame(width: K.dateButtonWidth, height: K.dateButtonHeight)
             .withRoundedBackground(
                 cornerRadius: K.dateButtonCornerRadius,
                 color: K.dateButtonBackgroundColor
             )
+    }
+    
+    private var notiCircle: some View {
+        VStack {
+            Spacer()
+            Circle()
+                .frame(width: K.notiCircleSize, height: K.notiCircleSize)
+                .foregroundStyle(Color.accentColor1)
+            Spacer()
+        }
     }
 }
 
@@ -233,13 +248,13 @@ extension PlanListView {
         static var chevronDownSFSymbolName: String { "chevron.down" }
         static var chevronDownColor: Color { .primeText }
         
-        
         static var dateHStackSpacing: CGFloat { 12 }
         static var dateTextColor: Color { .secondaryText }
         static var dateButtonWidth: CGFloat { 70 }
         static var dateButtonHeight: CGFloat { 36 }
         static var dateButtonCornerRadius: CGFloat { 12 }
         static var dateButtonBackgroundColor: Color { .buttonBgColor }
+        static var notiCircleSize: CGFloat { 6 }
         
         static var mealGroupListVStackSpacing: CGFloat { 40 }
         
