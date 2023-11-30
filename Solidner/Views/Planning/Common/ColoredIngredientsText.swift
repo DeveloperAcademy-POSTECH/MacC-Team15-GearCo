@@ -27,7 +27,8 @@ struct ColoredIngredientsText: View {
     var body: some View {
         (newIngredientsText + bridgeText + oldIngredientsText)
             .customFont(textType)
-            .lineLimit(1)
+//            .lineLimit(1)
+            .multilineTextAlignment(.leading)
     }
 
     private var newIngredientsText: Text {
@@ -35,7 +36,7 @@ struct ColoredIngredientsText: View {
     }
 
     private var bridgeText: Text {
-        if(newIngredients.count == 0) {
+        if(newIngredients.count == 0 || oldIngredients.count == 0) {
             return K.emptyText
         } else {
             return K.commaText.foreground(color: normalColor)
@@ -68,6 +69,20 @@ extension ColoredIngredientsText {
     ) {
         self.newIngredients = mealPlan.newIngredients
         self.oldIngredients = mealPlan.oldIngredients
+        self.accentColor = accentColor
+        self.normalColor = normalColor
+        self._textType = State(initialValue: type == .cell ? .header5 : .body3)
+    }
+    
+    init(
+        newIngredients: [Ingredient],
+        oldIngredients: [Ingredient],
+        accentColor: Color = .accentColor1,
+        normalColor: Color = .defaultText,
+        type: ColoredIngredientsTextType = .cell
+    ) {
+        self.newIngredients = newIngredients
+        self.oldIngredients = oldIngredients
         self.accentColor = accentColor
         self.normalColor = normalColor
         self._textType = State(initialValue: type == .cell ? .header5 : .body3)

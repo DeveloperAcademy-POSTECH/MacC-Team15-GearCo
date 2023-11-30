@@ -82,7 +82,11 @@ struct PlanListView: View {
             if mealPlans.count != .zero {
                 DailyPlanListView(date: date, mealPlans: mealPlans)
             } else {
-                MealDetailView(startDate: date, cycleGap: user.planCycleGap)
+                MealDetailView(
+                    startDate: date,
+                    cycleGap: user.planCycleGap,
+                    mealPlansOB: mealPlansOB
+                )
             }
         }
     }

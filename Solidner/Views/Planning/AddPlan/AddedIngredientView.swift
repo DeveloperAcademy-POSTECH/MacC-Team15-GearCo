@@ -10,12 +10,13 @@ import SwiftUI
 struct AddedIngredientView: View {
     private let texts = TextLiterals.AddedIngredient.self
 
-    enum AddedIngredientView {
-        case age, new, adverseReactionDate, deletable, mismatch
+    enum AddedIngredientViewType {
+        case age, new, adverseReactionDate, deletable, mismatch, none
     }
 
-    let type: AddedIngredientView
+    let type: AddedIngredientViewType
     let ingredient: Ingredient
+    let deleteAction: () -> ()
 
     var colorChip: some View {
         RoundedRectangle(cornerRadius: 5)
@@ -28,8 +29,14 @@ struct AddedIngredientView: View {
             colorChip
             ingredientName
             Spacer()
-            if type == .deletable { deleteButton }
-            else { ingredientBadge }
+            switch type {
+            case .none:
+                EmptyView()
+            case .deletable:
+                deleteButton
+            default:
+                ingredientBadge
+            }
         }
         .padding(top: 0, leading: 15, bottom: 0, trailing: 20)
         .frame(height: 56)
@@ -43,12 +50,14 @@ struct AddedIngredientView: View {
 
     private var ingredientName: some View {
         Text(ingredient.name)
-            .bodyFont1()
+            .customFont(.body1, color: .defaultText.opacity(0.8))
     }
 
     private var deleteButton: some View {
         Button {
-            // delete ingredient action - 밖에서 받아오기
+            withAnimation {
+                deleteAction()
+            }
         } label: {
             Text(texts.deleteText)
                 .foregroundStyle(Color.primeText.opacity(0.3))
