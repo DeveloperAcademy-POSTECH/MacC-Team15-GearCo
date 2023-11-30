@@ -25,14 +25,16 @@ struct AddTestIngredientsView: View {
     
     @State private var showReportSheet = false
     
-    @EnvironmentObject var user: UserOB
-    @EnvironmentObject var mealOB: MealOB
+    @EnvironmentObject private var user: UserOB
+    @EnvironmentObject private var mealOB: MealOB
+    @EnvironmentObject private var mealPlansOB: MealPlansOB
     
     // init property
     let viewType: MealOB.IngredientTestType
     @Environment(\.dismiss) private var dismiss
     // 선택된 테스트 재료
     @State private var selectedIngredients: [Int] = []
+    @State private var ingredientUseCount: [Int: Int] = [:]
     
     init(_ addIngredientViewType: MealOB.IngredientTestType) {
         self.viewType = addIngredientViewType
@@ -42,7 +44,7 @@ struct AddTestIngredientsView: View {
     // MARK: body
     var body: some View {
         VStack(spacing: 0) {
-            BackButtonAndTitleHeader(title: Texts.testViewTitle)
+            BackButtonAndTitleHeader(title: Texts.testViewTitle(viewType: viewType))
             
             // MARK: 검색, 재료 타입 버튼
             searchAndIngredientTypeButtonsRow
@@ -59,18 +61,21 @@ struct AddTestIngredientsView: View {
                 } else {
                     IngredientsBigDivision(case: .자주사용한재료,
                                            ingredients: $selectedIngredients,
-                                           viewType: viewType)
+                                           viewType: viewType,
+                                           ingredientUseCount: $ingredientUseCount)
                 }
                 
                 ThickDivider().padding(.vertical, divisionDividerVerticalPadding)
                 
                 IngredientsBigDivision(case: .먹을수있는재료,
                                        ingredients: $selectedIngredients,
-                                       viewType: viewType)
+                                       viewType: viewType,
+                                       ingredientUseCount: $ingredientUseCount)
                 Spacer().frame(height: divisionDividerVerticalPadding)
                 IngredientsBigDivision(case: .권장하지않는재료,
                                        ingredients: $selectedIngredients,
-                                       viewType: viewType)
+                                       viewType: viewType,
+                                       ingredientUseCount: $ingredientUseCount)
                 
                 Spacer().frame(height: reportButtonTopSpace)
                 reportButton
@@ -86,7 +91,10 @@ struct AddTestIngredientsView: View {
             }.padding(.horizontal, viewHorizontalPadding)
             
         }.background(Color.mainBackgroundColor).toolbar(.hidden)
-            .onAppear { initSelectedIngredient() }
+            .onAppear {
+                initSelectedIngredient()
+                countingIngredientUse()
+            }
     }
 }
 
@@ -238,6 +246,18 @@ extension AddTestIngredientsView {
         case .old:
             for ingredient in mealOB.oldIngredients {
                 selectedIngredients.append(ingredient.id)
+            }
+        }
+    }
+    
+    // 재료 사용 횟수 카운팅
+    private func countingIngredientUse() {
+        for plan in mealPlansOB.mealPlans {
+            for ingredient in plan.newIngredients {
+                ingredientUseCount[ingredient.id, default: 0] += 1
+            }
+            for ingredient in plan.oldIngredients {
+                ingredientUseCount[ingredient.id, default: 0] += 1
             }
         }
     }

@@ -13,6 +13,7 @@ final class FirebaseManager {
         case User
         case Plan
         case Report = "IngredientReport"
+        case Count = "IngredientUseCount"
     }
     
     static let shared = FirebaseManager()
@@ -140,9 +141,9 @@ extension FirebaseManager {
         
         planDocRefToSave.setData(dataToSave, merge: true) { err in
             if let err = err {
-                print("MealPlan 저장 실패! - \(err)")
+                print("MealPlan 저장&수정 실패! - \(err)")
             } else {
-                print("MealPlan 저장 완료. - \(user.email)_\(uuid)")
+                print("MealPlan 저장&수정 완료. - \(user.email)_\(uuid)")
             }
         }
     }
@@ -164,3 +165,25 @@ extension FirebaseManager {
     }
 }
 
+//extension FirebaseManager {
+//    enum CountUpdateCase {
+//        case add
+//        case delete
+//        case update
+//    }
+//    
+//    func updateIngredientUseCount(mealData: MealOB? = nil, mealPlan: MealPlan? = nil, email: String, updateCase: CountUpdateCase) async {
+//        let colRef = getColRef(.Count)
+//        let docRef = colRef.getDocRef(email)
+//        
+//        switch updateCase {
+//        case .add:
+//            let dataToSave: [String: Any]
+//            for ingredient in mealData
+//        case .delete:
+//            <#code#>
+//        case .update:
+//            <#code#>
+//        }
+//    }
+//}

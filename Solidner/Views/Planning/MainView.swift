@@ -13,7 +13,7 @@ struct MainView: View {
     @State private var showWeekly = true
     
     var body: some View {
-        Group {
+        NavigationStack {
             if showWeekly {
                 PlanListView(showWeekly: $showWeekly)
             } else {

@@ -48,12 +48,15 @@ struct IngredientsBigDivision: View {
     // MARK: Property Wrapper, init, etc
     @EnvironmentObject var user: UserOB
     @Binding var selectedIngredients: [Int]
+    @Binding var ingredientUseCount: [Int: Int]
     @State private var foldStates: [IngredientType: Bool]
+    
     let viewType: MealOB.IngredientTestType
     
-    init(case divisionCase: DivisionCase, ingredients selectedIngredients: Binding<[Int]>, viewType: MealOB.IngredientTestType) {
+    init(case divisionCase: DivisionCase, ingredients selectedIngredients: Binding<[Int]>, viewType: MealOB.IngredientTestType, ingredientUseCount: Binding<[Int: Int]>) {
         self.divisionCase = divisionCase
         self.viewType = viewType
+        self._ingredientUseCount = ingredientUseCount
         
         self._selectedIngredients = selectedIngredients
         var states: [IngredientType: Bool] = [:]
@@ -125,12 +128,17 @@ extension IngredientsBigDivision {
                             // 개월 수 필터링(month), type 필터링 (type foreach 내부임)
                             let data = ingredientData[key]!
                             let month = user.dateAfterBirth.month!
-                            if divisionCase == .먹을수있는재료 && data.type == type && data.ableMonth <= month {
-                                ingredientSelectRow(case: divisionCase, ingredient: data,
-                                                    selected: $selectedIngredients, viewType: viewType).padding(.vertical, 15)
-                            } else if divisionCase == .권장하지않는재료 && data.type == type && data.ableMonth > month {
-                                ingredientSelectRow(case: divisionCase, ingredient: data,
-                                                    selected: $selectedIngredients, viewType: viewType).padding(.vertical, 15)
+                            // 재료가 보이려면 -> new&사용횟수0 / old&사용횟수1이상 / 현재선택된재료
+                            let isIngredientAppear: Bool = (viewType == .new && ingredientUseCount[data.id, default: 0] == 0) || (viewType == .old && ingredientUseCount[data.id, default: 0] != 0) || selectedIngredients.contains { $0 == data.id }
+                            
+                            if isIngredientAppear {
+                                if divisionCase == .먹을수있는재료 && data.type == type && data.ableMonth <= month {
+                                    ingredientSelectRow(case: divisionCase, ingredient: data,
+                                                        selected: $selectedIngredients, viewType: viewType).padding(.vertical, 15)
+                                } else if divisionCase == .권장하지않는재료 && data.type == type && data.ableMonth > month {
+                                    ingredientSelectRow(case: divisionCase, ingredient: data,
+                                                        selected: $selectedIngredients, viewType: viewType).padding(.vertical, 15)
+                                }
                             }
                         }
                     }.transition(.push(from: foldStates[type]! ? .bottom : .top))
