@@ -143,10 +143,14 @@ extension MealDetailView {
             Text(texts.viewInEditTitleText)
                 .customFont(.header2, color: .defaultText)
         }()
-        if let mealPlan = mealOB.mealPlan {
+        if mealOB.mealPlan != nil {
             VStack(alignment: .leading, spacing: K.IngredientTitleAndChip.vStackSpacing){
                 title
-                ColoredIngredientsText(mealPlan: mealPlan, type: .chip)
+                ColoredIngredientsText(
+                    newIngredients: mealOB.newIngredients,
+                    oldIngredients: mealOB.oldIngredients,
+                    type: .chip
+                )
                     .padding(K.IngredientTitleAndChip.padding)
                     .withRoundedBackground(cornerRadius: K.IngredientTitleAndChip.backgroundCornerRadius, color: .defaultText_wh)
             }
