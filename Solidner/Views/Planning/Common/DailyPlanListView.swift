@@ -10,17 +10,15 @@
 import SwiftUI
 
 struct DailyPlanListView: View {
+    @EnvironmentObject private var mealPlansOB: MealPlansOB
     @EnvironmentObject private var user: UserOB
     @State private var isMealAdding: Bool = false
     private let texts = TextLiterals.DailyPlanList.self
 
     let date: Date
-    let mealPlans: [MealPlan]
+    @State private var mealPlans: [MealPlan]
     var mealPlanGroups: [MealPlanGroup] {
-        MealPlanGroup.build(with: mealPlans).sorted { mealPlanGroup1, mealPlanGroup2 in
-            // 시작일, 끼니 종류 기준
-            mealPlanGroup1.solidDate.startDate < mealPlanGroup2.solidDate.startDate &&
-            (mealPlanGroup1.mealPlans.first?.mealType) ?? MealType.간식2 < (mealPlanGroup2.mealPlans.first?.mealType) ?? MealType.간식2 }
+        MealPlanGroup.build(with: mealPlans)
     }
     
     // TODO: - 계획이 바뀌었을 때, 바뀐 계획에 따라서 값이 바뀌는지 확인하기
@@ -33,7 +31,7 @@ struct DailyPlanListView: View {
         isWrongPlan: Bool = false
     ) {
         self.date = date
-        self.mealPlans = mealPlans
+        self._mealPlans = State(initialValue: mealPlans)
         self.isWrongPlan = isWrongPlan
     }
 
@@ -68,10 +66,14 @@ extension DailyPlanListView {
         .navigationDestination(isPresented: $isMealAdding) {
             MealDetailView(
                 startDate: date,
-                cycleGap: user.planCycleGap
+                cycleGap: user.planCycleGap,
+                mealPlansOB: mealPlansOB
             )
         }
         .defaultHorizontalPadding()
+        .onChange(of: mealPlansOB.filteredMealPlans) { newValue in
+            mealPlans = mealPlansOB.getMealPlans(in: date)
+        }
     }
 }
 

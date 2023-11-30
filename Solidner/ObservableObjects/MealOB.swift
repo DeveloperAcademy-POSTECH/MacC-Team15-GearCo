@@ -11,6 +11,8 @@ final class MealOB: ObservableObject {
 //    static let mock: MealOB = MealOB(mealPlan: MealPlan.mockMealsOne.first!, cycleGap: .three)
     
     let mealPlan: MealPlan?
+    weak var mealPlansOB: MealPlansOB?
+    
     @Published private(set) var newIngredients: [Ingredient] = []
     @Published private(set) var oldIngredients: [Ingredient] = []
     @Published private(set) var mealType: MealType?
@@ -28,25 +30,26 @@ final class MealOB: ObservableObject {
     }
 
     // Edit일 때 initializer
-    init(mealPlan: MealPlan, cycleGap: CycleGaps) {
+    init(mealPlan: MealPlan, cycleGap: CycleGaps, mealPlansOB: MealPlansOB) {
         self.mealPlan = mealPlan
         self.startDate = mealPlan.startDate
         self.newIngredients = mealPlan.newIngredients
         self.oldIngredients = mealPlan.oldIngredients
         self.mealType = mealPlan.mealType
         self.cycleGap = mealPlan.cycleGap
+        self.mealPlansOB = mealPlansOB
     }
     
     // Add일 때 initializer
-    init(startDate: Date, cycleGap: CycleGaps) {
+    init(startDate: Date, cycleGap: CycleGaps, mealPlansOB: MealPlansOB) {
         self.mealPlan = nil
         self.startDate = startDate
         self.mealType = nil
         self.cycleGap = cycleGap
+        self.mealPlansOB = mealPlansOB
     }
 
     func set(mealType: MealType) {
-        print(#function)
         withAnimation {
             self.mealType = mealType
         }
@@ -54,7 +57,6 @@ final class MealOB: ObservableObject {
 
     func set(startDate date: Date) {
         withAnimation {
-            print(#function)
             self.startDate = date
         }
     }
@@ -88,7 +90,24 @@ final class MealOB: ObservableObject {
     #warning("meal - add plan 구현하기")
     // TODO: mealPlans에도 같이 업데이트가 필요.
     func addMealPlan(user: UserOB) {
-        firebaseManager.saveMealPlan(self, user: user)
+        // fb에서 만들 때 id를 어케 받아오징? 하하 안받아와도 되려나
+        let id = firebaseManager.saveMealPlan(self, user: user)
+        if let mealPlan = makeNewMealPlan(id: id) {
+            mealPlansOB?.add(plan: mealPlan)
+        }
+    }
+    
+    private func makeNewMealPlan(id: UUID) -> MealPlan? {
+        if let mealType {
+            return MealPlan(id: id,
+                     startDate: startDate,
+                     endDate: endDate,
+                     mealType: mealType,
+                     newIngredients: newIngredients,
+                     oldIngredients: oldIngredients
+            )
+        }
+        return nil
     }
     
     #warning("meal - change plan 구현하기")

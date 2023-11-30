@@ -61,13 +61,23 @@ struct PlanGroupDetailView: View {
             }
             addMealButton
         }
+        .defaultHorizontalPadding()
         .navigationDestination(isPresented: $isMealAdding) {
             MealDetailView(
                 startDate: startDate,
-                endDate: endDate
+                endDate: endDate,
+                mealPlansOB: mealPlansOB
             )
         }
-        .defaultHorizontalPadding()
+        .onChange(of: mealPlansOB.filteredMealPlans) { _ in
+            let solid = tempMealPlanGroup.solidDate
+            let plans = mealPlansOB.getMealPlans(from: solid.startDate, to: solid.endDate)
+            if let firstMealPlanGroup = MealPlanGroup.build(with: plans).first {
+                tempMealPlanGroup = firstMealPlanGroup
+            } else {
+                tempMealPlanGroup = MealPlanGroup(solidDate: tempMealPlanGroup.solidDate, mealPlans: [])
+            }
+        }
     }
 }
 
@@ -140,13 +150,3 @@ extension PlanGroupDetailView {
         static var wholeVStackSpacing: CGFloat { 26 }
     }
 }
-
-//struct PlanDetailView_Previews: PreviewProvider {
-//    static var mealPlansOB = MealPlansOB(mealPlans: MealPlan.mockMealsOne)
-//    static var previews: some View {
-//        let mealPlanGroup = MealPlanGroup(mealPlans: Array(MealPlan.mockMealsOne[0...3]))
-//        PlanGroupDetailView(mealPlanGroup: mealPlanGroup)
-//            .environmentObject(UserOB())
-//            .environmentObject(MealPlansOB())
-//    }
-//}

@@ -10,6 +10,7 @@
 import SwiftUI
 
 struct StartPlanView: View {
+    @EnvironmentObject private var mealPlansOB: MealPlansOB
     private let texts = TextLiterals.StartPlan.self
     @State private var startDate = Date()
     @State private var isStartTapped = false
@@ -42,7 +43,7 @@ struct StartPlanView: View {
             MypageRootView()
         }
         .navigationDestination(isPresented: $isPlanStarting) {
-            MealDetailView(startDate: startDate, cycleGap: .three)
+            MealDetailView(startDate: startDate, cycleGap: .three, mealPlansOB: mealPlansOB)
         }
     }
 

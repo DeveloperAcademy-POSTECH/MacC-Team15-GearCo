@@ -41,7 +41,13 @@ extension MealPlanGroup {
         let mealsDict = Dictionary(grouping: mealPlans) { SolidDate(startDate: $0.startDate, endDate: $0.endDate) }
         return mealsDict.reduce(into: [MealPlanGroup]()) { partialResult, element in
             let (solidDate, mealPlans) = element
-            partialResult.append(MealPlanGroup(solidDate: solidDate, mealPlans: mealPlans))
+            partialResult.append(MealPlanGroup(solidDate: solidDate, mealPlans: mealPlans.sorted { $0.mealType < $1.mealType }))
+        }
+        .sorted { mealPlanGroup1, mealPlanGroup2 in
+            // 시작일, 끼니 종류 기준
+            mealPlanGroup1.solidDate.startDate < mealPlanGroup2.solidDate.startDate &&
+            (mealPlanGroup1.mealPlans.first?.mealType) ?? MealType.간식2 < (mealPlanGroup2.mealPlans.first?.mealType) ?? MealType.간식2 &&
+            mealPlanGroup1.solidDate.endDate < mealPlanGroup2.solidDate.endDate
         }
     }
 }

@@ -17,26 +17,28 @@ struct MealDetailView: View {
     @State var showAddNewIngredientView: Bool = false
     @State var showAddOldIngredientView: Bool = false
     
+    @Environment(\.dismiss) private var dismiss
+    
     private let texts = TextLiterals.MealDetail.self
 
     let isEditMode: Bool
     
     // meal cell을 눌러서 들어온 경우 - 끼니 편집
-    init(mealPlan: MealPlan, cycleGap: CycleGaps) {
-        self._mealOB = StateObject(wrappedValue: MealOB(mealPlan: mealPlan, cycleGap: cycleGap))
+    init(mealPlan: MealPlan, cycleGap: CycleGaps, mealPlansOB: MealPlansOB) {
+        self._mealOB = StateObject(wrappedValue: MealOB(mealPlan: mealPlan, cycleGap: cycleGap, mealPlansOB: mealPlansOB))
         self.isEditMode = true
     }
     
     // from Daily Plan List View - 끼니 추가
-    init(startDate: Date, cycleGap: CycleGaps) {
-        self._mealOB = StateObject(wrappedValue: MealOB(startDate: startDate, cycleGap: cycleGap))
+    init(startDate: Date, cycleGap: CycleGaps, mealPlansOB: MealPlansOB) {
+        self._mealOB = StateObject(wrappedValue: MealOB(startDate: startDate, cycleGap: cycleGap, mealPlansOB: mealPlansOB))
         self.isEditMode = false
     }
     
     // from Plan Group Detail View - 끼니 추가
-    init(startDate: Date, endDate: Date) {
+    init(startDate: Date, endDate: Date, mealPlansOB: MealPlansOB) {
         let cycleGap = CycleGaps(rawValue:Date.componentsBetweenDates(from: startDate, to: endDate).day! + 1) ?? .three
-        self._mealOB = StateObject(wrappedValue: MealOB(startDate: startDate, cycleGap: cycleGap))
+        self._mealOB = StateObject(wrappedValue: MealOB(startDate: startDate, cycleGap: cycleGap, mealPlansOB: mealPlansOB))
         self.isEditMode = false
     }
     
@@ -359,7 +361,10 @@ extension MealDetailView {
                 isSaveButtonTapped = true
                 mealOB.changeMealPlan(user: user)
             }
-            else { mealOB.addMealPlan(user: user) }
+            else {
+                mealOB.addMealPlan(user: user)
+                dismiss()
+            }
         }
     }
 }

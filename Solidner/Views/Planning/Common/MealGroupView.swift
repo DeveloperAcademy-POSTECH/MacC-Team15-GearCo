@@ -16,6 +16,7 @@ import SwiftUI
 // MARK: - MealGroupView
 
 struct MealGroupView: View {
+    @EnvironmentObject private var mealPlansOB: MealPlansOB
     let mealPlanGroup: MealPlanGroup
     
     let isInPlanList: Bool
@@ -42,7 +43,11 @@ struct MealGroupView: View {
             mealGroup
         }
         .navigationDestination(for: MealPlan.self) { mealPlan in
-            MealDetailView(mealPlan: mealPlan, cycleGap: mealPlan.cycleGap)
+            MealDetailView(
+                mealPlan: mealPlan,
+                cycleGap: mealPlan.cycleGap,
+                mealPlansOB: mealPlansOB
+            )
         }
     }
     
@@ -154,6 +159,7 @@ extension MealGroupView {
 // MARK: - AddNewMealView
 
 struct AddNewMealView: View {
+    @EnvironmentObject private var mealPlansOB: MealPlansOB
     var startDate: Date
     var endDate: Date
     @State private var isMealAdding: Bool = false
@@ -169,7 +175,11 @@ struct AddNewMealView: View {
             .padding(.bottom, K.AddNewPlan.bottomPadding)
         }
         .navigationDestination(isPresented: $isMealAdding) {
-            MealDetailView(startDate: startDate, endDate: endDate)
+            MealDetailView(
+                startDate: startDate,
+                endDate: endDate,
+                mealPlansOB: mealPlansOB
+            )
         }
     }
     
