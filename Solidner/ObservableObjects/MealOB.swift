@@ -64,9 +64,9 @@ final class MealOB: ObservableObject {
     func delete(ingredient: Ingredient, in testType: IngredientTestType) {
         switch testType {
         case .old:
-            oldIngredients.removeAll { $0 == ingredient }
+            oldIngredients.remove(ingredient)
         case .new:
-            newIngredients.removeAll { $0 == ingredient }
+            newIngredients.remove(ingredient)
         }
     }
     

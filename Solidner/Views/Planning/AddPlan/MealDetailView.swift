@@ -190,7 +190,7 @@ extension MealDetailView {
     private func addedIngredientsView(of ingredients: [Ingredient], type: MealOB.IngredientTestType) -> some View {
         VStackInIngredients {
             ForEach(ingredients) { ingredient in
-                let type: AddedIngredientView.AddedIngredientViewType = {
+                let viewType: AddedIngredientView.AddedIngredientViewType = {
                     if !isEditMode { // Edit 모드가 아닐 때 - 삭제
                         return .deletable
                     } else if type == .new { // Edit 모드인데 새로운 재료일 때
@@ -205,9 +205,12 @@ extension MealDetailView {
                 }()
                 
                 AddedIngredientView(
-                    type: type,
+                    type: viewType,
                     ingredient: ingredient
-                )
+                ) {
+                    // delete action
+                    mealOB.delete(ingredient: ingredient, in: type)
+                }
             }
         }
     }

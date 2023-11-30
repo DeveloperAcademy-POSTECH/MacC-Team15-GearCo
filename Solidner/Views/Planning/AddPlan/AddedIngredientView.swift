@@ -16,6 +16,7 @@ struct AddedIngredientView: View {
 
     let type: AddedIngredientViewType
     let ingredient: Ingredient
+    let deleteAction: () -> ()
 
     var colorChip: some View {
         RoundedRectangle(cornerRadius: 5)
@@ -49,12 +50,14 @@ struct AddedIngredientView: View {
 
     private var ingredientName: some View {
         Text(ingredient.name)
-            .bodyFont1()
+            .customFont(.body1, color: .defaultText.opacity(0.8))
     }
 
     private var deleteButton: some View {
         Button {
-            // delete ingredient action - 밖에서 받아오기
+            withAnimation {
+                deleteAction()
+            }
         } label: {
             Text(texts.deleteText)
                 .foregroundStyle(Color.primeText.opacity(0.3))
