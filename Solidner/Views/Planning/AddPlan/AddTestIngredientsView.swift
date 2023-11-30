@@ -23,8 +23,9 @@ struct AddTestIngredientsView: View {
     private let saveButtonTopSpace: CGFloat = 100
     private let reportButtonTopSpace: CGFloat = 20
     
-    @State private var isIngredientBad = false
+    @State private var showReportSheet = false
     
+    @EnvironmentObject var user: UserOB
     @EnvironmentObject var mealOB: MealOB
     
     // init property
@@ -139,12 +140,14 @@ extension AddTestIngredientsView {
     
     private var reportButton: some View {
         Button {
-            // TODO: 재료 신고 기능
+            showReportSheet = true
         } label: {
             Text(Texts.isIngredientNotExist)
                 .clickableTextFont2()
                 .underline()
                 .foregroundColor(.primary.opacity(0.3))
+        }.sheet(isPresented: $showReportSheet) {
+            ReportIngredientModalView()
         }
     }
     

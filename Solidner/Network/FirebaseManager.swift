@@ -12,6 +12,7 @@ final class FirebaseManager {
     enum CollectionName: String {
         case User
         case Plan
+        case Report = "IngredientReport"
     }
     
     static let shared = FirebaseManager()
@@ -26,6 +27,34 @@ final class FirebaseManager {
     
     func getUserDocRefWithEmail(_ email: String) -> DocumentReference {
         return db.collection(CollectionName.User.rawValue).document(email)
+    }
+}
+
+// MARK: 없는 재료 리포트
+extension FirebaseManager {
+    
+    func reportIngredient(note: String, replyEmail: String, userEmail: String) async {
+        let nowDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYMMddHHmmss"
+        let formattedDate = dateFormatter.string(from: nowDate)
+        
+        let colRef = getColRef(.Report)
+        let docRef = colRef.getDocRef(userEmail, id: formattedDate)
+        
+        let dataToSave: [String: Any] = [
+            "email": userEmail,
+            "emailToReply": replyEmail,
+            "note": note,
+            "date": Timestamp(date: nowDate)
+        ]
+        
+        do {
+            try await docRef.setData(dataToSave)
+            print("재료 신고를 완료했습니다 - id: \(userEmail)_\(formattedDate)")
+        } catch {
+            print("재료 신고에 실패했습니다. 재시도 바랍니다.")
+        }
     }
 }
 
