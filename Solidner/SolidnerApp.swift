@@ -52,7 +52,7 @@ struct SolidnerApp: App {
 
             // MypageRootView().environmentObject(userOB)
             
-                MainView().environmentObject(userOB)
+            MainView().environmentObject(userOB)
         }
     }
 }

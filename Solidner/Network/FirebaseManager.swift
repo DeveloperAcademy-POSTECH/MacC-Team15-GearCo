@@ -12,6 +12,8 @@ final class FirebaseManager {
     enum CollectionName: String {
         case User
         case Plan
+        case Report = "IngredientReport"
+        case Count = "IngredientUseCount"
     }
     
     static let shared = FirebaseManager()
@@ -26,6 +28,34 @@ final class FirebaseManager {
     
     func getUserDocRefWithEmail(_ email: String) -> DocumentReference {
         return db.collection(CollectionName.User.rawValue).document(email)
+    }
+}
+
+// MARK: 없는 재료 리포트
+extension FirebaseManager {
+    
+    func reportIngredient(note: String, replyEmail: String, userEmail: String) async {
+        let nowDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYMMddHHmmss"
+        let formattedDate = dateFormatter.string(from: nowDate)
+        
+        let colRef = getColRef(.Report)
+        let docRef = colRef.getDocRef(userEmail, id: formattedDate)
+        
+        let dataToSave: [String: Any] = [
+            "email": userEmail,
+            "emailToReply": replyEmail,
+            "note": note,
+            "date": Timestamp(date: nowDate)
+        ]
+        
+        do {
+            try await docRef.setData(dataToSave)
+            print("재료 신고를 완료했습니다 - id: \(userEmail)_\(formattedDate)")
+        } catch {
+            print("재료 신고에 실패했습니다. 재시도 바랍니다.")
+        }
     }
 }
 
@@ -117,7 +147,7 @@ extension FirebaseManager {
         
         planDocRefToSave.setData(dataToSave, merge: true) { err in
             if let err = err {
-                print("MealPlan 저장 실패! - \(err)")
+                print("MealPlan 저장&수정 실패! - \(err)")
             } else {
                 print("MealPlan 저장 완료. - \(user.email)_\(uuidString)")
             }
@@ -142,3 +172,25 @@ extension FirebaseManager {
     }
 }
 
+//extension FirebaseManager {
+//    enum CountUpdateCase {
+//        case add
+//        case delete
+//        case update
+//    }
+//    
+//    func updateIngredientUseCount(mealData: MealOB? = nil, mealPlan: MealPlan? = nil, email: String, updateCase: CountUpdateCase) async {
+//        let colRef = getColRef(.Count)
+//        let docRef = colRef.getDocRef(email)
+//        
+//        switch updateCase {
+//        case .add:
+//            let dataToSave: [String: Any]
+//            for ingredient in mealData
+//        case .delete:
+//            <#code#>
+//        case .update:
+//            <#code#>
+//        }
+//    }
+//}

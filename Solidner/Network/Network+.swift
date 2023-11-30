@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 
 extension CollectionReference {
-    func getDocRef(_ email: String, id: String?) -> DocumentReference {
+    func getDocRef(_ email: String, id: String? = nil) -> DocumentReference {
         if let id {
             return self.document("\(email)_\(id)")
         }

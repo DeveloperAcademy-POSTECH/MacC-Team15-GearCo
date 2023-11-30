@@ -536,7 +536,7 @@ extension MonthlyPlanningView {
         let lastDateNum = nowMonthDates.last!.day
         // key는 -7 ~ 마지막일+7 까지의 Int형 정수, value는 (first: Bool, second: Bool)인 tuple로 이루어진 dictionary
         // ex: { 1: (true, false), 2: (true, false)... }  (true가 가용한(비어있는) 상태)
-        var dict = Dictionary(uniqueKeysWithValues: (-7...lastDateNum+7).map { ($0, (first: true, second: true)) })
+        var dict = Dictionary(uniqueKeysWithValues: (-32...lastDateNum+32).map { ($0, (first: true, second: true)) })
         
         var result: [(PlanData, BarPosition)] = []
         
