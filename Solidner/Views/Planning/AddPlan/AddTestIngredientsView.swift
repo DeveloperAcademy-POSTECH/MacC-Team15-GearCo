@@ -19,10 +19,11 @@ struct AddTestIngredientsView: View {
     private let typeButtonBetweenSpace: CGFloat = 10
     private let selectedTypeBottomSpace: CGFloat = 25
     private let divisionDividerVerticalPadding: CGFloat = 10
-    private let saveButtonBottomSpace: CGFloat = 40
+    private let saveButtonBottomSpace: CGFloat = 16
     private let saveButtonTopSpace: CGFloat = 100
     private let reportButtonTopSpace: CGFloat = 20
     
+    @State private var isIngredientBad = false
     
     @EnvironmentObject var mealOB: MealOB
     
@@ -74,11 +75,15 @@ struct AddTestIngredientsView: View {
                 reportButton
                 
                 Spacer().frame(height: saveButtonTopSpace)
+            }
+            Group {
+                Spacer().frame(height: saveButtonBottomSpace)
+//                if isIngredientBad { toastMessage }
                 ButtonComponents(.big, title: "저장") {
                     saveSelectedTestIngredient()
-                }.padding(.horizontal, viewHorizontalPadding)
-                Spacer().frame(height: saveButtonBottomSpace)
-            }
+                }
+            }.padding(.horizontal, viewHorizontalPadding)
+            
         }.background(Color.mainBackgroundColor).toolbar(.hidden)
             .onAppear { initSelectedIngredient() }
     }
@@ -86,6 +91,23 @@ struct AddTestIngredientsView: View {
 
 // MARK: View Components
 extension AddTestIngredientsView {
+//    private var toastMessage: some View {
+//        HStack(spacing: 4.27) {
+//            Image(assetName: .check)
+//            Text("방금 고른 재료는 지금 재료와 궁합이 좋지 않아요!")
+//                .customFont(.toast, color: .tertinaryText)
+//            Spacer()
+//        }
+//        .padding(.leading, 12.25)
+//        .frame(height: 48)
+//        .withRoundedBackground(
+//            cornerRadius: 12,
+//            fill: Color.defaultText_wh,
+//            strokeBorder: Color.listStrokeColor,
+//            lineWidth: 1
+//        )
+//    }
+    
     private var searchAndIngredientTypeButtonsRow: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: typeButtonBetweenSpace) {
@@ -230,4 +252,3 @@ extension AddTestIngredientsView {
         case 기타 = "기타"
     }
 }
-
