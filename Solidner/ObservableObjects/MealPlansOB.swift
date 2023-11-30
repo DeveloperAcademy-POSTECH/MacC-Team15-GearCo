@@ -58,11 +58,7 @@ final class MealPlansOB: ObservableObject {
         set { updateMealPlan(in: newValue) }
     }
     
-    func updateMealPlan(in group: MealPlanGroup?) {
-        if let group { updatePlans(using: group.mealPlans) }
-    }
-    
-    
+
     /// 앱 실행 시 (MealPlansOB Init 시) DB에서 모든 Plan 정보를 fetch.
     /// MealPlansOB 객체 초기화 이후 필수적으로 task로 호출해야 함.
     /// - Parameter user: UserOB의 객체.
@@ -74,6 +70,7 @@ final class MealPlansOB: ObservableObject {
         }
     }
     
+    //MARK: - update
     /// updatedItem을 순회하며 id를 기준으로 mealPlans를 업데이트 하는 함수
     /// - Parameter updatedItems: update 된 mealPlan들
     func updatePlans(using updatedItems: [MealPlan]) {
@@ -89,12 +86,34 @@ final class MealPlansOB: ObservableObject {
         mealPlans = tempMealPlans
     }
     
+    func updateMealPlan(in group: MealPlanGroup?) {
+        if let group { updatePlans(using: group.mealPlans) }
+    }
+    
+    func update(plan: MealPlan) {
+        var tempMealPlans: [MealPlan] = mealPlans
+        if let index = mealPlans.index(matching: plan) {
+            tempMealPlans.replaceSubrange(index...index, with: [plan])
+        }
+        mealPlans = tempMealPlans
+    }
+    
+    func add(plan: MealPlan) {
+        mealPlans = mealPlans + [plan]
+    }
+    
     /// date가 포함된 날짜의 모든 meal plan을 반환하는 함수
     /// - Parameter date: 원하는 날짜
     /// - Returns: date가 포함된 meal plan의 list
     func getMealPlans(in date: Date) -> [MealPlan] {
         mealPlans.filter {
             date.isInBetween(from: $0.startDate, to: $0.endDate)
+        }
+    }
+    
+    func getMealPlans(from startDate: Date, to endDate: Date) -> [MealPlan] {
+        mealPlans.filter {
+            $0.startDate == startDate && $0.endDate == endDate
         }
     }
     
@@ -121,13 +140,17 @@ final class MealPlansOB: ObservableObject {
         }
     }
     
-    
-    #warning("플랜 전체 삭제 구현")
+    //MARK: - delete
+    #warning("플랜 전체 삭제 구현 - firebase에서도 구현 필요")
     func deleteAllPlans() {
         print(#function)
+        mealPlans = []
+    }
+    
+    func delete(plan: MealPlan) {
+        mealPlans.remove(plan)
     }
 
-    #warning("특정 달에 문제 있는 plan 날짜를 반환하는 함수")
     func getWrongPlanDates(date: Date) -> [DateAndPlanStatus] {
         let currentMonthMealPlans = getCurrentMonthMealPlans(of: date)
         return date.monthDates().map {

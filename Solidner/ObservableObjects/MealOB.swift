@@ -86,17 +86,19 @@ final class MealOB: ObservableObject {
             newIngredients.append(ingredient)
         }
     }
-
-    #warning("meal - add plan 구현하기")
-    // TODO: mealPlans에도 같이 업데이트가 필요.
+    
     func addMealPlan(user: UserOB) {
-        // fb에서 만들 때 id를 어케 받아오징? 하하 안받아와도 되려나
+        // DB 업데이트
         let id = firebaseManager.saveMealPlan(self, user: user)
+        // mealPlans 업데이트
         if let mealPlan = makeNewMealPlan(id: id) {
             mealPlansOB?.add(plan: mealPlan)
         }
     }
     
+    /// 입력받은 id를 바탕으로 현재 MealOB의 프로퍼티를 가진 MealPlan을 만듭니다.
+    /// - Parameter id: 새로 생길 MealPlan의 id
+    /// - Returns: MealPlan, id는 argument, 다른 프로퍼티는 MealOB의 프로퍼티.
     private func makeNewMealPlan(id: UUID) -> MealPlan? {
         if let mealType {
             return MealPlan(id: id,
@@ -109,18 +111,27 @@ final class MealOB: ObservableObject {
         }
         return nil
     }
-    
-    #warning("meal - change plan 구현하기")
-    // TODO: change plan :) FB에 쓔우우웅?!
+
     func changeMealPlan(user: UserOB) {
+        // MealPlansOB 업데이트
+        if let mealPlan, let newMealPlan = makeNewMealPlan(id: mealPlan.id) {
+            mealPlansOB?.update(plan: newMealPlan)
+        }
+        // DB 업데이트
         firebaseManager.saveMealPlan(self, mealPlan: self.mealPlan, user: user)
     }
     
-    #warning("meal - delete plan 구현하기")
-    // TODO: delete plan :) FB에 쓔우우웅?!
     func deleteMealPlan(user: UserOB) {
+        // MealPlansOB 업데이트
+        if let mealPlan {
+            mealPlansOB?.delete(plan: mealPlan)
+        }
+        // DB 업데이트
         firebaseManager.deleteMealPlan(self.mealPlan, user: user)
     }
+    
+    #warning("mismatch check")
+    
 }
 
 extension MealOB {

@@ -321,6 +321,7 @@ extension MealDetailView {
             .alert("일정 삭제", isPresented: $isDeleteButtonTapped) {
                 Button("삭제", role: .destructive) {
                     mealOB.deleteMealPlan(user: user)
+                    dismiss()
                 }
             } message: {
                 Text("해당 끼니 일정을 삭제할까요?")
