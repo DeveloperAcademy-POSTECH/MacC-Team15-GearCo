@@ -61,6 +61,11 @@ struct NickNameView: View {
         .navigationDestination(isPresented: $navigationIsPresented) {
             SoCuteNameView()
         }
+        .onTapGesture {
+            if isFocused {
+                isFocused = false
+            }
+        }
     }
     
     private func viewBody() -> some View {

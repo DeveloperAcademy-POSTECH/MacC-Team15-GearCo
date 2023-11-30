@@ -25,7 +25,7 @@ struct FoodStartDateView: View {
     private func viewBody() -> some View {
         return VStack {
             OnboardingTitles(bigTitle: TextLiterals.FoodStartDate.bigTitle, smallTitle: TextLiterals.FoodStartDate.smallTitle)
-            DatePicker(selection: $solidStartDate, displayedComponents: .date){}
+            DatePicker(selection: $solidStartDate, in: user.babyBirthDate..., displayedComponents: .date){}
                 .labelsHidden()
                 .datePickerStyle(WheelDatePickerStyle())
                 .padding(.top, datePickerTopPadding)

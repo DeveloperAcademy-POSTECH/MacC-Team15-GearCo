@@ -34,10 +34,8 @@ struct SolidnerApp: App {
             #warning("이거 더 좋은 방법으로 정리해줄 사람~~")
 //            if isOnboardingOn {
 //                //                    SignInView()
-                NavigationStack {
-                    AgreeToTermsView()
-                }
-                .environmentObject(userOB)
+//            ReportIngredientModalView()
+//                .environmentObject(userOB)
 //            } else if isPlanEmpty {
 //                NavigationStack {
 //                    StartPlanView()
@@ -58,6 +56,10 @@ struct SolidnerApp: App {
 //            MealDetailView(startDate: Date(), cycleGap: userOB.planCycleGap)
 //                .environmentObject(userOB)
 //                .environmentObject(mealPlansOB)
+            NavigationStack {
+                AgreeToTermsView()
+            }
+            .environmentObject(userOB)
         }
     }
 }
