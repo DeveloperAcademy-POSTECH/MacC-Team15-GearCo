@@ -136,7 +136,6 @@ extension MealDetailView {
         }
     }
 
-    #warning("ingredientChip 편집 모드일 때 오른쪽 chip을 제대로 바꿔야..")
     @ViewBuilder
     private var titleAndIngredientsChip: some View {
         let title: some View = {
@@ -169,30 +168,44 @@ extension MealDetailView {
             EmptyView()
         }
     }
-
+    
+    #warning("ingredientChip 편집 모드일 때 오른쪽 chip을 제대로 바꿔야..")
+    // TODO: - 추후 이상 반응이 추가된다면, .new 말고 이상반응 뱃지 달아야함
     private var addedTestingIngredients: some View {
-        addedIngredientsView(of: mealOB.newIngredients)
-        //        VStack(spacing: 10) {
-        //            ForEach(mealOB.tempMealPlan.newIngredients) { ingredient in
-        //                AddedIngredientView(
-        //                    type: isEditMode ? .new : .deletable,
-        //                    ingredient: ingredient
-        //                )
-        //            }
-        //        }
+        addedIngredientsView(
+            of: mealOB.newIngredients,
+            type: .new
+        )
     }
 
     private var addedTestedIngredients: some View {
-        addedIngredientsView(of: mealOB.oldIngredients)
+        addedIngredientsView(
+            of: mealOB.oldIngredients,
+            type: .old
+        )
     }
-
+    
     // TODO: - type 어떻게 바꿀지 고민...
-    #warning("chip 제대로 바꾸기..")
-    private func addedIngredientsView(of ingredients: [Ingredient]) -> some View {
+    #warning("mismatch일 때에도 chip:)")
+    private func addedIngredientsView(of ingredients: [Ingredient], type: MealOB.IngredientTestType) -> some View {
         VStackInIngredients {
             ForEach(ingredients) { ingredient in
+                let type: AddedIngredientView.AddedIngredientViewType = {
+                    if !isEditMode { // Edit 모드가 아닐 때 - 삭제
+                        return .deletable
+                    } else if type == .new { // Edit 모드인데 새로운 재료일 때
+                        return .new
+                    } else if let babyMonth = user.dateAfterBirth.month, babyMonth < ingredient.ableMonth { // able month > 현재 생후 달
+                        return .age
+//                    } else if mismatches.contains(ingredient) //
+//
+                    } else {
+                        return .none
+                    }
+                }()
+                
                 AddedIngredientView(
-                    type: .deletable,
+                    type: type,
                     ingredient: ingredient
                 )
             }

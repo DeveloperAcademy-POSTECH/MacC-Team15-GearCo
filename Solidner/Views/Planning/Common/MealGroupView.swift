@@ -108,11 +108,11 @@ extension MealGroupView {
     private func mealView(of mealPlan: MealPlan) -> some View {
         // PlanListView에서는 전체가 눌린다.
         // DailyListView에서는 끼니 별로 눌린다.
-
         NavigationLink(value: mealPlan) {
-            HStack {
+            HStack(alignment: .center, spacing: 11.8) {
                 mealIcon(of: mealPlan)
                 ColoredIngredientsText(mealPlan: mealPlan, type: .cell)
+                    .frame(width: 230.responsibleWidth, alignment: .leading)
                 Spacer()
                 if isInPlanList == false {
                     Image(.rightChevronSmall)
@@ -150,9 +150,14 @@ extension MealGroupView {
 
 extension MealGroupView {
     private func mealIcon(of mealPlan: MealPlan) -> some View {
-        Image(systemName: mealPlan.mealType.icon)
-            .font(.body)
-            .foregroundStyle(Color.accentColor2)
+        VStack {
+            Spacer().frame(height: 5)
+            Image(mealPlan.mealType.icon)
+                .font(.body)
+                .foregroundStyle(Color.accentColor2)
+            Spacer()
+        }
+        
     }
 }
 

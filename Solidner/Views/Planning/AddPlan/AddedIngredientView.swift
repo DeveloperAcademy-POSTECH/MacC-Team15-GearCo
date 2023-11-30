@@ -10,11 +10,11 @@ import SwiftUI
 struct AddedIngredientView: View {
     private let texts = TextLiterals.AddedIngredient.self
 
-    enum AddedIngredientView {
-        case age, new, adverseReactionDate, deletable, mismatch
+    enum AddedIngredientViewType {
+        case age, new, adverseReactionDate, deletable, mismatch, none
     }
 
-    let type: AddedIngredientView
+    let type: AddedIngredientViewType
     let ingredient: Ingredient
 
     var colorChip: some View {
@@ -28,8 +28,14 @@ struct AddedIngredientView: View {
             colorChip
             ingredientName
             Spacer()
-            if type == .deletable { deleteButton }
-            else { ingredientBadge }
+            switch type {
+            case .none:
+                EmptyView()
+            case .deletable:
+                deleteButton
+            default:
+                ingredientBadge
+            }
         }
         .padding(top: 0, leading: 15, bottom: 0, trailing: 20)
         .frame(height: 56)

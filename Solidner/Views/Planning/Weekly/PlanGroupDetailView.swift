@@ -54,8 +54,12 @@ struct PlanGroupDetailView: View {
             ScrollView {
                 VStack(spacing: K.wholeVStackSpacing) {
                     headerTitle
-                    if isWrongPlan { WarningView() }
-                    mealGroup
+                    if mealPlanGroup.mealPlans.isEmpty {
+                        // 마지막 날짜가 있어야하는?
+                    } else {
+                        if isWrongPlan { WarningView() }
+                        mealGroup
+                    }
                     Spacer()
                 }
             }
