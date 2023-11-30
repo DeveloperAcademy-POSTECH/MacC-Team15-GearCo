@@ -118,20 +118,26 @@ extension FirebaseManager {
     /// MealPlan 데이터를 넣지 않고 MealOB만 넣으면 save, MealPlan 데이터를 넣으면 update로 작동합니다.
     /// - Parameters:
     ///   - mealData: MealOB 객체
-    ///   - completion: Error Completion Handler.
-    func saveMealPlan(_ mealData: MealOB, mealPlan: MealPlan? = nil, user: UserOB) {
+    ///   - mealPlan:
+    ///     - nil일 때 - 함수는 새로운 mealPlan을 생성 후 저장한다.
+    ///     - nil이 아닐 때, 수정하려는 meal Plan
+    ///   - user: UserOB 객체
+    /// - Returns: 새롭게 생성된 플랜의 UUID / 기존 플랜의 id
+    @discardableResult
+    func saveMealPlan(_ mealData: MealOB, mealPlan: MealPlan? = nil, user: UserOB) -> UUID {
         let planColRef = getColRef(.Plan)
-        var uuid: String {
+        let uuid: UUID = {
             if let mealPlan {
-                return mealPlan.id.uuidString
+                return mealPlan.id
             }
-            return UUID().uuidString
-        }
-        let planDocRefToSave = planColRef.getDocRef(user.email, id: uuid)
+            return UUID()
+        }()
+        let uuidString = uuid.uuidString
+        let planDocRefToSave = planColRef.getDocRef(user.email, id: uuidString)
         
         let dataToSave: [String: Any] = [
             "email": user.email,
-            "planID": uuid,
+            "planID": uuidString,
             "startDate": Timestamp(date: mealData.startDate),
             "endDate": Timestamp(date: mealData.endDate),
             "mealType": mealData.mealType?.rawValue ?? 0,
@@ -143,9 +149,10 @@ extension FirebaseManager {
             if let err = err {
                 print("MealPlan 저장&수정 실패! - \(err)")
             } else {
-                print("MealPlan 저장&수정 완료. - \(user.email)_\(uuid)")
+                print("MealPlan 저장 완료. - \(user.email)_\(uuidString)")
             }
         }
+        return uuid
     }
     
     func deleteMealPlan(_ mealPlan: MealPlan?, user: UserOB) {

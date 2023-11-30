@@ -39,7 +39,9 @@ struct MonthlyPlanningView: View {
             #warning("테스트 데이터 생성용 버튼")
             Button {
                 let sDate = user.solidStartDate.add(.day, value: Int.random(in: 0...90))
-                let meal: MealOB = MealOB(startDate: sDate, cycleGap: CycleGaps(rawValue: Int.random(in: 1...4))!)
+                let meal: MealOB = MealOB(startDate: sDate, cycleGap: CycleGaps(rawValue: Int.random(in: 1...4))!,
+                                          mealPlansOB: mealPlansOB
+                )
                 meal.set(mealType: MealType(rawValue: Int.random(in: 0...5))!)
                 for _ in Range<Int>(0...Int.random(in: 0...2)) {
                     meal.addIngredient(ingredient: ingredientData.ingredients.randomElement()!.value, in: .new)
@@ -372,24 +374,34 @@ struct MonthlyPlanningView: View {
                 rowLeftEndSpacer()
                 ForEach(thisWeekDates, id: \.self) { date in
                     let isToday = (date.day == Date().day && date.month == Date().month && date.year == Date().year)
-                    VStack(spacing: 0) {
-                        if isToday {
-                            Circle()
-                                .scaledToFit()
-                                .frame(width: todayCircleDiameter)
-                                .foregroundStyle(Color.defaultText_wh)
-                                .frame(height: solidDayNumberFrameHeight)
-                                .padding(.bottom, dayNumberGap)
+                    
+                    NavigationLink {
+                        let mealPlans = mealPlansOB.getMealPlans(in: date)
+                        if mealPlans.count != .zero {
+                            DailyPlanListView(date: date, mealPlans: mealPlans)
                         } else {
-                            Text("\(Date.componentsBetweenDates(from: user.solidStartDate, to: date).day!)")
-                                .weekDisplayFont1()
-                                .foregroundStyle(Color.tertinaryText)
-                                .frame(height: solidDayNumberFrameHeight)
-                                .padding(.bottom, dayNumberGap)
+                            MealDetailView(startDate: date, cycleGap: user.planCycleGap)
                         }
-                        Text("\(date.day)")
-                            .dayDisplayFont2()
-                            .foregroundStyle(isToday ? Color.defaultText_wh : Color.tertinaryText)
+                    } label: {
+                        VStack(spacing: 0) {
+                            if isToday {
+                                Circle()
+                                    .scaledToFit()
+                                    .frame(width: todayCircleDiameter)
+                                    .foregroundStyle(Color.defaultText_wh)
+                                    .frame(height: solidDayNumberFrameHeight)
+                                    .padding(.bottom, dayNumberGap)
+                            } else {
+                                Text("\(Date.componentsBetweenDates(from: user.solidStartDate, to: date).day!)")
+                                    .weekDisplayFont1()
+                                    .foregroundStyle(Color.tertinaryText)
+                                    .frame(height: solidDayNumberFrameHeight)
+                                    .padding(.bottom, dayNumberGap)
+                            }
+                            Text("\(date.day)")
+                                .dayDisplayFont2()
+                                .foregroundStyle(isToday ? Color.defaultText_wh : Color.tertinaryText)
+                        }
                     }.frame(width: mainDaySectionWidth)
                         .if(isToday) { view in
                             view.background {
