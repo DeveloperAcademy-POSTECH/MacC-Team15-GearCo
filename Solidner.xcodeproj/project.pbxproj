@@ -46,6 +46,7 @@
 		B2D1E3832B136C1E00318E85 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D1E3822B136C1E00318E85 /* Header.swift */; };
 		B2D1E3872B137C4100318E85 /* DefaultHorizontalPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D1E3862B137C4100318E85 /* DefaultHorizontalPadding.swift */; };
 		B2D96E5D2B1625C200B5D30C /* WrongPlanChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D96E5C2B1625C200B5D30C /* WrongPlanChecker.swift */; };
+		B2D96E5F2B17C78200B5D30C /* Collection+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D96E5E2B17C78200B5D30C /* Collection+.swift */; };
 		B2DE212E2B0DDA54006E42C7 /* PlanBatchSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DE212D2B0DDA54006E42C7 /* PlanBatchSettingView.swift */; };
 		B2EFE9832B067CA000E3F94B /* PlanGroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EFE9822B067CA000E3F94B /* PlanGroupDetailView.swift */; };
 		B2EFE9852B067FB200E3F94B /* MockPlanData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EFE9842B067FB200E3F94B /* MockPlanData.swift */; };
@@ -159,6 +160,7 @@
 		B2D1E3822B136C1E00318E85 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		B2D1E3862B137C4100318E85 /* DefaultHorizontalPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultHorizontalPadding.swift; sourceTree = "<group>"; };
 		B2D96E5C2B1625C200B5D30C /* WrongPlanChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrongPlanChecker.swift; sourceTree = "<group>"; };
+		B2D96E5E2B17C78200B5D30C /* Collection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+.swift"; sourceTree = "<group>"; };
 		B2DE212D2B0DDA54006E42C7 /* PlanBatchSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanBatchSettingView.swift; sourceTree = "<group>"; };
 		B2EFE9822B067CA000E3F94B /* PlanGroupDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanGroupDetailView.swift; sourceTree = "<group>"; };
 		B2EFE9842B067FB200E3F94B /* MockPlanData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPlanData.swift; sourceTree = "<group>"; };
@@ -516,6 +518,7 @@
 				B219F1262B0CE13000886087 /* View+.swift */,
 				C3B4DB462B0E84A500772C2A /* UIScreen+.swift */,
 				B25582012B10AAF200B34F34 /* CGFloat+.swift */,
+				B2D96E5E2B17C78200B5D30C /* Collection+.swift */,
 			);
 			path = "Extension+";
 			sourceTree = "<group>";
@@ -706,6 +709,7 @@
 				B2D1E3832B136C1E00318E85 /* Header.swift in Sources */,
 				B2F7909E2B0DDC9900CB4F71 /* SolidnerSegmentedPicker.swift in Sources */,
 				B2F790A22B0DF30B00CB4F71 /* CycleGaps.swift in Sources */,
+				B2D96E5F2B17C78200B5D30C /* Collection+.swift in Sources */,
 				0EB0F4322B0F5F5A00A32DFB /* AddIngredientBigDivision.swift in Sources */,
 				B25582022B10AAF200B34F34 /* CGFloat+.swift in Sources */,
 				B2EFE9852B067FB200E3F94B /* MockPlanData.swift in Sources */,

@@ -158,17 +158,17 @@ enum MealType: Int, CaseIterable, Codable {
     var icon: String {
         switch self {
         case .아침:
-            return "sun.max"
+            return "morning"
         case .점심:
-            return "sun.horizon"
+            return "lunch"
         case .저녁:
-            return "moon"
+            return "dinner"
         case .간식1:
-            return "1.circle"
+            return "snack"
         case .간식2:
-            return "2.circle"
+            return "snack"
         case .기타:
-            return "plus"
+            return "etc"
         }
     }
 }
