@@ -52,6 +52,7 @@ struct IngredientsBigDivision: View {
     @State private var foldStates: [IngredientType: Bool]
     
     let viewType: MealOB.IngredientTestType
+    let initialSelectedIngredients: [Int]   // selectedIngredients 복사. 테스트 재료 추가 화면에서 정상적으로 보일 수 있게.
     
     init(case divisionCase: DivisionCase, ingredients selectedIngredients: Binding<[Int]>, viewType: MealOB.IngredientTestType, ingredientUseCount: Binding<[Int: Int]>) {
         self.divisionCase = divisionCase
@@ -59,6 +60,7 @@ struct IngredientsBigDivision: View {
         self._ingredientUseCount = ingredientUseCount
         
         self._selectedIngredients = selectedIngredients
+        self.initialSelectedIngredients = selectedIngredients.wrappedValue
         var states: [IngredientType: Bool] = [:]
         for type in IngredientType.allCases {
             states[type] = false
@@ -129,7 +131,7 @@ extension IngredientsBigDivision {
                             let data = ingredientData[key]!
                             let month = user.dateAfterBirth.month!
                             // 재료가 보이려면 -> new&사용횟수0 / old&사용횟수1이상 / 현재선택된재료
-                            let isIngredientAppear: Bool = (viewType == .new && ingredientUseCount[data.id, default: 0] == 0) || (viewType == .old && ingredientUseCount[data.id, default: 0] != 0) || selectedIngredients.contains { $0 == data.id }
+                            let isIngredientAppear: Bool = (viewType == .new && ingredientUseCount[data.id, default: 0] == 0) || (viewType == .old && ingredientUseCount[data.id, default: 0] != 0) || initialSelectedIngredients.contains { $0 == data.id }
                             
                             if isIngredientAppear {
                                 if divisionCase == .먹을수있는재료 && data.type == type && data.ableMonth <= month {
@@ -152,18 +154,24 @@ extension IngredientsBigDivision {
     }
     
     private func 자주사용한재료Division() -> some View {
+        // value 기준으로 내림차순 정렬 후 상위 5개 요소 가져오기
+        let sortedByValue = ingredientUseCount.sorted { $0.value > $1.value }
+        // 상위 5개 요소 추출 (key, value) 형태의 tuple로.
+        let topFive = sortedByValue.prefix(5)
+        
         return VStack(alignment: .leading, spacing: 0) {
             Spacer().frame(height: titleTopSpace)
             Text(divisionCase.rawValue)
                 .headerFont2()
                 .foregroundColor(.defaultText)
             Spacer().frame(height: titleBottomSpace)
-            HStack{Spacer()}
-            // TODO: 실제 데이터로 변경 및 필터링
-//            ForEach(ingredientData.keys.sorted(), id: \.self) { key in
-//                let data = ingredientData[key]!
-//                ingredientSelectRow(divisionCase: divisionCase, ingredient: data, selectedIngredientPair: $selectedIngredients).padding(.vertical, 15)
-//            }
+            ForEach(topFive.indices, id: \.self) { i in
+                let id = topFive[i].key
+                let ingredient = ingredientData[id]!
+                
+                ingredientSelectRow(case: divisionCase, ingredient: ingredient,selected: $selectedIngredients, viewType: viewType)
+                    .padding(.vertical, 15)
+            }
         }
     }
     
