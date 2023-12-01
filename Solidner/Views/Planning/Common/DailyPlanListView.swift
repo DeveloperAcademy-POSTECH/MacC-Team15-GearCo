@@ -52,17 +52,25 @@ extension DailyPlanListView {
     
     private var viewBody: some View {
         VStack(spacing: K.rootVStackSpacing) {
-            ScrollView {
-                VStack(alignment: .leading, spacing: K.vStackSpacingInscroll) {
+            if mealPlanGroups.isEmpty {
+                VStack(alignment: .leading) {
                     title
-                    if isWrongPlan {
-                        WarningView()
+                    emptyView
+                }
+            } else {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: K.vStackSpacingInscroll) {
+                        title
+                        if isWrongPlan {
+                            WarningView()
+                        }
+                        mealGroupList
                     }
-                    mealGroupList
                 }
             }
             addMealPlanButton
         }
+        .defaultHorizontalPadding()
         .navigationDestination(isPresented: $isMealAdding) {
             MealDetailView(
                 startDate: date,
@@ -70,7 +78,6 @@ extension DailyPlanListView {
                 mealPlansOB: mealPlansOB
             )
         }
-        .defaultHorizontalPadding()
         .onChange(of: mealPlansOB.filteredMealPlans) { newValue in
             mealPlans = mealPlansOB.getMealPlans(in: date)
         }
@@ -83,6 +90,15 @@ extension DailyPlanListView {
     private var title: some View {
         Text(texts.titleText(date))
             .customFont(.header2, color: .defaultText)
+    }
+}
+
+// MARK: - PlanEmptyView
+
+extension DailyPlanListView {
+    private var emptyView: some View {
+        PlanEmptyView()
+            .frame(maxWidth: .infinity)
     }
 }
 
@@ -126,12 +142,14 @@ extension DailyPlanListView {
     }
 }
 
-//struct DailyPlanListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DailyPlanListView(
-//            date: Date(),
-//            mealPlans: MealPlan.mockMealsOne,
-//            isWrongPlan: true
-//        ).environmentObject(UserOB())
-//    }
-//}
+struct DailyPlanListView_Previews: PreviewProvider {
+    static var previews: some View {
+        DailyPlanListView(
+            date: Date(),
+            mealPlans: [],
+            isWrongPlan: false
+        )
+        .environmentObject(UserOB())
+            .environmentObject(MealPlansOB())
+    }
+}

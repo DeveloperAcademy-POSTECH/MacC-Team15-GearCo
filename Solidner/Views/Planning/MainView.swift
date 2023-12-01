@@ -14,12 +14,37 @@ struct MainView: View {
     
     var body: some View {
         NavigationStack {
-            if showWeekly {
-                PlanListView(showWeekly: $showWeekly)
-            } else {
-                MonthlyPlanningView(showWeekly: $showWeekly)
+            Group {
+                if showWeekly {
+                    PlanListView(showWeekly: $showWeekly)
+                } else {
+                    MonthlyPlanningView(showWeekly: $showWeekly)
+                }
             }
-        }.environmentObject(mealPlansOB)
+            .navigationDestination(for: Date.self) { date in
+                let mealPlans = mealPlansOB.getMealPlans(in: date)
+                if mealPlans.count != .zero {
+                    DailyPlanListView(date: date, mealPlans: mealPlans)
+                } else {
+                    MealDetailView(
+                        startDate: date,
+                        cycleGap: user.planCycleGap,
+                        mealPlansOB: mealPlansOB
+                    )
+                }
+            }
+            .navigationDestination(for: MealPlan.self) { mealPlan in
+                MealDetailView(
+                    mealPlan: mealPlan,
+                    cycleGap: mealPlan.cycleGap,
+                    mealPlansOB: mealPlansOB
+                )
+            }
+            .navigationDestination(for: MealPlanGroup.self) { mealPlanGroup in
+                PlanGroupDetailView(mealPlanGroup: mealPlanGroup)
+            }
+        }
+        .environmentObject(mealPlansOB)
         .task {
             await mealPlansOB.loadAllPlans()
         }

@@ -53,12 +53,30 @@ extension MealPlanGroup {
 }
 
 extension MealPlanGroup {
-    struct SolidDate: Hashable {
+    struct SolidDate: Hashable, Equatable {
         let startDate: Date
         let endDate: Date
 
         var description: String {
             TextLiterals.PlanList.dateRangeString(start: startDate, end: endDate)
+        }
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(startDate.year)
+            hasher.combine(startDate.month)
+            hasher.combine(startDate.day)
+            hasher.combine(endDate.year)
+            hasher.combine(endDate.month)
+            hasher.combine(endDate.day)
+        }
+        
+        static func == (lhs: Self, rhs: Self) -> Bool {
+            // 비교하려는 
+            let comparingComponents: [Calendar.Component] = [.year, .month, .day]
+            return comparingComponents.allSatisfy { component in
+                return (lhs.startDate.getValue(of: component) == rhs.startDate.getValue(of: component) &&
+                        lhs.endDate.getValue(of: component) == rhs.endDate.getValue(of: component))
+            }
         }
     }
 }

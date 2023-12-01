@@ -42,13 +42,6 @@ struct MealGroupView: View {
             dateInformation
             mealGroup
         }
-        .navigationDestination(for: MealPlan.self) { mealPlan in
-            MealDetailView(
-                mealPlan: mealPlan,
-                cycleGap: mealPlan.cycleGap,
-                mealPlansOB: mealPlansOB
-            )
-        }
     }
     
     private var dateInformation: some View {
