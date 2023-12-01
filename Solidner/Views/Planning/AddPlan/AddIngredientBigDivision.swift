@@ -57,16 +57,19 @@ struct IngredientsBigDivision: View {
     
     let viewType: MealOB.IngredientTestType
     let initialSelectedIngredients: [Int]   // selectedIngredients 복사. 테스트 재료 추가 화면에서 정상적으로 보일 수 있게.
+    let scrollID: ScrollID
     
     init(case divisionCase: DivisionCase, ingredients selectedIngredients: Binding<[Int]>,
          initSelected initialSelectedIngredients: [Int], viewType: MealOB.IngredientTestType,
-         ingredientUseCount: Binding<[Int: Int]>) {
+         ingredientUseCount: Binding<[Int: Int]>, scrollID: ScrollID) {
         self.divisionCase = divisionCase
         self.viewType = viewType
         self._ingredientUseCount = ingredientUseCount
         
         self._selectedIngredients = selectedIngredients
         self.initialSelectedIngredients = initialSelectedIngredients
+        self.scrollID = scrollID
+        
         var states: [IngredientType: Bool] = [:]
         for type in IngredientType.allCases {
             states[type] = false
@@ -135,7 +138,7 @@ extension IngredientsBigDivision {
             TitleAndHintView(title: divisionCase.rawValue, hint: explainText)
             Spacer().frame(height: divisionSubTitleBottomSpace)
             
-            ForEach(IngredientType.allCases, id: \.self) { type in
+            ForEach(Array(IngredientType.allCases.enumerated()), id: \.element) { index, type in
                 HStack(spacing: 0) {
                     Text(type.description)
                         .font(.system(size: 19, weight: .semibold))
@@ -159,7 +162,7 @@ extension IngredientsBigDivision {
                     withAnimation(.spring()) {
                         toggleFoldState(foldStateList: &foldStates, type: type)
                     }
-                }
+                }.id(divisionCase == .먹을수있는재료 ? scrollID.namespaces1[index] : scrollID.namespaces2[index])
                 
                 if foldStates[type]! {
                     Divider()
