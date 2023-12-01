@@ -32,6 +32,7 @@ struct MonthlyPlanningView: View {
     @State private var nowMonthWeekNums = Date.nowMonthWeeks()
     
     @State private var showChangeMonthModal = false
+    @State private var showTotalSetting = false
     @State private var isMyPageOpenning = false
     
     var body: some View {
@@ -77,8 +78,12 @@ struct MonthlyPlanningView: View {
                         RoundedRectangle(cornerRadius: 12)
                             .foregroundColor(.defaultText_wh)
                     }
-                    Spacer()
-                }.clipped().padding(.horizontal, 16)
+                    Spacer().frame(height: 200)
+                    ThickDivider()
+                        .padding(.horizontal, -16)
+                    totalSetting
+                        .padding(top: 26, leading: 0, bottom: 100, trailing: 0)
+                }.padding(.horizontal, 16).clipped()
                     .defaultViewBodyTopPadding()
             }
         }.background(Color.secondBgColor)
@@ -107,6 +112,24 @@ struct MonthlyPlanningView: View {
             }.sheet(isPresented: $showChangeMonthModal) {
                 ChangeMonthHalfModal(selectedDate: $selectedMonthDate, fromDate: user.solidStartDate)
             }
+    }
+    
+    private var totalSetting: some View {
+        Button {
+            showTotalSetting = true
+        } label: {
+            HStack {
+                Text("이유식 전체 설정")
+                    .customFont(.header4, color: .primeText)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(Color.primeText)
+                    .bold()
+            }
+        }
+        .navigationDestination(isPresented: $showTotalSetting) {
+            PlanBatchSettingView()
+        }
     }
     
     // MARK: 재료 바 Row return 함수
