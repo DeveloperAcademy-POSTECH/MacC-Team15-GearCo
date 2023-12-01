@@ -12,6 +12,7 @@ enum DivisionCase: String {
     case 먹을수있는재료 = "먹을 수 있는 재료"
     case 권장하지않는재료 = "권장하지 않는 재료"
     case 자주사용한재료 = "자주 사용한 재료"
+    case 검색
 }
 
 struct IngredientsBigDivision: View {
@@ -51,16 +52,24 @@ struct IngredientsBigDivision: View {
     @Binding var ingredientUseCount: [Int: Int]
     @State private var foldStates: [IngredientType: Bool]
     
+    @State private var searchText = ""
+    @FocusState private var isSearchFieldFocused: Bool
+    
     let viewType: MealOB.IngredientTestType
     let initialSelectedIngredients: [Int]   // selectedIngredients 복사. 테스트 재료 추가 화면에서 정상적으로 보일 수 있게.
+    let scrollID: ScrollID
     
-    init(case divisionCase: DivisionCase, ingredients selectedIngredients: Binding<[Int]>, viewType: MealOB.IngredientTestType, ingredientUseCount: Binding<[Int: Int]>) {
+    init(case divisionCase: DivisionCase, ingredients selectedIngredients: Binding<[Int]>,
+         initSelected initialSelectedIngredients: [Int], viewType: MealOB.IngredientTestType,
+         ingredientUseCount: Binding<[Int: Int]>, scrollID: ScrollID) {
         self.divisionCase = divisionCase
         self.viewType = viewType
         self._ingredientUseCount = ingredientUseCount
         
         self._selectedIngredients = selectedIngredients
-        self.initialSelectedIngredients = selectedIngredients.wrappedValue
+        self.initialSelectedIngredients = initialSelectedIngredients
+        self.scrollID = scrollID
+        
         var states: [IngredientType: Bool] = [:]
         for type in IngredientType.allCases {
             states[type] = false
@@ -70,6 +79,15 @@ struct IngredientsBigDivision: View {
     
     private func toggleFoldState(foldStateList: inout [IngredientType: Bool], type: IngredientType) {
         foldStateList[type]?.toggle()
+    }
+    
+    private func filterAndSortIngredients(by searchTerm: String, from values: [Ingredient]) -> [Ingredient] {
+        if searchTerm.isEmpty {
+            return values.sorted { $0.name < $1.name }
+        }
+        // 재료 name으로 filtering 및 sorting
+        return values.filter { $0.name.localizedCaseInsensitiveContains(searchTerm) }
+                     .sorted { $0.name < $1.name }
     }
     
     var body: some View {
@@ -83,6 +101,8 @@ struct IngredientsBigDivision: View {
                 먹을수있는권장하지않는Division()
             case .자주사용한재료:
                 자주사용한재료Division()
+            case .검색:
+                검색화면()
             }
         }.padding(.horizontal, viewHorizontalPadding)
     }
@@ -90,37 +110,59 @@ struct IngredientsBigDivision: View {
 
 // MARK: Division View
 extension IngredientsBigDivision {
+    private func 검색화면() -> some View {
+        var filteredIngredients: [Ingredient] {
+            let ingredients = ingredientData.values.filter { ingredient in
+                (viewType == .new && ingredientUseCount[ingredient.id, default: 0] == 0) ||
+                (viewType == .old && ingredientUseCount[ingredient.id, default: 0] != 0)
+            }
+            return filterAndSortIngredients(by: searchText, from: ingredients)
+        }
+
+        return VStack(spacing: 0) {
+            TextFieldComponents().shortTextfield(placeHolder: "", value: $searchText, isFocused: $isSearchFieldFocused)
+                .overlay { RoundedRectangle(cornerRadius: 12).stroke(Color.buttonStrokeColor, lineWidth: 1) }
+            
+                Divider()
+                    .padding(.top, foldSectionLightDividerBottomSpace)
+                ForEach(filteredIngredients, id: \.self) { ingredient in
+                    ingredientSelectRow(case: divisionCase, ingredient: ingredient, selected: $selectedIngredients, viewType: viewType)
+                        .padding(.vertical, 15)
+            }
+        }
+    }
+    
     private func 먹을수있는권장하지않는Division() -> some View {
         return VStack(alignment: .leading, spacing: 0) {
             Spacer().frame(height: titleTopSpace)
             TitleAndHintView(title: divisionCase.rawValue, hint: explainText)
             Spacer().frame(height: divisionSubTitleBottomSpace)
             
-            ForEach(IngredientType.allCases, id: \.self) { type in
+            ForEach(Array(IngredientType.allCases.enumerated()), id: \.element) { index, type in
                 HStack(spacing: 0) {
-                    Button {
-                        withAnimation(.spring()) {
-                            toggleFoldState(foldStateList: &foldStates, type: type)
-                        }
-                    } label: {
-                        Text(type.description)
-                            .font(.system(size: 19, weight: .semibold))
-                            .padding(.trailing, 2)
-                        if divisionCase == .권장하지않는재료 {
-                            Image(systemName: "xmark.shield.fill")
-                                .foregroundStyle(Color.ageColor)
-                                .scaledToFit()
-                                .frame(width: 23)
-                        }
-                        Spacer()
-                        Image(systemName: foldStates[type]! ? "chevron.up" : "chevron.down")
-                            .resizable()
-                            .bold()
-                            .frame(width: 18, height: 10)
-                    }.foregroundColor(.black)
-                        .toggleStyle(.automatic)
-                }.buttonStyle(PlainButtonStyle())   // 깜빡임 제거
-                .padding(.vertical, foldSectionTitleVerticalPadding)
+                    Text(type.description)
+                        .font(.system(size: 19, weight: .semibold))
+                        .padding(.trailing, 2)
+                    if divisionCase == .권장하지않는재료 {
+                        Image(systemName: "xmark.shield.fill")
+                            .foregroundStyle(Color.ageColor)
+                            .scaledToFit()
+                            .frame(width: 23)
+                    }
+                    Spacer()
+                    Image(systemName: foldStates[type]! ? "chevron.up" : "chevron.down")
+                        .resizable()
+                        .bold()
+                        .frame(width: 18, height: 10)
+                }.padding(.vertical, foldSectionTitleVerticalPadding)
+                .contentShape(Rectangle())
+                .foregroundColor(.black)
+                .toggleStyle(.automatic)
+                .onTapGesture {
+                    withAnimation(.spring()) {
+                        toggleFoldState(foldStateList: &foldStates, type: type)
+                    }
+                }.id(divisionCase == .먹을수있는재료 ? scrollID.namespaces1[index] : scrollID.namespaces2[index])
                 
                 if foldStates[type]! {
                     Divider()
@@ -204,6 +246,7 @@ extension IngredientsBigDivision {
         let divisionCase: DivisionCase
         let ingredient: Ingredient
         
+        @EnvironmentObject var mealOB: MealOB
         @Binding var selectedIngredients: [Int]
         let viewType: MealOB.IngredientTestType
         
@@ -228,7 +271,19 @@ extension IngredientsBigDivision {
         }
 
         var isNotRecommended: Bool {
+            // 선택된 재료와 궁합이 맞지 않으면
             for id in selectedIngredients {
+                if let misIngredients = ingredientData[id]?.misMatches {
+                    for misIngredient in misIngredients {
+                        if ingredient.id == misIngredient.id {
+                            return true
+                        }
+                    }
+                }
+            }
+            // mealOB의 반대 재료 (.new 일때 사용한 재료 / .old일때 새 재료)와 궁합이 맞지 않으면
+            for idResource in (viewType == .new ? mealOB.oldIngredients : mealOB.newIngredients) {
+                let id = idResource.id
                 if let misIngredients = ingredientData[id]?.misMatches {
                     for misIngredient in misIngredients {
                         if ingredient.id == misIngredient.id {
@@ -276,7 +331,10 @@ extension IngredientsBigDivision {
                                              VPad: dateTextVerticalPadding,
                                              color: .ageColor,
                                              radius: dateBackgroundRadius)
+                case .검색:
+                    EmptyView()
                 }   // end of switch
+                
                 Spacer().frame(width: ingredientNameRightSpace)
                 if isNotRecommended {
                     Image(systemName: "exclamationmark.triangle.fill")
@@ -284,6 +342,7 @@ extension IngredientsBigDivision {
                         .scaledToFit()
                         .frame(width: 20)
                 }
+                
                 Spacer()
                 
                 ButtonComponents(.clickableTiny, disabledCondition: buttonDisableCondition, isClicked: isClicked) {

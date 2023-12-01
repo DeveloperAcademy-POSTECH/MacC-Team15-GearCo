@@ -374,7 +374,6 @@ struct MonthlyPlanningView: View {
                 rowLeftEndSpacer()
                 ForEach(thisWeekDates, id: \.self) { date in
                     let isToday = (date.day == Date().day && date.month == Date().month && date.year == Date().year)
-                    
                     NavigationLink(value: date) {
                         VStack(spacing: 0) {
                             if isToday {

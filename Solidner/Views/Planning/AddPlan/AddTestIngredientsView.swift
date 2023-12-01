@@ -7,6 +7,29 @@
 
 import SwiftUI
 
+// 스크롤 id 저장.
+struct ScrollID {
+    var 채소1: Namespace.ID
+    var 과일1: Namespace.ID
+    var 곡물1: Namespace.ID
+    var 어육류1: Namespace.ID
+    var 유제품1: Namespace.ID
+    var 기타1: Namespace.ID
+    var 채소2: Namespace.ID
+    var 과일2: Namespace.ID
+    var 곡물2: Namespace.ID
+    var 어육류2: Namespace.ID
+    var 유제품2: Namespace.ID
+    var 기타2: Namespace.ID
+    
+    var namespaces1: [Namespace.ID] {
+        return [채소1, 과일1, 곡물1, 어육류1, 유제품1, 기타1]
+    }
+    var namespaces2: [Namespace.ID] {
+        return [채소2, 과일2, 곡물2, 어육류2, 유제품2, 기타2]
+    }
+}
+
 struct AddTestIngredientsView: View {
     // TODO: 전체적인 Padding 계층 및 Magic Number 수정 요함
     private let ingredientData = IngredientData.shared.ingredients
@@ -24,6 +47,7 @@ struct AddTestIngredientsView: View {
     private let reportButtonTopSpace: CGFloat = 20
     
     @State private var showReportSheet = false
+    @State private var isSearching = false
     
     @EnvironmentObject private var user: UserOB
     @EnvironmentObject private var mealOB: MealOB
@@ -35,52 +59,89 @@ struct AddTestIngredientsView: View {
     // 선택된 테스트 재료
     @State private var selectedIngredients: [Int] = []
     @State private var ingredientUseCount: [Int: Int] = [:]
+    @State private var initialSelectedIngredients: [Int] = []
     
     init(_ addIngredientViewType: MealOB.IngredientTestType) {
         self.viewType = addIngredientViewType
     }
     
+    @Namespace var 맨위
+    @Namespace var 채소1
+    @Namespace var 과일1
+    @Namespace var 곡물1
+    @Namespace var 어육류1
+    @Namespace var 유제품1
+    @Namespace var 기타1
+    @Namespace var 채소2
+    @Namespace var 과일2
+    @Namespace var 곡물2
+    @Namespace var 어육류2
+    @Namespace var 유제품2
+    @Namespace var 기타2
+    @State var scrollID: ScrollID?
+    
+    @State private var selectedIngredientType: (Int, Bool) = (0, false)
     
     // MARK: body
     var body: some View {
         VStack(spacing: 0) {
             BackButtonAndTitleHeader(title: Texts.testViewTitle(viewType: viewType))
             
-            // MARK: 검색, 재료 타입 버튼
-            searchAndIngredientTypeButtonsRow
-            
-            // MARK: 선택된 재료 타입 확인 Row
-            selectedIngredientRow
-            
-            ScrollView {
-                if viewType == .new {
-                    // TODO: 추후 이상반응 기능 추가 시 활성화
-//                    IngredientsBigDivision(case: .이상반응재료,
-//                                           ingredients: $selectedIngredients,
-//                                           viewType: viewType)
-                } else {
-                    IngredientsBigDivision(case: .자주사용한재료,
-                                           ingredients: $selectedIngredients,
-                                           viewType: viewType,
-                                           ingredientUseCount: $ingredientUseCount)
+            ScrollViewReader { proxy in
+                // MARK: 검색, 재료 타입 버튼
+                searchAndIngredientTypeButtonsRow(proxy: proxy)
+                
+                // MARK: 선택된 재료 타입 확인 Row
+                if !isSearching {
+                    selectedIngredientRow
                 }
                 
-                ThickDivider().padding(.vertical, divisionDividerVerticalPadding)
-                
-                IngredientsBigDivision(case: .먹을수있는재료,
-                                       ingredients: $selectedIngredients,
-                                       viewType: viewType,
-                                       ingredientUseCount: $ingredientUseCount)
-                Spacer().frame(height: divisionDividerVerticalPadding)
-                IngredientsBigDivision(case: .권장하지않는재료,
-                                       ingredients: $selectedIngredients,
-                                       viewType: viewType,
-                                       ingredientUseCount: $ingredientUseCount)
-                
-                Spacer().frame(height: reportButtonTopSpace)
-                reportButton
-                
-                Spacer().frame(height: saveButtonTopSpace)
+                ScrollView {
+                    if let scrollID = scrollID {
+                        if isSearching {
+                            IngredientsBigDivision(case: .검색,
+                                                   ingredients: $selectedIngredients,
+                                                   initSelected: initialSelectedIngredients,
+                                                   viewType: viewType,
+                                                   ingredientUseCount: $ingredientUseCount,
+                                                   scrollID: scrollID)
+                        } else {
+                            if viewType == .new {
+                                // TODO: 추후 이상반응 기능 추가 시 활성화
+                                //                    IngredientsBigDivision(case: .이상반응재료,
+                                //                                           ingredients: $selectedIngredients,
+                                //                                           viewType: viewType)
+                            } else {
+                                IngredientsBigDivision(case: .자주사용한재료,
+                                                       ingredients: $selectedIngredients,
+                                                       initSelected: initialSelectedIngredients,
+                                                       viewType: viewType,
+                                                       ingredientUseCount: $ingredientUseCount,
+                                                       scrollID: scrollID).id(맨위)
+                                ThickDivider().padding(.vertical, divisionDividerVerticalPadding)
+                            }
+                            
+                            IngredientsBigDivision(case: .먹을수있는재료,
+                                                   ingredients: $selectedIngredients,
+                                                   initSelected: initialSelectedIngredients,
+                                                   viewType: viewType,
+                                                   ingredientUseCount: $ingredientUseCount,
+                                                   scrollID: scrollID).id(맨위)
+                            Spacer().frame(height: divisionDividerVerticalPadding)
+                            IngredientsBigDivision(case: .권장하지않는재료,
+                                                   ingredients: $selectedIngredients,
+                                                   initSelected: initialSelectedIngredients,
+                                                   viewType: viewType,
+                                                   ingredientUseCount: $ingredientUseCount,
+                                                   scrollID: scrollID)
+                            
+                            Spacer().frame(height: reportButtonTopSpace)
+                            reportButton
+                            
+                            Spacer().frame(height: saveButtonTopSpace)
+                        }
+                    }
+                }
             }
             Group {
                 Spacer().frame(height: saveButtonBottomSpace)
@@ -94,6 +155,9 @@ struct AddTestIngredientsView: View {
             .onAppear {
                 initSelectedIngredient()
                 countingIngredientUse()
+            }.task {
+                scrollID = ScrollID(채소1: 채소1, 과일1: 과일1, 곡물1: 곡물1, 어육류1: 어육류1, 유제품1: 유제품1, 기타1: 기타1,
+                                    채소2: 채소2, 과일2: 과일2, 곡물2: 곡물2, 어육류2: 어육류2, 유제품2: 유제품2, 기타2: 기타2)
             }
     }
 }
@@ -117,14 +181,17 @@ extension AddTestIngredientsView {
 //        )
 //    }
     
-    private var searchAndIngredientTypeButtonsRow: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
+    private func searchAndIngredientTypeButtonsRow(proxy: ScrollViewProxy) -> some View {
+        return ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: typeButtonBetweenSpace) {
-                searchButton
-                ForEach(TempIngredientType.allCases, id: \.self) { ingredientType in
-                    ingredientTypeButton(ingredientType.rawValue)
+                searchButton(proxy: proxy)
+                ForEach(Array(IngredientType.allCases.enumerated()), id: \.element) { index, type in
+                    ingredientTypeButton(proxy, type.description, namespace: index, recommend: true)
                 }
-            }.padding(.leading, viewHorizontalPadding)
+                ForEach(Array(IngredientType.allCases.enumerated()), id: \.element) { index, type in
+                    ingredientTypeButton(proxy, type.description, namespace: index, recommend: false)
+                }
+            }.padding(.horizontal, viewHorizontalPadding)
         }.padding(.bottom, typeButtonsRowBottomPadding)
     }
     
@@ -160,29 +227,47 @@ extension AddTestIngredientsView {
     }
     
     // MARK: 테스트 재료 분류
-    private func ingredientTypeButton(_ text: String) -> some View {
+    private func ingredientTypeButton(_ proxy: ScrollViewProxy, _ text: String, namespace index: Int, recommend: Bool) -> some View {
         let textHorizontalPadding: CGFloat = 17
         let buttonFrameHeight: CGFloat = 40
         let buttonBackgroundRadius: CGFloat = 27.5
+        let textAndMarkSpace: CGFloat = 4
+        let buttonTrailingPadding: CGFloat = 13
         
         return Button {
             // TODO: 재료 분류에 따라 리스트 추가, 버튼 기능, 스크롤 따라가기, 선택여부따라 색 변경
-        } label: {
-            Text(text)
-                .bodyFont2()
-                .foregroundColor(.defaultText_wh)
-                .padding(.horizontal, textHorizontalPadding)
-                .frame(height: buttonFrameHeight)
-                .background {
-                    RoundedRectangle(cornerRadius: buttonBackgroundRadius)
-                        .fill(Color.secondaryText)
-                    //                        .fill(Color.defaultText_wh)
+            withAnimation {
+                if recommend {
+                    proxy.scrollTo(scrollID?.namespaces1[index], anchor: .top)
+                } else {
+                    proxy.scrollTo(scrollID?.namespaces2[index], anchor: .top)
                 }
+            }
+        } label: {
+            HStack(spacing: 0) {
+                Text(text)
+                    .bodyFont2()
+                    .foregroundColor(.defaultText.opacity(0.6))
+                    .frame(height: buttonFrameHeight)
+                Spacer().frame(width: textAndMarkSpace)
+                if !recommend {
+                    Image(systemName: "xmark.shield.fill")
+                        .foregroundStyle(Color.ageColor)
+                        .scaledToFit()
+                        .frame(width: 20)
+                }
+            }.padding(.leading, textHorizontalPadding)
+            .padding(.trailing, buttonTrailingPadding)
+            .background {
+                RoundedRectangle(cornerRadius: buttonBackgroundRadius)
+//                    .fill(Color.secondaryText)
+                        .fill(Color.defaultText_wh)
+            }
         }
     }
     
     // MARK: 검색 버튼
-    private var searchButton: some View {
+    private func searchButton(proxy: ScrollViewProxy) -> some View {
         let searchIconSize: CGFloat = 20
         let buttonFrameWidth: CGFloat = 70
         let buttonFrameHeight: CGFloat = 40
@@ -190,7 +275,10 @@ extension AddTestIngredientsView {
         let searchButtonStrokeLineWidth: CGFloat = 1
         
         return Button {
-            // TODO: Search
+            withAnimation {
+                proxy.scrollTo(맨위, anchor: .top)
+                isSearching.toggle()
+            }
         } label: {
             Image(systemName: "magnifyingglass")
                 .resizable()
@@ -213,7 +301,6 @@ extension AddTestIngredientsView {
         let verticalPadding: CGFloat = 7
         let cornerRadius: CGFloat = 6
         
-        // TODO: 재료 타입에 따른 color가 되도록 수정
         return Text("\(ingredient.name)")
             .bodyFont3()
             .foregroundColor(.secondaryText)
@@ -243,10 +330,12 @@ extension AddTestIngredientsView {
             for ingredient in mealOB.newIngredients {
                 selectedIngredients.append(ingredient.id)
             }
+            initialSelectedIngredients = selectedIngredients
         case .old:
             for ingredient in mealOB.oldIngredients {
                 selectedIngredients.append(ingredient.id)
             }
+            initialSelectedIngredients = selectedIngredients
         }
     }
     
@@ -260,18 +349,5 @@ extension AddTestIngredientsView {
                 ingredientUseCount[ingredient.id, default: 0] += 1
             }
         }
-    }
-}
-
-extension AddTestIngredientsView {
-    // MARK: IngredientType
-    enum TempIngredientType: String, CaseIterable {
-        case 이상반응재료 = "이상 반응 재료"
-        case 곡류 = "곡류"
-        case 채소류 = "채소류"
-        case 과일류 = "과일류"
-        case 육어류 = "육류&어류"
-        case 유제품류 = "유제품류"
-        case 기타 = "기타"
     }
 }
