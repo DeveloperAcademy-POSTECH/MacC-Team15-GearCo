@@ -77,6 +77,7 @@ struct MealDetailView: View {
                         deleteMealPlan
                     }
                 }
+                .defaultViewBodyTopPadding()
                 .defaultHorizontalPadding()
             }
             Group {
@@ -339,6 +340,7 @@ extension MealDetailView {
             } message: {
                 Text("해당 끼니 일정을 삭제할까요?")
             }
+            .padding(.bottom, 100)
     }
 }
 

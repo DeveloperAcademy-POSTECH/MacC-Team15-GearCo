@@ -68,6 +68,7 @@ struct PlanGroupDetailView: View {
             }
             addMealButton
         }
+        .defaultViewBodyTopPadding()
         .defaultHorizontalPadding()
         .navigationDestination(isPresented: $isMealAdding) {
             MealDetailView(

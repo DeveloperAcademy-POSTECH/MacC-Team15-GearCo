@@ -18,7 +18,7 @@ struct StartPlanView: View {
     @State private var isPlanStarting = false
     
     var body: some View {
-        RootVStack {
+        RootDefaultSpacingVStack {
             viewHeader
             viewBody
         }

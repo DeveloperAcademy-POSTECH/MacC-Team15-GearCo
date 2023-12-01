@@ -36,32 +36,33 @@ struct MonthlyPlanningView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            #warning("테스트 데이터 생성용 버튼")
-            Button {
-                let sDate = user.solidStartDate.add(.day, value: Int.random(in: 0...90))
-                let meal: MealOB = MealOB(startDate: sDate, cycleGap: CycleGaps(rawValue: Int.random(in: 1...4))!,
-                                          mealPlansOB: mealPlansOB
-                )
-                meal.set(mealType: MealType(rawValue: Int.random(in: 0...5))!)
-                for _ in Range<Int>(0...Int.random(in: 0...2)) {
-                    meal.addIngredient(ingredient: ingredientData.ingredients.randomElement()!.value, in: .new)
-                }
-                for _ in Range<Int>(0...Int.random(in: 0...5)) {
-                    meal.addIngredient(ingredient: ingredientData.ingredients.randomElement()!.value, in: .old)
-                }
-                FirebaseManager.shared.saveMealPlan(meal, user: user)
-            } label: {
-                HStack {
-                    Image(systemName: "lasso.and.sparkles")
-                        .foregroundStyle(Color.pink)
-                        .frame(width: 40)
-                    Text("랜덤 이유식 계획 생성 - 테스트용")
-                        .bodyFont2()
-                        .foregroundColor(Color.pink)
-                }
-            }
+//            #warning("테스트 데이터 생성용 버튼")
+//            Button {
+//                let sDate = user.solidStartDate.add(.day, value: Int.random(in: 0...90))
+//                let meal: MealOB = MealOB(startDate: sDate, cycleGap: CycleGaps(rawValue: Int.random(in: 1...4))!,
+//                                          mealPlansOB: mealPlansOB
+//                )
+//                meal.set(mealType: MealType(rawValue: Int.random(in: 0...5))!)
+//                for _ in Range<Int>(0...Int.random(in: 0...2)) {
+//                    meal.addIngredient(ingredient: ingredientData.ingredients.randomElement()!.value, in: .new)
+//                }
+//                for _ in Range<Int>(0...Int.random(in: 0...5)) {
+//                    meal.addIngredient(ingredient: ingredientData.ingredients.randomElement()!.value, in: .old)
+//                }
+//                FirebaseManager.shared.saveMealPlan(meal, user: user)
+//            } label: {
+//                HStack {
+//                    Image(systemName: "lasso.and.sparkles")
+//                        .foregroundStyle(Color.pink)
+//                        .frame(width: 40)
+//                    Text("랜덤 이유식 계획 생성 - 테스트용")
+//                        .bodyFont2()
+//                        .foregroundColor(Color.pink)
+//                }
+//            }
 
-            monthlyHeader.padding(.bottom, 16)
+            monthlyHeader
+//                .padding(.bottom, 16)
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     calendarCurrentYearMonth.padding(.bottom, 26)
@@ -78,6 +79,7 @@ struct MonthlyPlanningView: View {
                     }
                     Spacer()
                 }.clipped().padding(.horizontal, 16)
+                    .defaultViewBodyTopPadding()
             }
         }.background(Color.secondBgColor)
             .task {
@@ -433,7 +435,7 @@ struct MonthlyPlanningView: View {
             rightButton: Button {
                 showWeekly = true
             } label: {
-                Image(.calendarInPlanList)
+                Image(.calendarInMonthly)
             }
         )
     }

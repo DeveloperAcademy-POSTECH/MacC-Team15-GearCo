@@ -16,7 +16,7 @@ struct PlanBatchSettingView: View {
     @State private var isAlertShowing = false
     
     var body: some View {
-        RootVStack {
+        RootDefaultSpacingVStack {
             viewHeader
             viewBody
         }
@@ -80,6 +80,7 @@ struct PlanBatchSettingView: View {
                 isAlertShowing = true
             }
         }
+        .padding(.bottom, 60-34)
     }
 }
 

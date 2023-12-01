@@ -62,6 +62,7 @@ struct PlanListView: View {
             ThickDivider()
             Spacer()
         }
+        .defaultViewBodyTopPadding()
         .defaultHorizontalPadding()
         .overlay {
             ProgressView().frame(maxHeight: .infinity)
@@ -78,7 +79,9 @@ struct PlanListView: View {
                 mealGroupList
                 ThickDivider()
                 totalSetting
+                bottomSpacer
             }
+            .defaultViewBodyTopPadding()
             .defaultHorizontalPadding()
         }
         .sheet(isPresented: $isCurrentDateEditing) {
@@ -117,17 +120,20 @@ extension PlanListView {
 // MARK: - title Header
 extension PlanListView {
     private var titleHeader: some View {
-        Button {
-            isCurrentDateEditing.toggle()
-        } label: {
-            HStack(spacing: K.titleHStackSpacing) {
+        HStack(spacing: K.titleHStackSpacing) {
+            Button {
+                isCurrentDateEditing.toggle()
+            } label: {
                 Text(texts.yyyymmHeaderText(date: selectedDate))
                     .customFont(.header2, color: K.titleTextColor)
+                    .padding(.trailing, 2)
                 Image(systemName: K.chevronDownSFSymbolName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20)
                     .foregroundStyle(K.chevronDownColor)
-                    .bold()
-                Spacer()
             }
+            Spacer()
         }
         .padding(K.titlePadding)
     }
@@ -234,6 +240,10 @@ extension PlanListView {
             PlanBatchSettingView()
         }
     }
+    
+    private var bottomSpacer: some View {
+        Spacer().frame(height: 246 - 34)
+    }
 }
 
 extension PlanListView {
@@ -242,7 +252,7 @@ extension PlanListView {
         static var defaultHorizontalPadding: CGFloat { 20 }
         
         static var titleHStackSpacing: CGFloat { 4 }
-        static var titlePadding: EdgeInsets { .init(top: 21, leading: 0, bottom: 0, trailing: 0) }
+        static var titlePadding: EdgeInsets { .init(top: 0, leading: 0, bottom: 0, trailing: 0) }
         static var titleTextColor: Color { .defaultText }
         static var chevronDownSFSymbolName: String { "chevron.down" }
         static var chevronDownColor: Color { .primeText }

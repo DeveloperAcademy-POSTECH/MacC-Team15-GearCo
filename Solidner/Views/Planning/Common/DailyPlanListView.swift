@@ -70,6 +70,7 @@ extension DailyPlanListView {
             }
             addMealPlanButton
         }
+        .defaultViewBodyTopPadding()
         .defaultHorizontalPadding()
         .navigationDestination(isPresented: $isMealAdding) {
             MealDetailView(
