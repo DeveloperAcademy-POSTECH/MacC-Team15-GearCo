@@ -71,6 +71,14 @@ struct UserInfoUpdateView: View {
                 }
             })
         }
+        .onTapGesture {
+            if isBabynameFocused {
+                isBabynameFocused = false
+            }
+            if isNicknameFocused {
+                isNicknameFocused = false
+            }
+        }
         .onAppear {
             nickNameTextLimiter.value = user.nickName
             babyNameTextLimiter.value = user.babyName

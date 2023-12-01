@@ -55,6 +55,15 @@ struct ReportIngredientModalView: View {
                 })
             }
         }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
+        .onTapGesture {
+            if reportFieldIsFocused {
+                reportFieldIsFocused = false
+            }
+            if emilFieldIsFocused {
+                emilFieldIsFocused = false
+            }
+        }
     }
     private func reportNewIngredientComponent() -> some View {
         VStack(spacing: 16) {

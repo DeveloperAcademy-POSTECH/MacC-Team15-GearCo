@@ -26,7 +26,6 @@ struct SolidnerApp: App {
     @StateObject private var userOB = UserOB()
     
     var body: some Scene {
-        WindowGroup {
             let isPlanEmpty = false            
             #warning("이거 더 좋은 방법으로 정리해줄 사람~~")
 //            if isOnboardingOn {
@@ -55,5 +54,5 @@ struct SolidnerApp: App {
             MainView().environmentObject(userOB)
         }
     }
+    
 }
-
