@@ -51,16 +51,19 @@ struct PlanGroupDetailView: View {
     
     private var viewBody: some View {
         VStack(spacing: .zero) {
-            ScrollView {
-                VStack(spacing: K.wholeVStackSpacing) {
+            if tempMealPlanGroup.mealPlans.isEmpty {
+                VStack {
                     headerTitle
-                    if mealPlanGroup.mealPlans.isEmpty {
-                        // 마지막 날짜가 있어야하는?
-                    } else {
+                    emptyView
+                }
+            } else {
+                ScrollView {
+                    VStack(spacing: K.wholeVStackSpacing) {
+                        headerTitle
                         if isWrongPlan { WarningView() }
                         mealGroup
+                        Spacer()
                     }
-                    Spacer()
                 }
             }
             addMealButton
@@ -114,12 +117,18 @@ extension PlanGroupDetailView {
 // body
 
 extension PlanGroupDetailView {
+    
     private var headerTitle: some View {
         HStack(alignment: .top) {
             Text(texts.dateRangeTitle(from: startDate, to: endDate))
                 .headerFont2()
             Spacer()
         }
+    }
+    
+    private var emptyView: some View {
+        PlanEmptyView()
+            .frame(maxWidth: .infinity)
     }
     
     private var mealGroup: some View {
@@ -153,4 +162,10 @@ extension PlanGroupDetailView {
     private enum K {
         static var wholeVStackSpacing: CGFloat { 26 }
     }
+}
+
+#Preview {
+    PlanGroupDetailView(mealPlanGroup: .init(solidDate: .init(startDate: Date(), endDate: Date()), mealPlans: []))
+        .environmentObject(MealPlansOB())
+        .environmentObject(UserOB())
 }
