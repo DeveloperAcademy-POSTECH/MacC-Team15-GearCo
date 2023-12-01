@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Algorithms
 
 final class MealOB: ObservableObject {
 //    static let mock: MealOB = MealOB(mealPlan: MealPlan.mockMealsOne.first!, cycleGap: .three)
@@ -131,7 +132,10 @@ final class MealOB: ObservableObject {
     }
     
     #warning("mismatch check")
-    
+    var mismatches: [Ingredient] {
+        let totalMismatches = oldIngredients.flatMap { $0.misMatches } + newIngredients.flatMap { $0.misMatches }
+        return Array(totalMismatches.uniqued())
+    }
 }
 
 extension MealOB {

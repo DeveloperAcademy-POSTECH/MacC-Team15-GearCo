@@ -191,14 +191,18 @@ extension MealDetailView {
         VStackInIngredients {
             ForEach(ingredients) { ingredient in
                 let viewType: AddedIngredientView.AddedIngredientViewType = {
+                    let isMisMatched = mealOB.mismatches.contains(where: { $0.id == ingredient.id })
+                    let isNew = type == .new
                     if !isEditMode { // Edit 모드가 아닐 때 - 삭제
                         return .deletable
+                    } else if isMisMatched && isNew {
+                        return .mismatchAndNew
                     } else if type == .new { // Edit 모드인데 새로운 재료일 때
                         return .new
+                    } else if isMisMatched {
+                        return .mismatch
                     } else if let babyMonth = user.dateAfterBirth.month, babyMonth < ingredient.ableMonth { // able month > 현재 생후 달
                         return .age
-//                    } else if mismatches.contains(ingredient) //
-//
                     } else {
                         return .none
                     }

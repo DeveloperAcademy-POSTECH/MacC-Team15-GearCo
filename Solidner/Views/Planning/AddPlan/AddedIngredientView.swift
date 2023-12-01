@@ -11,7 +11,7 @@ struct AddedIngredientView: View {
     private let texts = TextLiterals.AddedIngredient.self
 
     enum AddedIngredientViewType {
-        case age, new, adverseReactionDate, deletable, mismatch, none
+        case age, new, adverseReactionDate, deletable, mismatch, mismatchAndNew, none
     }
 
     let type: AddedIngredientViewType
@@ -73,8 +73,10 @@ struct AddedIngredientView: View {
             return AnyView(badgeView(text: texts.newText, bgColor: .newColor))
         case .mismatch:
             return AnyView(misMatchBadgeView())
+        case .mismatchAndNew:
+            return AnyView(misMatchAndNewBadgeView())
         default:
-//            case .adverseReactionDate, deletable:
+            //            case .adverseReactionDate, deletable:
             // TODO: - 나중에 이상반응 날짜 넣기
             let reactedDateString = {
                 let reactedDate = Date()
@@ -83,6 +85,14 @@ struct AddedIngredientView: View {
             return AnyView(badgeView(text: reactedDateString, bgColor: .accentColor1))
         }
     }
+    
+    private func misMatchAndNewBadgeView() -> some View {
+        HStack(spacing: 6) {
+            misMatchBadgeView()
+            badgeView(text: texts.newText, bgColor: .newColor)
+        }
+    }
+    
     private func misMatchBadgeView() -> some View {
         Image(systemName: "exclamationmark.triangle.fill")
             .foregroundStyle(Color.accentColor1)
