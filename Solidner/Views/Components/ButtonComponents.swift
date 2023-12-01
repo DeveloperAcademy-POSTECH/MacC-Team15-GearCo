@@ -115,17 +115,38 @@ struct ButtonComponents: View {
     }
     
     func clickableTinyButton(disabledCondition: Bool, action: @escaping () -> Void) -> some View {
+        let fillColor: Color = {
+            return switch (disabledCondition, isClicked) {
+            case (true, _):
+                .buttonBgColor.opacity(0.3)
+            case (_, true):
+                .accentColor1
+            default:
+                .buttonBgColor
+            }
+        }()
+        
+        let textColor: Color = {
+            return switch (disabledCondition, isClicked) {
+            case (true, _):
+                .primeText.opacity(0.3)
+            case (_, true):
+                .defaultText_wh
+            default:
+                .primeText
+            }
+        }()
+        
         return Button(action: {
             action()
             isClicked.toggle()
         }) {
             RoundedRectangle(cornerRadius: buttonCornerRadius)
-                .fill(isClicked ? Color.accentColor1 : Color.buttonBgColor, strokeBorder: Color.buttonStrokeColor, lineWidth: 1.5)
+                .fill(fillColor, strokeBorder: Color.buttonStrokeColor, lineWidth: 1.5)
                 .frame(width: tinyButtonWidth, height: tinyButtonHeight)
                 .overlay {
                     Text(isClicked ? "추가됨" : "재료 추가")
-                        .headerFont6()
-                        .foregroundColor(isClicked ? .defaultText_wh : .primeText)
+                        .customFont(.header6, color: textColor)
                 }
         }
         .disabled(disabledCondition)
@@ -155,7 +176,7 @@ struct ButtonComponents_Previews: PreviewProvider {
             ) {
                 print(#function)
             }
-            ButtonComponents(.clickableTiny)
+            ButtonComponents(.clickableTiny, disabledCondition: true)
         }
     }
 }
