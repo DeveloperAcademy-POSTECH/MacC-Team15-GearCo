@@ -92,9 +92,7 @@ final class MealPlansOB: ObservableObject {
     
     func update(plan: MealPlan) {
         var tempMealPlans: [MealPlan] = mealPlans
-        if let index = mealPlans.index(matching: plan) {
-            tempMealPlans.replaceSubrange(index...index, with: [plan])
-        }
+        tempMealPlans[plan] = plan
         mealPlans = tempMealPlans
     }
     

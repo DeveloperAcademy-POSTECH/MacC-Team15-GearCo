@@ -151,11 +151,11 @@ extension MealPlan {
     }
 
     mutating func remove(newIngredient ingredient: Ingredient) {
-        self.newIngredients.removeAll { $0 == ingredient }
+        newIngredients.remove(ingredient)
     }
 
     mutating func remove(oldIngredient ingredient: Ingredient) {
-        self.oldIngredients.removeAll { $0 == ingredient }
+        oldIngredients.remove(ingredient)
     }
 }
 

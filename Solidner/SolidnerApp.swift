@@ -30,7 +30,7 @@ struct SolidnerApp: App {
             ZStack {
                 if finishLaunchScreen {
                     // 로그인 여부에 따른 뷰 분기처리는 여기에
-                    SignInView()
+                    MainView().environmentObject(userOB)
                 } else {
                     LaunchScreenView()
                         .onAppear {
