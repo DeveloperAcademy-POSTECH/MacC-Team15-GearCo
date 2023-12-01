@@ -205,7 +205,9 @@ extension AddTestIngredientsView {
         let searchButtonStrokeLineWidth: CGFloat = 1
         
         return Button {
-            isSearching.toggle()
+            withAnimation {
+                isSearching.toggle()
+            }
         } label: {
             Image(systemName: "magnifyingglass")
                 .resizable()

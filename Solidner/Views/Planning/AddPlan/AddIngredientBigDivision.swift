@@ -78,6 +78,12 @@ struct IngredientsBigDivision: View {
         foldStateList[type]?.toggle()
     }
     
+    private func filterAndSortIngredients(by searchTerm: String, from values: [Ingredient]) -> [Ingredient] {
+        // 재료 name으로 filtering 및 sorting
+        return values.filter { $0.name.localizedCaseInsensitiveContains(searchTerm) }
+                     .sorted { $0.name < $1.name }
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             switch divisionCase {
@@ -99,8 +105,30 @@ struct IngredientsBigDivision: View {
 // MARK: Division View
 extension IngredientsBigDivision {
     private func 검색화면() -> some View {
-        VStack(spacing: 0) {
+        var filteredIngredients: [Ingredient] {
+            let ingredients = ingredientData.values.filter { ingredient in
+                (viewType == .new && ingredientUseCount[ingredient.id, default: 0] == 0) ||
+                (viewType == .old && ingredientUseCount[ingredient.id, default: 0] != 0)
+            }
+            return filterAndSortIngredients(by: searchText, from: ingredients)
+        }
+
+        
+        return VStack(spacing: 0) {
             TextFieldComponents().shortTextfield(placeHolder: "", value: $searchText, isFocused: $isSearchFieldFocused)
+                .overlay { RoundedRectangle(cornerRadius: 12).stroke(Color.buttonStrokeColor, lineWidth: 1) }
+            
+            VStack(alignment: .leading, spacing: 0) {
+                Spacer().frame(height: titleTopSpace)
+                Text(divisionCase.rawValue)
+                    .headerFont2()
+                    .foregroundColor(.defaultText)
+                Spacer().frame(height: titleBottomSpace)
+                ForEach(filteredIngredients, id: \.self) { ingredient in
+                    ingredientSelectRow(case: divisionCase, ingredient: ingredient, selected: $selectedIngredients, viewType: viewType)
+                        .padding(.vertical, 15)
+                }
+            }
         }
     }
     
