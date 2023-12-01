@@ -221,6 +221,39 @@ extension Date {
     }
 }
 
+extension Date {
+    
+    ///  Date instance의, 기존에 구할 수 있었던 year, month, day, week, weekOfMonth 값에 한해 구할 수 있는!
+    ///  example: 
+    ///    - self.getValue(of: .day) -> 해당 date의 day Int 값 반환
+    /// - Parameter component: .day, .year 등 Calendar.Component
+    /// - Returns: component 값
+    func getValue(of component:Calendar.Component) -> Int? {
+        switch component {
+        case .year:
+            return year
+        case .month:
+            return month
+        case .day:
+            return day
+        case .weekday:
+            return weekday
+        case .weekOfMonth:
+            return weekOfMonth
+        default:
+            return nil
+        }
+    }
+    
+    var dayOfStart: Date {
+        Date.date(year: year, month: month, day: day)!
+    }
+    
+    var dayOfEnd: Date {
+        Date.date(year: year, month: month, day: day + 1)!.add(.nanosecond, value: -1)
+    }
+}
+
 extension Date: RawRepresentable {
     public var rawValue: String {
         self.timeIntervalSinceReferenceDate.description
