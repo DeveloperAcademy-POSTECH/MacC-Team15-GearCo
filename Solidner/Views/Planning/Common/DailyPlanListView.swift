@@ -39,7 +39,9 @@ struct DailyPlanListView: View {
         RootVStack {
             viewHeader
             viewBody
+                .defaultBottomPadding()
         }
+        .ignoresSafeArea(.all, edges: .bottom)
     }
 }
 

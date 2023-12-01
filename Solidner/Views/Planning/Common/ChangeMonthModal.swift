@@ -70,13 +70,10 @@ struct ChangeMonthModal: View {
             monthButtons
             saveButton
         }
-        .ignoresSafeArea(.keyboard)
-        .padding(.bottom, 40)
+        .ignoresSafeArea(.all, edges: .bottom)
+        .defaultBottomPadding()
         .defaultHorizontalPadding()
         .withClearBackground(color: .secondBgColor)
-        .onAppear {
-            print(UIScreen.screenHeight)
-        }
     }
 }
 
@@ -207,7 +204,6 @@ extension ChangeMonthModal {
 //                }
             }
             .buttonColor(K.saveButtonBackgroundColor)
-            .padding(.bottom, 6)
     }
 }
 

@@ -20,6 +20,12 @@ struct DefaultHorizontalPadding: ViewModifier {
     }
 }
 
+struct DefaultBottomPadding: ViewModifier {
+    func body(content: Content) -> some View {
+        content.padding(.bottom, 40.responsibleHeight)
+    }
+}
+
 extension View {
     func defaultHorizontalPadding() -> some View {
         self.modifier(DefaultHorizontalPadding())
@@ -27,5 +33,8 @@ extension View {
     
     func defaultViewBodyTopPadding() -> some View {
         self.modifier(DefautViewBodyTopPadding())
+    }
+    func defaultBottomPadding() -> some View {
+        self.modifier(DefaultBottomPadding())
     }
 }

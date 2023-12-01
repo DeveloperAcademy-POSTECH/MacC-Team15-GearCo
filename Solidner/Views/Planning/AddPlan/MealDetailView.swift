@@ -48,7 +48,9 @@ struct MealDetailView: View {
         RootVStack {
             viewHeader
             viewBody
+                .defaultBottomPadding()
         }
+        .ignoresSafeArea(.all, edges: .bottom)
     }
     
     @ViewBuilder
