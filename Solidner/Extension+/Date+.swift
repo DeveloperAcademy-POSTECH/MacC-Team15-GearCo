@@ -31,7 +31,7 @@ extension Date {
     ///   - endDate: 끝 시간. Date형
     /// - Returns: 시간차를 기록한 DateComponents
     static func componentsBetweenDates(from startDate: Date, to endDate: Date) -> DateComponents {
-        Calendar.current.dateComponents([.month, .day, .hour, .minute], from: startDate, to: endDate)
+        Calendar.current.dateComponents([.day, .hour, .minute], from: startDate, to: endDate)
     }
     
     /// 두 Date 객체를 포함한, 그 사이의 Date들의 리스트를 반환합니다.
@@ -85,16 +85,6 @@ extension Date {
         
         return nowMonthDates.filter { $0.weekOfMonth == nowWeekOfMonth }
     }
-    
-    
-    /// 파라미터로 받은 주차에 포함된 Date 객체를 리스트로 반환합니다.
-    /// - Parameter weekOfMonth: 원하는 주차 (Int)
-    /// - Returns: 입력된 주차에 포함된 날들을 Date형 리스트로 반환
-    static func weekDates(_ weekOfMonth: Int) -> [Date] {
-        let nowMonthDates = Date.nowMonthDates()
-        
-        return nowMonthDates.filter { $0.weekOfMonth == weekOfMonth }
-    }
 
     
     /// component를 value만큼 더한 Date를 반환합니다.
@@ -119,6 +109,28 @@ extension Date {
         } else {
             return resultDates
         }
+    }
+    
+    /// 날짜의 달이 몇 주차 까지 있는지 계산하여 Int형 리스트로 반환합니다.
+    /// - Returns: 달의 주차를 Int형 리스트로 반환 (ex. `[1, 2, 3, 4, 5]`)
+    func monthWeeks() -> [Int] {
+        let date = self
+        let range = Calendar.current.range(of: .weekOfMonth, in: .month, for: date) ?? Range<Int>(1...1)
+        
+        if range.upperBound == 1 {
+            fatalError("시간 설정 오류. 기기의 시간을 확인해주세요.")
+        } else {
+            return Array(range.lowerBound...range.upperBound - 1)
+        }
+    }
+    
+    /// 파라미터로 받은 주차에 포함된 Date 객체를 리스트로 반환합니다.
+    /// - Parameter weekOfMonth: 원하는 주차 (Int)
+    /// - Returns: 입력된 주차에 포함된 날들을 Date형 리스트로 반환
+    func weekDates(_ weekOfMonth: Int) -> [Date] {
+        let monthDates = self.monthDates()
+        
+        return monthDates.filter { $0.weekOfMonth == weekOfMonth }
     }
     
 

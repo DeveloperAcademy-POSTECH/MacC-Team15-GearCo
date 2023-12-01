@@ -15,6 +15,9 @@ struct ReportIngredientModalView: View {
     @State private var goToFinishedSendingView = false
     @EnvironmentObject var user: UserOB
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
+    
+    let firebaseManager = FirebaseManager.shared
+    
     var body: some View {
         ZStack {
             BackgroundView()
@@ -37,7 +40,12 @@ struct ReportIngredientModalView: View {
                         
                     Spacer()
                     ButtonComponents(.big, title: "보내기", disabledCondition: ingredientReportNote.isEmpty || receiveResultEmailAdress.isEmpty) {
-                        goToFinishedSendingView = true
+                        // TODO: 추후 보내기 실패 error handling 하기. (새로운 페이지?) - 여유 나면.. 지금은 비동기 처리만 되어 있고, 실패 시 다음 페이지 전송 x
+                        Task {
+                            await firebaseManager.reportIngredient(note: ingredientReportNote, replyEmail: receiveResultEmailAdress,
+                                                             userEmail: user.email)
+                            goToFinishedSendingView = true
+                        }
                     }
                 }
                 .padding(horizontal: 20, top: 49, bottom: 6)
@@ -116,8 +124,4 @@ struct FinishedSendingModalView: View {
             .padding(horizontal: 20, top: 0, bottom: 6)
         }
     }
-}
-
-#Preview {
-                ReportIngredientModalView().environmentObject(UserOB())
 }

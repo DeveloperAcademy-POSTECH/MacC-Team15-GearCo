@@ -25,18 +25,7 @@ struct MealPlanGroup: Hashable {
         // 1. 해당 Group에서 테스트 재료가 2개 초과인 경우
         // 2. 6끼 이상인 경우
         // 3. 중복되는 끼니가 있는 경우
-        testingIngredientCount > 2 || mealPlans.count > 6 || occursDuplicatedMealType
-    }
-
-    private var testingIngredientCount: Int {
-        mealPlans.reduce(0) { partialResult, mealPlan in
-            partialResult + mealPlan.newIngredients.count
-        }
-    }
-
-    private var occursDuplicatedMealType: Bool {
-        // mealType set의 count와 mealPlans의 count가 같지 않으면 중복된 끼니가 있다
-        Set(mealPlans.map { $0.mealType }).count != mealPlans.count
+        WrongPlanChecker.isWrongPlan(mealPlans)
     }
 }
 
@@ -52,7 +41,13 @@ extension MealPlanGroup {
         let mealsDict = Dictionary(grouping: mealPlans) { SolidDate(startDate: $0.startDate, endDate: $0.endDate) }
         return mealsDict.reduce(into: [MealPlanGroup]()) { partialResult, element in
             let (solidDate, mealPlans) = element
-            partialResult.append(MealPlanGroup(solidDate: solidDate, mealPlans: mealPlans))
+            partialResult.append(MealPlanGroup(solidDate: solidDate, mealPlans: mealPlans.sorted { $0.mealType < $1.mealType }))
+        }
+        .sorted { mealPlanGroup1, mealPlanGroup2 in
+            // 시작일, 끼니 종류 기준
+            mealPlanGroup1.solidDate.startDate < mealPlanGroup2.solidDate.startDate &&
+            (mealPlanGroup1.mealPlans.first?.mealType) ?? MealType.간식2 < (mealPlanGroup2.mealPlans.first?.mealType) ?? MealType.간식2 &&
+            mealPlanGroup1.solidDate.endDate < mealPlanGroup2.solidDate.endDate
         }
     }
 }
@@ -69,7 +64,7 @@ extension MealPlanGroup {
 }
 
 struct MealPlan: Identifiable, Hashable {
-    var id = UUID()
+    var id: UUID
     var startDate: Date {
         willSet {
             endDate = newValue.add(.day, value: cycleGap.rawValue - 1)
@@ -88,7 +83,8 @@ struct MealPlan: Identifiable, Hashable {
         }
     }
     
-    init(startDate: Date, endDate: Date, mealType: MealType, newIngredients: [Ingredient], oldIngredients: [Ingredient]) {
+    init(id: UUID, startDate: Date, endDate: Date, mealType: MealType, newIngredients: [Ingredient], oldIngredients: [Ingredient]) {
+        self.id = id
         self.startDate = startDate
         self.endDate = endDate
         self.mealType = mealType
@@ -96,13 +92,14 @@ struct MealPlan: Identifiable, Hashable {
         self.oldIngredients = oldIngredients
     }
     
-    init(startDate: Date, endDate: Date) {
-        self.startDate = startDate
-        self.endDate = endDate
-        self.mealType = .아침
-        self.newIngredients = []
-        self.oldIngredients = []
-    }
+//    init(startDate: Date, endDate: Date) {
+//        self.id = UUID()
+//        self.startDate = startDate
+//        self.endDate = endDate
+//        self.mealType = .아침
+//        self.newIngredients = []
+//        self.oldIngredients = []
+//    }
 
     var dateString: String {
         "\(startDate.day)일(\(startDate.weekDayKor)) ~ \(endDate.day)일(\(endDate.weekDayKor))"
@@ -167,17 +164,17 @@ enum MealType: Int, CaseIterable, Codable {
     var icon: String {
         switch self {
         case .아침:
-            return "sun.max"
+            return "morning"
         case .점심:
-            return "sun.horizon"
+            return "lunch"
         case .저녁:
-            return "moon"
+            return "dinner"
         case .간식1:
-            return "1.circle"
+            return "snack"
         case .간식2:
-            return "2.circle"
+            return "snack"
         case .기타:
-            return "plus"
+            return "etc"
         }
     }
 }
@@ -187,8 +184,8 @@ extension MealType: Comparable {
         lhs.rawValue < rhs.rawValue
     }
 }
-
-//struct Ingredient: CustomStringConvertible, Identifiable, Hashable, Codable {
+//
+//struct MockIngredient: CustomStringConvertible, Identifiable, Hashable, Codable {
 //    private(set) var id = UUID()
 //    let type: IngredientType
 //    private(set) var ableMonth: Int = 6
@@ -204,9 +201,9 @@ extension MealType: Comparable {
 //        return _self
 //    }
 //}
-//
+
 //enum IngredientType: Codable {
-//    case 곡물, 어육류, 노란채소, 녹색채소, 과일, 유제품, 기타채소, 기타
+//    case 곡물, 어육류, 노란채소, 채소, 과일, 유제품, 기타채소, 기타
 //
 //    var color: Color {
 //        switch self {
@@ -231,11 +228,6 @@ extension MealType: Comparable {
 //}
 
 
-extension MealPlan {
-    static var mockMealsOne: [MealPlan] = []
-}
-
-//
 //extension MealPlan {
 //    static var mockMealsOne: [MealPlan] {
 //        let ingredient = Ingredient.Mock.self
@@ -304,9 +296,17 @@ extension MealPlan {
 //                mealType: .간식2,
 //                newIngredients: [],
 //                oldIngredients: [ingredient.사과]
+//            ),
+//            .init(
+//                startDate: Date.date(year: 2023, month: 11, day: 21)!,
+//                endDate: Date.date(year: 2023, month: 11, day: 22)!,
+//                mealType: .간식2,
+//                newIngredients: [],
+//                oldIngredients: [ingredient.단호박]
 //            )
 //        ]
 //    }
+//}
 //
 //    // 돌림노래~~
 //    static var mockMealsTwo: [MealPlan] {
@@ -352,23 +352,35 @@ extension MealPlan {
 //    }
 //}
 
-//extension Ingredient {
-//    static var mocknewIngredients: [Ingredient] = [
-//        Mock.당근
-//    ]
-//    static var mockoldIngredients: [Ingredient] = [
-//        Mock.쌀, Mock.소고기, Mock.청경채
-//    ]
-//
-//    enum Mock {
-//        static var 쌀: Ingredient { .init(type: .곡물, name: "쌀") }
-//        static var 소고기: Ingredient { .init(type: .어육류, name: "소고기") }
-//        static var 사과: Ingredient { .init(type: .과일, name: "사과") }
-//        static var 브로콜리: Ingredient { .init(type: .녹색채소, name: "브로콜리") }
-//        static var 아스파라거스: Ingredient { .init(type: .녹색채소, name: "아스파라거스") }
-//        static var 단호박: Ingredient { .init(type: .노란채소, name: "단호박") }
-//        static var 땅콩: Ingredient { .init(type: .기타, name: "땅콩") }
-//        static var 당근: Ingredient { .init(type: .기타채소, name: "당근") }
-//        static var 청경채: Ingredient { .init(type: .녹색채소, name: "청경채") }
-//    }
-//}
+extension Ingredient {
+    static var mockNewIngredients: [Ingredient] = [
+        Mock.당근
+    ]
+    static var mockOldIngredients: [Ingredient] = [
+        Mock.쌀, Mock.소고기, Mock.청경채
+    ]
+
+    enum Mock {
+        static var 쌀: Ingredient { .init(type: .곡물, name: "쌀") }
+        static var 소고기: Ingredient { .init(type: .어육류, name: "소고기") }
+        static var 사과: Ingredient { .init(type: .과일, name: "사과") }
+        static var 브로콜리: Ingredient { .init(type: .채소, name: "브로콜리") }
+        static var 아스파라거스: Ingredient { .init(type: .채소, name: "아스파라거스") }
+        static var 단호박: Ingredient { .init(type: .채소, name: "단호박") }
+        static var 땅콩: Ingredient { .init(type: .기타, name: "땅콩") }
+        static var 당근: Ingredient { .init(type: .채소, name: "당근") }
+        static var 청경채: Ingredient { .init(type: .채소, name: "청경채") }
+    }
+}
+
+extension Ingredient {
+    init(type: IngredientType, name: String) {
+        self.id = UUID().hashValue
+        self.name = name
+        self.ableMonth = 6
+        self.type = type
+        self.description = name
+        self.misMatches = []
+        self.alternatives = []
+    }
+}

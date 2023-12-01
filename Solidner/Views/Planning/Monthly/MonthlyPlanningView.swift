@@ -13,48 +13,58 @@ struct MonthlyPlanningView: View {
     
     private let lightGray = Color(#colorLiteral(red: 0.8797428608, green: 0.8797428012, blue: 0.8797428608, alpha: 1)) // #D9D9D9
     private let weekDayKorList = ["일", "월", "화", "수", "목", "금", "토"]
-    
-    private let nowMonthWeekNums = Date.nowMonthWeeks()
-    
-    // Dummy struct
-    struct planData {
-        var startDate: Int
-        var endDate: Int
+        
+    // 이전 달의 데이터와 이후 달의 데이터는 -2, 33 등과 같이 표현됨.
+    struct PlanData {
+        var mealPlan: MealPlan
+        var startDay: Int
+        var endDay: Int
     }
-    // MARK: 이전 달의 데이터와 이후 달의 데이터는 -2, 33 등과 같이 표현할 것.
-    let plans: [planData] =
-    [
-     planData(startDate: -1, endDate: 1),
-     planData(startDate: 2, endDate: 4),
-     planData(startDate: 2, endDate: 3),
-     planData(startDate: 5, endDate: 7),
-     planData(startDate: 8, endDate: 10),
-     planData(startDate: 9, endDate: 11),
-     planData(startDate: 13, endDate: 14),
-     planData(startDate: 11, endDate: 12),
-     planData(startDate: 16, endDate: 19),
-     planData(startDate: 16, endDate: 18),
-     planData(startDate: 19, endDate: 22),
-     planData(startDate: 19, endDate: 22),
-     planData(startDate: 21, endDate: 24),
-     planData(startDate: 21, endDate: 24),
-     planData(startDate: 23, endDate: 26),
-     planData(startDate: 24, endDate: 25),
-     planData(startDate: 26, endDate: 27),
-     planData(startDate: 29, endDate: 30),
-     planData(startDate: 29, endDate: 31),
-     planData(startDate: 27, endDate: 32)
-    ]
     
-    @State private var reducedPlans: [(first: planData, second: BarPosition)] = []
+    @EnvironmentObject var user: UserOB
+    @EnvironmentObject var mealPlansOB: MealPlansOB
+    let ingredientData = IngredientData.shared
+    
+    @Binding var showWeekly: Bool
+    
+    @State private var reducedPlans: [(first: PlanData, second: BarPosition)] = []
+    @State private var selectedMonthDate: Date = Date()
+    @State private var nowMonthWeekNums = Date.nowMonthWeeks()
+    
+    @State private var showChangeMonthModal = false
+    @State private var isMyPageOpenning = false
     
     var body: some View {
         VStack(spacing: 0) {
-            // MARK: 임시로 대충 헤더 자리 비워두기
-            Spacer().frame(height: 70)
+            #warning("테스트 데이터 생성용 버튼")
+            Button {
+                let sDate = user.solidStartDate.add(.day, value: Int.random(in: 0...90))
+                let meal: MealOB = MealOB(startDate: sDate, cycleGap: CycleGaps(rawValue: Int.random(in: 1...4))!,
+                                          mealPlansOB: mealPlansOB
+                )
+                meal.set(mealType: MealType(rawValue: Int.random(in: 0...5))!)
+                for _ in Range<Int>(0...Int.random(in: 0...2)) {
+                    meal.addIngredient(ingredient: ingredientData.ingredients.randomElement()!.value, in: .new)
+                }
+                for _ in Range<Int>(0...Int.random(in: 0...5)) {
+                    meal.addIngredient(ingredient: ingredientData.ingredients.randomElement()!.value, in: .old)
+                }
+                FirebaseManager.shared.saveMealPlan(meal, user: user)
+            } label: {
+                HStack {
+                    Image(systemName: "lasso.and.sparkles")
+                        .foregroundStyle(Color.pink)
+                        .frame(width: 40)
+                    Text("랜덤 이유식 계획 생성 - 테스트용")
+                        .bodyFont2()
+                        .foregroundColor(Color.pink)
+                }
+            }
+
+            monthlyHeader.padding(.bottom, 16)
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
-                    calendarCurrentYearMonth.padding(.bottom, 15)
+                    calendarCurrentYearMonth.padding(.bottom, 26)
                     VStack(spacing: 0) {
                         calendarWeekDayRow
                         ForEach(nowMonthWeekNums, id: \.self) { num in
@@ -64,17 +74,36 @@ struct MonthlyPlanningView: View {
                         Spacer()
                     }.background {
                         RoundedRectangle(cornerRadius: 12)
-                            .foregroundColor(.white)
+                            .foregroundColor(.defaultText_wh)
                     }
                     Spacer()
                 }.clipped().padding(.horizontal, 16)
             }
-        }.background(Color(.lightGray))
-            .onAppear {
+        }.background(Color.secondBgColor)
+            .task {
+                if mealPlansOB.isLoaded {
+                    var plans: [PlanData] = []
+                    mealPlansOB.currentFilter = .month(date: selectedMonthDate)
+                    for plan in mealPlansOB.filteredMealPlans {
+                        let newPlan = PlanData(mealPlan: plan, startDay: plan.startDate.day, endDay: plan.endDate.day)
+                        plans.append(newPlan)
+                    }
+                    adjustPlanDataDays(plans: &plans)
+                    reducedPlans = reducePlanData(plans: plans)
+                }
+            }.onChange(of: mealPlansOB.filteredMealPlans) { value in
+                var plans: [PlanData] = []
+                for plan in mealPlansOB.filteredMealPlans {
+                    let newPlan = PlanData(mealPlan: plan, startDay: plan.startDate.day, endDay: plan.endDate.day)
+                    plans.append(newPlan)
+                }
+                adjustPlanDataDays(plans: &plans)
                 reducedPlans = reducePlanData(plans: plans)
-//                for plan in reducedPlans {
-//                    print("plan :: \(plan.first.startDate)~\(plan.first.endDate) / \(plan.second)")
-//                }
+            }.onChange(of: selectedMonthDate) { newValue in
+                mealPlansOB.currentFilter = .month(date: newValue)
+                nowMonthWeekNums = selectedMonthDate.monthWeeks()
+            }.sheet(isPresented: $showChangeMonthModal) {
+                ChangeMonthHalfModal(selectedDate: $selectedMonthDate, fromDate: user.solidStartDate)
             }
     }
     
@@ -91,48 +120,48 @@ struct MonthlyPlanningView: View {
         let barHorizontalPadding = screenWidth * (10/390)
         let endPadding = barHorizontalPadding + rowHorizontalPadding
         
-        let plansInWeek: [(data: planData, position: BarPosition)]
+        let plansInWeek: [(data: PlanData, position: BarPosition)]
         = reducePlanDataInWeek(weekOfMonth: weekOfMonth, reducedPlans: reducedPlans)
         
-        var plansInWeekFirstLine: [planData] {
+        var plansInWeekFirstLine: [PlanData] {
             plansInWeek.filter { $0.position == .first }.map { $0.data }
         }
-        var plansInWeekSecondLine: [planData] {
+        var plansInWeekSecondLine: [PlanData] {
             plansInWeek.filter { $0.position == .second }.map { $0.data }
         }
         
-        let weekDates = Date.weekDates(weekOfMonth)
+        let weekDates = selectedMonthDate.weekDates(weekOfMonth)
         let dayNumsInWeek: [Int] = weekDates.map{ $0.day }
-        let monthDates = Date.nowMonthDates()
+        let monthDates = selectedMonthDate.monthDates()
         
         
         // MARK: 바 길이 계산
-        func calculateBarWidth(plan: planData, isBarFromEnd: (left: Bool, right: Bool)) -> CGFloat {
+        func calculateBarWidth(plan: PlanData, isBarFromEnd: (left: Bool, right: Bool)) -> CGFloat {
             var cycle: CGFloat {
                 if isBarFromEnd.left {
-                    return CGFloat(plan.endDate - weekDates.first!.day + 1)
+                    return CGFloat(plan.endDay - weekDates.first!.day + 1)
                 } else if isBarFromEnd.right {
-                    return CGFloat(weekDates.last!.day - plan.startDate + 1)
+                    return CGFloat(weekDates.last!.day - plan.startDay + 1)
                 } else {
-                    return CGFloat(plan.endDate - plan.startDate + 1)
+                    return CGFloat(plan.endDay - plan.startDay + 1)
                 }
             }
             var result: CGFloat = 0
             
-            if dayNumsInWeek.contains(plan.startDate) &&
-                dayNumsInWeek.contains(plan.endDate) {
+            if dayNumsInWeek.contains(plan.startDay) &&
+                dayNumsInWeek.contains(plan.endDay) {
                 result = (mainDaySectionWidth * cycle) - (barHorizontalPadding * 2)
             } else if isBarFromEnd.left {
                 if dayNumsInWeek.first! == 1 {  // 1일 이전부터 이어지는 바
                     // 빈 날의 공간 + plan의 마지막 날까지
-                    let weekDay = CGFloat(weekDates.first!.weekday + plan.endDate - 1)
+                    let weekDay = CGFloat(weekDates.first!.weekday + plan.endDay - 1)
                     result = (mainDaySectionWidth * weekDay) - barHorizontalPadding * 2 + endPadding
                 } else {
                     result = (mainDaySectionWidth * cycle) - barHorizontalPadding * 2 + endPadding
                 }
             } else if isBarFromEnd.right {
                 if dayNumsInWeek.last! == monthDates.last!.day {    // 월말 이후까지 이어지는 바
-                    let weekDay = monthDates[plan.startDate-1].weekday // 요일
+                    let weekDay = monthDates[plan.startDay-1].weekday // 요일
                     let dayGap = CGFloat(7 - weekDay + 1)
                     result = (mainDaySectionWidth * dayGap) - barHorizontalPadding + rowHorizontalPadding
                 } else {
@@ -147,23 +176,35 @@ struct MonthlyPlanningView: View {
         }
         
         // MARK: 재료 바 한 개 return 함수
-        func ingredientBar(plan: planData, index: Int, isBarFromEnd: (left: Bool, right: Bool)) -> some View {
+        func ingredientBar(plan: PlanData, index: Int, isBarFromEnd: (left: Bool, right: Bool)) -> some View {
             let barWidth: CGFloat = calculateBarWidth(plan: plan, isBarFromEnd: isBarFromEnd)
             let barRadius: CGFloat = 4
+            
+            var newIngredientText: String {
+                var res = ""
+                let newIngredients = plan.mealPlan.newIngredients
+                for (index, ingredient) in newIngredients.enumerated() {
+                    if index == 0 {
+                        res += ingredient.name
+                    } else if index == 1 {
+                        res += ", \(ingredient.name)"
+                    }
+                }
+                return res
+            }
                         
             return VStack(spacing: 0) {
                 HStack(spacing: 0) {
-                    Text("고기고기고기")
-                        .font(.system(size: 10))
-                        .bold()
-                        .foregroundColor(.white)
+                    Text(newIngredientText)
+                        .weekDisplayFont3()
+                        .foregroundColor(.defaultText_wh)
                         .padding(.leading, 7)
                     Spacer()
                 }
             }.frame(width: barWidth, height: ingredientBarHeight)
             .background {
                 Rectangle()
-                    .foregroundColor(Color.pink.opacity(0.5))
+                    .foregroundColor(.accentColor1)
                     .if(!isBarFromEnd.left) { view in
                         view.leftCornerRadius(barRadius)
                     }.if(!isBarFromEnd.right) { view in
@@ -173,7 +214,7 @@ struct MonthlyPlanningView: View {
         }
         
         // MARK: 바 한 개 왼쪽, 오른쪽 공간 계산
-        func barLeftPadding(plans: [planData], index: Int, isBarFromEnd: (left: Bool, right: Bool)) -> some View {
+        func barLeftPadding(plans: [PlanData], index: Int, isBarFromEnd: (left: Bool, right: Bool)) -> some View {
             
             switch plans.count {
             case 0:
@@ -188,9 +229,9 @@ struct MonthlyPlanningView: View {
                     // 시작일과(plan 1개이므로 index=0) 그 주의 첫 번째 날의 차이를 빼어 빈 날짜가 며칠인지 계산
                     if dayNumsInWeek.first! == 1 {
                         // 주의 시작일이 1일일 때
-                        dayGap = CGFloat(plans[0].startDate - 1 + weekDates.first!.weekday - 1)
+                        dayGap = CGFloat(plans[0].startDay - 1 + weekDates.first!.weekday - 1)
                     } else {
-                        dayGap = CGFloat(plans[0].startDate - dayNumsInWeek.first!)
+                        dayGap = CGFloat(plans[0].startDay - dayNumsInWeek.first!)
                     }
                     let width = mainDaySectionWidth * dayGap + endPadding
                     return AnyView(Spacer().frame(width: width))
@@ -200,28 +241,28 @@ struct MonthlyPlanningView: View {
                     return AnyView(EmptyView())
                 } else if isBarFromEnd.right {  // 오른쪽으로 붙여야 하면
                     // 2개 이상일 때 오른쪽으로 붙여야 한다는 것은 index = 1이상
-                    let prevEndDate = plans[index-1].endDate
-                    let dayGap = CGFloat(plans[index].startDate - prevEndDate - 1)
+                    let prevEndDate = plans[index-1].endDay
+                    let dayGap = CGFloat(plans[index].startDay - prevEndDate - 1)
                     let width = mainDaySectionWidth * dayGap + barHorizontalPadding * 2
                     return AnyView(Spacer().frame(width: width))
                 } else {    // 어느 쪽으로도 붙이지 않을 때
                     var width: CGFloat
                     if dayNumsInWeek.first! == 1 {  // 주의 시작일이 1일일 때
                         if index == 0 { // 첫 블록이라면
-                            let dayGap = CGFloat(plans[0].startDate - 1 + weekDates.first!.weekday - 1)
+                            let dayGap = CGFloat(plans[0].startDay - 1 + weekDates.first!.weekday - 1)
                             width = mainDaySectionWidth * dayGap + endPadding
                         } else {    // 첫 블록이 아니라면 (왼쪽 패딩이므로, 마지막 블록인 지는 관심 없음.)
-                            let prevEndDate = plans[index-1].endDate
-                            let dayGap = CGFloat(plans[index].startDate - prevEndDate - 1)
+                            let prevEndDate = plans[index-1].endDay
+                            let dayGap = CGFloat(plans[index].startDay - prevEndDate - 1)
                             width = mainDaySectionWidth * dayGap + barHorizontalPadding * 2
                         }
                     } else {    // 첫 주가 아닐 때
                         if index == 0 { // 첫 블록이라면
-                            let dayGap = CGFloat(plans[0].startDate - dayNumsInWeek.first!)
+                            let dayGap = CGFloat(plans[0].startDay - dayNumsInWeek.first!)
                             width = mainDaySectionWidth * dayGap + endPadding
                         } else {    // 첫 블록이 아니라면 (왼쪽 패딩이므로, 마지막 블록인 지는 관심 없음.)
-                            let prevEndDate = plans[index-1].endDate
-                            let dayGap = CGFloat(plans[index].startDate - prevEndDate - 1)
+                            let prevEndDate = plans[index-1].endDay
+                            let dayGap = CGFloat(plans[index].startDay - prevEndDate - 1)
                             width = mainDaySectionWidth * dayGap + barHorizontalPadding * 2
                         }
                     }
@@ -229,7 +270,7 @@ struct MonthlyPlanningView: View {
                 }
             }
         }
-        func barRightPadding(plans: [planData], index: Int, isBarFromEnd: (left: Bool, right: Bool)) -> some View {
+        func barRightPadding(plans: [PlanData], index: Int, isBarFromEnd: (left: Bool, right: Bool)) -> some View {
             switch plans.count {
             case 0:
                 return AnyView(EmptyView())
@@ -259,11 +300,11 @@ struct MonthlyPlanningView: View {
         }
         
         // MARK: 바가 왼쪽에서 이어지는 지, 오른쪽에서 이어지는 지 계산
-        func calculateIsBarFromEnd(plan: planData) -> (Bool, Bool) {
+        func calculateIsBarFromEnd(plan: PlanData) -> (Bool, Bool) {
             var result: (left: Bool, right: Bool) = (false, false)
-            if dayNumsInWeek.first! > plan.startDate {
+            if dayNumsInWeek.first! > plan.startDay {
                 result.left = true
-            } else if dayNumsInWeek.last! < plan.endDate {
+            } else if dayNumsInWeek.last! < plan.endDay {
                 result.right = true
             }
             
@@ -299,11 +340,17 @@ struct MonthlyPlanningView: View {
     }
     
     private func calendarDayNumberRow(weekOfMonth: Int) -> some View {
-        let mainDaySectionWidth = screenWidth * (50/390)
-        let dayNumberRowFrameHeight = screenWidth * (60/390)
-        let dayNumberGap = screenWidth * (6/390)
-        let rowHorizontalPadding = screenWidth * (4/390)
-        let thisWeekDates: [Date] = Date.weekDates(weekOfMonth)
+        let mainDaySectionWidth = 50.responsibleWidth
+        let dayNumberRowFrameHeight = 60.responsibleWidth
+        let dayNumberGap = 6.responsibleWidth
+        let rowHorizontalPadding = 4.responsibleWidth
+        
+        let todayCircleDiameter = 8.responsibleWidth
+        let solidDayNumberFrameHeight = 13.responsibleWidth
+        let todayBackgroundHeight = 45.responsibleWidth
+        let todayBackgroundWidth = 32.responsibleWidth
+        
+        let thisWeekDates: [Date] = selectedMonthDate.weekDates(weekOfMonth)
         
         func rowLeftEndSpacer() -> some View {
             if weekOfMonth == nowMonthWeekNums.first! {
@@ -320,22 +367,72 @@ struct MonthlyPlanningView: View {
             }
         }
         
+        #warning("이상 있는 날짜 분기처리")
+
         return VStack(spacing: 0) {
             HStack(alignment: .center, spacing: 0) {
                 rowLeftEndSpacer()
                 ForEach(thisWeekDates, id: \.self) { date in
-                    VStack(spacing: 0) {
-                        Text("\(date.day)")
-                            .font(.system(size: 11))
-                            .padding(.bottom, dayNumberGap)
-                        Text("\(date.day)")
-                            .font(.system(size: 17))
+                    let isToday = (date.day == Date().day && date.month == Date().month && date.year == Date().year)
+                    
+                    NavigationLink {
+                        let mealPlans = mealPlansOB.getMealPlans(in: date)
+                        if mealPlans.count != .zero {
+                            DailyPlanListView(date: date, mealPlans: mealPlans)
+                        } else {
+                            MealDetailView(startDate: date, cycleGap: user.planCycleGap)
+                        }
+                    } label: {
+                        VStack(spacing: 0) {
+                            if isToday {
+                                Circle()
+                                    .scaledToFit()
+                                    .frame(width: todayCircleDiameter)
+                                    .foregroundStyle(Color.defaultText_wh)
+                                    .frame(height: solidDayNumberFrameHeight)
+                                    .padding(.bottom, dayNumberGap)
+                            } else {
+                                Text("\(Date.componentsBetweenDates(from: user.solidStartDate, to: date).day!)")
+                                    .weekDisplayFont1()
+                                    .foregroundStyle(Color.tertinaryText)
+                                    .frame(height: solidDayNumberFrameHeight)
+                                    .padding(.bottom, dayNumberGap)
+                            }
+                            Text("\(date.day)")
+                                .dayDisplayFont2()
+                                .foregroundStyle(isToday ? Color.defaultText_wh : Color.tertinaryText)
+                        }
                     }.frame(width: mainDaySectionWidth)
+                        .if(isToday) { view in
+                            view.background {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color.accentColor2)
+                                    .frame(width: todayBackgroundWidth, height: todayBackgroundHeight)
+                            }
+                        }
                 }
                 rowRightEndSpacer()
             }.frame(height: dayNumberRowFrameHeight)
             calendarDivider
         }
+    }
+    
+    private var monthlyHeader: some View {
+        LeftRightButtonHeader(
+            leftButton: Button {
+                isMyPageOpenning = true
+            } label: {
+                Image(.userInfo)
+            }
+            .navigationDestination(isPresented: $isMyPageOpenning) {
+                MypageRootView()
+            },
+            rightButton: Button {
+                showWeekly = true
+            } label: {
+                Image(.calendarInPlanList)
+            }
+        )
     }
     
     private var calendarWeekDayRow: some View {
@@ -349,20 +446,20 @@ struct MonthlyPlanningView: View {
                 ForEach(weekDayKorList.indices, id: \.self) { i in
                     if i == 0 {
                         Text(weekDayKorList[i])
-                            .font(.system(size: 10))
-                            .bold()
+                            .weekDisplayFont2()
+                            .foregroundStyle(Color.tertinaryText)
                             .frame(width: mainDaySectionWidth)
                             .padding(.leading, mainHorizontalPadding)
                     } else if i == 6 {
                         Text(weekDayKorList[i])
-                            .font(.system(size: 10))
-                            .bold()
+                            .weekDisplayFont2()
+                            .foregroundStyle(Color.tertinaryText)
                             .frame(width: mainDaySectionWidth)
                             .padding(.trailing, mainHorizontalPadding)
                     } else {
                         Text(weekDayKorList[i])
-                            .font(.system(size: 10))
-                            .bold()
+                            .weekDisplayFont2()
+                            .foregroundStyle(Color.tertinaryText)
                             .frame(width: mainDaySectionWidth)
                     }
                 }
@@ -372,13 +469,39 @@ struct MonthlyPlanningView: View {
     }
     
     private var calendarDivider: some View {
-        Rectangle().frame(height: 1).foregroundColor(.black)
+        Rectangle().frame(height: 1).foregroundColor(.listStrokeColor)
     }
     
     private var calendarCurrentYearMonth: some View {
-        HStack {
-            Text("2023년 10월").font(.title).bold()
+        var solidAndBirthDateText: String {
+            if user.displayDateType == .birth {
+                return "생후 \(Date.componentsBetweenDates(from: user.babyBirthDate, to: Date()).day!)일차"
+            } else {
+                return "이유식 진행 \(Date.componentsBetweenDates(from: user.solidStartDate, to: Date()).day!)일차"
+            }
+        }
+        
+        return HStack(spacing: 0) {
+            Button {
+                showChangeMonthModal = true
+            } label: {
+                Text("\(selectedMonthDate.year.description)년 \(selectedMonthDate.month)월")
+                    .headerFont2()
+                    .foregroundStyle(Color.defaultText)
+                    .padding(.trailing, 2)
+                Image(systemName: "chevron.down")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20)
+                    .foregroundStyle(Color.defaultText)
+            }
+            
             Spacer()
+            
+            Text(solidAndBirthDateText)
+                .bodyFont3()
+                .foregroundStyle(Color.primeText)
+                .symmetricBackground(HPad: 12, VPad: 7.5, color: Color.buttonBgColor, radius: 8)
         }
     }
 }
@@ -389,23 +512,42 @@ extension MonthlyPlanningView {
         case second = 2
     }
     
-    private func reducePlanData(plans: [planData]) -> [(planData, BarPosition)] {
+    private func adjustPlanDataDays(plans: inout [PlanData]) {
+        let nowMonthFirstDate = selectedMonthDate.monthDates().first!
+//        let nextMonthFirstDate = Date.date(year: nowMonthFirstDate.year, month: nowMonthFirstDate.month + 1, day: 1)
+        let nextMonthFirstDate = selectedMonthDate.monthDates().last!.add(.day, value: 1)
+        
+        for i in plans.indices {
+            var plan = plans[i]
+            
+            if plan.mealPlan.endDate.timeIntervalSince1970 >= nextMonthFirstDate.timeIntervalSince1970 {
+                plan.endDay += Date.nowMonthDates().count
+            }
+            if plan.mealPlan.startDate.timeIntervalSince1970 <= nowMonthFirstDate.timeIntervalSince1970 {
+                plan.startDay -= nowMonthFirstDate.add(.day, value: -1).monthDates().count
+            }
+            
+            plans[i] = plan
+        }
+    }
+    
+    private func reducePlanData(plans: [PlanData]) -> [(PlanData, BarPosition)] {
         let nowMonthDates = Date.nowMonthDates()
         let lastDateNum = nowMonthDates.last!.day
         // key는 -7 ~ 마지막일+7 까지의 Int형 정수, value는 (first: Bool, second: Bool)인 tuple로 이루어진 dictionary
         // ex: { 1: (true, false), 2: (true, false)... }  (true가 가용한(비어있는) 상태)
-        var dict = Dictionary(uniqueKeysWithValues: (-7...lastDateNum+7).map { ($0, (first: true, second: true)) })
+        var dict = Dictionary(uniqueKeysWithValues: (-32...lastDateNum+32).map { ($0, (first: true, second: true)) })
         
-        var result: [(planData, BarPosition)] = []
+        var result: [(PlanData, BarPosition)] = []
         
         // 시작일 순 정렬
-        let sortedPlans = plans.sorted{ $0.startDate < $1.startDate }
+        let sortedPlans = plans.sorted{ $0.startDay < $1.startDay }
         
         for plan in sortedPlans {
             var isPlanAcceptedOnFirstLine = true
             var isPlanAcceptedOnSecondLine = true
             
-            for i in Range<Int>(plan.startDate...plan.endDate) {
+            for i in Range<Int>(plan.startDay...plan.endDay) {
                 // plan의 모든 날짜를 순회하며 첫줄이나 둘째줄에 들어갈 수 있는 지 검사.
                 if !dict[i]!.first {
                     isPlanAcceptedOnFirstLine = false
@@ -417,44 +559,40 @@ extension MonthlyPlanningView {
             
             if isPlanAcceptedOnFirstLine {
                 // 첫 줄에 수용 가능하면, dictionary 상태를 false (수용불가능)으로 바꾸고, append
-                for i in Range<Int>(plan.startDate...plan.endDate) {
+                for i in Range<Int>(plan.startDay...plan.endDay) {
                     dict[i]!.first = false
                 }
                 result.append((plan, .first))
             } else if isPlanAcceptedOnSecondLine {
                 // 첫 줄에 가능한 지 우선 체크 후 둘째 줄을 체크
-                for i in Range<Int>(plan.startDate...plan.endDate) {
+                for i in Range<Int>(plan.startDay...plan.endDay) {
                     dict[i]!.second = false
                 }
                 result.append((plan, .second))
             }
-//            print(plan.startDate, plan.endDate)
-//            for i in Range<Int>(-1...4) {
-//                print("\(i)일차 - ", dict[i]!)
-//            }
         }
         
-        return result.sorted { $0.0.startDate < $1.0.startDate }    // startDate 순 정렬
+        return result.sorted { $0.0.startDay < $1.0.startDay }    // startDate 순 정렬
     }
     
     private func reducePlanDataInWeek(weekOfMonth: Int,
-                                      reducedPlans: [(first: planData, second: BarPosition)])
-    -> [(planData, BarPosition)] {
-        let dayNumsInWeek: [Int] = Date.weekDates(weekOfMonth).map{ $0.day }
-        var result: [(planData, BarPosition)] = []
+                                      reducedPlans: [(first: PlanData, second: BarPosition)])
+    -> [(PlanData, BarPosition)] {
+        let dayNumsInWeek: [Int] = selectedMonthDate.weekDates(weekOfMonth).map{ $0.day }
+        var result: [(PlanData, BarPosition)] = []
         
-        for plan in reducedPlans.sorted(by: { $0.0.startDate < $1.0.startDate }) {
-            if dayNumsInWeek.contains(plan.first.startDate) ||
-                dayNumsInWeek.contains(plan.first.endDate) {
+        for plan in reducedPlans.sorted(by: { $0.0.startDay < $1.0.startDay }) {
+            if dayNumsInWeek.contains(plan.first.startDay) ||
+                dayNumsInWeek.contains(plan.first.endDay) {
                 result.append(plan)
             }
         }
-        return result.sorted { $0.0.startDate < $1.0.startDate }    // startDate 순 정렬
+        return result.sorted { $0.0.startDay < $1.0.startDay }    // startDate 순 정렬
     }
 }
 
-struct MonthlyPlanningView_Previews: PreviewProvider {
-    static var previews: some View {
-        MonthlyPlanningView()
-    }
-}
+//struct MonthlyPlanningView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MonthlyPlanningView()
+//    }
+//}

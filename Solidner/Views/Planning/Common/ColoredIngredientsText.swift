@@ -27,6 +27,8 @@ struct ColoredIngredientsText: View {
     var body: some View {
         (newIngredientsText + bridgeText + oldIngredientsText)
             .customFont(textType)
+//            .lineLimit(1)
+            .multilineTextAlignment(.leading)
     }
 
     private var newIngredientsText: Text {
@@ -34,7 +36,7 @@ struct ColoredIngredientsText: View {
     }
 
     private var bridgeText: Text {
-        if(newIngredients.count == 0) {
+        if(newIngredients.count == 0 || oldIngredients.count == 0) {
             return K.emptyText
         } else {
             return K.commaText.foreground(color: normalColor)
@@ -49,8 +51,7 @@ struct ColoredIngredientsText: View {
         let lastIndex = ingredients.endIndex - 1
         return ingredients.enumerated().reduce(K.emptyText) { partialResult, enumeration in
             let (index, ingredient) = (enumeration.offset, enumeration.element)
-            let ingredientsText = Text(ingredient.description).foreground(color: accentColor)
-            print(index, lastIndex)
+            let ingredientsText = Text(ingredient.name).foreground(color: accentColor)
             let additionalText = ((index == lastIndex) ? K.emptyText : K.commaText).foreground(color: normalColor)
             return partialResult + ingredientsText + additionalText
         }
@@ -72,6 +73,20 @@ extension ColoredIngredientsText {
         self.normalColor = normalColor
         self._textType = State(initialValue: type == .cell ? .header5 : .body3)
     }
+    
+    init(
+        newIngredients: [Ingredient],
+        oldIngredients: [Ingredient],
+        accentColor: Color = .accentColor1,
+        normalColor: Color = .defaultText,
+        type: ColoredIngredientsTextType = .cell
+    ) {
+        self.newIngredients = newIngredients
+        self.oldIngredients = oldIngredients
+        self.accentColor = accentColor
+        self.normalColor = normalColor
+        self._textType = State(initialValue: type == .cell ? .header5 : .body3)
+    }
 }
 
 extension ColoredIngredientsText {
@@ -82,13 +97,13 @@ extension ColoredIngredientsText {
     }
 }
 
-struct ColoredIngredientsText_PreviewProvider: PreviewProvider {
-    static var previews: some View {
-        Group {
-            ColoredIngredientsText(mealPlan: .mockMealsOne[0])
-            ColoredIngredientsText(mealPlan: .mockMealsOne[1])
-            ColoredIngredientsText(mealPlan: .mockMealsOne[2])
-                .customFont(.body3)
-        }
-    }
-}
+//struct ColoredIngredientsText_PreviewProvider: PreviewProvider {
+//    static var previews: some View {
+//        Group {
+//            ColoredIngredientsText(mealPlan: .mockMealsOne[0])
+//            ColoredIngredientsText(mealPlan: .mockMealsOne[1])
+//            ColoredIngredientsText(mealPlan: .mockMealsOne[2])
+//                .customFont(.body3)
+//        }
+//    }
+//}

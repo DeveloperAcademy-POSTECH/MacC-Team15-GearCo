@@ -19,18 +19,22 @@ struct AddTestIngredientsView: View {
     private let typeButtonBetweenSpace: CGFloat = 10
     private let selectedTypeBottomSpace: CGFloat = 25
     private let divisionDividerVerticalPadding: CGFloat = 10
-    private let saveButtonBottomSpace: CGFloat = 40
+    private let saveButtonBottomSpace: CGFloat = 16
     private let saveButtonTopSpace: CGFloat = 100
     private let reportButtonTopSpace: CGFloat = 20
     
+    @State private var showReportSheet = false
     
-    @EnvironmentObject var mealOB: MealOB
+    @EnvironmentObject private var user: UserOB
+    @EnvironmentObject private var mealOB: MealOB
+    @EnvironmentObject private var mealPlansOB: MealPlansOB
     
     // init property
     let viewType: MealOB.IngredientTestType
     @Environment(\.dismiss) private var dismiss
     // 선택된 테스트 재료
     @State private var selectedIngredients: [Int] = []
+    @State private var ingredientUseCount: [Int: Int] = [:]
     
     init(_ addIngredientViewType: MealOB.IngredientTestType) {
         self.viewType = addIngredientViewType
@@ -40,7 +44,7 @@ struct AddTestIngredientsView: View {
     // MARK: body
     var body: some View {
         VStack(spacing: 0) {
-            BackButtonAndTitleHeader(title: Texts.testViewTitle)
+            BackButtonAndTitleHeader(title: Texts.testViewTitle(viewType: viewType))
             
             // MARK: 검색, 재료 타입 버튼
             searchAndIngredientTypeButtonsRow
@@ -57,35 +61,62 @@ struct AddTestIngredientsView: View {
                 } else {
                     IngredientsBigDivision(case: .자주사용한재료,
                                            ingredients: $selectedIngredients,
-                                           viewType: viewType)
+                                           viewType: viewType,
+                                           ingredientUseCount: $ingredientUseCount)
                 }
                 
                 ThickDivider().padding(.vertical, divisionDividerVerticalPadding)
                 
                 IngredientsBigDivision(case: .먹을수있는재료,
                                        ingredients: $selectedIngredients,
-                                       viewType: viewType)
+                                       viewType: viewType,
+                                       ingredientUseCount: $ingredientUseCount)
                 Spacer().frame(height: divisionDividerVerticalPadding)
                 IngredientsBigDivision(case: .권장하지않는재료,
                                        ingredients: $selectedIngredients,
-                                       viewType: viewType)
+                                       viewType: viewType,
+                                       ingredientUseCount: $ingredientUseCount)
                 
                 Spacer().frame(height: reportButtonTopSpace)
                 reportButton
                 
                 Spacer().frame(height: saveButtonTopSpace)
+            }
+            Group {
+                Spacer().frame(height: saveButtonBottomSpace)
+//                if isIngredientBad { toastMessage }
                 ButtonComponents(.big, title: "저장") {
                     saveSelectedTestIngredient()
-                }.padding(.horizontal, viewHorizontalPadding)
-                Spacer().frame(height: saveButtonBottomSpace)
-            }
+                }
+            }.padding(.horizontal, viewHorizontalPadding)
+            
         }.background(Color.mainBackgroundColor).toolbar(.hidden)
-            .onAppear { initSelectedIngredient() }
+            .onAppear {
+                initSelectedIngredient()
+                countingIngredientUse()
+            }
     }
 }
 
 // MARK: View Components
 extension AddTestIngredientsView {
+//    private var toastMessage: some View {
+//        HStack(spacing: 4.27) {
+//            Image(assetName: .check)
+//            Text("방금 고른 재료는 지금 재료와 궁합이 좋지 않아요!")
+//                .customFont(.toast, color: .tertinaryText)
+//            Spacer()
+//        }
+//        .padding(.leading, 12.25)
+//        .frame(height: 48)
+//        .withRoundedBackground(
+//            cornerRadius: 12,
+//            fill: Color.defaultText_wh,
+//            strokeBorder: Color.listStrokeColor,
+//            lineWidth: 1
+//        )
+//    }
+    
     private var searchAndIngredientTypeButtonsRow: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: typeButtonBetweenSpace) {
@@ -117,12 +148,14 @@ extension AddTestIngredientsView {
     
     private var reportButton: some View {
         Button {
-            // TODO: 재료 신고 기능
+            showReportSheet = true
         } label: {
             Text(Texts.isIngredientNotExist)
                 .clickableTextFont2()
                 .underline()
                 .foregroundColor(.primary.opacity(0.3))
+        }.sheet(isPresented: $showReportSheet) {
+            ReportIngredientModalView()
         }
     }
     
@@ -216,6 +249,18 @@ extension AddTestIngredientsView {
             }
         }
     }
+    
+    // 재료 사용 횟수 카운팅
+    private func countingIngredientUse() {
+        for plan in mealPlansOB.mealPlans {
+            for ingredient in plan.newIngredients {
+                ingredientUseCount[ingredient.id, default: 0] += 1
+            }
+            for ingredient in plan.oldIngredients {
+                ingredientUseCount[ingredient.id, default: 0] += 1
+            }
+        }
+    }
 }
 
 extension AddTestIngredientsView {
@@ -230,4 +275,3 @@ extension AddTestIngredientsView {
         case 기타 = "기타"
     }
 }
-

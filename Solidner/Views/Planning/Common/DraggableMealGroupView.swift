@@ -109,9 +109,10 @@ extension DraggableMealGroupView {
 
     private func mealView(of mealPlan: MealPlan) -> some View {
         NavigationLink(value: mealPlan) {
-            HStack {
+            HStack(spacing: 11.8) {
                 mealIcon(of: mealPlan)
                 ColoredIngredientsText(mealPlan: mealPlan, type: .cell)
+                    .frame(width: 230.responsibleWidth, alignment: .leading)
                 Spacer()
                 rightIcon
             }
@@ -138,7 +139,7 @@ extension DraggableMealGroupView {
 
 extension DraggableMealGroupView {
     private func mealIcon(of mealPlan: MealPlan) -> some View {
-        Image(systemName: mealPlan.mealType.icon)
+        Image(mealPlan.mealType.icon)
             .font(.body)
             .foregroundStyle(K.mealIconColor)
     }

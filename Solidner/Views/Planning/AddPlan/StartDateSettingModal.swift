@@ -87,8 +87,8 @@ extension StartDateSettingModal {
 
     }
 }
-struct StartDateSettingModal_Previews: PreviewProvider {
-    static var previews: some View {
-        StartDateSettingModal(mealOB: MealOB(mealPlan: MealPlan.mockMealsOne.first!, cycleGap: .four))
-    }
-}
+//struct StartDateSettingModal_Previews: PreviewProvider {
+//    static var previews: some View {
+//        StartDateSettingModal(mealOB: MealOB(mealPlan: MealPlan.mockMealsOne.first!, cycleGap: .four))
+//    }
+//}

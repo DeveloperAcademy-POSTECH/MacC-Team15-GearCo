@@ -5,7 +5,7 @@
 //  Created by sei on 11/26/23.
 //
 
-import Foundation
+import SwiftUI
 
 enum MealPlanFilter {
     case all
@@ -16,7 +16,12 @@ enum MealPlanFilter {
 }
 
 final class MealPlansOB: ObservableObject {
-    // TODO: - init할 때 모든 플랜을 서버에서 갖고 와요.
+    
+    private let firebaseManager = FirebaseManager.shared
+//    private var email: String = "jwlee010222@gmail.com"
+    @AppStorage("email") private var email: String = "jwlee010222@gmail.com"
+    
+    @Published var isLoaded: Bool = false
     @Published private(set) var mealPlans: [MealPlan] = [] {
         didSet {
             applyFilter()
@@ -24,9 +29,8 @@ final class MealPlansOB: ObservableObject {
     }
     @Published private(set) var filteredMealPlans: [MealPlan] = []
     
-    init(mealPlans: [MealPlan] = MealPlan.mockMealsOne, 
-         currentFilter: MealPlanFilter = .month(date:Date())) {
-        #warning("meal plan 파베에서 받아오는 함수 구현해야 함")
+    init(currentFilter: MealPlanFilter = .month(date:Date())) {
+        // View 측에서 task로 loadAllPlans() 호출 바람
         let sortedMealPlan = mealPlans.sorted { $0.startDate < $1.startDate }
         self.mealPlans = sortedMealPlan
         self.filteredMealPlans = sortedMealPlan
@@ -54,10 +58,19 @@ final class MealPlansOB: ObservableObject {
         set { updateMealPlan(in: newValue) }
     }
     
-    func updateMealPlan(in group: MealPlanGroup?) {
-        if let group { updatePlans(using: group.mealPlans) }
+
+    /// 앱 실행 시 (MealPlansOB Init 시) DB에서 모든 Plan 정보를 fetch.
+    /// MealPlansOB 객체 초기화 이후 필수적으로 task로 호출해야 함.
+    /// - Parameter user: UserOB의 객체.
+    func loadAllPlans() async {
+        let plans = await firebaseManager.loadAllPlans(email: email)
+        await MainActor.run {
+            self.mealPlans = plans
+            self.isLoaded = true
+        }
     }
     
+    //MARK: - update
     /// updatedItem을 순회하며 id를 기준으로 mealPlans를 업데이트 하는 함수
     /// - Parameter updatedItems: update 된 mealPlan들
     func updatePlans(using updatedItems: [MealPlan]) {
@@ -73,12 +86,34 @@ final class MealPlansOB: ObservableObject {
         mealPlans = tempMealPlans
     }
     
+    func updateMealPlan(in group: MealPlanGroup?) {
+        if let group { updatePlans(using: group.mealPlans) }
+    }
+    
+    func update(plan: MealPlan) {
+        var tempMealPlans: [MealPlan] = mealPlans
+        if let index = mealPlans.index(matching: plan) {
+            tempMealPlans.replaceSubrange(index...index, with: [plan])
+        }
+        mealPlans = tempMealPlans
+    }
+    
+    func add(plan: MealPlan) {
+        mealPlans = mealPlans + [plan]
+    }
+    
     /// date가 포함된 날짜의 모든 meal plan을 반환하는 함수
     /// - Parameter date: 원하는 날짜
     /// - Returns: date가 포함된 meal plan의 list
     func getMealPlans(in date: Date) -> [MealPlan] {
         mealPlans.filter {
             date.isInBetween(from: $0.startDate, to: $0.endDate)
+        }
+    }
+    
+    func getMealPlans(from startDate: Date, to endDate: Date) -> [MealPlan] {
+        mealPlans.filter {
+            $0.startDate == startDate && $0.endDate == endDate
         }
     }
     
@@ -105,12 +140,46 @@ final class MealPlansOB: ObservableObject {
         }
     }
     
-    
-    #warning("플랜 전체 삭제 구현")
+    //MARK: - delete
+    #warning("플랜 전체 삭제 구현 - firebase에서도 구현 필요")
     func deleteAllPlans() {
         print(#function)
+        mealPlans = []
+    }
+    
+    func delete(plan: MealPlan) {
+        mealPlans.remove(plan)
     }
 
-    #warning("특정 달에 문제 있는 plan 날짜를 반환하는 함수")
+    func getWrongPlanDates(date: Date) -> [DateAndPlanStatus] {
+        let currentMonthMealPlans = getCurrentMonthMealPlans(of: date)
+        return date.monthDates().map {
+            DateAndPlanStatus(date: $0, isPlanWrong: isWrongPlan(at: $0, in: currentMonthMealPlans))
+        }
+    }
+    
+    private func getCurrentMonthMealPlans(of date: Date) -> [MealPlan] {
+        let monthDates = date.monthDates()
+        if let theFirstDay = monthDates.first, let theLastDay = monthDates.last {
+             
+            return mealPlans.filter {
+                theFirstDay.isInBetween(from: $0.startDate, to: $0.endDate) ||
+                $0.startDate >= theFirstDay && $0.endDate <= theLastDay ||
+                theLastDay.isInBetween(from: $0.startDate, to: $0.endDate) }
+        }
+        return []
+    }
+    
+    private func isWrongPlan(at date: Date, in plans: [MealPlan]) -> Bool {
+        let relatedPlans = plans.filter { date.isInBetween(from: $0.startDate, to: $0.endDate) }
         
+        return WrongPlanChecker.isWrongPlan(relatedPlans)
+    }
+}
+
+struct DateAndPlanStatus: Identifiable {
+    let date: Date
+    let isPlanWrong: Bool
+    
+    var id: Date { date }
 }

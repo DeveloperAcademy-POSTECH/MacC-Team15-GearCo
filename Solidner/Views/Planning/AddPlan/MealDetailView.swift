@@ -17,36 +17,35 @@ struct MealDetailView: View {
     @State var showAddNewIngredientView: Bool = false
     @State var showAddOldIngredientView: Bool = false
     
+    @Environment(\.dismiss) private var dismiss
+    
     private let texts = TextLiterals.MealDetail.self
 
     let isEditMode: Bool
     
     // meal cell을 눌러서 들어온 경우 - 끼니 편집
-    init(mealPlan: MealPlan, cycleGap: CycleGaps) {
-        self._mealOB = StateObject(wrappedValue: MealOB(mealPlan: mealPlan, cycleGap: cycleGap))
+    init(mealPlan: MealPlan, cycleGap: CycleGaps, mealPlansOB: MealPlansOB) {
+        self._mealOB = StateObject(wrappedValue: MealOB(mealPlan: mealPlan, cycleGap: cycleGap, mealPlansOB: mealPlansOB))
         self.isEditMode = true
     }
     
     // from Daily Plan List View - 끼니 추가
-    init(startDate: Date, cycleGap: CycleGaps) {
-        self._mealOB = StateObject(wrappedValue: MealOB(startDate: startDate, cycleGap: cycleGap))
+    init(startDate: Date, cycleGap: CycleGaps, mealPlansOB: MealPlansOB) {
+        self._mealOB = StateObject(wrappedValue: MealOB(startDate: startDate, cycleGap: cycleGap, mealPlansOB: mealPlansOB))
         self.isEditMode = false
     }
     
     // from Plan Group Detail View - 끼니 추가
-    init(startDate: Date, endDate: Date) {
+    init(startDate: Date, endDate: Date, mealPlansOB: MealPlansOB) {
         let cycleGap = CycleGaps(rawValue:Date.componentsBetweenDates(from: startDate, to: endDate).day! + 1) ?? .three
-        self._mealOB = StateObject(wrappedValue: MealOB(startDate: startDate, cycleGap: cycleGap))
+        self._mealOB = StateObject(wrappedValue: MealOB(startDate: startDate, cycleGap: cycleGap, mealPlansOB: mealPlansOB))
         self.isEditMode = false
     }
     
     var body: some View {
-        #warning("임시 NavigationStack. 추후 뷰 연결 시 NavigationStack을 삭제할 것.")
-        NavigationStack {
-            RootVStack {
-                viewHeader
-                viewBody
-            }
+        RootVStack {
+            viewHeader
+            viewBody
         }
     }
     
@@ -137,17 +136,20 @@ extension MealDetailView {
         }
     }
 
-    #warning("ingredientChip 편집 모드일 때 오른쪽 chip을 제대로 바꿔야..")
     @ViewBuilder
     private var titleAndIngredientsChip: some View {
         let title: some View = {
             Text(texts.viewInEditTitleText)
                 .customFont(.header2, color: .defaultText)
         }()
-        if let mealPlan = mealOB.mealPlan {
+        if mealOB.mealPlan != nil {
             VStack(alignment: .leading, spacing: K.IngredientTitleAndChip.vStackSpacing){
                 title
-                ColoredIngredientsText(mealPlan: mealPlan, type: .chip)
+                ColoredIngredientsText(
+                    newIngredients: mealOB.newIngredients,
+                    oldIngredients: mealOB.oldIngredients,
+                    type: .chip
+                )
                     .padding(K.IngredientTitleAndChip.padding)
                     .withRoundedBackground(cornerRadius: K.IngredientTitleAndChip.backgroundCornerRadius, color: .defaultText_wh)
             }
@@ -166,32 +168,49 @@ extension MealDetailView {
             EmptyView()
         }
     }
-
+    
+    #warning("ingredientChip 편집 모드일 때 오른쪽 chip을 제대로 바꿔야..")
+    // TODO: - 추후 이상 반응이 추가된다면, .new 말고 이상반응 뱃지 달아야함
     private var addedTestingIngredients: some View {
-        addedIngredientsView(of: mealOB.newIngredients)
-        //        VStack(spacing: 10) {
-        //            ForEach(mealOB.tempMealPlan.newIngredients) { ingredient in
-        //                AddedIngredientView(
-        //                    type: isEditMode ? .new : .deletable,
-        //                    ingredient: ingredient
-        //                )
-        //            }
-        //        }
+        addedIngredientsView(
+            of: mealOB.newIngredients,
+            type: .new
+        )
     }
 
     private var addedTestedIngredients: some View {
-        addedIngredientsView(of: mealOB.oldIngredients)
+        addedIngredientsView(
+            of: mealOB.oldIngredients,
+            type: .old
+        )
     }
-
+    
     // TODO: - type 어떻게 바꿀지 고민...
-    #warning("chip 제대로 바꾸기..")
-    private func addedIngredientsView(of ingredients: [Ingredient]) -> some View {
+    #warning("mismatch일 때에도 chip:)")
+    private func addedIngredientsView(of ingredients: [Ingredient], type: MealOB.IngredientTestType) -> some View {
         VStackInIngredients {
             ForEach(ingredients) { ingredient in
+                let viewType: AddedIngredientView.AddedIngredientViewType = {
+                    if !isEditMode { // Edit 모드가 아닐 때 - 삭제
+                        return .deletable
+                    } else if type == .new { // Edit 모드인데 새로운 재료일 때
+                        return .new
+                    } else if let babyMonth = user.dateAfterBirth.month, babyMonth < ingredient.ableMonth { // able month > 현재 생후 달
+                        return .age
+//                    } else if mismatches.contains(ingredient) //
+//
+                    } else {
+                        return .none
+                    }
+                }()
+                
                 AddedIngredientView(
-                    type: .deletable,
+                    type: viewType,
                     ingredient: ingredient
-                )
+                ) {
+                    // delete action
+                    mealOB.delete(ingredient: ingredient, in: type)
+                }
             }
         }
     }
@@ -322,6 +341,7 @@ extension MealDetailView {
             .alert("일정 삭제", isPresented: $isDeleteButtonTapped) {
                 Button("삭제", role: .destructive) {
                     mealOB.deleteMealPlan(user: user)
+                    dismiss()
                 }
             } message: {
                 Text("해당 끼니 일정을 삭제할까요?")
@@ -362,7 +382,10 @@ extension MealDetailView {
                 isSaveButtonTapped = true
                 mealOB.changeMealPlan(user: user)
             }
-            else { mealOB.addMealPlan(user: user) }
+            else {
+                mealOB.addMealPlan(user: user)
+                dismiss()
+            }
         }
     }
 }
@@ -470,8 +493,8 @@ extension MealDetailView.TitleAndActionButtonView {
     }
 }
 
-struct MealDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        MealDetailView(mealPlan: MealPlan.mockMealsOne.first!, cycleGap: .two)
-    }
-}
+//struct MealDetailView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MealDetailView(mealPlan: MealPlan.mockMealsOne.first!, cycleGap: .two)
+//    }
+//}

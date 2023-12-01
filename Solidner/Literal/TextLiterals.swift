@@ -193,7 +193,10 @@ enum TextLiterals {
     }
     
     enum AddIngredientsView {
-        static var testViewTitle: String { "테스트 재료 추가" }
+        static func testViewTitle(viewType: MealOB.IngredientTestType) -> String {
+            if viewType == .new { "테스트 재료 추가" }
+            else { "먹어본 재료 추가" }
+        }
         static var 먹을수있는재료Explain: String { "아이가 섭취할 수 있는 재료의\n전체 목록이에요" }
         static var 권장하지않는재료Explain: String { "월령과 이유식 단계에\n권장하지 않는 식재료예요"}
         static var isIngredientNotExist: String { "찾는 재료가 없으신가요?" }

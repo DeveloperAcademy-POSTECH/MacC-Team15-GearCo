@@ -10,25 +10,28 @@
 import SwiftUI
 
 struct DailyPlanListView: View {
+    @EnvironmentObject private var mealPlansOB: MealPlansOB
     @EnvironmentObject private var user: UserOB
     @State private var isMealAdding: Bool = false
     private let texts = TextLiterals.DailyPlanList.self
 
     let date: Date
-    let mealPlans: [MealPlan]
+    @State private var mealPlans: [MealPlan]
     var mealPlanGroups: [MealPlanGroup] {
-        MealPlanGroup.build(with: mealPlans).sorted { $0.solidDate.startDate < $1.solidDate.startDate }
+        MealPlanGroup.build(with: mealPlans)
     }
-    // TODO: - 나중에 어떻게 선언해야할지 고민 State? Binding? 계획이 바뀌었을 때, 바뀐 계획에 따라서 값이 바뀌어야함.
+    
+    // TODO: - 계획이 바뀌었을 때, 바뀐 계획에 따라서 값이 바뀌는지 확인하기
     let isWrongPlan: Bool
 
     init(
         date: Date = Date(),
-        mealPlans: [MealPlan] = MealPlan.mockMealsOne,
+//        mealPlans: [MealPlan] = [MealPlan.mockMealsOne],
+        mealPlans: [MealPlan] = [],
         isWrongPlan: Bool = false
     ) {
         self.date = date
-        self.mealPlans = mealPlans
+        self._mealPlans = State(initialValue: mealPlans)
         self.isWrongPlan = isWrongPlan
     }
 
@@ -44,6 +47,8 @@ extension DailyPlanListView {
     private var viewHeader: some View {
         BackButtonOnlyHeader()
     }
+    
+    // MARK: - view body
     
     private var viewBody: some View {
         VStack(spacing: K.rootVStackSpacing) {
@@ -61,10 +66,14 @@ extension DailyPlanListView {
         .navigationDestination(isPresented: $isMealAdding) {
             MealDetailView(
                 startDate: date,
-                cycleGap: user.planCycleGap
+                cycleGap: user.planCycleGap,
+                mealPlansOB: mealPlansOB
             )
         }
         .defaultHorizontalPadding()
+        .onChange(of: mealPlansOB.filteredMealPlans) { newValue in
+            mealPlans = mealPlansOB.getMealPlans(in: date)
+        }
     }
 }
 
@@ -92,6 +101,7 @@ extension DailyPlanListView {
     }
 }
 
+// MARK: - add meal plan button
 extension DailyPlanListView {
     private var addMealPlanButton: some View {
         ButtonComponents(.big,
@@ -116,12 +126,12 @@ extension DailyPlanListView {
     }
 }
 
-struct DailyPlanListView_Previews: PreviewProvider {
-    static var previews: some View {
-        DailyPlanListView(
-            date: Date(),
-            mealPlans: MealPlan.mockMealsOne,
-            isWrongPlan: true
-        ).environmentObject(UserOB())
-    }
-}
+//struct DailyPlanListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DailyPlanListView(
+//            date: Date(),
+//            mealPlans: MealPlan.mockMealsOne,
+//            isWrongPlan: true
+//        ).environmentObject(UserOB())
+//    }
+//}

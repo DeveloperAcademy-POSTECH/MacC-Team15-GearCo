@@ -12,9 +12,13 @@ final class FirebaseManager {
     enum CollectionName: String {
         case User
         case Plan
+        case Report = "IngredientReport"
+        case Count = "IngredientUseCount"
     }
     
     static let shared = FirebaseManager()
+    #warning("ingredientData의 fetch가 선행되어야 함. 나중에 비동기로 순차 처리 되도록 주의할 것.")
+    let ingredientData = IngredientData.shared.ingredients
     private let db = Firestore.firestore()
     private init() {}
     
@@ -27,12 +31,84 @@ final class FirebaseManager {
     }
 }
 
-extension CollectionReference {
-    func getDocRef(_ email: String, id: String?) -> DocumentReference {
-        if let id {
-            return self.document("\(email)_\(id)")
+// MARK: 없는 재료 리포트
+extension FirebaseManager {
+    
+    func reportIngredient(note: String, replyEmail: String, userEmail: String) async {
+        let nowDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYMMddHHmmss"
+        let formattedDate = dateFormatter.string(from: nowDate)
+        
+        let colRef = getColRef(.Report)
+        let docRef = colRef.getDocRef(userEmail, id: formattedDate)
+        
+        let dataToSave: [String: Any] = [
+            "email": userEmail,
+            "emailToReply": replyEmail,
+            "note": note,
+            "date": Timestamp(date: nowDate)
+        ]
+        
+        do {
+            try await docRef.setData(dataToSave)
+            print("재료 신고를 완료했습니다 - id: \(userEmail)_\(formattedDate)")
+        } catch {
+            print("재료 신고에 실패했습니다. 재시도 바랍니다.")
         }
-        return self.document("\(email)")
+    }
+}
+
+// MARK: MealPlansOB 관련
+extension FirebaseManager {
+    
+    func loadAllPlans(email: String) async -> [MealPlan] {
+        var result: [MealPlan] = []
+        let planColRef = getColRef(.Plan)
+        
+        do {
+            let querySnapshot = try await planColRef.whereField("email", isEqualTo: email).getDocumentsAsync()
+            for document in querySnapshot.documents {
+                result.append(parseDataToMealPlan(data: document.data()))
+            }
+            print("MealPlansOB 초기화 - 모든 계획을 불러오는 데 성공했습니다.")
+        } catch {
+            print("MealPlansOB 초기화 실패! 모든 계획을 성공적으로 불러오지 못했습니다. - \(error)")
+        }
+        
+        return result
+        
+        // func to parse querydata to MealPlan object.
+        func parseDataToMealPlan(data: [String: Any]) -> MealPlan {
+            let id = UUID(uuidString: data["planID"] as? String ?? "") ?? UUID()
+            let startDate = (data["startDate"] as? Timestamp ?? Timestamp()).dateValue()
+            let endDate = (data["endDate"] as? Timestamp ?? Timestamp()).dateValue()
+            let mealType = MealType(rawValue: data["mealType"] as? Int ?? 0) ?? .아침
+            var newIngredients: [Ingredient] {
+                var res: [Ingredient] = []
+                let newIngredientIDs = data["newIngredients"] as? [Int] ?? []
+                
+                for id in newIngredientIDs {
+                    if let ingredient = ingredientData[id] {
+                        res.append(ingredient)
+                    }
+                }
+                return res
+            }
+            var oldIngredients: [Ingredient] {
+                var res: [Ingredient] = []
+                let oldIngredientIDs = data["oldIngredients"] as? [Int] ?? []
+                
+                for id in oldIngredientIDs {
+                    if let ingredient = ingredientData[id] {
+                        res.append(ingredient)
+                    }
+                }
+                return res
+            }
+            
+            return MealPlan(id: id, startDate: startDate, endDate: endDate, mealType: mealType, newIngredients: newIngredients, oldIngredients: oldIngredients)
+        }
     }
 }
 
@@ -42,20 +118,26 @@ extension FirebaseManager {
     /// MealPlan 데이터를 넣지 않고 MealOB만 넣으면 save, MealPlan 데이터를 넣으면 update로 작동합니다.
     /// - Parameters:
     ///   - mealData: MealOB 객체
-    ///   - completion: Error Completion Handler.
-    func saveMealPlan(_ mealData: MealOB, mealPlan: MealPlan? = nil, user: UserOB) {
+    ///   - mealPlan:
+    ///     - nil일 때 - 함수는 새로운 mealPlan을 생성 후 저장한다.
+    ///     - nil이 아닐 때, 수정하려는 meal Plan
+    ///   - user: UserOB 객체
+    /// - Returns: 새롭게 생성된 플랜의 UUID / 기존 플랜의 id
+    @discardableResult
+    func saveMealPlan(_ mealData: MealOB, mealPlan: MealPlan? = nil, user: UserOB) -> UUID {
         let planColRef = getColRef(.Plan)
-        var uuid: String {
+        let uuid: UUID = {
             if let mealPlan {
-                return mealPlan.id.uuidString
+                return mealPlan.id
             }
-            return UUID().uuidString
-        }
-        let planDocRefToSave = planColRef.getDocRef(user.email, id: uuid)
+            return UUID()
+        }()
+        let uuidString = uuid.uuidString
+        let planDocRefToSave = planColRef.getDocRef(user.email, id: uuidString)
         
         let dataToSave: [String: Any] = [
             "email": user.email,
-            "planID": uuid,
+            "planID": uuidString,
             "startDate": Timestamp(date: mealData.startDate),
             "endDate": Timestamp(date: mealData.endDate),
             "mealType": mealData.mealType?.rawValue ?? 0,
@@ -65,11 +147,12 @@ extension FirebaseManager {
         
         planDocRefToSave.setData(dataToSave, merge: true) { err in
             if let err = err {
-                print("MealPlan 저장 실패! - \(err)")
+                print("MealPlan 저장&수정 실패! - \(err)")
             } else {
-                print("MealPlan 저장 완료. - \(user.email)_\(uuid)")
+                print("MealPlan 저장 완료. - \(user.email)_\(uuidString)")
             }
         }
+        return uuid
     }
     
     func deleteMealPlan(_ mealPlan: MealPlan?, user: UserOB) {
@@ -88,3 +171,26 @@ extension FirebaseManager {
         }
     }
 }
+
+//extension FirebaseManager {
+//    enum CountUpdateCase {
+//        case add
+//        case delete
+//        case update
+//    }
+//    
+//    func updateIngredientUseCount(mealData: MealOB? = nil, mealPlan: MealPlan? = nil, email: String, updateCase: CountUpdateCase) async {
+//        let colRef = getColRef(.Count)
+//        let docRef = colRef.getDocRef(email)
+//        
+//        switch updateCase {
+//        case .add:
+//            let dataToSave: [String: Any]
+//            for ingredient in mealData
+//        case .delete:
+//            <#code#>
+//        case .update:
+//            <#code#>
+//        }
+//    }
+//}
