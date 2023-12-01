@@ -375,14 +375,7 @@ struct MonthlyPlanningView: View {
                 ForEach(thisWeekDates, id: \.self) { date in
                     let isToday = (date.day == Date().day && date.month == Date().month && date.year == Date().year)
                     
-                    NavigationLink {
-                        let mealPlans = mealPlansOB.getMealPlans(in: date)
-                        if mealPlans.count != .zero {
-                            DailyPlanListView(date: date, mealPlans: mealPlans)
-                        } else {
-                            MealDetailView(startDate: date, cycleGap: user.planCycleGap, mealPlansOB: mealPlansOB)
-                        }
-                    } label: {
+                    NavigationLink(value: date) {
                         VStack(spacing: 0) {
                             if isToday {
                                 Circle()
@@ -410,6 +403,17 @@ struct MonthlyPlanningView: View {
                                     .frame(width: todayBackgroundWidth, height: todayBackgroundHeight)
                             }
                         }
+                    
+//                    NavigationLink {
+//                        let mealPlans = mealPlansOB.getMealPlans(in: date)
+//                        if mealPlans.count != .zero {
+//                            DailyPlanListView(date: date, mealPlans: mealPlans)
+//                        } else {
+//                            MealDetailView(startDate: date, cycleGap: user.planCycleGap, mealPlansOB: mealPlansOB)
+//                        }
+//                    } label: {
+//                       
+//                    }
                 }
                 rowRightEndSpacer()
             }.frame(height: dayNumberRowFrameHeight)
