@@ -107,13 +107,14 @@ final class MealPlansOB: ObservableObject {
     /// - Returns: date가 포함된 meal plan의 list
     func getMealPlans(in date: Date) -> [MealPlan] {
         mealPlans.filter {
-            date.isInBetween(from: $0.startDate, to: $0.endDate)
+            date.isInBetween(from: $0.startDate.dayOfStart, to: $0.endDate.dayOfEnd)
         }
     }
     
     func getMealPlans(from startDate: Date, to endDate: Date) -> [MealPlan] {
         mealPlans.filter {
-            $0.startDate == startDate && $0.endDate == endDate
+            MealPlanGroup.SolidDate(startDate: $0.startDate, endDate: $0.endDate) == MealPlanGroup.SolidDate(startDate: startDate, endDate: endDate)
+//            $0.startDate == startDate && $0.endDate == endDate
         }
     }
     

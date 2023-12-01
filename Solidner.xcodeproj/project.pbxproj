@@ -47,6 +47,7 @@
 		B2D1E3872B137C4100318E85 /* DefaultHorizontalPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D1E3862B137C4100318E85 /* DefaultHorizontalPadding.swift */; };
 		B2D96E5D2B1625C200B5D30C /* WrongPlanChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D96E5C2B1625C200B5D30C /* WrongPlanChecker.swift */; };
 		B2D96E5F2B17C78200B5D30C /* Collection+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D96E5E2B17C78200B5D30C /* Collection+.swift */; };
+		B2D96E612B19675D00B5D30C /* PlanEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D96E602B19675D00B5D30C /* PlanEmptyView.swift */; };
 		B2DE212E2B0DDA54006E42C7 /* PlanBatchSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DE212D2B0DDA54006E42C7 /* PlanBatchSettingView.swift */; };
 		B2EFE9832B067CA000E3F94B /* PlanGroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EFE9822B067CA000E3F94B /* PlanGroupDetailView.swift */; };
 		B2EFE9852B067FB200E3F94B /* MockPlanData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EFE9842B067FB200E3F94B /* MockPlanData.swift */; };
@@ -62,6 +63,7 @@
 		C336EE4C2B03F5320057D8B8 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336EE4B2B03F5320057D8B8 /* Color+.swift */; };
 		C336EE512B054AED0057D8B8 /* TermsWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336EE502B054AED0057D8B8 /* TermsWebView.swift */; };
 		C336EE532B054C820057D8B8 /* AgreeCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C336EE522B054C820057D8B8 /* AgreeCase.swift */; };
+		C34B0D652B1989EB00D41A4A /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34B0D642B1989EB00D41A4A /* LaunchScreenView.swift */; };
 		C36942472AFCD687002465D4 /* ButtonComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36942462AFCD686002465D4 /* ButtonComponents.swift */; };
 		C36942492AFF755F002465D4 /* BackButtonHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36942482AFF755F002465D4 /* BackButtonHeader.swift */; };
 		C369424B2B00B350002465D4 /* TextFieldComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = C369424A2B00B350002465D4 /* TextFieldComponents.swift */; };
@@ -161,6 +163,7 @@
 		B2D1E3862B137C4100318E85 /* DefaultHorizontalPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultHorizontalPadding.swift; sourceTree = "<group>"; };
 		B2D96E5C2B1625C200B5D30C /* WrongPlanChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrongPlanChecker.swift; sourceTree = "<group>"; };
 		B2D96E5E2B17C78200B5D30C /* Collection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+.swift"; sourceTree = "<group>"; };
+		B2D96E602B19675D00B5D30C /* PlanEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanEmptyView.swift; sourceTree = "<group>"; };
 		B2DE212D2B0DDA54006E42C7 /* PlanBatchSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanBatchSettingView.swift; sourceTree = "<group>"; };
 		B2EFE9822B067CA000E3F94B /* PlanGroupDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanGroupDetailView.swift; sourceTree = "<group>"; };
 		B2EFE9842B067FB200E3F94B /* MockPlanData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPlanData.swift; sourceTree = "<group>"; };
@@ -177,6 +180,7 @@
 		C336EE4F2B054A300057D8B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C336EE502B054AED0057D8B8 /* TermsWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsWebView.swift; sourceTree = "<group>"; };
 		C336EE522B054C820057D8B8 /* AgreeCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeCase.swift; sourceTree = "<group>"; };
+		C34B0D642B1989EB00D41A4A /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
 		C36942462AFCD686002465D4 /* ButtonComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonComponents.swift; sourceTree = "<group>"; };
 		C36942482AFF755F002465D4 /* BackButtonHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButtonHeader.swift; sourceTree = "<group>"; };
 		C369424A2B00B350002465D4 /* TextFieldComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldComponents.swift; sourceTree = "<group>"; };
@@ -256,6 +260,7 @@
 				C3AD1BCF2B026CB5003BB3E0 /* OnboardingEndView.swift */,
 				C336EE422B03C37B0057D8B8 /* AgreeToTermsView.swift */,
 				C336EE502B054AED0057D8B8 /* TermsWebView.swift */,
+				C34B0D642B1989EB00D41A4A /* LaunchScreenView.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -341,6 +346,7 @@
 				B25582052B10C94600B34F34 /* ColoredIngredientsText.swift */,
 				B2C2632E2B0F511A0032C488 /* DraggableMealGroupView.swift */,
 				B24078212B13D8CB005D3412 /* RootVStack.swift */,
+				B2D96E602B19675D00B5D30C /* PlanEmptyView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -697,6 +703,7 @@
 				B2746E3F2B05F5210083AB57 /* ThickDivider.swift in Sources */,
 				B25582042B10BED500B34F34 /* AddedIngredientView.swift in Sources */,
 				C3B4DB352B0DEBA700772C2A /* Text+.swift in Sources */,
+				C34B0D652B1989EB00D41A4A /* LaunchScreenView.swift in Sources */,
 				B2746E3B2B052A4D0083AB57 /* Shape+.swift in Sources */,
 				0E613A2A2B13315700AF75BF /* IngredientData.swift in Sources */,
 				0EA65EE22B0C846200E1C8D7 /* AddTestIngredientsView.swift in Sources */,
@@ -748,6 +755,7 @@
 				B2F790A42B0DF40400CB4F71 /* DisplayDateType.swift in Sources */,
 				B219F1252B0C974F00886087 /* MealOB.swift in Sources */,
 				C3C6375D2AF90C2B006D464D /* SolidnerApp.swift in Sources */,
+				B2D96E612B19675D00B5D30C /* PlanEmptyView.swift in Sources */,
 				B2D1DCD62B07466500D7B77B /* MealGroupView.swift in Sources */,
 				C336EE512B054AED0057D8B8 /* TermsWebView.swift in Sources */,
 				C3B4DB4C2B10B51300772C2A /* MypageRootView.swift in Sources */,
@@ -930,7 +938,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Solidner/Preview Content\"";
-				DEVELOPMENT_TEAM = PAQ92DM7XD;
+				DEVELOPMENT_TEAM = G8XX337GMH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Solidner/Info.plist;
@@ -945,7 +953,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jeckmu.Solidner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swimmer.Solidner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -964,7 +972,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Solidner/Preview Content\"";
-				DEVELOPMENT_TEAM = PAQ92DM7XD;
+				DEVELOPMENT_TEAM = G8XX337GMH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Solidner/Info.plist;
@@ -979,7 +987,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jeckmu.Solidner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swimmer.Solidner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
