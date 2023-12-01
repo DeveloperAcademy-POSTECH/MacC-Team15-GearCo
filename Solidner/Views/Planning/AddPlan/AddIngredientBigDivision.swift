@@ -98,29 +98,29 @@ extension IngredientsBigDivision {
             
             ForEach(IngredientType.allCases, id: \.self) { type in
                 HStack(spacing: 0) {
-                    Button {
-                        withAnimation(.spring()) {
-                            toggleFoldState(foldStateList: &foldStates, type: type)
-                        }
-                    } label: {
-                        Text(type.description)
-                            .font(.system(size: 19, weight: .semibold))
-                            .padding(.trailing, 2)
-                        if divisionCase == .권장하지않는재료 {
-                            Image(systemName: "xmark.shield.fill")
-                                .foregroundStyle(Color.ageColor)
-                                .scaledToFit()
-                                .frame(width: 23)
-                        }
-                        Spacer()
-                        Image(systemName: foldStates[type]! ? "chevron.up" : "chevron.down")
-                            .resizable()
-                            .bold()
-                            .frame(width: 18, height: 10)
-                    }.foregroundColor(.black)
-                        .toggleStyle(.automatic)
-                }.buttonStyle(PlainButtonStyle())   // 깜빡임 제거
-                .padding(.vertical, foldSectionTitleVerticalPadding)
+                    Text(type.description)
+                        .font(.system(size: 19, weight: .semibold))
+                        .padding(.trailing, 2)
+                    if divisionCase == .권장하지않는재료 {
+                        Image(systemName: "xmark.shield.fill")
+                            .foregroundStyle(Color.ageColor)
+                            .scaledToFit()
+                            .frame(width: 23)
+                    }
+                    Spacer()
+                    Image(systemName: foldStates[type]! ? "chevron.up" : "chevron.down")
+                        .resizable()
+                        .bold()
+                        .frame(width: 18, height: 10)
+                }.padding(.vertical, foldSectionTitleVerticalPadding)
+                .contentShape(Rectangle())
+                .foregroundColor(.black)
+                .toggleStyle(.automatic)
+                .onTapGesture {
+                    withAnimation(.spring()) {
+                        toggleFoldState(foldStateList: &foldStates, type: type)
+                    }
+                }
                 
                 if foldStates[type]! {
                     Divider()
