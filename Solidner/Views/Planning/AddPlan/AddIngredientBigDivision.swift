@@ -243,6 +243,7 @@ extension IngredientsBigDivision {
         let divisionCase: DivisionCase
         let ingredient: Ingredient
         
+        @EnvironmentObject var mealOB: MealOB
         @Binding var selectedIngredients: [Int]
         let viewType: MealOB.IngredientTestType
         
@@ -267,7 +268,19 @@ extension IngredientsBigDivision {
         }
 
         var isNotRecommended: Bool {
+            // 선택된 재료와 궁합이 맞지 않으면
             for id in selectedIngredients {
+                if let misIngredients = ingredientData[id]?.misMatches {
+                    for misIngredient in misIngredients {
+                        if ingredient.id == misIngredient.id {
+                            return true
+                        }
+                    }
+                }
+            }
+            // mealOB의 반대 재료 (.new 일때 사용한 재료 / .old일때 새 재료)와 궁합이 맞지 않으면
+            for idResource in (viewType == .new ? mealOB.oldIngredients : mealOB.newIngredients) {
+                let id = idResource.id
                 if let misIngredients = ingredientData[id]?.misMatches {
                     for misIngredient in misIngredients {
                         if ingredient.id == misIngredient.id {
@@ -318,6 +331,7 @@ extension IngredientsBigDivision {
                 case .검색:
                     EmptyView()
                 }   // end of switch
+                
                 Spacer().frame(width: ingredientNameRightSpace)
                 if isNotRecommended {
                     Image(systemName: "exclamationmark.triangle.fill")
@@ -325,6 +339,7 @@ extension IngredientsBigDivision {
                         .scaledToFit()
                         .frame(width: 20)
                 }
+                
                 Spacer()
                 
                 ButtonComponents(.clickableTiny, disabledCondition: buttonDisableCondition, isClicked: isClicked) {
