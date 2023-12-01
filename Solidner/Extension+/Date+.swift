@@ -244,6 +244,14 @@ extension Date {
             return nil
         }
     }
+    
+    var dayOfStart: Date {
+        Date.date(year: year, month: month, day: day)!
+    }
+    
+    var dayOfEnd: Date {
+        Date.date(year: year, month: month, day: day + 1)!.add(.nanosecond, value: -1)
+    }
 }
 
 extension Date: RawRepresentable {
