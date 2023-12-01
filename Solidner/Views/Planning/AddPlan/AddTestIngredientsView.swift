@@ -35,6 +35,7 @@ struct AddTestIngredientsView: View {
     // 선택된 테스트 재료
     @State private var selectedIngredients: [Int] = []
     @State private var ingredientUseCount: [Int: Int] = [:]
+    @State private var initialSelectedIngredients: [Int] = []
     
     init(_ addIngredientViewType: MealOB.IngredientTestType) {
         self.viewType = addIngredientViewType
@@ -61,6 +62,7 @@ struct AddTestIngredientsView: View {
                 } else {
                     IngredientsBigDivision(case: .자주사용한재료,
                                            ingredients: $selectedIngredients,
+                                           initSelected: initialSelectedIngredients,
                                            viewType: viewType,
                                            ingredientUseCount: $ingredientUseCount)
                 }
@@ -69,11 +71,13 @@ struct AddTestIngredientsView: View {
                 
                 IngredientsBigDivision(case: .먹을수있는재료,
                                        ingredients: $selectedIngredients,
+                                       initSelected: initialSelectedIngredients,
                                        viewType: viewType,
                                        ingredientUseCount: $ingredientUseCount)
                 Spacer().frame(height: divisionDividerVerticalPadding)
                 IngredientsBigDivision(case: .권장하지않는재료,
                                        ingredients: $selectedIngredients,
+                                       initSelected: initialSelectedIngredients,
                                        viewType: viewType,
                                        ingredientUseCount: $ingredientUseCount)
                 
@@ -94,6 +98,7 @@ struct AddTestIngredientsView: View {
             .onAppear {
                 initSelectedIngredient()
                 countingIngredientUse()
+                print("appear")
             }
     }
 }
@@ -243,10 +248,12 @@ extension AddTestIngredientsView {
             for ingredient in mealOB.newIngredients {
                 selectedIngredients.append(ingredient.id)
             }
+            initialSelectedIngredients = selectedIngredients
         case .old:
             for ingredient in mealOB.oldIngredients {
                 selectedIngredients.append(ingredient.id)
             }
+            initialSelectedIngredients = selectedIngredients
         }
     }
     

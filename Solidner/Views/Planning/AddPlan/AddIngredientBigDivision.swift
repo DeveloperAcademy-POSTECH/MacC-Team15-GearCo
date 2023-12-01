@@ -54,13 +54,13 @@ struct IngredientsBigDivision: View {
     let viewType: MealOB.IngredientTestType
     let initialSelectedIngredients: [Int]   // selectedIngredients 복사. 테스트 재료 추가 화면에서 정상적으로 보일 수 있게.
     
-    init(case divisionCase: DivisionCase, ingredients selectedIngredients: Binding<[Int]>, viewType: MealOB.IngredientTestType, ingredientUseCount: Binding<[Int: Int]>) {
+    init(case divisionCase: DivisionCase, ingredients selectedIngredients: Binding<[Int]>, initSelected initialSelectedIngredients: [Int], viewType: MealOB.IngredientTestType, ingredientUseCount: Binding<[Int: Int]>) {
         self.divisionCase = divisionCase
         self.viewType = viewType
         self._ingredientUseCount = ingredientUseCount
         
         self._selectedIngredients = selectedIngredients
-        self.initialSelectedIngredients = selectedIngredients.wrappedValue
+        self.initialSelectedIngredients = initialSelectedIngredients
         var states: [IngredientType: Bool] = [:]
         for type in IngredientType.allCases {
             states[type] = false
