@@ -12,6 +12,7 @@ enum DivisionCase: String {
     case 먹을수있는재료 = "먹을 수 있는 재료"
     case 권장하지않는재료 = "권장하지 않는 재료"
     case 자주사용한재료 = "자주 사용한 재료"
+    case 검색
 }
 
 struct IngredientsBigDivision: View {
@@ -51,10 +52,15 @@ struct IngredientsBigDivision: View {
     @Binding var ingredientUseCount: [Int: Int]
     @State private var foldStates: [IngredientType: Bool]
     
+    @State private var searchText = ""
+    @FocusState private var isSearchFieldFocused: Bool
+    
     let viewType: MealOB.IngredientTestType
     let initialSelectedIngredients: [Int]   // selectedIngredients 복사. 테스트 재료 추가 화면에서 정상적으로 보일 수 있게.
     
-    init(case divisionCase: DivisionCase, ingredients selectedIngredients: Binding<[Int]>, initSelected initialSelectedIngredients: [Int], viewType: MealOB.IngredientTestType, ingredientUseCount: Binding<[Int: Int]>) {
+    init(case divisionCase: DivisionCase, ingredients selectedIngredients: Binding<[Int]>,
+         initSelected initialSelectedIngredients: [Int], viewType: MealOB.IngredientTestType,
+         ingredientUseCount: Binding<[Int: Int]>) {
         self.divisionCase = divisionCase
         self.viewType = viewType
         self._ingredientUseCount = ingredientUseCount
@@ -83,6 +89,8 @@ struct IngredientsBigDivision: View {
                 먹을수있는권장하지않는Division()
             case .자주사용한재료:
                 자주사용한재료Division()
+            case .검색:
+                검색화면()
             }
         }.padding(.horizontal, viewHorizontalPadding)
     }
@@ -90,6 +98,12 @@ struct IngredientsBigDivision: View {
 
 // MARK: Division View
 extension IngredientsBigDivision {
+    private func 검색화면() -> some View {
+        VStack(spacing: 0) {
+            TextFieldComponents().shortTextfield(placeHolder: "", value: $searchText, isFocused: $isSearchFieldFocused)
+        }
+    }
+    
     private func 먹을수있는권장하지않는Division() -> some View {
         return VStack(alignment: .leading, spacing: 0) {
             Spacer().frame(height: titleTopSpace)
@@ -276,6 +290,8 @@ extension IngredientsBigDivision {
                                              VPad: dateTextVerticalPadding,
                                              color: .ageColor,
                                              radius: dateBackgroundRadius)
+                case .검색:
+                    EmptyView()
                 }   // end of switch
                 Spacer().frame(width: ingredientNameRightSpace)
                 if isNotRecommended {

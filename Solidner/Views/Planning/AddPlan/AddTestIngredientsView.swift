@@ -24,6 +24,7 @@ struct AddTestIngredientsView: View {
     private let reportButtonTopSpace: CGFloat = 20
     
     @State private var showReportSheet = false
+    @State private var isSearching = false
     
     @EnvironmentObject private var user: UserOB
     @EnvironmentObject private var mealOB: MealOB
@@ -51,40 +52,50 @@ struct AddTestIngredientsView: View {
             searchAndIngredientTypeButtonsRow
             
             // MARK: 선택된 재료 타입 확인 Row
-            selectedIngredientRow
+            if !isSearching {
+                selectedIngredientRow
+            }
             
             ScrollView {
-                if viewType == .new {
-                    // TODO: 추후 이상반응 기능 추가 시 활성화
-//                    IngredientsBigDivision(case: .이상반응재료,
-//                                           ingredients: $selectedIngredients,
-//                                           viewType: viewType)
-                } else {
-                    IngredientsBigDivision(case: .자주사용한재료,
+                if isSearching {
+                    IngredientsBigDivision(case: .검색,
                                            ingredients: $selectedIngredients,
                                            initSelected: initialSelectedIngredients,
                                            viewType: viewType,
                                            ingredientUseCount: $ingredientUseCount)
+                } else {
+                    if viewType == .new {
+                    // TODO: 추후 이상반응 기능 추가 시 활성화
+//                    IngredientsBigDivision(case: .이상반응재료,
+//                                           ingredients: $selectedIngredients,
+//                                           viewType: viewType)
+                    } else {
+                        IngredientsBigDivision(case: .자주사용한재료,
+                                               ingredients: $selectedIngredients,
+                                               initSelected: initialSelectedIngredients,
+                                               viewType: viewType,
+                                               ingredientUseCount: $ingredientUseCount)
+                    }
+                    
+                    ThickDivider().padding(.vertical, divisionDividerVerticalPadding)
+                    
+                    IngredientsBigDivision(case: .먹을수있는재료,
+                                           ingredients: $selectedIngredients,
+                                           initSelected: initialSelectedIngredients,
+                                           viewType: viewType,
+                                           ingredientUseCount: $ingredientUseCount)
+                    Spacer().frame(height: divisionDividerVerticalPadding)
+                    IngredientsBigDivision(case: .권장하지않는재료,
+                                           ingredients: $selectedIngredients,
+                                           initSelected: initialSelectedIngredients,
+                                           viewType: viewType,
+                                           ingredientUseCount: $ingredientUseCount)
+                    
+                    Spacer().frame(height: reportButtonTopSpace)
+                    reportButton
+                    
+                    Spacer().frame(height: saveButtonTopSpace)
                 }
-                
-                ThickDivider().padding(.vertical, divisionDividerVerticalPadding)
-                
-                IngredientsBigDivision(case: .먹을수있는재료,
-                                       ingredients: $selectedIngredients,
-                                       initSelected: initialSelectedIngredients,
-                                       viewType: viewType,
-                                       ingredientUseCount: $ingredientUseCount)
-                Spacer().frame(height: divisionDividerVerticalPadding)
-                IngredientsBigDivision(case: .권장하지않는재료,
-                                       ingredients: $selectedIngredients,
-                                       initSelected: initialSelectedIngredients,
-                                       viewType: viewType,
-                                       ingredientUseCount: $ingredientUseCount)
-                
-                Spacer().frame(height: reportButtonTopSpace)
-                reportButton
-                
-                Spacer().frame(height: saveButtonTopSpace)
             }
             Group {
                 Spacer().frame(height: saveButtonBottomSpace)
@@ -98,7 +109,6 @@ struct AddTestIngredientsView: View {
             .onAppear {
                 initSelectedIngredient()
                 countingIngredientUse()
-                print("appear")
             }
     }
 }
@@ -195,7 +205,7 @@ extension AddTestIngredientsView {
         let searchButtonStrokeLineWidth: CGFloat = 1
         
         return Button {
-            // TODO: Search
+            isSearching.toggle()
         } label: {
             Image(systemName: "magnifyingglass")
                 .resizable()
