@@ -65,13 +65,13 @@ struct AddTestIngredientsView: View {
         self.viewType = addIngredientViewType
     }
     
+    @Namespace var 맨위
     @Namespace var 채소1
     @Namespace var 과일1
     @Namespace var 곡물1
     @Namespace var 어육류1
     @Namespace var 유제품1
     @Namespace var 기타1
-    
     @Namespace var 채소2
     @Namespace var 과일2
     @Namespace var 곡물2
@@ -117,7 +117,7 @@ struct AddTestIngredientsView: View {
                                                        initSelected: initialSelectedIngredients,
                                                        viewType: viewType,
                                                        ingredientUseCount: $ingredientUseCount,
-                                                       scrollID: scrollID)
+                                                       scrollID: scrollID).id(맨위)
                                 ThickDivider().padding(.vertical, divisionDividerVerticalPadding)
                             }
                             
@@ -126,7 +126,7 @@ struct AddTestIngredientsView: View {
                                                    initSelected: initialSelectedIngredients,
                                                    viewType: viewType,
                                                    ingredientUseCount: $ingredientUseCount,
-                                                   scrollID: scrollID)
+                                                   scrollID: scrollID).id(맨위)
                             Spacer().frame(height: divisionDividerVerticalPadding)
                             IngredientsBigDivision(case: .권장하지않는재료,
                                                    ingredients: $selectedIngredients,
@@ -184,7 +184,7 @@ extension AddTestIngredientsView {
     private func searchAndIngredientTypeButtonsRow(proxy: ScrollViewProxy) -> some View {
         return ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: typeButtonBetweenSpace) {
-                searchButton
+                searchButton(proxy: proxy)
                 ForEach(Array(IngredientType.allCases.enumerated()), id: \.element) { index, type in
                     ingredientTypeButton(proxy, type.description, namespace: index, recommend: true)
                 }
@@ -247,7 +247,7 @@ extension AddTestIngredientsView {
             HStack(spacing: 0) {
                 Text(text)
                     .bodyFont2()
-                    .foregroundColor(.defaultText)
+                    .foregroundColor(.defaultText.opacity(0.6))
                     .frame(height: buttonFrameHeight)
                 Spacer().frame(width: textAndMarkSpace)
                 if !recommend {
@@ -267,7 +267,7 @@ extension AddTestIngredientsView {
     }
     
     // MARK: 검색 버튼
-    private var searchButton: some View {
+    private func searchButton(proxy: ScrollViewProxy) -> some View {
         let searchIconSize: CGFloat = 20
         let buttonFrameWidth: CGFloat = 70
         let buttonFrameHeight: CGFloat = 40
@@ -276,6 +276,7 @@ extension AddTestIngredientsView {
         
         return Button {
             withAnimation {
+                proxy.scrollTo(맨위, anchor: .top)
                 isSearching.toggle()
             }
         } label: {
@@ -300,7 +301,6 @@ extension AddTestIngredientsView {
         let verticalPadding: CGFloat = 7
         let cornerRadius: CGFloat = 6
         
-        // TODO: 재료 타입에 따른 color가 되도록 수정
         return Text("\(ingredient.name)")
             .bodyFont3()
             .foregroundColor(.secondaryText)
