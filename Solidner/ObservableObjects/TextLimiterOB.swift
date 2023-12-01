@@ -12,7 +12,7 @@ final class TextLimiterOB: ObservableObject {
     @Published var value = "" {
         didSet {
             if value.count > self.limit {
-                value = String(oldValue.prefix(self.limit))
+                value = String(value.prefix(self.limit))
                 self.hasReachedLimit = true
             } else {
                 self.hasReachedLimit = false

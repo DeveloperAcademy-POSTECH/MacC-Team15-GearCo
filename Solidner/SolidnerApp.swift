@@ -28,39 +28,39 @@ struct SolidnerApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            let isPlanEmpty = mealPlansOB.mealPlans.isEmpty
+            //            let isPlanEmpty = mealPlansOB.mealPlans.isEmpty
             let isPlanEmpty = false
             
-            #warning("이거 더 좋은 방법으로 정리해줄 사람~~")
-//            if isOnboardingOn {
-//                //                    SignInView()
-//            ReportIngredientModalView()
-//                .environmentObject(userOB)
-//            } else if isPlanEmpty {
-//                NavigationStack {
-//                    StartPlanView()
-//                }
-//                .environmentObject(userOB)
-//                .environmentObject(mealPlansOB)
-//            } else {
-//                NavigationStack {
-//                    PlanListView()
-//                }
-//                .environmentObject(userOB)
-//                .environmentObject(mealPlansOB)
-//                //                    MonthlyPlanningView()
-//            }
-
-            // MypageRootView().environmentObject(userOB)
+#warning("이거 더 좋은 방법으로 정리해줄 사람~~")
+            //            if isOnboardingOn {
+            //                //                    SignInView()
+            //            ReportIngredientModalView()
+            //                .environmentObject(userOB)
+            //            } else if isPlanEmpty {
+            //                NavigationStack {
+            //                    StartPlanView()
+            //                }
+            //                .environmentObject(userOB)
+            //                .environmentObject(mealPlansOB)
+            //            } else {
+            //                NavigationStack {
+            //                    PlanListView()
+            //                }
+            //                .environmentObject(userOB)
+            //                .environmentObject(mealPlansOB)
+            //                //                    MonthlyPlanningView()
+            //            }
             
-//            MealDetailView(startDate: Date(), cycleGap: userOB.planCycleGap)
-//                .environmentObject(userOB)
-//                .environmentObject(mealPlansOB)
-            NavigationStack {
-                AgreeToTermsView()
-            }
-            .environmentObject(userOB)
-        }
+            //MypageRootView().environmentObject(userOB)
+            
+            //            MealDetailView(startDate: Date(), cycleGap: userOB.planCycleGap)
+            //                .environmentObject(userOB)
+            //                .environmentObject(mealPlansOB)
+            //            NavigationStack {
+            //                AgreeToTermsView()
+            //            }
+            //            .environmentObject(userOB)
+                   }
     }
+    
 }
-

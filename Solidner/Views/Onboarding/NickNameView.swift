@@ -19,6 +19,18 @@ struct NickNameView: View {
     @EnvironmentObject var user: UserOB
     @State private var babyNameViewIsPresented = false
     @State private var navigationIsPresented = false
+    private let limit = 10
+//    @State private var inputText = "" {
+//        didSet {
+//            if inputText.count > self.limit {
+//                // inputText = String(inputText.prefix(self.limit))
+//                self.hasReachedLimit = true
+//            } else {
+//                self.hasReachedLimit = false
+//            }
+//        }
+//    }
+//    @State var hasReachedLimit = false 
     
     var body: some View {
         ZStack {
@@ -73,11 +85,10 @@ struct NickNameView: View {
             OnboardingTitles(bigTitle: nickNameViewCase == .userName ? TextLiterals.NickName.bigUserNameTitle : TextLiterals.NickName.bigBabyNameTitle , smallTitle: "", isSmallTitleExist: false)
             TextFieldComponents().shortTextfield(placeHolder: TextLiterals.NickName.placeHolder, value: $textLimiter.value, isFocused: $isFocused)
                 .onChange(of: textLimiter.value) { newValue in
-                    if textLimiter.value.count > 10 {
-                        textLimiter.value = String(textLimiter.value.prefix(10))
+                    if newValue.count > limit {
+                        textLimiter.value = String(newValue.prefix(limit))
                     }
                 }
-
                 .padding(.top, textFieldTopPadding)
             if textLimiter.hasReachedLimit {
                 withAnimation {
@@ -92,21 +103,6 @@ struct NickNameView: View {
                 }
             }
             Spacer()
-//            HStack {
-//                Spacer()
-//                ButtonComponents().smallButton(disabledCondition: textLimiter.value.isEmpty) {
-//                    switch nickNameViewCase {
-//                    case .userName :
-//                        user.nickName = textLimiter.value
-//                        babyNameViewIsPresented = true
-//                    case .babyName :
-//                        user.babyName = textLimiter.value
-//                        navigationIsPresented = true
-//                    }
-//                }
-//                    .offset(y: isFocused ? -self.keyboardHeightHelper.keyboardHeight : 0)
-//                    .animation(.easeIn(duration: buttonUpDuration), value: keyboardHeightHelper.keyboardHeight)
-//            }
         }
     }
     enum NickNameViewCase {
