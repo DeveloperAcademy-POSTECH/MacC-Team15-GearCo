@@ -13,7 +13,8 @@ struct BabyBirthDateView: View {
     private let datePickerTopPadding = 86.0
     @State private var babyBirthDate = Date()
     @State private var navigationIsPresented = false
-    @EnvironmentObject var user: UserOB
+    @Binding var tempUserInfo: TempUserInfo
+//    @EnvironmentObject var user: UserOB
     var body: some View {
         ZStack {
             BackgroundView()
@@ -26,30 +27,26 @@ struct BabyBirthDateView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
         .navigationDestination(isPresented: $navigationIsPresented) {
-            FoodStartDateView()
+            FoodStartDateView(tempUserInfo: $tempUserInfo)
         }
     }
     private func viewBody() -> some View {
         VStack(spacing: 0) {
             Text(TextLiterals.BabyBirthDate.cakeLabelText)
                 .font(.custom(Text.FontWeightCase.bold.rawValue, size: 32))
-            OnboardingTitles(alignmentCase: .center, bigTitle: user.babyName+TextLiterals.BabyBirthDate.bigTitle , smallTitle: TextLiterals.BabyBirthDate.smallTitle)
-                .padding(.top, onboardingTitlesTopPadding)
+            OnboardingTitles(alignmentCase: .center,
+                             bigTitle: tempUserInfo.babyName+TextLiterals.BabyBirthDate.bigTitle,
+                             smallTitle: TextLiterals.BabyBirthDate.smallTitle)
+                            .padding(.top, onboardingTitlesTopPadding)
             DatePicker(selection: $babyBirthDate, in: ...Date(), displayedComponents: .date){}
                 .labelsHidden()
                 .datePickerStyle(WheelDatePickerStyle())
                 .padding(.top, datePickerTopPadding)
             Spacer()
             ButtonComponents(.big, disabledCondition: false, action: {
-                user.babyBirthDate = babyBirthDate
+                tempUserInfo.babyBirthDate = babyBirthDate
                 navigationIsPresented = true
             })
         }
-    }
-}
-
-struct BabyBirthDateView_Previews: PreviewProvider {
-    static var previews: some View {
-        BabyBirthDateView().environmentObject(UserOB())
     }
 }

@@ -25,22 +25,31 @@ struct SolidnerApp: App {
     let ingredientData = IngredientData.shared
     @StateObject private var userOB = UserOB()
     @State private var finishLaunchScreen = false
+    
     var body: some Scene {
         WindowGroup {
-            ZStack {
-                if finishLaunchScreen {
-                    // 로그인 여부에 따른 뷰 분기처리는 여기에
-                    MainView().environmentObject(userOB)
-                } else {
-                    LaunchScreenView()
-                        .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                                withAnimation {
-                                    finishLaunchScreen.toggle()
+            if userOB.email.isEmpty {
+                ZStack {
+                    if finishLaunchScreen {
+                        // 로그인 여부에 따른 뷰 분기처리는 여기에
+                        SignInView().environmentObject(userOB)
+                    } else {
+                        LaunchScreenView()
+                            .onAppear {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                    withAnimation {
+                                        finishLaunchScreen.toggle()
+                                    }
                                 }
                             }
-                        }
+                    }
                 }
+            } else if userOB.nickName.isEmpty {
+                NavigationStack {
+                    AgreeToTermsView()
+                }.environmentObject(userOB)
+            } else {
+                MainView().environmentObject(userOB)
             }
         }
     }

@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct AgreeToTermsView: View {
     private let termsButtonsSpacing = 16.0
     private let bigButtonTopPadding = 70.0
@@ -19,7 +18,9 @@ struct AgreeToTermsView: View {
     @State private var openPersonalInfoTerms = false
     @State private var openAdvertisingTerms = false
     @State private var navigationIsPresented = false
-    @EnvironmentObject var user: UserOB
+//    @EnvironmentObject var user: UserOB
+    @State var tempUserInfo: TempUserInfo = TempUserInfo()
+    
     var body: some View {
         ZStack {
             BackgroundView()
@@ -32,7 +33,7 @@ struct AgreeToTermsView: View {
                     agreeButton(agreeCase: .advertising)
                 }
                 ButtonComponents(.big, disabledCondition: disabledCondition, action: {
-                    user.isAgreeToAdvertising = isAgreeToAdvertising
+                    tempUserInfo.isAgreeToAdvertising = isAgreeToAdvertising
                     navigationIsPresented = true
                 })
                 .padding(.top, bigButtonTopPadding)
@@ -40,7 +41,7 @@ struct AgreeToTermsView: View {
             .padding(horizontal: 20, top: 76, bottom: 20)
         }
         .navigationDestination(isPresented: $navigationIsPresented) {
-            NickNameView(nickNameViewCase: .userName)
+            NickNameView(nickNameViewCase: .userName, tempUserInfo: $tempUserInfo)
         }
         .sheet(isPresented: $openServiceUseTerms) {
             TermsWebView(agreeCase: .serviceUse)

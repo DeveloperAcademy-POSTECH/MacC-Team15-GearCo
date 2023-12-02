@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E0F68AB2B1AF5AA0071941D /* TempUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0F68AA2B1AF5AA0071941D /* TempUserInfo.swift */; };
 		0E18AD602AFA10840011ED4A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0E18AD5F2AFA10840011ED4A /* GoogleService-Info.plist */; };
 		0E18AD6B2AFA7F670011ED4A /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AD6A2AFA7F670011ED4A /* SignInView.swift */; };
 		0E18AD6D2AFA8DC50011ED4A /* UserOB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AD6C2AFA8DC50011ED4A /* UserOB.swift */; };
@@ -37,6 +38,7 @@
 		B2746E3D2B05DF900083AB57 /* StartDateSettingModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E3C2B05DF900083AB57 /* StartDateSettingModal.swift */; };
 		B2746E3F2B05F5210083AB57 /* ThickDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E3E2B05F5210083AB57 /* ThickDivider.swift */; };
 		B2746E432B05FDC40083AB57 /* TitleAndHintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E422B05FDC40083AB57 /* TitleAndHintView.swift */; };
+		B29602B42B1AFC24001E3E98 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29602B32B1AFC24001E3E98 /* UINavigationController+.swift */; };
 		B29854B82B0DB38C009FBE33 /* ChangeMonthModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29854B72B0DB38C009FBE33 /* ChangeMonthModal.swift */; };
 		B29CF7882AFCCA5B00B54A3E /* PlanListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF7872AFCCA5B00B54A3E /* PlanListView.swift */; };
 		B29CF78B2AFCCEA000B54A3E /* TextLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF78A2AFCCEA000B54A3E /* TextLiterals.swift */; };
@@ -126,6 +128,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E0F68AA2B1AF5AA0071941D /* TempUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempUserInfo.swift; sourceTree = "<group>"; };
 		0E18AD5F2AFA10840011ED4A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0E18AD682AFA7A260011ED4A /* Solidner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Solidner.entitlements; sourceTree = "<group>"; };
 		0E18AD6A2AFA7F670011ED4A /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
@@ -155,6 +158,7 @@
 		B2746E3C2B05DF900083AB57 /* StartDateSettingModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDateSettingModal.swift; sourceTree = "<group>"; };
 		B2746E3E2B05F5210083AB57 /* ThickDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThickDivider.swift; sourceTree = "<group>"; };
 		B2746E422B05FDC40083AB57 /* TitleAndHintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleAndHintView.swift; sourceTree = "<group>"; };
+		B29602B32B1AFC24001E3E98 /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
 		B29854B72B0DB38C009FBE33 /* ChangeMonthModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeMonthModal.swift; sourceTree = "<group>"; };
 		B29CF7872AFCCA5B00B54A3E /* PlanListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanListView.swift; sourceTree = "<group>"; };
 		B29CF78A2AFCCEA000B54A3E /* TextLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLiterals.swift; sourceTree = "<group>"; };
@@ -272,6 +276,7 @@
 		0E18AD792AFBDCD20011ED4A /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				B24078212B13D8CB005D3412 /* RootVStack.swift */,
 				B2F7909D2B0DDC9900CB4F71 /* SolidnerSegmentedPicker.swift */,
 				B2746E3E2B05F5210083AB57 /* ThickDivider.swift */,
 				B2746E422B05FDC40083AB57 /* TitleAndHintView.swift */,
@@ -350,7 +355,6 @@
 				B2D1DCD52B07466500D7B77B /* MealGroupView.swift */,
 				B25582052B10C94600B34F34 /* ColoredIngredientsText.swift */,
 				B2C2632E2B0F511A0032C488 /* DraggableMealGroupView.swift */,
-				B24078212B13D8CB005D3412 /* RootVStack.swift */,
 				B2D96E602B19675D00B5D30C /* PlanEmptyView.swift */,
 			);
 			path = Common;
@@ -493,6 +497,7 @@
 				B2F790A12B0DF30B00CB4F71 /* CycleGaps.swift */,
 				B2F790A32B0DF40400CB4F71 /* DisplayDateType.swift */,
 				0E613A272B131CAF00AF75BF /* Ingredient.swift */,
+				0E0F68AA2B1AF5AA0071941D /* TempUserInfo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -530,6 +535,7 @@
 				C3B4DB462B0E84A500772C2A /* UIScreen+.swift */,
 				B25582012B10AAF200B34F34 /* CGFloat+.swift */,
 				B2D96E5E2B17C78200B5D30C /* Collection+.swift */,
+				B29602B32B1AFC24001E3E98 /* UINavigationController+.swift */,
 			);
 			path = "Extension+";
 			sourceTree = "<group>";
@@ -734,6 +740,7 @@
 				C36942492AFF755F002465D4 /* BackButtonHeader.swift in Sources */,
 				B24078222B13D8CB005D3412 /* RootVStack.swift in Sources */,
 				B29854B82B0DB38C009FBE33 /* ChangeMonthModal.swift in Sources */,
+				B29602B42B1AFC24001E3E98 /* UINavigationController+.swift in Sources */,
 				B29CF7882AFCCA5B00B54A3E /* PlanListView.swift in Sources */,
 				C336EE4A2B03F13B0057D8B8 /* Image+.swift in Sources */,
 				0E18AD712AFA94E10011ED4A /* FirebaseManager.swift in Sources */,
@@ -771,6 +778,7 @@
 				C336EE532B054C820057D8B8 /* AgreeCase.swift in Sources */,
 				C3AD1BCA2B023FA1003BB3E0 /* BabyBirthDateView.swift in Sources */,
 				C369424B2B00B350002465D4 /* TextFieldComponents.swift in Sources */,
+				0E0F68AB2B1AF5AA0071941D /* TempUserInfo.swift in Sources */,
 				C369424D2B00C333002465D4 /* NickNameView.swift in Sources */,
 				0E8D348D2B16103A0023FCA5 /* MainView.swift in Sources */,
 				C336EE4C2B03F5320057D8B8 /* Color+.swift in Sources */,
@@ -947,6 +955,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Solidner/Preview Content\"";
 				DEVELOPMENT_TEAM = G8XX337GMH;
+				DEVELOPMENT_TEAM = 6BHXWP5PYW;
+				DEVELOPMENT_TEAM = PAQ92DM7XD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Solidner/Info.plist;
@@ -962,6 +972,8 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.swimmer.Solidner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ollie.Solidner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jeckmu.Solidner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -981,6 +993,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Solidner/Preview Content\"";
 				DEVELOPMENT_TEAM = G8XX337GMH;
+				DEVELOPMENT_TEAM = 6BHXWP5PYW;
+				DEVELOPMENT_TEAM = PAQ92DM7XD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Solidner/Info.plist;
@@ -996,6 +1010,8 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.swimmer.Solidner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ollie.Solidner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jeckmu.Solidner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

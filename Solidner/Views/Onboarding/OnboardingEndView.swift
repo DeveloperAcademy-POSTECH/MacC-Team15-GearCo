@@ -9,6 +9,8 @@ import SwiftUI
 
 struct OnboardingEndView: View {
     @AppStorage("isOnboardingOn") var isOnboardingOn = true
+    @Binding var tempUserInfo: TempUserInfo
+    @EnvironmentObject private var user: UserOB
     var body: some View {
         ZStack {
             BackgroundView()
@@ -25,14 +27,24 @@ struct OnboardingEndView: View {
                 .padding(.top, 95)
             Spacer()
             ButtonComponents(.big, title: TextLiterals.OnboardingEnd.buttonTitle, disabledCondition: false) {
-                isOnboardingOn = false
+//                isOnboardingOn = false
+                Task {
+                    do {
+                        try await FirebaseManager.shared.createUser(tempUserInfo, email: user.email)
+                        
+                        // createUser 함수가 성공적으로 완료된 후 실행될 코드
+                        user.isAgreeToAdvertising = tempUserInfo.isAgreeToAdvertising
+                        user.nickName = tempUserInfo.nickName
+                        user.babyName = tempUserInfo.babyName
+                        user.babyBirthDate = tempUserInfo.babyBirthDate
+                        user.solidStartDate = tempUserInfo.solidStartDate
+
+                        print("사용자 정보 업데이트 완료")
+                    } catch {
+                        print("온보딩 유저 데이터 저장 중 에러 발생: \(error.localizedDescription)")
+                    }
+                }
             }
         }
-    }
-}
-
-struct OnboardingEndView_Previews: PreviewProvider {
-    static var previews: some View {
-        OnboardingEndView()
     }
 }
