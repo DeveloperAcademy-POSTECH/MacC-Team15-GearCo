@@ -250,7 +250,7 @@ extension Date {
     }
     
     var dayOfEnd: Date {
-        Date.date(year: year, month: month, day: day + 1)!.add(.nanosecond, value: -1)
+        Date.date(year: year, month: month, day: day + 1)!.add(.second, value: -1)
     }
 }
 
