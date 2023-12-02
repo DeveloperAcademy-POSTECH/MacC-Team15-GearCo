@@ -108,6 +108,7 @@ extension PlanListView {
             Image(.userInfo)
         }
     }
+    
     private var headerRightButton: some View {
         Button {
             showWeekly = false
