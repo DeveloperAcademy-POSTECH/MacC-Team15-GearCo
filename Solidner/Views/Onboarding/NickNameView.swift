@@ -13,7 +13,6 @@ struct NickNameView: View {
     private let warningMessageLeadingPadding = 6.0
     private let buttonUpDuration = 0.05
     let nickNameViewCase: NickNameViewCase
-    @StateObject private var textLimiter = TextLimiterOB()
     @StateObject private var keyboardHeightHelper = KeyboardHeightHelperOB()
     @FocusState private var isFocused: Bool
 //    @EnvironmentObject var user: UserOB
@@ -21,17 +20,9 @@ struct NickNameView: View {
     @State private var babyNameViewIsPresented = false
     @State private var navigationIsPresented = false
     private let limit = 10
-//    @State private var inputText = "" {
-//        didSet {
-//            if inputText.count > self.limit {
-//                // inputText = String(inputText.prefix(self.limit))
-//                self.hasReachedLimit = true
-//            } else {
-//                self.hasReachedLimit = false
-//            }
-//        }
-//    }
-//    @State var hasReachedLimit = false 
+    @State private var inputText = ""
+    @State private var hasReachedLimit = false
+    
     
     var body: some View {
         ZStack {
@@ -51,13 +42,13 @@ struct NickNameView: View {
                 Spacer()
                 HStack {
                     Spacer()
-                    ButtonComponents().smallButton(disabledCondition: textLimiter.value.isEmpty) {
+                    ButtonComponents().smallButton(disabledCondition: inputText.isEmpty) {
                         switch nickNameViewCase {
                         case .userName :
-                            tempUserInfo.nickName = textLimiter.value
+                            tempUserInfo.nickName = inputText
                             babyNameViewIsPresented = true
                         case .babyName :
-                            tempUserInfo.babyName = textLimiter.value
+                            tempUserInfo.babyName = inputText
                             navigationIsPresented = true
                         }
                     }
@@ -84,25 +75,23 @@ struct NickNameView: View {
     private func viewBody() -> some View {
         return VStack(spacing: 0) {
             OnboardingTitles(bigTitle: nickNameViewCase == .userName ? TextLiterals.NickName.bigUserNameTitle : TextLiterals.NickName.bigBabyNameTitle , smallTitle: "", isSmallTitleExist: false)
-            TextFieldComponents().shortTextfield(placeHolder: TextLiterals.NickName.placeHolder, value: $textLimiter.value, isFocused: $isFocused)
-                .onChange(of: textLimiter.value) { newValue in
-                    if newValue.count > limit {
-                        textLimiter.value = String(newValue.prefix(limit))
+            TextFieldComponents().shortTextfield(placeHolder: TextLiterals.NickName.placeHolder, value: $inputText, isFocused: $isFocused)
+                .onReceive(inputText.publisher.collect()) { collectionText in
+                    let trimmedText = String(collectionText.prefix(limit))
+                    if inputText != trimmedText {
+                        hasReachedLimit = inputText.count > limit ? true : false
+                        inputText = trimmedText
                     }
                 }
                 .padding(.top, textFieldTopPadding)
-            if textLimiter.hasReachedLimit {
-                withAnimation {
-                    HStack {
-                        Text(TextLiterals.NickName.warningMessage)
-                            .foregroundColor(Color.accentColor1)
-                            .inputErrorFont()
+                HStack {
+                    Text(TextLiterals.NickName.warningMessage)
+                        .foregroundColor(hasReachedLimit ? ($inputText.wrappedValue.count < limit ? .clear : .accentColor1) : .clear)
+                        .inputErrorFont()
                         .padding(.top, warningMessageTopPadding)
                         .padding(.leading, warningMessageLeadingPadding)
-                        Spacer()
-                    }
+                    Spacer()
                 }
-            }
             Spacer()
         }
     }

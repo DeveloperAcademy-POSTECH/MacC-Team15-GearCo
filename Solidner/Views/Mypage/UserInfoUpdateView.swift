@@ -10,13 +10,16 @@ import SwiftUI
 struct UserInfoUpdateView: View {
     private let warningMessageTopPadding = 9.0
     private let warningMessageLeadingPadding = 6.0
+    private let limit = 10
     @State private var showBabyBirthDateModal = false
     @State private var showSolidStartDateModal = false
     @State private var showAddMoreUserFYIModal = false
     @State private var updatedBabyBirthDate = Date()
     @State private var updatedSolidStartDate = Date()
-    @StateObject private var nickNameTextLimiter = TextLimiterOB()
-    @StateObject private var babyNameTextLimiter = TextLimiterOB()
+    @State private var nickNameInputText = ""
+    @State private var babyNameInputText = ""
+    @State private var nickNameHasReachedLimit = false
+    @State private var babyNameHasReachedLimit = false
     @FocusState private var isNicknameFocused: Bool
     @FocusState private var isBabynameFocused: Bool
     @EnvironmentObject var user: UserOB
@@ -80,8 +83,8 @@ struct UserInfoUpdateView: View {
             }
         }
         .onAppear {
-            nickNameTextLimiter.value = user.nickName
-            babyNameTextLimiter.value = user.babyName
+            nickNameInputText = user.nickName
+            babyNameInputText = user.babyName
             updatedBabyBirthDate = user.babyBirthDate
             updatedSolidStartDate = user.solidStartDate
         }
@@ -108,8 +111,8 @@ struct UserInfoUpdateView: View {
                 }
             }
             ButtonComponents(.big, title: "수정 완료", disabledCondition: false) {
-                user.babyName = babyNameTextLimiter.value
-                user.nickName = nickNameTextLimiter.value
+                user.babyName = babyNameInputText
+                user.nickName = nickNameInputText
                 user.babyBirthDate = updatedBabyBirthDate
                 user.solidStartDate = updatedSolidStartDate
                 //🔴 서버 유저정보 업데이트 코드 추가
@@ -145,10 +148,17 @@ struct UserInfoUpdateView: View {
     }
     private func nickNameTextField() -> some View {
         VStack {
-            TextFieldComponents().shortTextfield(placeHolder: "", value: $nickNameTextLimiter.value, isFocused: $isNicknameFocused)
+            TextFieldComponents().shortTextfield(placeHolder: "", value: $nickNameInputText, isFocused: $isNicknameFocused)
+                .onReceive(nickNameInputText.publisher.collect()) { collectionText in
+                    let trimmedText = String(collectionText.prefix(limit))
+                    if nickNameInputText != trimmedText {
+                        nickNameHasReachedLimit = nickNameInputText.count > limit ? true : false
+                        nickNameInputText = trimmedText
+                    }
+                }
             HStack {
                 Text(TextLiterals.NickName.warningMessage)
-                    .foregroundColor(nickNameTextLimiter.hasReachedLimit ? .accentColor1 : .clear)
+                    .foregroundColor(nickNameHasReachedLimit ? ($nickNameInputText.wrappedValue.count < limit ? .clear : .accentColor1) : .clear)
                     .inputErrorFont()
                     .padding(.top, warningMessageTopPadding)
                     .padding(.leading, warningMessageLeadingPadding)
@@ -158,10 +168,17 @@ struct UserInfoUpdateView: View {
     }
     private func babyNameTextField() -> some View {
         VStack {
-            TextFieldComponents().shortTextfield(placeHolder: "", value: $babyNameTextLimiter.value, isFocused: $isBabynameFocused)
+            TextFieldComponents().shortTextfield(placeHolder: "", value: $babyNameInputText, isFocused: $isBabynameFocused)
+                .onReceive(babyNameInputText.publisher.collect()) { collectionText in
+                    let trimmedText = String(collectionText.prefix(limit))
+                    if babyNameInputText != trimmedText {
+                        babyNameHasReachedLimit = babyNameInputText.count > limit ? true : false
+                        babyNameInputText = trimmedText
+                    }
+                }
             HStack {
                 Text(TextLiterals.NickName.warningMessage)
-                    .foregroundColor(babyNameTextLimiter.hasReachedLimit ? .accentColor1 : .clear)
+                    .foregroundColor(babyNameHasReachedLimit ? ($babyNameInputText.wrappedValue.count < limit ? .clear : .accentColor1) : .clear)
                     .inputErrorFont()
                     .padding(.top, warningMessageTopPadding)
                     .padding(.leading, warningMessageLeadingPadding)
