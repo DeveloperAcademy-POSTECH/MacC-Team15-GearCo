@@ -14,7 +14,8 @@ struct SoCuteNameView: View {
     @State private var isMessageAppear = false
     @State private var isButtonAppear = false
     @State private var navigationIsPresented = false
-    @EnvironmentObject var user: UserOB
+    @Binding var tempUserInfo: TempUserInfo
+//    @EnvironmentObject var user: UserOB
     var body: some View {
         ZStack {
             labelView()
@@ -47,12 +48,12 @@ struct SoCuteNameView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
         .navigationDestination(isPresented: $navigationIsPresented){
-            BabyBirthDateView()
+            BabyBirthDateView(tempUserInfo: $tempUserInfo)
         }
     }
     private func labelView() -> some View {
         return VStack(spacing: 0) {
-            Text(user.babyName+",")
+            Text(tempUserInfo.babyName+",")
                 .headerFont1()
                 .foregroundColor(isNicknameAppear ? .secondBgColor : .clear)
             Text(TextLiterals.SoCuteName.cuteNameMessage)
@@ -71,11 +72,5 @@ struct SoCuteNameView: View {
                 .transition(.opacity.animation(.easeIn))
             }
         }
-    }
-}
-
-struct SoCuteNameView_Previews: PreviewProvider {
-    static var previews: some View {
-        SoCuteNameView().environmentObject(UserOB())
     }
 }

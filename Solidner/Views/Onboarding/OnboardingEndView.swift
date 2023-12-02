@@ -9,6 +9,8 @@ import SwiftUI
 
 struct OnboardingEndView: View {
     @AppStorage("isOnboardingOn") var isOnboardingOn = true
+    @Binding var tempUserInfo: TempUserInfo
+    @EnvironmentObject private var user: UserOB
     var body: some View {
         ZStack {
             BackgroundView()
@@ -25,14 +27,17 @@ struct OnboardingEndView: View {
                 .padding(.top, 95)
             Spacer()
             ButtonComponents(.big, title: TextLiterals.OnboardingEnd.buttonTitle, disabledCondition: false) {
-                isOnboardingOn = false
+//                isOnboardingOn = false
+                Task {
+                    await FirebaseManager.shared.createUser(tempUserInfo)
+                    
+                    user.isAgreeToAdvertising = tempUserInfo.isAgreeToAdvertising
+                    user.nickName = tempUserInfo.nickName
+                    user.babyName = tempUserInfo.babyName
+                    user.babyBirthDate = tempUserInfo.babyBirthDate
+                    user.solidStartDate = tempUserInfo.solidStartDate
+                }
             }
         }
-    }
-}
-
-struct OnboardingEndView_Previews: PreviewProvider {
-    static var previews: some View {
-        OnboardingEndView()
     }
 }
