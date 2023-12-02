@@ -28,28 +28,28 @@ struct SolidnerApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if userOB.email.isEmpty {
-                ZStack {
-                    if finishLaunchScreen {
-                        // 로그인 여부에 따른 뷰 분기처리는 여기에
+            ZStack {
+                if finishLaunchScreen {
+                    // 로그인 여부에 따른 뷰 분기처리는 여기에
+                    if userOB.email.isEmpty {
                         SignInView().environmentObject(userOB)
+                    } else if userOB.nickName.isEmpty {
+                        NavigationStack {
+                            AgreeToTermsView()
+                        }.environmentObject(userOB)
                     } else {
-                        LaunchScreenView()
-                            .onAppear {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                                    withAnimation {
-                                        finishLaunchScreen.toggle()
-                                    }
+                        MainView().environmentObject(userOB)
+                    }
+                } else {
+                    LaunchScreenView()
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                withAnimation {
+                                    finishLaunchScreen.toggle()
                                 }
                             }
-                    }
+                        }
                 }
-            } else if userOB.nickName.isEmpty {
-                NavigationStack {
-                    AgreeToTermsView()
-                }.environmentObject(userOB)
-            } else {
-                MainView().environmentObject(userOB)
             }
         }
     }

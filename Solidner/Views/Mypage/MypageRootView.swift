@@ -28,7 +28,8 @@ struct MypageRootView: View {
                 primaryButton: .destructive(
                     Text("로그아웃"),
                     action: {
-                        // 🔴 로그아웃 코드
+                        // TODO: 로그아웃 세심하게 수정. 추후.
+                        UserDefaults().set("", forKey: "email")
                     }
                 ),
                 secondaryButton: .default(
