@@ -31,7 +31,7 @@ final class FirebaseManager {
     }
 }
 
-// MARK: 유저 온보딩 이후 데이터 업데이트
+// MARK: 유저 관련
 extension FirebaseManager {
     func createUser(_ userInfo: TempUserInfo, email: String) async throws {
         let dataToSave: [String: Any] = [
@@ -50,6 +50,20 @@ extension FirebaseManager {
             print("온보딩 유저 데이터를 저장했습니다. - id: \(email)")
         } catch {
             print("온보딩 유저 데이터 저장에 실패했습니다.")
+            throw error
+        }
+    }
+    
+    // TODO: 추후 회원탈퇴 로직 수정 (plan 제거, revoke 등)
+    func withdrawUser(_ email: String) async throws {
+        let colRef = getColRef(.User)
+        let docRef = colRef.getDocRef(email)
+        
+        do {
+            try await docRef.delete()
+            print("유저 정보 삭제 완료 - email: \(email)")
+        } catch {
+            print("유저 정보 삭제에 실패했습니다. 재시도 해 주세요.")
             throw error
         }
     }
