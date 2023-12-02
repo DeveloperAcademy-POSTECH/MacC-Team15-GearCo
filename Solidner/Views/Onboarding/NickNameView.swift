@@ -111,9 +111,3 @@ struct NickNameView: View {
         case babyName
     }
 }
-
-struct NickNameView_Previews: PreviewProvider {
-    static var previews: some View {
-        NickNameView(nickNameViewCase: .userName).environmentObject(UserOB())
-    }
-}

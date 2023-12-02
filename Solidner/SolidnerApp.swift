@@ -45,7 +45,9 @@ struct SolidnerApp: App {
                     }
                 }
             } else if userOB.nickName.isEmpty {
-                
+                NavigationStack {
+                    AgreeToTermsView()
+                }.environmentObject(userOB)
             } else {
                 MainView().environmentObject(userOB)
             }

@@ -31,6 +31,30 @@ final class FirebaseManager {
     }
 }
 
+// MARK: 유저 온보딩 이후 데이터 업데이트
+extension FirebaseManager {
+    func createUser(_ userInfo: TempUserInfo, email: String) async throws {
+        let dataToSave: [String: Any] = [
+            "nickName": userInfo.nickName,
+            "babyName": userInfo.babyName,
+            "isAgreeToAdvertising": userInfo.isAgreeToAdvertising,
+            "babyBirthDate": Timestamp(date: userInfo.babyBirthDate),
+            "solidStartDate": Timestamp(date: userInfo.solidStartDate)
+        ]
+        
+        let colRef = getColRef(.User)
+        let docRef = colRef.getDocRef(email)
+        
+        do {
+            try await docRef.setData(dataToSave, merge: true)
+            print("온보딩 유저 데이터를 저장했습니다. - id: \(email)")
+        } catch {
+            print("온보딩 유저 데이터 저장에 실패했습니다.")
+            throw error
+        }
+    }
+}
+
 // MARK: 없는 재료 리포트
 extension FirebaseManager {
     

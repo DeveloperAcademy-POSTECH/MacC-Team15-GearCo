@@ -7,14 +7,6 @@
 
 import SwiftUI
 
-struct TempUserInfo {
-    var isAgreeToAdvertising: Bool = false
-    var nickName: String = ""
-    var babyName: String = ""
-    var babyBirthDate: Date = Date()
-    var solidStartDate: Date = Date()
-}
-
 struct AgreeToTermsView: View {
     private let termsButtonsSpacing = 16.0
     private let bigButtonTopPadding = 70.0
