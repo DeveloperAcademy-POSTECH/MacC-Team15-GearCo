@@ -12,6 +12,7 @@ import FirebaseAuth
 
 class AppleLoginOB: ObservableObject{
     @EnvironmentObject var user: UserOB
+    @AppStorage("email") var email = ""
     
     // State of Signed in
     enum SignInState {
@@ -86,7 +87,7 @@ class AppleLoginOB: ObservableObject{
                 print("Sign in With Apple : Register, upload User Data on Firestore")
                 let userDocRef = FirebaseManager.shared.getUserDocRefWithEmail(useremail)
                 userDocRef.setData([
-                    "id" : useremail,
+                    "email" : useremail,
                     "AppleID" : userID,
                 ], merge: true){ err in
                     if let err = err {
@@ -117,7 +118,7 @@ class AppleLoginOB: ObservableObject{
                         failHandler("최초 등록 실패","관리자 문의 바랍니다")
                     }else{
                         for document in querySnapshot!.documents {
-                            let useremail = document.data()["id"] as? String ?? ""
+                            let useremail = document.data()["email"] as? String ?? ""
                             print("Success fetching Email Data from Firebase in Apple Login")
                             self.appleLoginHandler(true, useremail, failHandler: failHandler)
                         }
@@ -141,12 +142,21 @@ class AppleLoginOB: ObservableObject{
                 let userItems = dict
                 
                 let AppldID = userItems["AppleID"] as? String ?? ""
-                let id = userItems["id"] as? String ?? ""
+                let email = userItems["email"] as? String ?? ""
                 let nickName = userItems["nickName"] as? String ?? ""
+                let babyName = userItems["babyName"] as? String ?? ""
+                let isAgreeToAdvertising = userItems["isAgreeToAdvertising"] as? Bool ?? false
+                let babyBirthDate = (userItems["babyBirthDate"] as? Timestamp ?? Timestamp(date: Date())).dateValue()
+                let solidStartDate = (userItems["solidStartDate"] as? Timestamp ?? Timestamp(date: Date())).dateValue()
                 
-                UserDefaults().set(id, forKey: "id")
+                
+                UserDefaults().set(email, forKey: "email")
                 UserDefaults().set(AppldID, forKey: "AppleID")
+                UserDefaults().set(babyName, forKey: "babyName")
                 UserDefaults().set(nickName, forKey: "nickName")
+                UserDefaults().set(isAgreeToAdvertising, forKey: "isAgreeToAdvertising")
+                UserDefaults().set(babyBirthDate, forKey: "babyBirthDate")
+                UserDefaults().set(solidStartDate, forKey: "solidStartDate")
                 
                 print("Uset Data Fetched, saved at UserDefaults.")
             }
