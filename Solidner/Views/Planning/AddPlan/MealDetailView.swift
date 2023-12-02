@@ -11,11 +11,13 @@ struct MealDetailView: View {
     @EnvironmentObject var user: UserOB
     @StateObject private var mealOB: MealOB
     @State private var showSettingStartDate: Bool = false
-    @State private var isSaveButtonTapped: Bool = false
     @State private var isDeleteButtonTapped: Bool = false
     
-    @State var showAddNewIngredientView: Bool = false
-    @State var showAddOldIngredientView: Bool = false
+    @State private var showToast: Bool = false
+    @State private var toastCounter = 0
+    
+    @State private var showAddNewIngredientView: Bool = false
+    @State private var showAddOldIngredientView: Bool = false
     
     @Environment(\.dismiss) private var dismiss
     
@@ -46,7 +48,9 @@ struct MealDetailView: View {
         RootVStack {
             viewHeader
             viewBody
+                .defaultBottomPadding()
         }
+        .ignoresSafeArea(.all, edges: .bottom)
     }
     
     @ViewBuilder
@@ -75,10 +79,11 @@ struct MealDetailView: View {
                         deleteMealPlan
                     }
                 }
+                .defaultViewBodyTopPadding()
                 .defaultHorizontalPadding()
             }
             Group {
-                if isSaveButtonTapped { toastMessage }
+                if showToast { toastMessage }
                 addMealPlanButton
             }
             .defaultHorizontalPadding()
@@ -154,22 +159,11 @@ extension MealDetailView {
                     .withRoundedBackground(cornerRadius: K.IngredientTitleAndChip.backgroundCornerRadius, color: .defaultText_wh)
             }
             .padding(K.IngredientTitleAndChip.vstackPadding)
-            //        return HStack {
-            //            VStack(spacing: 16){
-            //                title
-            //                ColoredIngredientsText(mealPlan: mealOB.mealPlan, type: .chip)
-            //                    .padding(top: 5, leading: 10, bottom: 7, trailing: 10)
-            //                    .withRoundedBackground(cornerRadius: 4.87, color: .defaultText_wh)
-            //            }
-            //            Spacer()
-            //        }
-            //        .padding(.bottom, -10)
         } else {
             EmptyView()
         }
     }
     
-    #warning("ingredientChip 편집 모드일 때 오른쪽 chip을 제대로 바꿔야..")
     // TODO: - 추후 이상 반응이 추가된다면, .new 말고 이상반응 뱃지 달아야함
     private var addedTestingIngredients: some View {
         addedIngredientsView(
@@ -185,20 +179,22 @@ extension MealDetailView {
         )
     }
     
-    // TODO: - type 어떻게 바꿀지 고민...
-    #warning("mismatch일 때에도 chip:)")
     private func addedIngredientsView(of ingredients: [Ingredient], type: MealOB.IngredientTestType) -> some View {
         VStackInIngredients {
             ForEach(ingredients) { ingredient in
                 let viewType: AddedIngredientView.AddedIngredientViewType = {
+                    let isMisMatched = mealOB.mismatches.contains(where: { $0.id == ingredient.id })
+                    let isNew = type == .new
                     if !isEditMode { // Edit 모드가 아닐 때 - 삭제
                         return .deletable
+                    } else if isMisMatched && isNew {
+                        return .mismatchAndNew
                     } else if type == .new { // Edit 모드인데 새로운 재료일 때
                         return .new
+                    } else if isMisMatched {
+                        return .mismatch
                     } else if let babyMonth = user.dateAfterBirth.month, babyMonth < ingredient.ableMonth { // able month > 현재 생후 달
                         return .age
-//                    } else if mismatches.contains(ingredient) //
-//
                     } else {
                         return .none
                     }
@@ -346,6 +342,7 @@ extension MealDetailView {
             } message: {
                 Text("해당 끼니 일정을 삭제할까요?")
             }
+            .padding(.bottom, 100)
     }
 }
 
@@ -353,20 +350,7 @@ extension MealDetailView {
 // TODO: - taost Message는 나타난지 3초 이후에 사라짐.
 extension MealDetailView {
     private var toastMessage: some View {
-        HStack(spacing: K.ToastMessage.hStackSpacing) {
-            Image(assetName: .check)
-            Text(texts.editCompleteText)
-                .customFont(.toast, color: .tertinaryText)
-            Spacer()
-        }
-        .padding(.leading, K.ToastMessage.hStackPaddingLeading)
-        .frame(height: K.ToastMessage.hStackFrameHeight)
-        .withRoundedBackground(
-            cornerRadius: K.ToastMessage.backgroundCornerRadius,
-            fill: Color.defaultText_wh,
-            strokeBorder: Color.listStrokeColor, 
-            lineWidth: K.ToastMessage.backgroundLineWidth
-        )
+        ToastMessage($showToast, image: .check, message: texts.editCompleteText)
     }
 }
 
@@ -379,14 +363,25 @@ extension MealDetailView {
             disabledCondition: mealOB.isAddButtonDisabled && !isEditMode
         ) {
             if isEditMode {
-                isSaveButtonTapped = true
-                mealOB.changeMealPlan(user: user)
+                addMealPlanButtonTapped()
             }
             else {
                 mealOB.addMealPlan(user: user)
                 dismiss()
             }
         }
+    }
+    
+    private func addMealPlanButtonTapped() {
+        showToast = true
+        toastCounter += 1
+        let currentCounter = toastCounter
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            if currentCounter == toastCounter {
+                showToast = false
+            }
+        }
+        mealOB.changeMealPlan(user: user)
     }
 }
 
@@ -459,14 +454,6 @@ extension MealDetailView {
         enum MealCycle {
             static var resultCycleGapTextColor: Color { .primeText.opacity(0.4) }
             static var resultCycleVStackSpacing: CGFloat { 10 }
-        }
-
-        enum ToastMessage {
-            static var hStackSpacing: CGFloat { 4.27 }
-            static var hStackFrameHeight: CGFloat { 48 }
-            static var hStackPaddingLeading: CGFloat { 12.25 }
-            static var backgroundCornerRadius: CGFloat { 12 }
-            static var backgroundLineWidth: CGFloat { 1 }
         }
         
         static func textColor(when condition: Bool) -> Color {

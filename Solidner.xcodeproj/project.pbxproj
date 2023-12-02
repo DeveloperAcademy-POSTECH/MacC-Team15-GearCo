@@ -48,6 +48,8 @@
 		B2D96E5D2B1625C200B5D30C /* WrongPlanChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D96E5C2B1625C200B5D30C /* WrongPlanChecker.swift */; };
 		B2D96E5F2B17C78200B5D30C /* Collection+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D96E5E2B17C78200B5D30C /* Collection+.swift */; };
 		B2D96E612B19675D00B5D30C /* PlanEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D96E602B19675D00B5D30C /* PlanEmptyView.swift */; };
+		B2D96E662B19A7CC00B5D30C /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = B2D96E652B19A7CC00B5D30C /* Algorithms */; };
+		B2D96E682B19B6B300B5D30C /* ToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D96E672B19B6B300B5D30C /* ToastMessage.swift */; };
 		B2DE212E2B0DDA54006E42C7 /* PlanBatchSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DE212D2B0DDA54006E42C7 /* PlanBatchSettingView.swift */; };
 		B2EFE9832B067CA000E3F94B /* PlanGroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EFE9822B067CA000E3F94B /* PlanGroupDetailView.swift */; };
 		B2EFE9852B067FB200E3F94B /* MockPlanData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EFE9842B067FB200E3F94B /* MockPlanData.swift */; };
@@ -164,6 +166,7 @@
 		B2D96E5C2B1625C200B5D30C /* WrongPlanChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrongPlanChecker.swift; sourceTree = "<group>"; };
 		B2D96E5E2B17C78200B5D30C /* Collection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+.swift"; sourceTree = "<group>"; };
 		B2D96E602B19675D00B5D30C /* PlanEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanEmptyView.swift; sourceTree = "<group>"; };
+		B2D96E672B19B6B300B5D30C /* ToastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessage.swift; sourceTree = "<group>"; };
 		B2DE212D2B0DDA54006E42C7 /* PlanBatchSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanBatchSettingView.swift; sourceTree = "<group>"; };
 		B2EFE9822B067CA000E3F94B /* PlanGroupDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanGroupDetailView.swift; sourceTree = "<group>"; };
 		B2EFE9842B067FB200E3F94B /* MockPlanData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPlanData.swift; sourceTree = "<group>"; };
@@ -225,6 +228,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2D96E662B19A7CC00B5D30C /* Algorithms in Frameworks */,
 				0E18AD742AFAA3430011ED4A /* FirebaseAnalytics in Frameworks */,
 				0E18AD762AFAA3430011ED4A /* FirebaseAuth in Frameworks */,
 				0E18AD782AFAA3430011ED4A /* FirebaseFirestore in Frameworks */,
@@ -277,6 +281,7 @@
 				C3B4DB482B0F22AF00772C2A /* BackgroundView.swift */,
 				B2D1E3822B136C1E00318E85 /* Header.swift */,
 				C3B4DB4D2B10BA2E00772C2A /* ViewDivider.swift */,
+				B2D96E672B19B6B300B5D30C /* ToastMessage.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -568,6 +573,7 @@
 				0E18AD732AFAA3430011ED4A /* FirebaseAnalytics */,
 				0E18AD752AFAA3430011ED4A /* FirebaseAuth */,
 				0E18AD772AFAA3430011ED4A /* FirebaseFirestore */,
+				B2D96E652B19A7CC00B5D30C /* Algorithms */,
 			);
 			productName = Solidner;
 			productReference = C3C637592AF90C2B006D464D /* Solidner.app */;
@@ -644,6 +650,7 @@
 			mainGroup = C3C637502AF90C2B006D464D;
 			packageReferences = (
 				0E18AD722AFAA3430011ED4A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				B2D96E642B19A7CC00B5D30C /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 			);
 			productRefGroup = C3C6375A2AF90C2B006D464D /* Products */;
 			projectDirPath = "";
@@ -759,6 +766,7 @@
 				B2D1DCD62B07466500D7B77B /* MealGroupView.swift in Sources */,
 				C336EE512B054AED0057D8B8 /* TermsWebView.swift in Sources */,
 				C3B4DB4C2B10B51300772C2A /* MypageRootView.swift in Sources */,
+				B2D96E682B19B6B300B5D30C /* ToastMessage.swift in Sources */,
 				B2DE212E2B0DDA54006E42C7 /* PlanBatchSettingView.swift in Sources */,
 				C336EE532B054C820057D8B8 /* AgreeCase.swift in Sources */,
 				C3AD1BCA2B023FA1003BB3E0 /* BabyBirthDateView.swift in Sources */,
@@ -938,7 +946,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Solidner/Preview Content\"";
-				DEVELOPMENT_TEAM = G8XX337GMH;
+				DEVELOPMENT_TEAM = 6BHXWP5PYW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Solidner/Info.plist;
@@ -953,7 +961,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.swimmer.Solidner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ollie.Solidner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -972,7 +980,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Solidner/Preview Content\"";
-				DEVELOPMENT_TEAM = G8XX337GMH;
+				DEVELOPMENT_TEAM = 6BHXWP5PYW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Solidner/Info.plist;
@@ -987,7 +995,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.swimmer.Solidner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ollie.Solidner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1122,6 +1130,14 @@
 				minimumVersion = 10.0.0;
 			};
 		};
+		B2D96E642B19A7CC00B5D30C /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1139,6 +1155,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0E18AD722AFAA3430011ED4A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		B2D96E652B19A7CC00B5D30C /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2D96E642B19A7CC00B5D30C /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

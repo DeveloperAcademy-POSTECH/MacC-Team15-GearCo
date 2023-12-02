@@ -19,6 +19,19 @@ struct RootVStack<C: View>: View {
     }
 }
 
+
+struct RootDefaultSpacingVStack<C: View>: View {
+    @ViewBuilder let content: C
+    
+    var body: some View {
+        VStack(spacing: 19.88) {
+            content
+        }
+        .navigationBarBackButtonHidden()
+        .withClearBackground(color: .secondBgColor)
+    }
+}
+
 #Preview {
     RootVStack {
         Text("haha")

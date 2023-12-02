@@ -32,36 +32,38 @@ struct MonthlyPlanningView: View {
     @State private var nowMonthWeekNums = Date.nowMonthWeeks()
     
     @State private var showChangeMonthModal = false
+    @State private var showTotalSetting = false
     @State private var isMyPageOpenning = false
     
     var body: some View {
         VStack(spacing: 0) {
-            #warning("테스트 데이터 생성용 버튼")
-            Button {
-                let sDate = user.solidStartDate.add(.day, value: Int.random(in: 0...90))
-                let meal: MealOB = MealOB(startDate: sDate, cycleGap: CycleGaps(rawValue: Int.random(in: 1...4))!,
-                                          mealPlansOB: mealPlansOB
-                )
-                meal.set(mealType: MealType(rawValue: Int.random(in: 0...5))!)
-                for _ in Range<Int>(0...Int.random(in: 0...2)) {
-                    meal.addIngredient(ingredient: ingredientData.ingredients.randomElement()!.value, in: .new)
-                }
-                for _ in Range<Int>(0...Int.random(in: 0...5)) {
-                    meal.addIngredient(ingredient: ingredientData.ingredients.randomElement()!.value, in: .old)
-                }
-                FirebaseManager.shared.saveMealPlan(meal, user: user)
-            } label: {
-                HStack {
-                    Image(systemName: "lasso.and.sparkles")
-                        .foregroundStyle(Color.pink)
-                        .frame(width: 40)
-                    Text("랜덤 이유식 계획 생성 - 테스트용")
-                        .bodyFont2()
-                        .foregroundColor(Color.pink)
-                }
-            }
+//            #warning("테스트 데이터 생성용 버튼")
+//            Button {
+//                let sDate = user.solidStartDate.add(.day, value: Int.random(in: 0...90))
+//                let meal: MealOB = MealOB(startDate: sDate, cycleGap: CycleGaps(rawValue: Int.random(in: 1...4))!,
+//                                          mealPlansOB: mealPlansOB
+//                )
+//                meal.set(mealType: MealType(rawValue: Int.random(in: 0...5))!)
+//                for _ in Range<Int>(0...Int.random(in: 0...2)) {
+//                    meal.addIngredient(ingredient: ingredientData.ingredients.randomElement()!.value, in: .new)
+//                }
+//                for _ in Range<Int>(0...Int.random(in: 0...5)) {
+//                    meal.addIngredient(ingredient: ingredientData.ingredients.randomElement()!.value, in: .old)
+//                }
+//                FirebaseManager.shared.saveMealPlan(meal, user: user)
+//            } label: {
+//                HStack {
+//                    Image(systemName: "lasso.and.sparkles")
+//                        .foregroundStyle(Color.pink)
+//                        .frame(width: 40)
+//                    Text("랜덤 이유식 계획 생성 - 테스트용")
+//                        .bodyFont2()
+//                        .foregroundColor(Color.pink)
+//                }
+//            }
 
-            monthlyHeader.padding(.bottom, 16)
+            monthlyHeader
+//                .padding(.bottom, 16)
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     calendarCurrentYearMonth.padding(.bottom, 26)
@@ -76,8 +78,13 @@ struct MonthlyPlanningView: View {
                         RoundedRectangle(cornerRadius: 12)
                             .foregroundColor(.defaultText_wh)
                     }
-                    Spacer()
-                }.clipped().padding(.horizontal, 16)
+                    Spacer().frame(height: 200)
+                    ThickDivider()
+                        .padding(.horizontal, -16)
+                    totalSetting
+                        .padding(top: 26, leading: 0, bottom: 100, trailing: 0)
+                }.padding(.horizontal, 16).clipped()
+                    .defaultViewBodyTopPadding()
             }
         }.background(Color.secondBgColor)
             .task {
@@ -105,6 +112,24 @@ struct MonthlyPlanningView: View {
             }.sheet(isPresented: $showChangeMonthModal) {
                 ChangeMonthHalfModal(selectedDate: $selectedMonthDate, fromDate: user.solidStartDate)
             }
+    }
+    
+    private var totalSetting: some View {
+        Button {
+            showTotalSetting = true
+        } label: {
+            HStack {
+                Text("이유식 전체 설정")
+                    .customFont(.header4, color: .primeText)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(Color.primeText)
+                    .bold()
+            }
+        }
+        .navigationDestination(isPresented: $showTotalSetting) {
+            PlanBatchSettingView()
+        }
     }
     
     // MARK: 재료 바 Row return 함수
@@ -433,7 +458,7 @@ struct MonthlyPlanningView: View {
             rightButton: Button {
                 showWeekly = true
             } label: {
-                Image(.calendarInPlanList)
+                Image(.calendarInMonthly)
             }
         )
     }

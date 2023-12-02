@@ -37,7 +37,9 @@ struct PlanGroupDetailView: View {
         RootVStack {
             viewHeader
             viewBody
+                .defaultBottomPadding()
         }
+        .ignoresSafeArea(.all, edges: .bottom)
     }
     
     @ViewBuilder
@@ -68,6 +70,7 @@ struct PlanGroupDetailView: View {
             }
             addMealButton
         }
+        .defaultViewBodyTopPadding()
         .defaultHorizontalPadding()
         .navigationDestination(isPresented: $isMealAdding) {
             MealDetailView(

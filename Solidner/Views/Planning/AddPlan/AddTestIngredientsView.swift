@@ -97,6 +97,7 @@ struct AddTestIngredientsView: View {
                 }
                 
                 ScrollView {
+                    Spacer().frame(height: selectedTypeBottomSpace)
                     if let scrollID = scrollID {
                         if isSearching {
                             IngredientsBigDivision(case: .검색,
@@ -142,16 +143,21 @@ struct AddTestIngredientsView: View {
                         }
                     }
                 }
+                Spacer().frame(height: saveButtonBottomSpace)
             }
             Group {
-                Spacer().frame(height: saveButtonBottomSpace)
 //                if isIngredientBad { toastMessage }
                 ButtonComponents(.big, title: "저장") {
                     saveSelectedTestIngredient()
                 }
-            }.padding(.horizontal, viewHorizontalPadding)
+            }
+            .padding(.horizontal, viewHorizontalPadding)
+            .defaultBottomPadding()
             
-        }.background(Color.mainBackgroundColor).toolbar(.hidden)
+        }
+        .background(Color.secondBgColor)
+        .ignoresSafeArea(.all, edges: .bottom)
+        .toolbar(.hidden)
             .onAppear {
                 initSelectedIngredient()
                 countingIngredientUse()
@@ -206,7 +212,9 @@ extension AddTestIngredientsView {
                                 selectedIngredientTypeBox(ingredient: data)
                             }
                         }
-                    }.padding(.leading, viewHorizontalPadding).padding(.bottom, selectedTypeBottomSpace)
+                    }
+                    .padding(.leading, viewHorizontalPadding)
+//                    .padding(.bottom, selectedTypeBottomSpace)
                 }
             )
         }

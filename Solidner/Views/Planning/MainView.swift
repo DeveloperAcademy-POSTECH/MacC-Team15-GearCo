@@ -11,12 +11,13 @@ struct MainView: View {
     @EnvironmentObject var user: UserOB
     @StateObject private var mealPlansOB = MealPlansOB()
     @State private var showWeekly = true
+    @State private var isLoading = true
     
     var body: some View {
         NavigationStack {
             Group {
                 if showWeekly {
-                    PlanListView(showWeekly: $showWeekly)
+                    PlanListView(showWeekly: $showWeekly, isLoading: $isLoading)
                 } else {
                     MonthlyPlanningView(showWeekly: $showWeekly)
                 }
@@ -47,6 +48,9 @@ struct MainView: View {
         .environmentObject(mealPlansOB)
         .task {
             await mealPlansOB.loadAllPlans()
+            withAnimation {
+                isLoading = false
+            }
         }
     }
 }

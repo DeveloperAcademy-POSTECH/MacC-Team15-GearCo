@@ -23,7 +23,7 @@ struct ChangeMonthHalfModal: View {
     // TODO: - 매직넘버 지우기
     var body: some View {
         ChangeMonthModal(selectedDate: $selectedDate, fromDate: user.solidStartDate)
-            .presentationDetents([.height(395)])
+            .presentationDetents([.height(400)])
             .modify { view in
                 if #available(iOS 16.4, *) {
                     view.presentationCornerRadius(25)
@@ -68,9 +68,10 @@ struct ChangeMonthModal: View {
             Spacer().frame(height: 34)
             monthTitleBar
             monthButtons
-            Spacer()
             saveButton
         }
+        .ignoresSafeArea(.all, edges: .bottom)
+        .defaultBottomPadding()
         .defaultHorizontalPadding()
         .withClearBackground(color: .secondBgColor)
     }
@@ -114,7 +115,7 @@ extension ChangeMonthModal {
         }
     }
     
-    #warning("밖으로 빼든가 매직스트링 지우든가 svg를 불러오든가")
+#warning("밖으로 빼든가 매직스트링 지우든가 svg를 불러오든가")
     enum Chevron {
         case left, right
         
@@ -153,7 +154,7 @@ extension ChangeMonthModal {
                 }
             }
         }
-//        .padding(.bottom, 12)
+        .frame(height: 226)
     }
     
     private func monthButton(of number: Int) -> some View {
@@ -197,19 +198,18 @@ extension ChangeMonthModal {
             title: texts.saveButtonText,
             disabledCondition: isDisabled) {
 //                withAnimation {
-                    selectedDate = selectingDate
-                    saveAction()
-                    dismiss()
+                selectedDate = selectingDate
+                saveAction()
+                dismiss()
 //                }
             }
             .buttonColor(K.saveButtonBackgroundColor)
-            .padding(.bottom, 6)
     }
 }
 
 extension ChangeMonthModal {
     enum K {
-//         static var rootVStackSpacing: CGFloat { 30 }
+        //         static var rootVStackSpacing: CGFloat { 30 }
         static var rootVStackSpacing: CGFloat { 25 }
         static var chevronColor: Color { Color.tertinaryText }
         

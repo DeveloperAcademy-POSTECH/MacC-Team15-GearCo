@@ -31,7 +31,7 @@ enum TextLiterals {
         }
         static func fromDateToDateText(from: Int, to: Int) -> String { "\(from) ~ \(to)일차" }
         static var addIngredientText: String { "재료 추가" }
-        static var solidTotalSettingText: String { "이유식 전체설정" }
+        static var solidTotalSettingText: String { "이유식 전체 설정" }
         
     }
 
@@ -194,7 +194,7 @@ enum TextLiterals {
     
     enum AddIngredientsView {
         static func testViewTitle(viewType: MealOB.IngredientTestType) -> String {
-            if viewType == .new { "테스트 재료 추가" }
+            if viewType == .new { "새로운 재료 추가" }
             else { "먹어본 재료 추가" }
         }
         static var 먹을수있는재료Explain: String { "아이가 섭취할 수 있는 재료의\n전체 목록이에요" }

@@ -22,24 +22,26 @@ struct DailyPlanListView: View {
     }
     
     // TODO: - 계획이 바뀌었을 때, 바뀐 계획에 따라서 값이 바뀌는지 확인하기
-    let isWrongPlan: Bool
+    var isWrongPlan: Bool {
+        WrongPlanChecker.isWrongPlan(mealPlans)
+    }
 
     init(
         date: Date = Date(),
 //        mealPlans: [MealPlan] = [MealPlan.mockMealsOne],
-        mealPlans: [MealPlan] = [],
-        isWrongPlan: Bool = false
+        mealPlans: [MealPlan] = []
     ) {
         self.date = date
         self._mealPlans = State(initialValue: mealPlans)
-        self.isWrongPlan = isWrongPlan
     }
 
     var body: some View {
         RootVStack {
             viewHeader
             viewBody
+                .defaultBottomPadding()
         }
+        .ignoresSafeArea(.all, edges: .bottom)
     }
 }
 
@@ -70,6 +72,7 @@ extension DailyPlanListView {
             }
             addMealPlanButton
         }
+        .defaultViewBodyTopPadding()
         .defaultHorizontalPadding()
         .navigationDestination(isPresented: $isMealAdding) {
             MealDetailView(
@@ -146,10 +149,9 @@ struct DailyPlanListView_Previews: PreviewProvider {
     static var previews: some View {
         DailyPlanListView(
             date: Date(),
-            mealPlans: [],
-            isWrongPlan: false
+            mealPlans: []
         )
         .environmentObject(UserOB())
-            .environmentObject(MealPlansOB())
+        .environmentObject(MealPlansOB())
     }
 }

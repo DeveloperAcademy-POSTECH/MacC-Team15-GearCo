@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Ingredient: CustomStringConvertible, Identifiable, Hashable, Codable {
+struct Ingredient: Identifiable, Hashable, Codable {
     let id: Int
     let name: String
     let type: IngredientType

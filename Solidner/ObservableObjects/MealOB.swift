@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Algorithms
 
 final class MealOB: ObservableObject {
 //    static let mock: MealOB = MealOB(mealPlan: MealPlan.mockMealsOne.first!, cycleGap: .three)
@@ -13,8 +14,16 @@ final class MealOB: ObservableObject {
     let mealPlan: MealPlan?
     weak var mealPlansOB: MealPlansOB?
     
-    @Published private(set) var newIngredients: [Ingredient] = []
-    @Published private(set) var oldIngredients: [Ingredient] = []
+    @Published private(set) var newIngredients: [Ingredient] = [] {
+        didSet {
+            mismatches = buildMismatches()
+        }
+    }
+    @Published private(set) var oldIngredients: [Ingredient] = [] {
+        didSet {
+            mismatches = buildMismatches()
+        }
+    }
     @Published private(set) var mealType: MealType?
     @Published private(set) var startDate: Date
     @Published var cycleGap: CycleGaps
@@ -130,8 +139,14 @@ final class MealOB: ObservableObject {
         firebaseManager.deleteMealPlan(self.mealPlan, user: user)
     }
     
-    #warning("mismatch check")
+    lazy var mismatches: [Ingredient] = {
+        return buildMismatches()
+    }()
     
+    private func buildMismatches() -> [Ingredient] {
+        let totalMismatches = oldIngredients.flatMap { $0.misMatches } + newIngredients.flatMap { $0.misMatches }
+        return Array(totalMismatches.uniqued())
+    }
 }
 
 extension MealOB {
