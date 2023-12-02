@@ -50,7 +50,7 @@ struct PlanEmptyView: View {
     private var navigateToReset: some View {
         Button {
             wantsToReset = true
-            #warning("플랜 세팅 후 메인 화면으로 가야 합니다.")
+            //TODO: - "플랜 세팅 후 메인 화면으로 가야 합니다.")
             // navigation path 날려~
         } label: {
             Text("캘린더 초기화를 찾으시나요?")

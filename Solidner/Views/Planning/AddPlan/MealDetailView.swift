@@ -350,7 +350,7 @@ extension MealDetailView {
 // TODO: - taost Message는 나타난지 3초 이후에 사라짐.
 extension MealDetailView {
     private var toastMessage: some View {
-        ToastMessage(type: .savePlan, isPresented: $showToast)
+        ToastMessage(type: .savePlan)
     }
 }
 

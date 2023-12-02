@@ -12,7 +12,6 @@ struct ToastMessage: View {
         case warnMismatch, savePlan
     }
     
-    @Binding var isPresented: Bool
     let type: ToastMessageType
     
     var image: Image {
@@ -52,16 +51,9 @@ struct ToastMessage: View {
     }
 }
 
-extension ToastMessage {
-    init(type: ToastMessageType,isPresented: Binding<Bool>) {
-        self.type = type
-        self._isPresented = isPresented
-    }
-}
-
 #Preview {
     Group {
-        ToastMessage(type: .warnMismatch, isPresented: .constant(true))
-        ToastMessage(type: .savePlan, isPresented: .constant(true))
+        ToastMessage(type: .warnMismatch)
+        ToastMessage(type: .savePlan)
     }
 }

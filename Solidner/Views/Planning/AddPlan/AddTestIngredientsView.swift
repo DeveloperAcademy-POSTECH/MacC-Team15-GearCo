@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Algorithms
 
 // 스크롤 id 저장.
 struct ScrollID {
@@ -48,6 +49,14 @@ struct AddTestIngredientsView: View {
     
     @State private var showReportSheet = false
     @State private var isSearching = false
+    
+    var hasIngredientsMismatch: Bool {
+        let ingredients = selectedIngredients.compactMap { ingredientData[$0] }
+        let mismatches = Set(ingredients.flatMap { $0.misMatches }.uniqued())
+        return ingredients.reduce(false) { partialResult, ingredient in
+            partialResult || mismatches.contains(ingredient)
+        }
+    }
     
     @EnvironmentObject private var user: UserOB
     @EnvironmentObject private var mealOB: MealOB
@@ -146,14 +155,12 @@ struct AddTestIngredientsView: View {
                 Spacer().frame(height: saveButtonBottomSpace)
             }
             Group {
-//                if isIngredientBad { toastMessage }
+                if hasIngredientsMismatch { toastMessage }
                 ButtonComponents(.big, title: "저장") {
                     saveSelectedTestIngredient()
-                }
+                }.defaultBottomPadding()
             }
             .padding(.horizontal, viewHorizontalPadding)
-            .defaultBottomPadding()
-            
         }
         .background(Color.secondBgColor)
         .ignoresSafeArea(.all, edges: .bottom)
@@ -170,23 +177,12 @@ struct AddTestIngredientsView: View {
 
 // MARK: View Components
 extension AddTestIngredientsView {
-//    private var toastMessage: some View {
-//        HStack(spacing: 4.27) {
-//            Image(assetName: .check)
-//            Text("방금 고른 재료는 지금 재료와 궁합이 좋지 않아요!")
-//                .customFont(.toast, color: .tertinaryText)
-//            Spacer()
-//        }
-//        .padding(.leading, 12.25)
-//        .frame(height: 48)
-//        .withRoundedBackground(
-//            cornerRadius: 12,
-//            fill: Color.defaultText_wh,
-//            strokeBorder: Color.listStrokeColor,
-//            lineWidth: 1
-//        )
-//    }
     
+    private var toastMessage: some View {
+        ToastMessage(type: .warnMismatch)
+            .padding(.bottom, 20.responsibleHeight)
+    }
+
     private func searchAndIngredientTypeButtonsRow(proxy: ScrollViewProxy) -> some View {
         return ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: typeButtonBetweenSpace) {
