@@ -37,6 +37,7 @@
 		B2746E3D2B05DF900083AB57 /* StartDateSettingModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E3C2B05DF900083AB57 /* StartDateSettingModal.swift */; };
 		B2746E3F2B05F5210083AB57 /* ThickDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E3E2B05F5210083AB57 /* ThickDivider.swift */; };
 		B2746E432B05FDC40083AB57 /* TitleAndHintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2746E422B05FDC40083AB57 /* TitleAndHintView.swift */; };
+		B29602B42B1AFC24001E3E98 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29602B32B1AFC24001E3E98 /* UINavigationController+.swift */; };
 		B29854B82B0DB38C009FBE33 /* ChangeMonthModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29854B72B0DB38C009FBE33 /* ChangeMonthModal.swift */; };
 		B29CF7882AFCCA5B00B54A3E /* PlanListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF7872AFCCA5B00B54A3E /* PlanListView.swift */; };
 		B29CF78B2AFCCEA000B54A3E /* TextLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CF78A2AFCCEA000B54A3E /* TextLiterals.swift */; };
@@ -155,6 +156,7 @@
 		B2746E3C2B05DF900083AB57 /* StartDateSettingModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDateSettingModal.swift; sourceTree = "<group>"; };
 		B2746E3E2B05F5210083AB57 /* ThickDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThickDivider.swift; sourceTree = "<group>"; };
 		B2746E422B05FDC40083AB57 /* TitleAndHintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleAndHintView.swift; sourceTree = "<group>"; };
+		B29602B32B1AFC24001E3E98 /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
 		B29854B72B0DB38C009FBE33 /* ChangeMonthModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeMonthModal.swift; sourceTree = "<group>"; };
 		B29CF7872AFCCA5B00B54A3E /* PlanListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanListView.swift; sourceTree = "<group>"; };
 		B29CF78A2AFCCEA000B54A3E /* TextLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLiterals.swift; sourceTree = "<group>"; };
@@ -530,6 +532,7 @@
 				C3B4DB462B0E84A500772C2A /* UIScreen+.swift */,
 				B25582012B10AAF200B34F34 /* CGFloat+.swift */,
 				B2D96E5E2B17C78200B5D30C /* Collection+.swift */,
+				B29602B32B1AFC24001E3E98 /* UINavigationController+.swift */,
 			);
 			path = "Extension+";
 			sourceTree = "<group>";
@@ -734,6 +737,7 @@
 				C36942492AFF755F002465D4 /* BackButtonHeader.swift in Sources */,
 				B24078222B13D8CB005D3412 /* RootVStack.swift in Sources */,
 				B29854B82B0DB38C009FBE33 /* ChangeMonthModal.swift in Sources */,
+				B29602B42B1AFC24001E3E98 /* UINavigationController+.swift in Sources */,
 				B29CF7882AFCCA5B00B54A3E /* PlanListView.swift in Sources */,
 				C336EE4A2B03F13B0057D8B8 /* Image+.swift in Sources */,
 				0E18AD712AFA94E10011ED4A /* FirebaseManager.swift in Sources */,
