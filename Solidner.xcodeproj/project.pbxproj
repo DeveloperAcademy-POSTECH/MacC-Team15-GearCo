@@ -272,6 +272,7 @@
 		0E18AD792AFBDCD20011ED4A /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				B24078212B13D8CB005D3412 /* RootVStack.swift */,
 				B2F7909D2B0DDC9900CB4F71 /* SolidnerSegmentedPicker.swift */,
 				B2746E3E2B05F5210083AB57 /* ThickDivider.swift */,
 				B2746E422B05FDC40083AB57 /* TitleAndHintView.swift */,
@@ -350,7 +351,6 @@
 				B2D1DCD52B07466500D7B77B /* MealGroupView.swift */,
 				B25582052B10C94600B34F34 /* ColoredIngredientsText.swift */,
 				B2C2632E2B0F511A0032C488 /* DraggableMealGroupView.swift */,
-				B24078212B13D8CB005D3412 /* RootVStack.swift */,
 				B2D96E602B19675D00B5D30C /* PlanEmptyView.swift */,
 			);
 			path = Common;
