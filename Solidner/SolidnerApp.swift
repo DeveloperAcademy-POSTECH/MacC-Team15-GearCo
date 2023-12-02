@@ -20,11 +20,37 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct SolidnerApp: App {
     // Firebase Setup.
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @AppStorage("isOnboardingOn") var isOnboardingOn = true
     
+    let ingredientData = IngredientData.shared
     @StateObject private var userOB = UserOB()
+    @State private var finishLaunchScreen = false
+    
     var body: some Scene {
         WindowGroup {
-            SignInView().environmentObject(userOB)
+            ZStack {
+                if finishLaunchScreen {
+                    // 로그인 여부에 따른 뷰 분기처리는 여기에
+                    if userOB.email.isEmpty {
+                        SignInView().environmentObject(userOB)
+                    } else if userOB.nickName.isEmpty {
+                        NavigationStack {
+                            AgreeToTermsView()
+                        }.environmentObject(userOB)
+                    } else {
+                        MainView().environmentObject(userOB)
+                    }
+                } else {
+                    LaunchScreenView()
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                withAnimation {
+                                    finishLaunchScreen.toggle()
+                                }
+                            }
+                        }
+                }
+            }
         }
     }
 }

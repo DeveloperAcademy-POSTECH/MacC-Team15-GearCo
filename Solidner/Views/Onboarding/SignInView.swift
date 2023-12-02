@@ -36,14 +36,38 @@ struct AppleUser: Codable {
 struct SignInView: View {
     @EnvironmentObject var user: UserOB
     @StateObject var loginData = AppleLoginOB()
-    
     @State private var currentNonce: String?
+    @State private var isLoading = false
     var body: some View {
-
-        VStack {
-            SignInWithAppleButton(
-                onRequest: configure,
-                onCompletion: handle)
+        ZStack {
+            BackgroundView()
+            if isLoading {
+                ZStack {
+                    VStack {
+                        Spacer()
+                        SignInWithAppleButton(
+                            onRequest: configure,
+                            onCompletion: handle)
+                        .frame(width: 335, height: 56)
+                        .cornerRadius(12)
+                        .padding(.bottom, 21)
+                    }
+                    .background(
+                        Image(assetName: .loginBg)
+                            .resizable()
+                            .edgesIgnoringSafeArea(.all)
+                            .frame(width: UIScreen.getWidth(390), height: UIScreen.getWidth(844))
+                    )
+                    Image(assetName: .loginTypo)
+                        .resizable()
+                        .frame(width: UIScreen.getWidth(250.86), height: UIScreen.getWidth(52))
+                }
+            }
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now()+0.1 , execute: {
+                withAnimation { isLoading.toggle() }
+            })
         }
     }
     
@@ -63,7 +87,7 @@ struct SignInView: View {
             print(auth)
             switch auth.credential {
             case let appleIdCredentials as ASAuthorizationAppleIDCredential:
-                if let appleUser = AppleUser(credentials: appleIdCredentials){
+                if let appleUser = AppleUser(credentials: appleIdCredentials) {
                     // AppleUser 객체를 JSON 형태로 Encoding하여 UserDefaults에 저장할 수 았는 형태로.
                     let appleUserData = try? JSONEncoder().encode(appleUser)
                     // UserDefaults에 Register한 User의 정보 저장. 초회차 로그인(Register) 이후에는 유저 데이터에 접근할 수 없으므로
@@ -111,6 +135,16 @@ struct SignInView: View {
                                     if let nickName = document.get("nickName") as? String {
                                         user.nickName = nickName
                                         print("로그인(이미 가입된 회원) : \(user.nickName)")
+                                    }
+                                    if let babyName = document.get("babyName") as? String,
+                                       let isAgreeToAdvertising = document.get("isAgreeToAdvertising") as? Bool,
+                                       let babyBirthDate = (document.get("babyBirthDate") as? Timestamp)?.dateValue(),
+                                       let solidStartDate = (document.get("solidStartDate") as? Timestamp)?.dateValue() {
+                                        user.babyName = babyName
+                                        user.isAgreeToAdvertising = isAgreeToAdvertising
+                                        user.babyBirthDate = babyBirthDate
+                                        user.solidStartDate = solidStartDate
+                                        print("로그인(이미 가입된 회원) : 각종 User Data Fetched.")
                                     }
                                 }
                             }

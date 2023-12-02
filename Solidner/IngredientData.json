@@ -1,0 +1,1668 @@
+{
+  "Ingredients": [
+    {
+      "id": 1,
+      "name": "가자미",
+      "type": 4,
+      "ableMonth": 6,
+      "misMatches": [
+        85
+      ],
+      "alternatives": [],
+      "others": "간 x"
+    },
+    {
+      "id": 2,
+      "name": "가지",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 3,
+      "name": "감자",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "초기 추천"
+    },
+    {
+      "id": 4,
+      "name": "강낭콩",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [
+        100
+      ],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 5,
+      "name": "건대추",
+      "type": 2,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 6,
+      "name": "건포도",
+      "type": 2,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 7,
+      "name": "검은깨",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 8,
+      "name": "검은콩",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [
+        100
+      ],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 9,
+      "name": "게살",
+      "type": 4,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 10,
+      "name": "계란",
+      "type": 4,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "지단은 중기 이후"
+    },
+    {
+      "id": 13,
+      "name": "고구마",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [
+        67
+      ],
+      "alternatives": [],
+      "others": "초기 추천"
+    },
+    {
+      "id": 14,
+      "name": "귀리",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 15,
+      "name": "귤",
+      "type": 2,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "이상반응 주의"
+    },
+    {
+      "id": 16,
+      "name": "근대",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [
+        71
+      ],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 17,
+      "name": "기장",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 18,
+      "name": "김",
+      "type": 6,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 19,
+      "name": "녹두",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 20,
+      "name": "녹말",
+      "type": 6,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 21,
+      "name": "느타리버섯",
+      "type": 6,
+      "ableMonth": 7,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 22,
+      "name": "다시마",
+      "type": 6,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 23,
+      "name": "단호박",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "초기 추천"
+    },
+    {
+      "id": 24,
+      "name": "닭고기",
+      "type": 4,
+      "ableMonth": 6,
+      "misMatches": [
+        92
+      ],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 25,
+      "name": "당근",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [
+        77,
+        83,
+        43
+      ],
+      "alternatives": [],
+      "others": "6개월 전 사용x"
+    },
+    {
+      "id": 26,
+      "name": "당면",
+      "type": 6,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 27,
+      "name": "대구",
+      "type": 4,
+      "ableMonth": 6,
+      "misMatches": [
+        85
+      ],
+      "alternatives": [],
+      "others": "간 x"
+    },
+    {
+      "id": 28,
+      "name": "대두",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 29,
+      "name": "대추",
+      "type": 2,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 30,
+      "name": "도미",
+      "type": 4,
+      "ableMonth": 6,
+      "misMatches": [
+        85
+      ],
+      "alternatives": [],
+      "others": "간 x"
+    },
+    {
+      "id": 31,
+      "name": "돼지고기",
+      "type": 4,
+      "ableMonth": 6,
+      "misMatches": [
+        115
+      ],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 32,
+      "name": "두부",
+      "type": 4,
+      "ableMonth": 6,
+      "misMatches": [
+        71
+      ],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 33,
+      "name": "들기름",
+      "type": 6,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 34,
+      "name": "들깨",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 35,
+      "name": "딸기",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "초기 추천,이상반응 주의"
+    },
+    {
+      "id": 36,
+      "name": "땅콩",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "7개월 이전 첨가, (초기 추천)"
+    },
+    {
+      "id": 37,
+      "name": "땅콩버터",
+      "type": 6,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "초기 추천"
+    },
+    {
+      "id": 38,
+      "name": "릭",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 39,
+      "name": "마늘",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "중기 추천"
+    },
+    {
+      "id": 40,
+      "name": "망고",
+      "type": 2,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 41,
+      "name": "멜론",
+      "type": 2,
+      "ableMonth": 7,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 42,
+      "name": "멸치",
+      "type": 4,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 43,
+      "name": "무",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [
+        83,
+        25
+      ],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 44,
+      "name": "미역",
+      "type": 6,
+      "ableMonth": 6,
+      "misMatches": [
+        106
+      ],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 45,
+      "name": "밀가루",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "7개월 이전 첨가, 초기 추천"
+    },
+    {
+      "id": 46,
+      "name": "바나나",
+      "type": 2,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "초기 추천"
+    },
+    {
+      "id": 47,
+      "name": "밤",
+      "type": 2,
+      "ableMonth": 6,
+      "misMatches": [
+        67
+      ],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 48,
+      "name": "밥새우",
+      "type": 4,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 49,
+      "name": "배",
+      "type": 2,
+      "ableMonth": 0,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "초기 추천"
+    },
+    {
+      "id": 50,
+      "name": "배추",
+      "type": 1,
+      "ableMonth": 7,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "6개월 전 사용x"
+    },
+    {
+      "id": 51,
+      "name": "베이킹파우더",
+      "type": 6,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 52,
+      "name": "보리",
+      "type": 3,
+      "ableMonth": 7,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 53,
+      "name": "분유",
+      "type": 5,
+      "ableMonth": 7,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 54,
+      "name": "브로콜리",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "초기 추천"
+    },
+    {
+      "id": 55,
+      "name": "블루베리",
+      "type": 2,
+      "ableMonth": 10,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 56,
+      "name": "비타민",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "초기 추천"
+    },
+    {
+      "id": 57,
+      "name": "비트",
+      "type": 1,
+      "ableMonth": 7,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 58,
+      "name": "빵",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 59,
+      "name": "사과",
+      "type": 2,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "초기 추천"
+    },
+    {
+      "id": 60,
+      "name": "살구",
+      "type": 2,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 61,
+      "name": "새송이버섯",
+      "type": 6,
+      "ableMonth": 7,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 62,
+      "name": "새우",
+      "type": 4,
+      "ableMonth": 7,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "이상반응 주의"
+    },
+    {
+      "id": 63,
+      "name": "샐러리",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 64,
+      "name": "생크림",
+      "type": 5,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 65,
+      "name": "서리태",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 66,
+      "name": "설탕",
+      "type": 6,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 67,
+      "name": "소고기",
+      "type": 4,
+      "ableMonth": 6,
+      "misMatches": [
+        13,
+        147,
+        47
+      ],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 68,
+      "name": "수박",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "초기 추천"
+    },
+    {
+      "id": 69,
+      "name": "수수",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 70,
+      "name": "숙주",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 71,
+      "name": "시금치",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [
+        32,
+        16
+      ],
+      "alternatives": [],
+      "others": "6개월 전 사용x"
+    },
+    {
+      "id": 72,
+      "name": "식용유",
+      "type": 6,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 73,
+      "name": "쌀",
+      "type": 3,
+      "ableMonth": 4,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 74,
+      "name": "아보카도",
+      "type": 2,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "초기 추천"
+    },
+    {
+      "id": 75,
+      "name": "아욱",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 76,
+      "name": "애호박",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 77,
+      "name": "양배추",
+      "type": 1,
+      "ableMonth": 7,
+      "misMatches": [
+        25
+      ],
+      "alternatives": [],
+      "others": "두꺼운 심 사용 x, 초기 추천"
+    },
+    {
+      "id": 78,
+      "name": "양송이버섯",
+      "type": 6,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 79,
+      "name": "양파",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "초기 추천"
+    },
+    {
+      "id": 80,
+      "name": "연근",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 81,
+      "name": "연두부",
+      "type": 4,
+      "ableMonth": 6,
+      "misMatches": [
+        71
+      ],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 82,
+      "name": "연어",
+      "type": 4,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 83,
+      "name": "오이",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [
+        43,
+        25,
+        36
+      ],
+      "alternatives": [],
+      "others": "초기 추천"
+    },
+    {
+      "id": 84,
+      "name": "오트밀",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "초기 추천"
+    },
+    {
+      "id": 85,
+      "name": "옥수수",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [
+        30,
+        27,
+        1
+      ],
+      "alternatives": [],
+      "others": "옥수수는 흰살생선과 궁합이 좋지 않아요."
+    },
+    {
+      "id": 86,
+      "name": "옥수수전분",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [
+        30,
+        27,
+        1
+      ],
+      "alternatives": [],
+      "others": "옥수수는 흰살생선과 궁합이 좋지 않아요."
+    },
+    {
+      "id": 87,
+      "name": "올리브유",
+      "type": 6,
+      "ableMonth": 10,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 88,
+      "name": "완두콩",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [
+        100
+      ],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 89,
+      "name": "요거트",
+      "type": 5,
+      "ableMonth": 7,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 90,
+      "name": "요구르트",
+      "type": 5,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 91,
+      "name": "우엉",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 92,
+      "name": "자두",
+      "type": 2,
+      "ableMonth": 6,
+      "misMatches": [
+        24
+      ],
+      "alternatives": [],
+      "others": "초기 추천"
+    },
+    {
+      "id": 93,
+      "name": "잣",
+      "type": 6,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 94,
+      "name": "적양배추",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 95,
+      "name": "차조",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 96,
+      "name": "참기름",
+      "type": 6,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "중기 추천"
+    },
+    {
+      "id": 97,
+      "name": "참외",
+      "type": 2,
+      "ableMonth": 7,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 98,
+      "name": "찹쌀",
+      "type": 3,
+      "ableMonth": 7,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 99,
+      "name": "청경채",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "초기 추천"
+    },
+    {
+      "id": 100,
+      "name": "치즈",
+      "type": 5,
+      "ableMonth": 7,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 101,
+      "name": "콜라비",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 102,
+      "name": "콜리플라워",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 103,
+      "name": "콩나물",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 104,
+      "name": "퀴노아",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 105,
+      "name": "토마토",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "초기 추천, 이상반응 주의"
+    },
+    {
+      "id": 106,
+      "name": "파",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [
+        44
+      ],
+      "alternatives": [],
+      "others": "흰 부분만 사용, 중기 추천"
+    },
+    {
+      "id": 107,
+      "name": "파래",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 108,
+      "name": "팽이버섯",
+      "type": 6,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 109,
+      "name": "포도",
+      "type": 2,
+      "ableMonth": 10,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 110,
+      "name": "표고버섯",
+      "type": 6,
+      "ableMonth": 7,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 111,
+      "name": "현미",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "두돌 이전 100% 지양, 초기 추천"
+    },
+    {
+      "id": 112,
+      "name": "흑미",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 113,
+      "name": "파프리카",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 114,
+      "name": "늙은호박",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 115,
+      "name": "도라지",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [
+        31
+      ],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 117,
+      "name": "감",
+      "type": 2,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 118,
+      "name": "검정콩",
+      "type": 3,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 119,
+      "name": "고등어",
+      "type": 4,
+      "ableMonth": 18,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 120,
+      "name": "고사리",
+      "type": 1,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 123,
+      "name": "관자",
+      "type": 4,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 124,
+      "name": "굴비",
+      "type": 4,
+      "ableMonth": 15,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 125,
+      "name": "꽁치",
+      "type": 4,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 126,
+      "name": "낙지",
+      "type": 4,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 127,
+      "name": "냉이",
+      "type": 1,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 128,
+      "name": "다슬기",
+      "type": 4,
+      "ableMonth": 10,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 129,
+      "name": "달걀",
+      "type": 4,
+      "ableMonth": 7,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 131,
+      "name": "라임",
+      "type": 2,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 132,
+      "name": "레몬",
+      "type": 2,
+      "ableMonth": 13,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "이상반응 주의"
+    },
+    {
+      "id": 133,
+      "name": "렌틸콩",
+      "type": 3,
+      "ableMonth": 10,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 134,
+      "name": "마시멜로",
+      "type": 6,
+      "ableMonth": 24,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 136,
+      "name": "매실",
+      "type": 2,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 137,
+      "name": "메밀",
+      "type": 3,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 138,
+      "name": "메추리알",
+      "type": 4,
+      "ableMonth": 10,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 139,
+      "name": "명란",
+      "type": 4,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 140,
+      "name": "무화과",
+      "type": 2,
+      "ableMonth": 10,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 141,
+      "name": "문어",
+      "type": 4,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 142,
+      "name": "바지락",
+      "type": 4,
+      "ableMonth": 13,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 144,
+      "name": "벌꿀",
+      "type": 6,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 145,
+      "name": "복분자",
+      "type": 2,
+      "ableMonth": 24,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 146,
+      "name": "복숭아",
+      "type": 2,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 147,
+      "name": "부추",
+      "type": 1,
+      "ableMonth": 7,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 148,
+      "name": "사골",
+      "type": 6,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 149,
+      "name": "상추",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 150,
+      "name": "생강",
+      "type": 1,
+      "ableMonth": 24,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 151,
+      "name": "석류",
+      "type": 2,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 152,
+      "name": "샐러리",
+      "type": 1,
+      "ableMonth": 9,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 154,
+      "name": "소라",
+      "type": 4,
+      "ableMonth": 13,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 155,
+      "name": "송이버섯",
+      "type": 6,
+      "ableMonth": 7,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 156,
+      "name": "숙주나물",
+      "type": 1,
+      "ableMonth": 9,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 157,
+      "name": "순무",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 158,
+      "name": "아몬드",
+      "type": 6,
+      "ableMonth": 24,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "잘게 다져서 "
+    },
+    {
+      "id": 159,
+      "name": "아스파라거스",
+      "type": 1,
+      "ableMonth": 8,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 160,
+      "name": "앵두",
+      "type": 2,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 161,
+      "name": "양고기",
+      "type": 4,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 162,
+      "name": "양상추",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 163,
+      "name": "어묵",
+      "type": 4,
+      "ableMonth": 24,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 164,
+      "name": "열무",
+      "type": 1,
+      "ableMonth": 8,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 165,
+      "name": "오렌지",
+      "type": 2,
+      "ableMonth": 13,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "이상반응 주의"
+    },
+    {
+      "id": 166,
+      "name": "오리고기",
+      "type": 4,
+      "ableMonth": 7,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 167,
+      "name": "오징어",
+      "type": 4,
+      "ableMonth": 11,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 169,
+      "name": "용과",
+      "type": 2,
+      "ableMonth": 10,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "6개월 이후부터 가능하지만 씨 주의"
+    },
+    {
+      "id": 170,
+      "name": "우유",
+      "type": 5,
+      "ableMonth": 13,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "돌 이후부터 가능"
+    },
+    {
+      "id": 171,
+      "name": "유자",
+      "type": 2,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 172,
+      "name": "율무",
+      "type": 3,
+      "ableMonth": 13,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 173,
+      "name": "자몽",
+      "type": 2,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 174,
+      "name": "작두콩",
+      "type": 3,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 175,
+      "name": "전복",
+      "type": 4,
+      "ableMonth": 13,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 176,
+      "name": "조",
+      "type": 3,
+      "ableMonth": 8,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 177,
+      "name": "좁쌀",
+      "type": 3,
+      "ableMonth": 10,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 178,
+      "name": "주꾸미",
+      "type": 4,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 179,
+      "name": "죽순",
+      "type": 1,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 180,
+      "name": "참깨",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 181,
+      "name": "크랜베리",
+      "type": 2,
+      "ableMonth": 18,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 182,
+      "name": "키위",
+      "type": 2,
+      "ableMonth": 13,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 183,
+      "name": "파인애플",
+      "type": 2,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 184,
+      "name": "팥",
+      "type": 3,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 186,
+      "name": "피망",
+      "type": 1,
+      "ableMonth": 12,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 187,
+      "name": "호두",
+      "type": 6,
+      "ableMonth": 13,
+      "misMatches": [],
+      "alternatives": [],
+      "others": "잘게 다져야 함"
+    },
+    {
+      "id": 189,
+      "name": "홍합",
+      "type": 4,
+      "ableMonth": 13,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    },
+    {
+      "id": 191,
+      "name": "흰강낭콩",
+      "type": 1,
+      "ableMonth": 6,
+      "misMatches": [],
+      "alternatives": [],
+      "others": ""
+    }
+  ]
+}
