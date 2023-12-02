@@ -28,7 +28,6 @@ struct PlanListView: View {
     @EnvironmentObject private var mealPlansOB: MealPlansOB
     
     @Binding var showWeekly: Bool
-    @Binding var isLoading: Bool
     
     @State private var selectedDate = Date()
     @State private var isCurrentDateEditing = false
@@ -43,8 +42,7 @@ struct PlanListView: View {
     var body: some View {
         RootVStack {
             viewHeader
-            if isLoading { loadingViewBody }
-            else { viewBody }
+            viewBody
         }
     }
     
@@ -53,21 +51,6 @@ struct PlanListView: View {
             leftButton: headerLeftButton,
             rightButton: headerRightButton
         )
-    }
-    
-    private var loadingViewBody: some View {
-        VStack(spacing: K.rootVStackSpacing) {
-            titleHeader
-            dateScroll
-            ThickDivider()
-            Spacer()
-        }
-        .defaultViewBodyTopPadding()
-        .defaultHorizontalPadding()
-        .overlay {
-            ProgressView().frame(maxHeight: .infinity)
-        }
-        
     }
     
     private var viewBody: some View {

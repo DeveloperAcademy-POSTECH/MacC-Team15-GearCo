@@ -16,7 +16,7 @@ struct MainView: View {
     var body: some View {
         NavigationStack {
             if isLoading {
-                // TODO: progressView()
+                ProgressView().frame(maxHeight: .infinity)
             } else {
                 if mealPlansOB.mealPlans.isEmpty {
                     // plan이 없을 시(초기)
@@ -24,7 +24,7 @@ struct MainView: View {
                 } else {
                     Group {
                         if showWeekly {
-                            PlanListView(showWeekly: $showWeekly, isLoading: $isLoading)
+                            PlanListView(showWeekly: $showWeekly)
                         } else {
                             MonthlyPlanningView(showWeekly: $showWeekly)
                         }
