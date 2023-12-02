@@ -103,7 +103,7 @@ struct ServiceInfoView: View {
         }
     }
     private func openInstagramProfile(username: String) {
-        if let instagramURL = URL(string: "instagram://user?username=\(username)"), UIApplication.shared.canOpenURL(instagramURL) {
+        if let instagramURL = URL(string: "https://www.instagram.com/\(username)"), UIApplication.shared.canOpenURL(instagramURL) {
             UIApplication.shared.open(instagramURL)
         } else {
             if let appStoreURL = URL(string: "https://apps.apple.com/us/app/instagram/id389801252") {
