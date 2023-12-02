@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E0F68AB2B1AF5AA0071941D /* TempUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0F68AA2B1AF5AA0071941D /* TempUserInfo.swift */; };
 		0E18AD602AFA10840011ED4A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0E18AD5F2AFA10840011ED4A /* GoogleService-Info.plist */; };
 		0E18AD6B2AFA7F670011ED4A /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AD6A2AFA7F670011ED4A /* SignInView.swift */; };
 		0E18AD6D2AFA8DC50011ED4A /* UserOB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AD6C2AFA8DC50011ED4A /* UserOB.swift */; };
@@ -127,6 +128,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E0F68AA2B1AF5AA0071941D /* TempUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempUserInfo.swift; sourceTree = "<group>"; };
 		0E18AD5F2AFA10840011ED4A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0E18AD682AFA7A260011ED4A /* Solidner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Solidner.entitlements; sourceTree = "<group>"; };
 		0E18AD6A2AFA7F670011ED4A /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
@@ -495,6 +497,7 @@
 				B2F790A12B0DF30B00CB4F71 /* CycleGaps.swift */,
 				B2F790A32B0DF40400CB4F71 /* DisplayDateType.swift */,
 				0E613A272B131CAF00AF75BF /* Ingredient.swift */,
+				0E0F68AA2B1AF5AA0071941D /* TempUserInfo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -775,6 +778,7 @@
 				C336EE532B054C820057D8B8 /* AgreeCase.swift in Sources */,
 				C3AD1BCA2B023FA1003BB3E0 /* BabyBirthDateView.swift in Sources */,
 				C369424B2B00B350002465D4 /* TextFieldComponents.swift in Sources */,
+				0E0F68AB2B1AF5AA0071941D /* TempUserInfo.swift in Sources */,
 				C369424D2B00C333002465D4 /* NickNameView.swift in Sources */,
 				0E8D348D2B16103A0023FCA5 /* MainView.swift in Sources */,
 				C336EE4C2B03F5320057D8B8 /* Color+.swift in Sources */,
@@ -951,6 +955,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Solidner/Preview Content\"";
 				DEVELOPMENT_TEAM = 6BHXWP5PYW;
+				DEVELOPMENT_TEAM = PAQ92DM7XD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Solidner/Info.plist;
@@ -966,6 +971,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ollie.Solidner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jeckmu.Solidner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -985,6 +991,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Solidner/Preview Content\"";
 				DEVELOPMENT_TEAM = 6BHXWP5PYW;
+				DEVELOPMENT_TEAM = PAQ92DM7XD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Solidner/Info.plist;
@@ -1000,6 +1007,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ollie.Solidner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jeckmu.Solidner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

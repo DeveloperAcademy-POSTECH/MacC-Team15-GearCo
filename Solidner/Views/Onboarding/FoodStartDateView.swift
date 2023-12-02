@@ -11,7 +11,8 @@ struct FoodStartDateView: View {
     private let datePickerTopPadding = 64.0
     @State private var solidStartDate = Date()
     @State private var navigationIsPresented = false
-    @EnvironmentObject var user: UserOB
+//    @EnvironmentObject var user: UserOB
+    @Binding var tempUserInfo: TempUserInfo
     var body: some View {
         ZStack {
             BackgroundView()
@@ -25,26 +26,20 @@ struct FoodStartDateView: View {
     private func viewBody() -> some View {
         return VStack {
             OnboardingTitles(bigTitle: TextLiterals.FoodStartDate.bigTitle, smallTitle: TextLiterals.FoodStartDate.smallTitle)
-            DatePicker(selection: $solidStartDate, in: user.babyBirthDate..., displayedComponents: .date){}
+            DatePicker(selection: $solidStartDate, in: tempUserInfo.babyBirthDate..., displayedComponents: .date){}
                 .labelsHidden()
                 .datePickerStyle(WheelDatePickerStyle())
                 .padding(.top, datePickerTopPadding)
             Spacer()
             ButtonComponents(.big, disabledCondition: false) {
-                user.solidStartDate = solidStartDate
+                tempUserInfo.solidStartDate = solidStartDate
                 navigationIsPresented = true
             }
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
         .navigationDestination(isPresented: $navigationIsPresented) {
-            OnboardingEndView()
+            OnboardingEndView(tempUserInfo: $tempUserInfo)
         }
-    }
-}
-
-struct FoodStartDateView_Previews: PreviewProvider {
-    static var previews: some View {
-        FoodStartDateView()
     }
 }
