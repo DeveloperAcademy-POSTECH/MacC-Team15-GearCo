@@ -14,7 +14,7 @@ struct BabyBirthDateView: View {
     @State private var babyBirthDate = Date()
     @State private var navigationIsPresented = false
     @Binding var tempUserInfo: TempUserInfo
-//    @EnvironmentObject var user: UserOB
+    @EnvironmentObject var user: UserOB
     var body: some View {
         ZStack {
             BackgroundView()
@@ -45,6 +45,7 @@ struct BabyBirthDateView: View {
             Spacer()
             ButtonComponents(.big, disabledCondition: false, action: {
                 tempUserInfo.babyBirthDate = babyBirthDate
+                user.babyBirthDate = babyBirthDate
                 navigationIsPresented = true
             })
         }

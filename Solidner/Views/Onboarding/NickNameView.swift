@@ -15,7 +15,7 @@ struct NickNameView: View {
     let nickNameViewCase: NickNameViewCase
     @StateObject private var keyboardHeightHelper = KeyboardHeightHelperOB()
     @FocusState private var isFocused: Bool
-//    @EnvironmentObject var user: UserOB
+    @EnvironmentObject var user: UserOB
     @Binding var tempUserInfo: TempUserInfo
     @State private var babyNameViewIsPresented = false
     @State private var navigationIsPresented = false
@@ -45,9 +45,11 @@ struct NickNameView: View {
                     ButtonComponents().smallButton(disabledCondition: inputText.isEmpty) {
                         switch nickNameViewCase {
                         case .userName :
+                            user.nickName = inputText
                             tempUserInfo.nickName = inputText
                             babyNameViewIsPresented = true
                         case .babyName :
+                            user.nickName = inputText
                             tempUserInfo.babyName = inputText
                             navigationIsPresented = true
                         }

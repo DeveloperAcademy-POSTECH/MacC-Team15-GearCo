@@ -23,7 +23,7 @@ struct UserInfoUpdateView: View {
     @FocusState private var isNicknameFocused: Bool
     @FocusState private var isBabynameFocused: Bool
     @EnvironmentObject var user: UserOB
-    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
+    @Environment(\.dismiss) private var dismiss
     var body: some View {
         GeometryReader { _ in
             ZStack {
@@ -116,7 +116,7 @@ struct UserInfoUpdateView: View {
                 user.babyBirthDate = updatedBabyBirthDate
                 user.solidStartDate = updatedSolidStartDate
                 //🔴 서버 유저정보 업데이트 코드 추가
-                presentationMode.wrappedValue.dismiss()
+                dismiss()
             }
             .padding(.top, 40)
         }

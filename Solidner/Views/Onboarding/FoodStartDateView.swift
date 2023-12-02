@@ -11,7 +11,7 @@ struct FoodStartDateView: View {
     private let datePickerTopPadding = 64.0
     @State private var solidStartDate = Date()
     @State private var navigationIsPresented = false
-//    @EnvironmentObject var user: UserOB
+    @EnvironmentObject var user: UserOB
     @Binding var tempUserInfo: TempUserInfo
     var body: some View {
         ZStack {
@@ -33,6 +33,7 @@ struct FoodStartDateView: View {
             Spacer()
             ButtonComponents(.big, disabledCondition: false) {
                 tempUserInfo.solidStartDate = solidStartDate
+                user.solidStartDate = solidStartDate
                 navigationIsPresented = true
             }
         }
