@@ -10,6 +10,7 @@
 import SwiftUI
 
 struct PlanBatchSettingView: View {
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var user: UserOB
     @EnvironmentObject private var mealPlansOB: MealPlansOB
     private let texts = TextLiterals.PlanBatchSetting.self
@@ -42,7 +43,12 @@ struct PlanBatchSettingView: View {
         ) {
             Button(texts.Alert.leftButtonText, role: .cancel) { }
             Button(texts.Alert.rightButtonText, role: .destructive) {
-                mealPlansOB.deleteAllPlans()
+                Task {
+                    try? await mealPlansOB.deleteAllPlans()
+                    await MainActor.run {
+                        dismiss()
+                    }
+                }
             }
         } message: {
             Text(texts.Alert.description)

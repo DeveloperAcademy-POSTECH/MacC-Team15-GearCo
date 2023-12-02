@@ -208,6 +208,19 @@ extension FirebaseManager {
             print("MealPlan 삭제 실패 - 계획이 정상적으로 존재하지 않는 상태입니다.")
         }
     }
+    
+    func deleteAllMealPlan(email: String) async throws {
+        let planColRef = getColRef(.Plan)
+        
+        // 'idField' 필드에 특정 문자열을 포함하는 문서 검색
+        let querySnapshot = try await planColRef.whereField("email", isEqualTo: email).getDocumentsAsync()
+        // Batch를 생성하여 검색된 문서들 삭제
+        let batch = db.batch()
+        for document in querySnapshot.documents {
+            batch.deleteDocument(document.reference)
+        }
+        try await batch.commit()
+    }
 }
 
 //extension FirebaseManager {
