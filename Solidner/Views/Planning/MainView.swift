@@ -12,41 +12,55 @@ struct MainView: View {
     @StateObject private var mealPlansOB = MealPlansOB()
     @State private var showWeekly = true
     
+    @State private var isLoading = true
+    
     var body: some View {
         NavigationStack {
-            Group {
-                if showWeekly {
-                    PlanListView(showWeekly: $showWeekly)
+            if isLoading {
+                // TODO: progressView()
+            } else {
+                if mealPlansOB.mealPlans.isEmpty {
+                    // plan이 없을 시(초기)
+                    StartPlanView()
                 } else {
-                    MonthlyPlanningView(showWeekly: $showWeekly)
+                    Group {
+                        if showWeekly {
+                            PlanListView(showWeekly: $showWeekly)
+                        } else {
+                            MonthlyPlanningView(showWeekly: $showWeekly)
+                        }
+                    }
+                    .navigationDestination(for: Date.self) { date in
+                        let mealPlans = mealPlansOB.getMealPlans(in: date)
+                        if mealPlans.count != .zero {
+                            DailyPlanListView(date: date, mealPlans: mealPlans)
+                        } else {
+                            MealDetailView(
+                                startDate: date,
+                                cycleGap: user.planCycleGap,
+                                mealPlansOB: mealPlansOB
+                            )
+                        }
+                    }
+                    .navigationDestination(for: MealPlan.self) { mealPlan in
+                        MealDetailView(
+                            mealPlan: mealPlan,
+                            cycleGap: mealPlan.cycleGap,
+                            mealPlansOB: mealPlansOB
+                        )
+                    }
+                    .navigationDestination(for: MealPlanGroup.self) { mealPlanGroup in
+                        PlanGroupDetailView(mealPlanGroup: mealPlanGroup)
+                    }
                 }
             }
-            .navigationDestination(for: Date.self) { date in
-                let mealPlans = mealPlansOB.getMealPlans(in: date)
-                if mealPlans.count != .zero {
-                    DailyPlanListView(date: date, mealPlans: mealPlans)
-                } else {
-                    MealDetailView(
-                        startDate: date,
-                        cycleGap: user.planCycleGap,
-                        mealPlansOB: mealPlansOB
-                    )
-                }
-            }
-            .navigationDestination(for: MealPlan.self) { mealPlan in
-                MealDetailView(
-                    mealPlan: mealPlan,
-                    cycleGap: mealPlan.cycleGap,
-                    mealPlansOB: mealPlansOB
-                )
-            }
-            .navigationDestination(for: MealPlanGroup.self) { mealPlanGroup in
-                PlanGroupDetailView(mealPlanGroup: mealPlanGroup)
-            }
-        }
-        .environmentObject(mealPlansOB)
+        }.environmentObject(mealPlansOB)
         .task {
             await mealPlansOB.loadAllPlans()
+            print("loadPlans")
+            withAnimation(.linear(duration: 0.1)) {
+                isLoading = false
+            }
         }
     }
 }
