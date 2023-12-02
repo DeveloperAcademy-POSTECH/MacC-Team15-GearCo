@@ -9,6 +9,8 @@ import SwiftUI
 
 struct WithdrawalModalView: View {
     @State private var reminderChecked = false
+    @EnvironmentObject var user: UserOB
+    
     var body: some View {
         ZStack {
             BackgroundView()
@@ -23,7 +25,13 @@ struct WithdrawalModalView: View {
                     .padding(.top, 30)
                 remindCheckButton()
                     .padding(.top, 36)
+                
                 Spacer()
+                
+                Text("탈퇴하면 며칠간 재가입할 수 없어요")
+                    .customFont(.clickableText2, color: .primeText.opacity(0.4))
+                    .padding(.bottom, 15)
+                
                 withdrawalButton()
             }
             .padding(horizontal: 20, top: 40, bottom: 26)
@@ -60,14 +68,29 @@ struct WithdrawalModalView: View {
         })
     }
     private func withdrawalButton() -> some View {
-        Button(action: {
-            //🔴 서버 회원탈퇴 코드
-        }, label: {
+        Button {
+            // TODO: 서버 회원탈퇴
+            Task {
+                do {
+                    try await FirebaseManager.shared.withdrawUser(user.email)
+                    
+                    UserDefaults().set("", forKey: "email")
+                    UserDefaults().set("", forKey: "AppleID")
+                    UserDefaults().set("", forKey: "babyName")
+                    UserDefaults().set("", forKey: "nickName")
+                    UserDefaults().set(false, forKey: "isAgreeToAdvertising")
+                    UserDefaults().set(Date(), forKey: "babyBirthDate")
+                    UserDefaults().set(Date(), forKey: "solidStartDate")
+                } catch {
+                    print("회원 탈퇴 중 에러 발생: \(error.localizedDescription)")
+                }
+            }
+        } label: {
             Text("탈퇴하기")
                 .buttonFont()
                 .foregroundStyle(Color.defaultText_wh)
                 .symmetricBackground(HPad: 40.5, VPad: 17, color: .accentColor1.opacity(reminderChecked ? 1.0 : 0.2), radius: 60)
-        })
+        }
         .disabled(!reminderChecked)
     }
     private enum ReminderCase: String {
@@ -78,5 +101,5 @@ struct WithdrawalModalView: View {
 }
 
 #Preview {
-    WithdrawalModalView()
+    WithdrawalModalView().environmentObject(UserOB())
 }

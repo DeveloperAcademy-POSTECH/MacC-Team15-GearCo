@@ -173,9 +173,9 @@ extension IngredientsBigDivision {
                             let data = ingredientData[key]!
                             let month = user.dateAfterBirth.month!
                             // 재료가 보이려면 -> new&사용횟수0 / old&사용횟수1이상 / 현재선택된재료
-                            let isIngredientAppear: Bool = (viewType == .new && ingredientUseCount[data.id, default: 0] == 0) || (viewType == .old && ingredientUseCount[data.id, default: 0] != 0) || initialSelectedIngredients.contains { $0 == data.id }
+//                            let isIngredientAppear: Bool = (viewType == .new && ingredientUseCount[data.id, default: 0] == 0) || (viewType == .old && ingredientUseCount[data.id, default: 0] != 0) || initialSelectedIngredients.contains { $0 == data.id }
                             
-                            if isIngredientAppear {
+//                            if isIngredientAppear {
                                 if divisionCase == .먹을수있는재료 && data.type == type && data.ableMonth <= month {
                                     ingredientSelectRow(case: divisionCase, ingredient: data,
                                                         selected: $selectedIngredients, viewType: viewType).padding(.vertical, 15)
@@ -183,7 +183,7 @@ extension IngredientsBigDivision {
                                     ingredientSelectRow(case: divisionCase, ingredient: data,
                                                         selected: $selectedIngredients, viewType: viewType).padding(.vertical, 15)
                                 }
-                            }
+//                            }
                         }
                     }.transition(.push(from: foldStates[type]! ? .bottom : .top))
                 }
@@ -206,6 +206,7 @@ extension IngredientsBigDivision {
             Text(divisionCase.rawValue)
                 .headerFont2()
                 .foregroundColor(.defaultText)
+            HStack{Spacer()}    // to align left
             Spacer().frame(height: titleBottomSpace)
             ForEach(topFive.indices, id: \.self) { i in
                 let id = topFive[i].key
