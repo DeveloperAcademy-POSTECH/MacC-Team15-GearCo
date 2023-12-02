@@ -25,6 +25,7 @@ struct SolidnerApp: App {
     let ingredientData = IngredientData.shared
     @StateObject private var userOB = UserOB()
     @State private var finishLaunchScreen = false
+    
     var body: some Scene {
         WindowGroup {
             if userOB.email.isEmpty {

@@ -19,7 +19,7 @@ final class MealPlansOB: ObservableObject {
     
     private let firebaseManager = FirebaseManager.shared
 //    private var email: String = "jwlee010222@gmail.com"
-    @AppStorage("email") private var email: String = "jwlee010222@gmail.com"
+    @AppStorage("email") private var email: String = ""
     
     @Published var isLoaded: Bool = false
     @Published private(set) var mealPlans: [MealPlan] = [] {
