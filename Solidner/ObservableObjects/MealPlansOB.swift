@@ -122,28 +122,32 @@ final class MealPlansOB: ObservableObject {
             filteredMealPlans = mealPlans
         case let .dateRange(start, end):
             filteredMealPlans = mealPlans.filter {
-                start.isInBetween(from: $0.startDate, to: $0.endDate) || end.isInBetween(from: $0.startDate, to: $0.endDate)
+                start.isInBetween(from: $0.startDate.dayOfStart, to: $0.endDate.dayOfEnd) || end.isInBetween(from: $0.startDate.dayOfStart, to: $0.endDate.dayOfEnd)
             }
         case let .month(date):
             #warning("test해봐야...")
             filteredMealPlans = mealPlans.filter {
                 let start = Date.date(year: date.year, month: date.month, day: 1) ?? Date()
-                let end = start.add(.month, value: 1).add(.day, value: -1)
+                let end = start.add(.month, value: 1).add(.day, value: -1).dayOfEnd
                 return $0.startDate.isInBetween(from: start, to: end) || $0.endDate.isInBetween(from: start, to: end)
 //                return ($0.startDate <= end && $0.startDate >= start) || ($0.endDate >= start && $0.endDate <= end)
             }
         case let .day(date):
             filteredMealPlans = mealPlans.filter {
-                date.isInBetween(from: $0.startDate, to: $0.endDate)
+                date.isInBetween(from: $0.startDate.dayOfStart, to: $0.endDate.dayOfEnd)
             }
         }
     }
     
     //MARK: - delete
     #warning("플랜 전체 삭제 구현 - firebase에서도 구현 필요")
-    func deleteAllPlans() {
-        print(#function)
-        mealPlans = []
+    func deleteAllPlans() async throws {
+        Task {
+            try await firebaseManager.deleteAllMealPlan(email: email)
+            await MainActor.run {
+                mealPlans = []
+            }
+        }
     }
     
     func delete(plan: MealPlan) {
