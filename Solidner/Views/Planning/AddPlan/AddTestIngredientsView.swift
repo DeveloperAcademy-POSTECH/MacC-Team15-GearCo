@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Algorithms
 
 // 스크롤 id 저장.
 struct ScrollID {
@@ -50,14 +49,6 @@ struct AddTestIngredientsView: View {
     @State private var showReportSheet = false
     @State private var isSearching = false
     
-    var hasIngredientsMismatch: Bool {
-        let ingredients = selectedIngredients.compactMap { ingredientData[$0] }
-        let mismatches = Set(ingredients.flatMap { $0.misMatches }.uniqued())
-        return ingredients.reduce(false) { partialResult, ingredient in
-            partialResult || mismatches.contains(ingredient)
-        }
-    }
-    
     @EnvironmentObject private var user: UserOB
     @EnvironmentObject private var mealOB: MealOB
     @EnvironmentObject private var mealPlansOB: MealPlansOB
@@ -72,6 +63,14 @@ struct AddTestIngredientsView: View {
     
     init(_ addIngredientViewType: MealOB.IngredientTestType) {
         self.viewType = addIngredientViewType
+    }
+    
+    var hasIngredientsMismatch: Bool {
+        let ingredients = selectedIngredients.compactMap { ingredientData[$0] }
+        let mismatches = Set(ingredients.flatMap { $0.misMatches })
+        return ingredients.reduce(false) { partialResult, ingredient in
+            partialResult || mismatches.contains(ingredient)
+        }
     }
     
     @Namespace var 맨위
