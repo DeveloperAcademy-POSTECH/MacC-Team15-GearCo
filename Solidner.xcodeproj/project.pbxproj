@@ -24,6 +24,8 @@
 		0EA65EE22B0C846200E1C8D7 /* AddTestIngredientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA65EE12B0C846200E1C8D7 /* AddTestIngredientsView.swift */; };
 		0EAFB7212B012A3D0075A384 /* MonthlyPlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */; };
 		0EB0F4322B0F5F5A00A32DFB /* AddIngredientBigDivision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB0F4312B0F5F5A00A32DFB /* AddIngredientBigDivision.swift */; };
+		B208B12E2B1CEE0200968A87 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = B208B12D2B1CEE0200968A87 /* Lottie */; };
+		B208B1302B1CEE6500968A87 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B208B12F2B1CEE6500968A87 /* LottieView.swift */; };
 		B219F11F2B0C911200886087 /* StartPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219F11E2B0C911200886087 /* StartPlanView.swift */; };
 		B219F1212B0C915300886087 /* StartDateInitialSelectModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219F1202B0C915300886087 /* StartDateInitialSelectModal.swift */; };
 		B219F1252B0C974F00886087 /* MealOB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219F1242B0C974F00886087 /* MealOB.swift */; };
@@ -144,6 +146,7 @@
 		0EA6C61D2AFBE087004FF2AA /* MonthlyPlanningDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningDummy.swift; sourceTree = "<group>"; };
 		0EAFB7202B012A3D0075A384 /* MonthlyPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyPlanningView.swift; sourceTree = "<group>"; };
 		0EB0F4312B0F5F5A00A32DFB /* AddIngredientBigDivision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIngredientBigDivision.swift; sourceTree = "<group>"; };
+		B208B12F2B1CEE6500968A87 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		B219F11E2B0C911200886087 /* StartPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartPlanView.swift; sourceTree = "<group>"; };
 		B219F1202B0C915300886087 /* StartDateInitialSelectModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDateInitialSelectModal.swift; sourceTree = "<group>"; };
 		B219F1242B0C974F00886087 /* MealOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealOB.swift; sourceTree = "<group>"; };
@@ -232,6 +235,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B208B12E2B1CEE0200968A87 /* Lottie in Frameworks */,
 				B2D96E662B19A7CC00B5D30C /* Algorithms in Frameworks */,
 				0E18AD742AFAA3430011ED4A /* FirebaseAnalytics in Frameworks */,
 				0E18AD762AFAA3430011ED4A /* FirebaseAuth in Frameworks */,
@@ -287,6 +291,7 @@
 				B2D1E3822B136C1E00318E85 /* Header.swift */,
 				C3B4DB4D2B10BA2E00772C2A /* ViewDivider.swift */,
 				B2D96E672B19B6B300B5D30C /* ToastMessage.swift */,
+				B208B12F2B1CEE6500968A87 /* LottieView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -320,6 +325,13 @@
 				B2EFE9822B067CA000E3F94B /* PlanGroupDetailView.swift */,
 			);
 			path = Weekly;
+			sourceTree = "<group>";
+		};
+		B208B1312B1CEF3C00968A87 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		B219F11D2B0C90FE00886087 /* StartPlan */ = {
@@ -431,6 +443,7 @@
 		C3C6375B2AF90C2B006D464D /* Solidner */ = {
 			isa = PBXGroup;
 			children = (
+				B208B1312B1CEF3C00968A87 /* Resources */,
 				C336EE4F2B054A300057D8B8 /* Info.plist */,
 				0E613A252B131B9B00AF75BF /* IngredientData.json */,
 				0E18AD682AFA7A260011ED4A /* Solidner.entitlements */,
@@ -580,6 +593,7 @@
 				0E18AD752AFAA3430011ED4A /* FirebaseAuth */,
 				0E18AD772AFAA3430011ED4A /* FirebaseFirestore */,
 				B2D96E652B19A7CC00B5D30C /* Algorithms */,
+				B208B12D2B1CEE0200968A87 /* Lottie */,
 			);
 			productName = Solidner;
 			productReference = C3C637592AF90C2B006D464D /* Solidner.app */;
@@ -657,6 +671,7 @@
 			packageReferences = (
 				0E18AD722AFAA3430011ED4A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				B2D96E642B19A7CC00B5D30C /* XCRemoteSwiftPackageReference "swift-algorithms" */,
+				B208B12C2B1CEE0200968A87 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = C3C6375A2AF90C2B006D464D /* Products */;
 			projectDirPath = "";
@@ -722,6 +737,7 @@
 				0EA65EE22B0C846200E1C8D7 /* AddTestIngredientsView.swift in Sources */,
 				C3B4DB502B10EE8D00772C2A /* UserInfoUpdateView.swift in Sources */,
 				C3319A932B14E5160003ACD0 /* ReportIngredientModalView.swift in Sources */,
+				B208B1302B1CEE6500968A87 /* LottieView.swift in Sources */,
 				C3777C6C2B136A55008B951A /* WithdrawalModalView.swift in Sources */,
 				0EAFB7212B012A3D0075A384 /* MonthlyPlanningView.swift in Sources */,
 				B219F1272B0CE13000886087 /* View+.swift in Sources */,
@@ -1144,6 +1160,14 @@
 				minimumVersion = 10.0.0;
 			};
 		};
+		B208B12C2B1CEE0200968A87 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.3.4;
+			};
+		};
 		B2D96E642B19A7CC00B5D30C /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-algorithms.git";
@@ -1169,6 +1193,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0E18AD722AFAA3430011ED4A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		B208B12D2B1CEE0200968A87 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B208B12C2B1CEE0200968A87 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		B2D96E652B19A7CC00B5D30C /* Algorithms */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -17,7 +17,12 @@ struct MainView: View {
     var body: some View {
         NavigationStack {
             if isLoading {
-                ProgressView().frame(maxHeight: .infinity)
+                VStack {
+                    LottieView(jsonName: "solidnerLoadingAnimation")
+                        .frame(width: 40)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.secondBgColor)
             } else {
                 if mealPlansOB.mealPlans.isEmpty {
                     // plan이 없을 시(초기)
