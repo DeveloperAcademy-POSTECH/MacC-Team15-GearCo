@@ -28,8 +28,8 @@ struct PlanListView: View {
     @EnvironmentObject private var mealPlansOB: MealPlansOB
     
     @Binding var showWeekly: Bool
+    @Binding var selectedMonthDate: Date
     
-    @State private var selectedDate = Date()
     @State private var isCurrentDateEditing = false
     @State private var isWholeSettingEditing = false
     @State private var isMyPageOpenning = false
@@ -69,11 +69,11 @@ struct PlanListView: View {
         }
         .sheet(isPresented: $isCurrentDateEditing) {
             ChangeMonthHalfModal(
-                selectedDate: $selectedDate,
+                selectedDate: $selectedMonthDate,
                 fromDate: user.babyBirthDate
             )
         }
-        .onChange(of: selectedDate) { value in
+        .onChange(of: selectedMonthDate) { value in
             mealPlansOB.currentFilter = .month(date: value)
         }
         .navigationDestination(isPresented: $isMyPageOpenning) {
@@ -108,7 +108,7 @@ extension PlanListView {
             Button {
                 isCurrentDateEditing.toggle()
             } label: {
-                Text(texts.yyyymmHeaderText(date: selectedDate))
+                Text(texts.yyyymmHeaderText(date: selectedMonthDate))
                     .customFont(.header2, color: K.titleTextColor)
                     .padding(.trailing, 2)
                 Image(systemName: K.chevronDownSFSymbolName)
@@ -132,7 +132,7 @@ extension PlanListView {
         return ScrollView(.horizontal) {
             HStack(spacing: K.dateHStackSpacing) {
                 spacer
-                ForEach(mealPlansOB.getWrongPlanDates(date: selectedDate)) { dateAndStatus in
+                ForEach(mealPlansOB.getWrongPlanDates(date: selectedMonthDate)) { dateAndStatus in
                     let date = dateAndStatus.date
                     NavigationLink(value: date){
                         dateScrollLabel(of: dateAndStatus)
@@ -193,10 +193,10 @@ extension PlanListView {
         let one = 1
         let newStartDate: Date = {
             let nextDateOfLastPlan = mealPlans.sorted { $0.endDate > $1.endDate }.first?.endDate.add(.day, value: one)
-            let firstOfThisMonth = Date.date(year: selectedDate.year, month: selectedDate.month, day: one)!
+            let firstOfThisMonth = Date.date(year: selectedMonthDate.year, month: selectedMonthDate.month, day: one)!
             return max(user.solidStartDate, (nextDateOfLastPlan ?? firstOfThisMonth))
         }()
-        if newStartDate.month != selectedDate.month {
+        if newStartDate.month != selectedMonthDate.month {
             EmptyView()
         } else {
             let newEndDate = newStartDate.add(.day, value: user.planCycleGap.rawValue - one)

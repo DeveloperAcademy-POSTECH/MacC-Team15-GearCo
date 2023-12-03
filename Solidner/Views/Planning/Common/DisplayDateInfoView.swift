@@ -19,18 +19,22 @@ struct DisplayDateInfoView: View {
     private var fromDateCount: Int {
         switch user.displayDateType {
         case .birth:
-            return Date.componentsBetweenDates(from: user.babyBirthDate, to: from).day!
+            return Date.diffDate(from: user.babyBirthDate, to: from)
+//            Date.componentsBetweenDates(from: user.babyBirthDate, to: from).day!
         case .solid:
-            return Date.componentsBetweenDates(from: user.solidStartDate, to: from).day!
+            return Date.diffDate(from: user.solidStartDate, to: from)
+//            Date.componentsBetweenDates(from: user.solidStartDate, to: from).day!
         }
     }
 
     private var toDateCount: Int {
         switch user.displayDateType {
         case .birth:
-            return Date.componentsBetweenDates(from: user.babyBirthDate, to: to).day!
+            return Date.diffDate(from: user.babyBirthDate, to: to)
+//            Date.componentsBetweenDates(from: user.babyBirthDate, to: to).day!
         case .solid:
-            return Date.componentsBetweenDates(from: user.solidStartDate, to: to).day!
+            return Date.diffDate(from: user.solidStartDate, to: to)
+//            Date.componentsBetweenDates(from: user.solidStartDate, to: to).day!
         }
     }
 
