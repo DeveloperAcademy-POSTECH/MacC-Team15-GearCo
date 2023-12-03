@@ -117,7 +117,19 @@ extension PlanListView {
                     .frame(width: 20)
                     .foregroundStyle(K.chevronDownColor)
             }
-            Spacer()
+            Rectangle()
+                .foregroundStyle(Color.secondBgColor)
+                .frame(maxWidth: .infinity)
+                .frame(height: 31)
+                .onTapGesture(count: 5) {
+                    print("Tapped!")
+                    Task {
+                        try? await FirebaseManager.shared.deleteAllMealPlan(email: user.email)
+                        UserDefaults().set("", forKey: "nickName")
+                    }
+                }.gesture(TapGesture().onEnded { _ in
+                    print("tapped once")
+                })
         }
         .padding(K.titlePadding)
     }

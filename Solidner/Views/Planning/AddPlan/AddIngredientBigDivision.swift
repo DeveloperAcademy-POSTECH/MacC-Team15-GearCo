@@ -112,11 +112,12 @@ struct IngredientsBigDivision: View {
 extension IngredientsBigDivision {
     private func 검색화면() -> some View {
         var filteredIngredients: [Ingredient] {
-            let ingredients = ingredientData.values.filter { ingredient in
-                (viewType == .new && ingredientUseCount[ingredient.id, default: 0] == 0) ||
-                (viewType == .old && ingredientUseCount[ingredient.id, default: 0] != 0)
-            }
-            return filterAndSortIngredients(by: searchText, from: ingredients)
+//            let ingredients = ingredientData.values.filter { ingredient in
+//                (viewType == .new && ingredientUseCount[ingredient.id, default: 0] == 0) ||
+//                (viewType == .old && ingredientUseCount[ingredient.id, default: 0] != 0)
+//            }
+//            return filterAndSortIngredients(by: searchText, from: ingredients)
+            return filterAndSortIngredients(by: searchText, from: Array(ingredientData.values))
         }
 
         return VStack(spacing: 0) {
