@@ -31,7 +31,12 @@ extension Date {
     ///   - endDate: 끝 시간. Date형
     /// - Returns: 시간차를 기록한 DateComponents
     static func componentsBetweenDates(from startDate: Date, to endDate: Date) -> DateComponents {
-        Calendar.current.dateComponents([.day, .hour, .minute], from: startDate, to: endDate)
+        Calendar.current.dateComponents([.day, .hour, .minute], from: startDate.dayOfStart, to: endDate.dayOfStart)
+    }
+    
+    static func diffDate(from startDate: Date, to endDate: Date) -> Int {
+        let diffDateCompoents = componentsBetweenDates(from: startDate, to: endDate)
+        return (diffDateCompoents.day ?? 0) + 1
     }
     
     /// 두 Date 객체를 포함한, 그 사이의 Date들의 리스트를 반환합니다.
@@ -40,8 +45,8 @@ extension Date {
     ///   - endDate: 종료일. (Date)
     /// - Returns: 시작일과 종료일 사이의 날짜의 Date 객체를 갖는 리스트.
     static func range(from startDate: Date, to endDate: Date) -> [Date] {
-        let diff = componentsBetweenDates(from: startDate, to: endDate).day!
-        return (0...diff).compactMap {
+        let diff = diffDate(from: startDate, to: endDate)
+        return (0..<diff).compactMap {
             Calendar.current.date(byAdding: .day, value: $0, to: startDate)
         }
     }

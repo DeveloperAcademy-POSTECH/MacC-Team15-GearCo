@@ -409,7 +409,15 @@ struct MonthlyPlanningView: View {
                                     .frame(height: solidDayNumberFrameHeight)
                                     .padding(.bottom, dayNumberGap)
                             } else {
-                                Text("\(Date.componentsBetweenDates(from: user.solidStartDate, to: date).day!)")
+                                let diffDates: Int = {
+                                    switch user.displayDateType {
+                                    case .birth:
+                                        return Date.diffDate(from: user.babyBirthDate, to: date)
+                                    case .solid:
+                                        return Date.diffDate(from: user.solidStartDate, to: date)
+                                    }
+                                }()
+                                Text("\(diffDates)")
                                     .weekDisplayFont1()
                                     .foregroundStyle(Color.tertinaryText)
                                     .frame(height: solidDayNumberFrameHeight)
@@ -503,9 +511,11 @@ struct MonthlyPlanningView: View {
     private var calendarCurrentYearMonth: some View {
         var solidAndBirthDateText: String {
             if user.displayDateType == .birth {
-                return "생후 \(Date.componentsBetweenDates(from: user.babyBirthDate, to: Date()).day!)일차"
+//                return "생후 \(Date.componentsBetweenDates(from: user.babyBirthDate, to: Date()).day!)일차"
+                return "생후 \(Date.diffDate(from: user.babyBirthDate, to: Date()))일차"
             } else {
-                return "이유식 진행 \(Date.componentsBetweenDates(from: user.solidStartDate, to: Date()).day!)일차"
+//                return "이유식 진행 \(Date.componentsBetweenDates(from: user.solidStartDate, to: Date()).day!)일차"
+                return "이유식 진행 \(Date.diffDate(from: user.solidStartDate, to: Date()))일차"
             }
         }
         
