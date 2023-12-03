@@ -12,6 +12,7 @@ struct MainView: View {
     @StateObject private var mealPlansOB = MealPlansOB()
     @State private var showWeekly = true
     @State private var isLoading = true
+    @State private var selectedMonthDate = Date()
     
     var body: some View {
         NavigationStack {
@@ -24,9 +25,9 @@ struct MainView: View {
                 } else {
                     Group {
                         if showWeekly {
-                            PlanListView(showWeekly: $showWeekly)
+                            PlanListView(showWeekly: $showWeekly, selectedMonthDate: $selectedMonthDate)
                         } else {
-                            MonthlyPlanningView(showWeekly: $showWeekly)
+                            MonthlyPlanningView(showWeekly: $showWeekly, selectedMonthDate: $selectedMonthDate)
                         }
                     }
                     .navigationDestination(for: Date.self) { date in

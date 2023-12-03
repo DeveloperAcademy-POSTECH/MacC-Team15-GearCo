@@ -26,9 +26,9 @@ struct MonthlyPlanningView: View {
     let ingredientData = IngredientData.shared
     
     @Binding var showWeekly: Bool
+    @Binding var selectedMonthDate: Date
     
     @State private var reducedPlans: [(first: PlanData, second: BarPosition)] = []
-    @State private var selectedMonthDate: Date = Date()
     @State private var nowMonthWeekNums = Date.nowMonthWeeks()
     
     @State private var showChangeMonthModal = false
