@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MainView: View {
+    @AppStorage("isOnboardingOn") var isOnboardingLoading = false
     @EnvironmentObject var user: UserOB
     @StateObject private var mealPlansOB = MealPlansOB()
     @State private var showWeekly = true
@@ -16,7 +17,7 @@ struct MainView: View {
     
     var body: some View {
         NavigationStack {
-            if isLoading {
+            if isLoading || isOnboardingLoading {
                 VStack {
                     LottieView(jsonName: "solidnerLoadingAnimation")
                         .frame(width: 40)
