@@ -125,7 +125,7 @@ extension PlanListView {
                     print("Tapped!")
                     Task {
                         try? await FirebaseManager.shared.deleteAllMealPlan(email: user.email)
-                        UserDefaults().set("", forKey: "nickName")
+                        user.nickName = ""
                     }
                 }.gesture(TapGesture().onEnded { _ in
                     print("tapped once")

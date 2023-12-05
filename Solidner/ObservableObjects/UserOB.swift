@@ -36,3 +36,15 @@ final class UserOB: ObservableObject {
     }
     @AppStorage("isAppAlarmOn") var isAppAlarmOn = true
 }
+
+extension UserOB {
+    func withdraw() {
+        email = ""
+        AppleID = ""
+        babyName = ""
+        nickName = ""
+        isAgreeToAdvertising = false
+        babyBirthDate = Date()
+        solidStartDate = Date()
+    }
+}

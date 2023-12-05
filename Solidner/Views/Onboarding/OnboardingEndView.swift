@@ -9,6 +9,7 @@ import SwiftUI
 
 struct OnboardingEndView: View {
     @AppStorage("isOnboardingOn") var isOnboardingOn = true
+    @AppStorage("isOnboardingOn") var isOnboardingLoading = false
     @Binding var tempUserInfo: TempUserInfo
     @EnvironmentObject private var user: UserOB
     var body: some View {
@@ -30,6 +31,9 @@ struct OnboardingEndView: View {
 //                isOnboardingOn = false
                 Task {
                     do {
+                        await MainActor.run {
+                            isOnboardingLoading = true
+                        }
                         try await FirebaseManager.shared.createUser(tempUserInfo, email: user.email)
                         
                         // createUser 함수가 성공적으로 완료된 후 실행될 코드
@@ -38,6 +42,10 @@ struct OnboardingEndView: View {
                         user.babyName = tempUserInfo.babyName
                         user.babyBirthDate = tempUserInfo.babyBirthDate
                         user.solidStartDate = tempUserInfo.solidStartDate
+                        
+                        await MainActor.run {
+                            isOnboardingLoading = false
+                        }
 
                         print("사용자 정보 업데이트 완료")
                     } catch {

@@ -87,6 +87,24 @@ final class MealOB: ObservableObject {
             newIngredients = []
         }
     }
+    
+    func selectIngredient(_ ingredient: Ingredient, in testType: IngredientTestType) {
+        switch testType {
+        case .old:
+            if oldIngredients.contains(ingredient) {
+                oldIngredients.remove(ingredient)
+            } else {
+                oldIngredients.append(ingredient)
+            }
+        case .new:
+            if newIngredients.contains(ingredient) {
+                newIngredients.remove(ingredient)
+            } else {
+                newIngredients.append(ingredient)
+            }
+        }
+    }
+    
     func addIngredient(ingredient: Ingredient, in testType: IngredientTestType) {
         switch testType {
         case .old:

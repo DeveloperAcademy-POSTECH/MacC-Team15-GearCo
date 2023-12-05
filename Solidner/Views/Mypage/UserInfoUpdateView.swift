@@ -14,16 +14,26 @@ struct UserInfoUpdateView: View {
     @State private var showBabyBirthDateModal = false
     @State private var showSolidStartDateModal = false
     @State private var showAddMoreUserFYIModal = false
-    @State private var updatedBabyBirthDate = Date()
-    @State private var updatedSolidStartDate = Date()
-    @State private var nickNameInputText = ""
-    @State private var babyNameInputText = ""
+    @State private var updatedBabyBirthDate: Date
+    @State private var updatedSolidStartDate: Date
+    @State private var nickNameInputText: String
+    @State private var babyNameInputText: String
     @State private var nickNameHasReachedLimit = false
     @State private var babyNameHasReachedLimit = false
     @FocusState private var isNicknameFocused: Bool
     @FocusState private var isBabynameFocused: Bool
-    @EnvironmentObject var user: UserOB
-    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
+//    @EnvironmentObject var user: UserOB
+    @ObservedObject var user: UserOB
+    @Environment(\.dismiss) private var dismiss
+    
+    init(user: UserOB){
+        self.user = user
+        _nickNameInputText = State(initialValue: user.nickName)
+        _babyNameInputText = State(initialValue: user.babyName)
+        _updatedBabyBirthDate = State(initialValue: user.babyBirthDate)
+        _updatedSolidStartDate = State(initialValue: user.solidStartDate)
+    }
+    
     var body: some View {
         GeometryReader { _ in
             ZStack {
@@ -116,7 +126,8 @@ struct UserInfoUpdateView: View {
                 user.babyBirthDate = updatedBabyBirthDate
                 user.solidStartDate = updatedSolidStartDate
                 //🔴 서버 유저정보 업데이트 코드 추가
-                presentationMode.wrappedValue.dismiss()
+//                presentationMode.wrappedValue.dismiss()
+                dismiss()
             }
             .padding(.top, 40)
         }
@@ -148,7 +159,7 @@ struct UserInfoUpdateView: View {
     }
     private func nickNameTextField() -> some View {
         VStack {
-            TextFieldComponents().shortTextfield(placeHolder: "", value: $nickNameInputText, isFocused: $isNicknameFocused)
+            TextFieldComponents().shortTextfield(placeHolder: nickNameInputText, value: $nickNameInputText, isFocused: $isNicknameFocused)
                 .onReceive(nickNameInputText.publisher.collect()) { collectionText in
                     let trimmedText = String(collectionText.prefix(limit))
                     if nickNameInputText != trimmedText {
@@ -217,8 +228,7 @@ struct UserInfoUpdateView: View {
     }
 }
 
-struct UserInfoUpdateView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserInfoUpdateView().environmentObject(UserOB())
-    }
+#Preview {
+    UserInfoUpdateView(user: UserOB())
+//        .environmentObject(UserOB())
 }

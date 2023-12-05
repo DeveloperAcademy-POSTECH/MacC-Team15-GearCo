@@ -111,6 +111,7 @@ struct AddTestIngredientsView: View {
                             IngredientsBigDivision(case: .검색,
                                                    ingredients: $selectedIngredients,
                                                    initSelected: initialSelectedIngredients,
+                                                   mealOB: mealOB,
                                                    viewType: viewType,
                                                    ingredientUseCount: $ingredientUseCount,
                                                    scrollID: scrollID)
@@ -124,6 +125,7 @@ struct AddTestIngredientsView: View {
                                 IngredientsBigDivision(case: .자주사용한재료,
                                                        ingredients: $selectedIngredients,
                                                        initSelected: initialSelectedIngredients,
+                                                       mealOB: mealOB,
                                                        viewType: viewType,
                                                        ingredientUseCount: $ingredientUseCount,
                                                        scrollID: scrollID).id(맨위)
@@ -133,6 +135,7 @@ struct AddTestIngredientsView: View {
                             IngredientsBigDivision(case: .먹을수있는재료,
                                                    ingredients: $selectedIngredients,
                                                    initSelected: initialSelectedIngredients,
+                                                   mealOB: mealOB,
                                                    viewType: viewType,
                                                    ingredientUseCount: $ingredientUseCount,
                                                    scrollID: scrollID).id(맨위)
@@ -140,6 +143,7 @@ struct AddTestIngredientsView: View {
                             IngredientsBigDivision(case: .권장하지않는재료,
                                                    ingredients: $selectedIngredients,
                                                    initSelected: initialSelectedIngredients,
+                                                   mealOB: mealOB,
                                                    viewType: viewType,
                                                    ingredientUseCount: $ingredientUseCount,
                                                    scrollID: scrollID)
@@ -155,9 +159,9 @@ struct AddTestIngredientsView: View {
             }
             Group {
                 if hasIngredientsMismatch { toastMessage }
-                ButtonComponents(.big, title: "저장") {
-                    saveSelectedTestIngredient()
-                }.defaultBottomPadding()
+//                ButtonComponents(.big, title: "저장") {
+//                    saveSelectedTestIngredient()
+//                }.defaultBottomPadding()
             }
             .padding(.horizontal, viewHorizontalPadding)
         }
@@ -324,7 +328,7 @@ extension AddTestIngredientsView {
             mealOB.addIngredient(ingredient: ingredient, in: viewType)
         }
         
-        dismiss()
+//        dismiss()
     }
     
     private func initSelectedIngredient() {

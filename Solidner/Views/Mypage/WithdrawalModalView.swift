@@ -73,14 +73,14 @@ struct WithdrawalModalView: View {
             Task {
                 do {
                     try await FirebaseManager.shared.withdrawUser(user.email)
-                    
-                    UserDefaults().set("", forKey: "email")
-                    UserDefaults().set("", forKey: "AppleID")
-                    UserDefaults().set("", forKey: "babyName")
-                    UserDefaults().set("", forKey: "nickName")
-                    UserDefaults().set(false, forKey: "isAgreeToAdvertising")
-                    UserDefaults().set(Date(), forKey: "babyBirthDate")
-                    UserDefaults().set(Date(), forKey: "solidStartDate")
+                    user.withdraw()
+//                    UserDefaults().set("", forKey: "email")
+//                    UserDefaults().set("", forKey: "AppleID")
+//                    UserDefaults().set("", forKey: "babyName")
+//                    UserDefaults().set("", forKey: "nickName")
+//                    UserDefaults().set(false, forKey: "isAgreeToAdvertising")
+//                    UserDefaults().set(Date(), forKey: "babyBirthDate")
+//                    UserDefaults().set(Date(), forKey: "solidStartDate")
                 } catch {
                     print("회원 탈퇴 중 에러 발생: \(error.localizedDescription)")
                 }
