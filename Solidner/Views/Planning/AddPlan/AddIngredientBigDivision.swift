@@ -29,6 +29,7 @@ struct IngredientsBigDivision: View {
     private let divisionSubTitleBottomSpace: CGFloat = 4
     
     private let divierTopSpaceWhenNotFolded: CGFloat = 10
+    @ObservedObject var mealOB: MealOB
     
     // MARK: let properties
     let ingredientData = IngredientData.shared.ingredients
@@ -60,9 +61,10 @@ struct IngredientsBigDivision: View {
     let scrollID: ScrollID
     
     init(case divisionCase: DivisionCase, ingredients selectedIngredients: Binding<[Int]>,
-         initSelected initialSelectedIngredients: [Int], viewType: MealOB.IngredientTestType,
+         initSelected initialSelectedIngredients: [Int], mealOB: MealOB, viewType: MealOB.IngredientTestType,
          ingredientUseCount: Binding<[Int: Int]>, scrollID: ScrollID) {
         self.divisionCase = divisionCase
+        self.mealOB = mealOB
         self.viewType = viewType
         self._ingredientUseCount = ingredientUseCount
         
@@ -298,11 +300,14 @@ extension IngredientsBigDivision {
         }
         
         private func addIngredient(ingredient: Ingredient) {
-            if selectedIngredients.contains(ingredient.id) {
-                selectedIngredients.removeAll{$0 == ingredient.id}
-            } else if viewType == .old || selectedIngredients.count < 2 {
-                selectedIngredients.append(ingredient.id)
-            }
+            // 버튼 눌렀을 때 임시로 저장하는 로직
+//            if selectedIngredients.contains(ingredient.id) {
+//                selectedIngredients.removeAll{$0 == ingredient.id}
+//            } else if viewType == .old || selectedIngredients.count < 2 {
+//                selectedIngredients.append(ingredient.id)
+//            }
+            // 버튼 눌렀을 때 바로 저장되게
+            mealOB.selectIngredient(ingredient, in: viewType)
         }
         
         var body: some View {

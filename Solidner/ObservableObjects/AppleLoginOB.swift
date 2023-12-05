@@ -141,7 +141,7 @@ class AppleLoginOB: ObservableObject{
                 guard let dict = snap.data() else { return }
                 let userItems = dict
                 
-                let AppldID = userItems["AppleID"] as? String ?? ""
+                let AppleID = userItems["AppleID"] as? String ?? ""
                 let email = userItems["email"] as? String ?? ""
                 let nickName = userItems["nickName"] as? String ?? ""
                 let babyName = userItems["babyName"] as? String ?? ""
@@ -150,13 +150,21 @@ class AppleLoginOB: ObservableObject{
                 let solidStartDate = (userItems["solidStartDate"] as? Timestamp ?? Timestamp(date: Date())).dateValue()
                 
                 
-                UserDefaults().set(email, forKey: "email")
-                UserDefaults().set(AppldID, forKey: "AppleID")
-                UserDefaults().set(babyName, forKey: "babyName")
-                UserDefaults().set(nickName, forKey: "nickName")
-                UserDefaults().set(isAgreeToAdvertising, forKey: "isAgreeToAdvertising")
-                UserDefaults().set(babyBirthDate, forKey: "babyBirthDate")
-                UserDefaults().set(solidStartDate, forKey: "solidStartDate")
+//                UserDefaults().set(email, forKey: "email")
+//                UserDefaults().set(AppldID, forKey: "AppleID")
+//                UserDefaults().set(babyName, forKey: "babyName")
+//                UserDefaults().set(nickName, forKey: "nickName")
+//                UserDefaults().set(isAgreeToAdvertising, forKey: "isAgreeToAdvertising")
+//                UserDefaults().set(babyBirthDate, forKey: "babyBirthDate")
+//                UserDefaults().set(solidStartDate, forKey: "solidStartDate")
+                
+                self.user.AppleID = AppleID
+                self.user.email = email
+                self.user.babyName = babyName
+                self.user.nickName = nickName
+                self.user.isAgreeToAdvertising = isAgreeToAdvertising
+                self.user.babyBirthDate = babyBirthDate
+                self.user.solidStartDate = solidStartDate
                 
                 print("Uset Data Fetched, saved at UserDefaults.")
             }

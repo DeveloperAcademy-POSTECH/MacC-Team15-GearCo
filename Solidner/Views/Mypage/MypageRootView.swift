@@ -29,7 +29,8 @@ struct MypageRootView: View {
                     Text("로그아웃"),
                     action: {
                         // TODO: 로그아웃 세심하게 수정. 추후.
-                        UserDefaults().set("", forKey: "email")
+                        user.email = ""
+//                        UserDefaults().set("", forKey: "email")
                     }
                 ),
                 secondaryButton: .default(
@@ -43,7 +44,7 @@ struct MypageRootView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
         .navigationDestination(isPresented: $goForUserInfoUpdate) {
-            UserInfoUpdateView()
+            UserInfoUpdateView(user: user)
         }
     }
     private func viewBody() -> some View {

@@ -232,6 +232,6 @@ extension ChangeMonthModal {
 
 struct ChangeMonthModal_Previews: PreviewProvider {
     static var previews: some View {
-        ChangeMonthModal(selectedDate: .constant(Date()), fromDate: Date.date(year: 2022, month: 12, day: 20)!)
+        ChangeMonthModal(selectedDate: .constant(Date()), fromDate: Date.date(year: 2022, month: 12, day: 20)!).environmentObject(UserOB())
     }
 }
