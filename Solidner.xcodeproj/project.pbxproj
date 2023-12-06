@@ -327,13 +327,6 @@
 			path = Weekly;
 			sourceTree = "<group>";
 		};
-		B208B1312B1CEF3C00968A87 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		B219F11D2B0C90FE00886087 /* StartPlan */ = {
 			isa = PBXGroup;
 			children = (
@@ -443,7 +436,6 @@
 		C3C6375B2AF90C2B006D464D /* Solidner */ = {
 			isa = PBXGroup;
 			children = (
-				B208B1312B1CEF3C00968A87 /* Resources */,
 				C336EE4F2B054A300057D8B8 /* Info.plist */,
 				0E613A252B131B9B00AF75BF /* IngredientData.json */,
 				0E18AD682AFA7A260011ED4A /* Solidner.entitlements */,
@@ -970,7 +962,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Solidner/Preview Content\"";
-				DEVELOPMENT_TEAM = 6BHXWP5PYW;
+				DEVELOPMENT_TEAM = PAQ92DM7XD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Solidner/Info.plist;
@@ -985,7 +977,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ollie.Solidner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jeckmu.Solidner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1007,7 +999,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Solidner/Preview Content\"";
-				DEVELOPMENT_TEAM = 6BHXWP5PYW;
+				DEVELOPMENT_TEAM = PAQ92DM7XD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Solidner/Info.plist;
@@ -1022,7 +1014,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ollie.Solidner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jeckmu.Solidner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

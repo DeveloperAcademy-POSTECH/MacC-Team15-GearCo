@@ -32,6 +32,11 @@ struct UserInfoUpdateView: View {
                     BackButtonAndTitleHeader(title: "회원정보 수정")
                     viewBody()
                         .padding(horizontal: 20, top: 26.88, bottom: 6)
+                }.task {
+                    nickNameInputText = user.nickName
+                    babyNameInputText = user.babyName
+                    updatedBabyBirthDate = user.babyBirthDate
+                    updatedSolidStartDate = user.solidStartDate
                 }
             }
             .sheet(isPresented: $showBabyBirthDateModal, content: {
@@ -82,18 +87,16 @@ struct UserInfoUpdateView: View {
                 isNicknameFocused = false
             }
         }
-        .onAppear {
-            nickNameInputText = user.nickName
-            babyNameInputText = user.babyName
-            updatedBabyBirthDate = user.babyBirthDate
-            updatedSolidStartDate = user.solidStartDate
-        }
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
     }
     private func viewBody() -> some View {
-        VStack(spacing: 0) {
+        var disableCondition: Bool {
+            nickNameInputText.isEmpty || nickNameInputText.count > limit || babyNameInputText.isEmpty || babyNameInputText.count > limit
+        }
+        
+        return VStack(spacing: 0) {
             userInfoUpdateList()
             Spacer()
             VStack {
@@ -110,7 +113,7 @@ struct UserInfoUpdateView: View {
                     }
                 }
             }
-            ButtonComponents(.big, title: "수정 완료", disabledCondition: false) {
+            ButtonComponents(.big, title: "수정 완료", disabledCondition: disableCondition) {
                 user.babyName = babyNameInputText
                 user.nickName = nickNameInputText
                 user.babyBirthDate = updatedBabyBirthDate
@@ -152,7 +155,7 @@ struct UserInfoUpdateView: View {
                 .onReceive(nickNameInputText.publisher.collect()) { collectionText in
                     let trimmedText = String(collectionText.prefix(limit))
                     if nickNameInputText != trimmedText {
-                        nickNameHasReachedLimit = nickNameInputText.count > limit ? true : false
+                        nickNameHasReachedLimit = (nickNameInputText.count > limit || nickNameInputText.isEmpty) ? true : false
                         nickNameInputText = trimmedText
                     }
                 }
@@ -172,7 +175,7 @@ struct UserInfoUpdateView: View {
                 .onReceive(babyNameInputText.publisher.collect()) { collectionText in
                     let trimmedText = String(collectionText.prefix(limit))
                     if babyNameInputText != trimmedText {
-                        babyNameHasReachedLimit = babyNameInputText.count > limit ? true : false
+                        babyNameHasReachedLimit = (babyNameInputText.count > limit || babyNameInputText.isEmpty) ? true : false
                         babyNameInputText = trimmedText
                     }
                 }
