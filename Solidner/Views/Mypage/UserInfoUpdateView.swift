@@ -14,10 +14,14 @@ struct UserInfoUpdateView: View {
     @State private var showBabyBirthDateModal = false
     @State private var showSolidStartDateModal = false
     @State private var showAddMoreUserFYIModal = false
+    @State private var showFailureAlert = false
+    @State private var err: Error?
+    
     @State private var updatedBabyBirthDate = Date()
     @State private var updatedSolidStartDate = Date()
     @State private var nickNameInputText = ""
     @State private var babyNameInputText = ""
+    
     @State private var nickNameHasReachedLimit = false
     @State private var babyNameHasReachedLimit = false
     @FocusState private var isNicknameFocused: Bool
@@ -95,7 +99,7 @@ struct UserInfoUpdateView: View {
         var disableCondition: Bool {
             nickNameInputText.isEmpty || nickNameInputText.count > limit || babyNameInputText.isEmpty || babyNameInputText.count > limit
         }
-        
+                
         return VStack(spacing: 0) {
             userInfoUpdateList()
             Spacer()
@@ -114,14 +118,24 @@ struct UserInfoUpdateView: View {
                 }
             }
             ButtonComponents(.big, title: "수정 완료", disabledCondition: disableCondition) {
-                user.babyName = babyNameInputText
-                user.nickName = nickNameInputText
-                user.babyBirthDate = updatedBabyBirthDate
-                user.solidStartDate = updatedSolidStartDate
-                //🔴 서버 유저정보 업데이트 코드 추가
-                presentationMode.wrappedValue.dismiss()
-            }
-            .padding(.top, 40)
+                Task {
+                    do {
+                        try await FirebaseManager.shared.updateUser(user.email, nickName: nickNameInputText, babyName: babyNameInputText, babyBirth: updatedBabyBirthDate, solidStart: updatedSolidStartDate)
+                        user.babyName = babyNameInputText
+                        user.nickName = nickNameInputText
+                        user.babyBirthDate = updatedBabyBirthDate
+                        user.solidStartDate = updatedSolidStartDate
+                        presentationMode.wrappedValue.dismiss()
+                    } catch {
+                        showFailureAlert = true
+                        self.err = error
+                    }
+                }
+            }.padding(.top, 40)
+        }.alert("에러 발생", isPresented: $showFailureAlert, presenting: err) { err in
+            Button("확인") { showFailureAlert = false }
+        } message: { error in
+            Text("회원 정보 수정 중 오류 발생.\n인터넷 연결을 확인해 보시고, 재시도 해 주세요.")
         }
     }
     private func userInfoUpdateList() -> some View {
