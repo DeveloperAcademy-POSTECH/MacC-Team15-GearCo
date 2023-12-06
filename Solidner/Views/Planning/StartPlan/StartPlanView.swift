@@ -124,7 +124,7 @@ extension StartPlanView {
         static var goToPlanButtonLabelframeHeight: CGFloat { 60.responsibleHeight }
         static var goToPlanButtonLabelBackgroundCornerRadius: CGFloat { 50 }
         static var goToPlanButtonLabelBackgroundColor: Color { .accentColor1 }
-        static var modalHeight: CGFloat { 498.responsibleHeight }
+        static var modalHeight: CGFloat { 498 }
         static var modalPresentationCornerRadius: CGFloat { 25 }
         static var buttonBottomSpace: CGFloat { 35.responsibleHeight }
     }

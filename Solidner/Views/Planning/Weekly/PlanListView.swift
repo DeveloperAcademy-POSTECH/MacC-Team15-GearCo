@@ -109,27 +109,16 @@ extension PlanListView {
                 isCurrentDateEditing.toggle()
             } label: {
                 Text(texts.yyyymmHeaderText(date: selectedMonthDate))
-                    .customFont(.header2, color: K.titleTextColor)
+                    .headerFont2()
+                    .foregroundStyle(Color.defaultText)
                     .padding(.trailing, 2)
-                Image(systemName: K.chevronDownSFSymbolName)
+                Image(systemName: "chevron.down")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 20)
-                    .foregroundStyle(K.chevronDownColor)
+                    .foregroundStyle(Color.defaultText)
             }
-            Rectangle()
-                .foregroundStyle(Color.secondBgColor)
-                .frame(maxWidth: .infinity)
-                .frame(height: 31)
-                .onTapGesture(count: 5) {
-                    print("Tapped!")
-                    Task {
-                        try? await FirebaseManager.shared.deleteAllMealPlan(email: user.email)
-                        UserDefaults().set("", forKey: "nickName")
-                    }
-                }.gesture(TapGesture().onEnded { _ in
-                    print("tapped once")
-                })
+            Spacer()
         }
         .padding(K.titlePadding)
     }
