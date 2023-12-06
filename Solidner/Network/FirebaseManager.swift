@@ -67,6 +67,26 @@ extension FirebaseManager {
             throw error
         }
     }
+    
+    func updateUser(_ email: String, nickName: String, babyName: String, babyBirth: Date, solidStart: Date) async throws {
+        let colRef = getColRef(.User)
+        let docRef = colRef.getDocRef(email)
+        
+        let dataToUpdate: [String: Any] = [
+            "nickName": nickName,
+            "babyName": babyName,
+            "babyBirthDate": Timestamp(date: babyBirth),
+            "solidStartDate": Timestamp(date: solidStart)
+        ]
+        
+        do {
+            try await docRef.setData(dataToUpdate, merge: true)
+            print("회원 정보를 수정했습니다. - id: \(email)")
+        } catch {
+            print("회원 정보 수정에 실패했습니다.")
+            throw error
+        }
+    }
 }
 
 // MARK: 없는 재료 리포트

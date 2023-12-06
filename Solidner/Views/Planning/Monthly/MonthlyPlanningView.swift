@@ -63,7 +63,7 @@ struct MonthlyPlanningView: View {
 //            }
 
             monthlyHeader
-//                .padding(.bottom, 16)
+            
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     calendarCurrentYearMonth.padding(.bottom, 26)
@@ -78,11 +78,12 @@ struct MonthlyPlanningView: View {
                         RoundedRectangle(cornerRadius: 12)
                             .foregroundColor(.defaultText_wh)
                     }
-                    Spacer().frame(height: 200)
+                    Spacer().frame(height: 100.responsibleHeight)
                     ThickDivider()
                         .padding(.horizontal, -16)
+                    // TODO: Magic Number 수정
                     totalSetting
-                        .padding(top: 26, leading: 0, bottom: 100, trailing: 0)
+                        .padding(top: 26.responsibleHeight, leading: 0, bottom: 75.responsibleHeight, trailing: 0)
                 }.padding(.horizontal, 16).clipped()
                     .defaultViewBodyTopPadding()
             }
@@ -628,9 +629,3 @@ extension MonthlyPlanningView {
         return result.sorted { $0.0.startDay < $1.0.startDay }    // startDate 순 정렬
     }
 }
-
-//struct MonthlyPlanningView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MonthlyPlanningView()
-//    }
-//}

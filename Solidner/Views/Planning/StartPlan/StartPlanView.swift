@@ -37,7 +37,7 @@ struct StartPlanView: View {
             ingredientsImage
             titleAndHint
             goToPlanButton
-            Spacer()
+            Spacer().frame(height: K.buttonBottomSpace)
         }
         .navigationDestination(isPresented: $isMyPageOpenning) {
             MypageRootView()
@@ -64,6 +64,8 @@ struct StartPlanView: View {
     
     private var ingredientsImage: some View {
         Image(assetName: .ingredientsInStart)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
             .padding(.bottom, K.ingredientsImagePaddingBottom)
     }
 
@@ -115,15 +117,16 @@ struct StartPlanView: View {
 
 extension StartPlanView {
     private enum K {
-        static var topSpacerHeight: CGFloat { 20 }
-        static var ingredientsImagePaddingBottom: CGFloat { 45 }
-        static var titleAndHintPaddingBottom: CGFloat { 30 }
-        static var goToPlanButtonLabelPaddingHorizontal: CGFloat { 27 }
-        static var goToPlanButtonLabelframeHeight: CGFloat { 60 }
+        static var topSpacerHeight: CGFloat { 20.responsibleHeight }
+        static var ingredientsImagePaddingBottom: CGFloat { 45.responsibleHeight }
+        static var titleAndHintPaddingBottom: CGFloat { 30.responsibleHeight }
+        static var goToPlanButtonLabelPaddingHorizontal: CGFloat { 27.responsibleWidth }
+        static var goToPlanButtonLabelframeHeight: CGFloat { 60.responsibleHeight }
         static var goToPlanButtonLabelBackgroundCornerRadius: CGFloat { 50 }
         static var goToPlanButtonLabelBackgroundColor: Color { .accentColor1 }
         static var modalHeight: CGFloat { 498 }
         static var modalPresentationCornerRadius: CGFloat { 25 }
+        static var buttonBottomSpace: CGFloat { 35.responsibleHeight }
     }
 }
 
