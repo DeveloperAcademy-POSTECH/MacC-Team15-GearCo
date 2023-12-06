@@ -32,15 +32,17 @@ struct UserInfoUpdateView: View {
         GeometryReader { _ in
             ZStack {
                 BackgroundView()
-                VStack(spacing: 0) {
-                    BackButtonAndTitleHeader(title: "회원정보 수정")
-                    viewBody()
-                        .padding(horizontal: 20, top: 26.88, bottom: 6)
-                }.task {
-                    nickNameInputText = user.nickName
-                    babyNameInputText = user.babyName
-                    updatedBabyBirthDate = user.babyBirthDate
-                    updatedSolidStartDate = user.solidStartDate
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 0) {
+                        BackButtonAndTitleHeader(title: "회원정보 수정")
+                        viewBody()
+                            .padding(horizontal: 20, top: 26.88, bottom: 6)
+                    }.task {
+                        nickNameInputText = user.nickName
+                        babyNameInputText = user.babyName
+                        updatedBabyBirthDate = user.babyBirthDate
+                        updatedSolidStartDate = user.solidStartDate
+                    }
                 }
             }
             .sheet(isPresented: $showBabyBirthDateModal, content: {
@@ -99,10 +101,10 @@ struct UserInfoUpdateView: View {
         var disableCondition: Bool {
             nickNameInputText.isEmpty || nickNameInputText.count > limit || babyNameInputText.isEmpty || babyNameInputText.count > limit
         }
-                
+        
         return VStack(spacing: 0) {
             userInfoUpdateList()
-            Spacer()
+            Spacer().frame(height: 35)
             VStack {
                 Button(action: {
                     showAddMoreUserFYIModal = true
@@ -110,13 +112,14 @@ struct UserInfoUpdateView: View {
                     VStack(spacing: 3) {
                         Text("양육자, 아이 추가를 찾으시나요?")
                             .clickableTextFont2()
-                        .foregroundColor(.tertinaryText)
+                            .foregroundColor(.tertinaryText)
                         Rectangle()
                             .fill(Color.tertinaryText)
                             .frame(width: 166, height: 1)
                     }
                 }
             }
+            Spacer().frame(height: 40)
             ButtonComponents(.big, title: "수정 완료", disabledCondition: disableCondition) {
                 Task {
                     do {
@@ -131,7 +134,7 @@ struct UserInfoUpdateView: View {
                         self.err = error
                     }
                 }
-            }.padding(.top, 40)
+            }.padding(.bottom, 25)
         }.alert("에러 발생", isPresented: $showFailureAlert, presenting: err) { err in
             Button("확인") { showFailureAlert = false }
         } message: { error in
@@ -152,7 +155,7 @@ struct UserInfoUpdateView: View {
         VStack(alignment: .leading, spacing: 16) {
             Text(userInfoCase.rawValue)
                 .headerFont4()
-            .foregroundColor(.defaultText.opacity(0.8))
+                .foregroundColor(.defaultText.opacity(0.8))
             switch userInfoCase {
             case .nickName:
                 nickNameTextField()

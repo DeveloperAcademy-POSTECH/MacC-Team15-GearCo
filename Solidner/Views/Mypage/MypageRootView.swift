@@ -15,10 +15,12 @@ struct MypageRootView: View {
     var body: some View {
         ZStack {
             BackgroundView()
-            VStack(spacing: 0) {
-                BackButtonAndTitleHeader(title: "프로필")
-                viewBody()
-                    .padding(horizontal: 20, top: 22.8, bottom: 0)
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 0) {
+                    BackButtonAndTitleHeader(title: "프로필")
+                    viewBody()
+                        .padding(horizontal: 20, top: 22.8, bottom: 0)
+                }
             }
         }
         .alert(isPresented: $showLogoutAlert) {
@@ -166,6 +168,7 @@ struct MypageRootView: View {
             logoutButton()
                 .padding(.top, -4)
             myPageFunctionButton(mypageFuctionCase: .withdrawal)
+            Spacer().frame(height: 30)
         }
     }
 }
