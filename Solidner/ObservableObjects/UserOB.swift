@@ -26,7 +26,7 @@ final class UserOB: ObservableObject {
     @AppStorage("babyBirthDate") var babyBirthDate = Date.date(year: 2023, month: 2, day: 22)!
     @AppStorage("solidStartDate") var solidStartDate = Date.date(year: 2023, month: 9, day: 22)!
     @AppStorage("planCycleGap") var planCycleGap = CycleGaps.three
-    @AppStorage("displayDateType") var displayDateType = DisplayDateType.birth
+    @AppStorage("displayDateType") var displayDateType = DisplayDateType.solid
 
     /// 생후 얼마가 지났는 지 불러옴.
     /// `UserOB.dateAfterBirth.day / UserOB.dateAfterBirth.month` 와 같은 형식으로 사용.
