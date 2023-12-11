@@ -124,7 +124,7 @@ extension PlanGroupDetailView {
     private var headerTitle: some View {
         HStack(alignment: .top) {
             Text(texts.dateRangeTitle(from: startDate, to: endDate))
-                .headerFont2()
+                .customFont(.header2, color: .defaultText)
             Spacer()
         }
     }
