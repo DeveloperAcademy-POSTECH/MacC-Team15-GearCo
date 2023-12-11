@@ -174,11 +174,16 @@ extension Date {
     
     /// `formatted(_ format: DateFormat) -> String` 함수에 사용되는 format 형식을 case로 재정의한 enum입니다.
     enum DateFormat: String {
+        // 2023.12.08
         case yyyyMMdd_dot = "yyyy.MM.dd"
+        // 2023. 12. 08
         case yyyyMMdd_dotWithSpace = "yyyy. MM. dd"
+        // 2023년 12월 08일
         case yyyyMMdd_fullKorean = "yyyy년 MM월 dd일"
-        // 11/13
+        // 12/08
         case MMdd_slash = "MM/dd"
+        // 12. 8. (금)
+        case MMdE_dotWithSpace = "MM. d. (E)"
     }
 
     func isInBetween(from: Date, to: Date) -> Bool {
