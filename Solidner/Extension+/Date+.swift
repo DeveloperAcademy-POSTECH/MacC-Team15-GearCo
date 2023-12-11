@@ -182,7 +182,7 @@ extension Date {
     }
 
     func isInBetween(from: Date, to: Date) -> Bool {
-        self >= from && self <= to
+        self >= from.dayOfStart && self <= to.dayOfEnd
     }
 
     /// 이 Extension 내에서 정의한 DateFormat Enum 참고.
