@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0E0F68AB2B1AF5AA0071941D /* TempUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0F68AA2B1AF5AA0071941D /* TempUserInfo.swift */; };
-		0E18AD602AFA10840011ED4A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0E18AD5F2AFA10840011ED4A /* GoogleService-Info.plist */; };
 		0E18AD6B2AFA7F670011ED4A /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AD6A2AFA7F670011ED4A /* SignInView.swift */; };
 		0E18AD6D2AFA8DC50011ED4A /* UserOB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AD6C2AFA8DC50011ED4A /* UserOB.swift */; };
 		0E18AD6F2AFA8F140011ED4A /* AppleLoginOB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E18AD6E2AFA8F140011ED4A /* AppleLoginOB.swift */; };
@@ -82,6 +81,9 @@
 		C3777C682B132BC1008B951A /* ServiceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3777C672B132BC1008B951A /* ServiceInfoView.swift */; };
 		C3777C6A2B135B80008B951A /* WithdrawalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3777C692B135B80008B951A /* WithdrawalView.swift */; };
 		C3777C6C2B136A55008B951A /* WithdrawalModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3777C6B2B136A55008B951A /* WithdrawalModalView.swift */; };
+		C386F6FD2B29A4CD0044812D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C386F6FC2B29A4CD0044812D /* GoogleService-Info.plist */; };
+		C386F6FE2B29A4CD0044812D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C386F6FC2B29A4CD0044812D /* GoogleService-Info.plist */; };
+		C386F6FF2B29A4CD0044812D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C386F6FC2B29A4CD0044812D /* GoogleService-Info.plist */; };
 		C3AD1BC42B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AD1BC32B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift */; };
 		C3AD1BC62B012DA6003BB3E0 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AD1BC52B012DA6003BB3E0 /* UIApplication+.swift */; };
 		C3AD1BC82B021660003BB3E0 /* SoCuteNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AD1BC72B021660003BB3E0 /* SoCuteNameView.swift */; };
@@ -131,7 +133,6 @@
 
 /* Begin PBXFileReference section */
 		0E0F68AA2B1AF5AA0071941D /* TempUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempUserInfo.swift; sourceTree = "<group>"; };
-		0E18AD5F2AFA10840011ED4A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0E18AD682AFA7A260011ED4A /* Solidner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Solidner.entitlements; sourceTree = "<group>"; };
 		0E18AD6A2AFA7F670011ED4A /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		0E18AD6C2AFA8DC50011ED4A /* UserOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOB.swift; sourceTree = "<group>"; };
@@ -203,6 +204,7 @@
 		C3777C672B132BC1008B951A /* ServiceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceInfoView.swift; sourceTree = "<group>"; };
 		C3777C692B135B80008B951A /* WithdrawalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalView.swift; sourceTree = "<group>"; };
 		C3777C6B2B136A55008B951A /* WithdrawalModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalModalView.swift; sourceTree = "<group>"; };
+		C386F6FC2B29A4CD0044812D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C3AD1BC32B0126A2003BB3E0 /* KeyboardHeightHelperOB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightHelperOB.swift; sourceTree = "<group>"; };
 		C3AD1BC52B012DA6003BB3E0 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
 		C3AD1BC72B021660003BB3E0 /* SoCuteNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoCuteNameView.swift; sourceTree = "<group>"; };
@@ -439,7 +441,7 @@
 				C336EE4F2B054A300057D8B8 /* Info.plist */,
 				0E613A252B131B9B00AF75BF /* IngredientData.json */,
 				0E18AD682AFA7A260011ED4A /* Solidner.entitlements */,
-				0E18AD5F2AFA10840011ED4A /* GoogleService-Info.plist */,
+				C386F6FC2B29A4CD0044812D /* GoogleService-Info.plist */,
 				B29CF7892AFCCE9200B54A3E /* Literal */,
 				C3C6378C2AF90CA2006D464D /* Network */,
 				C3C6378B2AF90C94006D464D /* Fonts */,
@@ -635,7 +637,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					C3C637582AF90C2B006D464D = {
 						CreatedOnToolsVersion = 14.3;
@@ -682,10 +684,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3C637642AF90C2C006D464D /* Preview Assets.xcassets in Resources */,
+				C386F6FD2B29A4CD0044812D /* GoogleService-Info.plist in Resources */,
 				C3B4DB372B0DF16D00772C2A /* Pretendard-Bold.otf in Resources */,
 				C3B4DB3B2B0DF17700772C2A /* Pretendard-SemiBold.otf in Resources */,
 				C3C637612AF90C2C006D464D /* Assets.xcassets in Resources */,
-				0E18AD602AFA10840011ED4A /* GoogleService-Info.plist in Resources */,
 				C3B4DB3F2B0DF18700772C2A /* Pretendard-Medium.otf in Resources */,
 				0E613A262B131B9B00AF75BF /* IngredientData.json in Resources */,
 			);
@@ -696,6 +698,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3B4DB382B0DF16D00772C2A /* Pretendard-Bold.otf in Resources */,
+				C386F6FE2B29A4CD0044812D /* GoogleService-Info.plist in Resources */,
 				C3B4DB3C2B0DF17700772C2A /* Pretendard-SemiBold.otf in Resources */,
 				C3B4DB402B0DF18700772C2A /* Pretendard-Medium.otf in Resources */,
 			);
@@ -706,6 +709,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3B4DB392B0DF16D00772C2A /* Pretendard-Bold.otf in Resources */,
+				C386F6FF2B29A4CD0044812D /* GoogleService-Info.plist in Resources */,
 				C3B4DB3D2B0DF17700772C2A /* Pretendard-SemiBold.otf in Resources */,
 				C3B4DB412B0DF18700772C2A /* Pretendard-Medium.otf in Resources */,
 			);
@@ -962,7 +966,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Solidner/Preview Content\"";
-				DEVELOPMENT_TEAM = PAQ92DM7XD;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Solidner/Info.plist;
@@ -977,7 +981,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jeckmu.Solidner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swimmer.Solidner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -999,7 +1003,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Solidner/Preview Content\"";
-				DEVELOPMENT_TEAM = PAQ92DM7XD;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Solidner/Info.plist;
@@ -1014,7 +1018,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jeckmu.Solidner;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swimmer.Solidner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
