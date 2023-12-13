@@ -22,40 +22,53 @@ struct ReportIngredientModalView: View {
         ZStack {
             BackgroundView()
             if !goToFinishedSendingView {
-                RootVStack {
-                    Text("재료 리포트")
-                        .headerFont1()
-                        .foregroundStyle(Color.defaultText)
-                    Text("더 많은 재료를 제공할 수 있도록\n솔리너에게 필요한 재료를 알려주세요")
-                        .bodyFont1()
-                        .foregroundStyle(Color.defaultText.opacity(0.6))
-                        .multilineTextAlignment(.center)
-                        .padding(.top, 14)
-                    reportNewIngredientComponent()
-                        .padding(.top, 30)
-                    ViewDivider(dividerCase: .thick)
-                        .padding(.top, 26)
-                    Spacer().frame(height: 26)
-                    receiveReportResultComponent()
-                        
-                    Spacer()
-                    ButtonComponents(.big, title: "보내기", disabledCondition: ingredientReportNote.isEmpty || receiveResultEmailAdress.isEmpty) {
-                        // TODO: 추후 보내기 실패 error handling 하기. (새로운 페이지?) - 여유 나면.. 지금은 비동기 처리만 되어 있고, 실패 시 다음 페이지 전송 x
-                        Task {
-                            await firebaseManager.reportIngredient(note: ingredientReportNote, replyEmail: receiveResultEmailAdress,
-                                                             userEmail: user.email)
-                            goToFinishedSendingView = true
+                ZStack {
+                    RootVStack {
+                        Text("재료 리포트")
+                            .headerFont1()
+                            .foregroundStyle(Color.defaultText)
+                        Text("더 많은 재료를 제공할 수 있도록\n솔리너에게 필요한 재료를 알려주세요")
+                            .bodyFont1()
+                            .foregroundStyle(Color.defaultText.opacity(0.6))
+                            .multilineTextAlignment(.center)
+                            .padding(.top, 14)
+                            .padding(.bottom, 10)
+                            .fixedSize(horizontal: false, vertical: true)
+                        ScrollView {
+                            reportNewIngredientComponent()
+                                .padding(.top, 30)
+                            ViewDivider(dividerCase: .thick)
+                                .padding(.top, 26)
+                            Spacer().frame(height: 26)
+                            receiveReportResultComponent()
                         }
+                        Spacer()
+                    }
+                    .padding(horizontal: 20, top: 49, bottom: 0)
+                    GeometryReader { _ in
+                        VStack(spacing: 0) {
+                            Spacer()
+                            ButtonComponents(.big, title: "보내기", disabledCondition: ingredientReportNote.isEmpty || receiveResultEmailAdress.isEmpty) {
+                                // TODO: 추후 보내기 실패 error handling 하기. (새로운 페이지?) - 여유 나면.. 지금은 비동기 처리만 되어 있고, 실패 시 다음 페이지 전송 x
+                                Task {
+                                    await firebaseManager.reportIngredient(note: ingredientReportNote, replyEmail: receiveResultEmailAdress,
+                                                                           userEmail: user.email)
+                                    goToFinishedSendingView = true
+                                }
+                            }
+                            .padding(.top, 10)
+                            .background(Color.secondBgColor)
+                        }
+                        .padding(horizontal: 20, top: 0, bottom: 6)
+                        .ignoresSafeArea(.keyboard, edges: .bottom)
                     }
                 }
-                .padding(horizontal: 20, top: 49, bottom: 6)
             } else {
                 FinishedSendingModalView(action: {
                     presentationMode.wrappedValue.dismiss()
                 })
             }
         }
-        .ignoresSafeArea(.keyboard, edges: .bottom)
         .onTapGesture {
             if reportFieldIsFocused {
                 reportFieldIsFocused = false
