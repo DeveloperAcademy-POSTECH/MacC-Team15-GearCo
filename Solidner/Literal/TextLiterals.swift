@@ -36,7 +36,7 @@ enum TextLiterals {
     }
 
     enum PlanGroupDetail {
-        static func dateRangeTitle(from: Date, to: Date) -> String { "\(from.month).\(from.day).(\(from.weekDayKor)) ~ \n\(to.month).\(to.day).(\(to.weekDayKor)) 식단" }
+        static func dateRangeTitle(from: Date, to: Date) -> String { "\(from.formatted(.MMdE_dotWithSpace)) ~ \n\(to.formatted(.MMdE_dotWithSpace)) 식단" }
 
         static var editPlan: String { "편집" }
         static var editComplete: String { "완료" }
@@ -49,7 +49,7 @@ enum TextLiterals {
     }
 
     enum DailyPlanList {
-        static func titleText(_ date: Date) -> String { "\(date.month).\(date.day).(\(date.weekDayKor)) 식단" }
+        static func titleText(_ date: Date) -> String { "\(date.formatted(.MMdE_dotWithSpace)) 식단" }
         static func dateRangeString(start: Date, end: Date) -> String {
             "\(start.day)일(\(start.weekDayKor)) ~ \(end.day)일(\(end.weekDayKor))"
         }
@@ -131,13 +131,10 @@ enum TextLiterals {
 
     enum MealDetail {
         static func viewHeaderTitleText(from: Date, to: Date, isSingle: Bool) -> String {
-            func dateString(of date: Date) -> String {
-                return "\(date.month).\(date.day).(\(date.weekDayKor))"
-            }
             if isSingle {
-                return "\(dateString(of: from)) 재료"
+                return "\(from.formatted(.MMdE_dotWithSpace)) 재료"
             } else {
-                return "\(dateString(of: from)) ~ \(dateString(of: to)) 재료"
+                return "\(from.formatted(.MMdE_dotWithSpace)) ~ \(to.formatted(.MMdE_dotWithSpace)) 재료"
             }
             
         }

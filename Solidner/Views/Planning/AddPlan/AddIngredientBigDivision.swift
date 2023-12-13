@@ -142,7 +142,7 @@ extension IngredientsBigDivision {
             ForEach(Array(IngredientType.allCases.enumerated()), id: \.element) { index, type in
                 HStack(spacing: 0) {
                     Text(type.description)
-                        .font(.system(size: 19, weight: .semibold))
+                        .customFont(.header4, color: .defaultText.opacity(0.8))
                         .padding(.trailing, 2)
                     if divisionCase == .권장하지않는재료 {
                         Image(systemName: "xmark.shield.fill")
@@ -308,7 +308,7 @@ extension IngredientsBigDivision {
         var body: some View {
             HStack(spacing: 0) {
                 Text(ingredient.name)
-                    .headerFont4()
+                    .customFont(.header4, color: .defaultText.opacity(0.8))
                 Spacer().frame(width: ingredientNameRightSpace)
                 switch divisionCase {
                 case .이상반응재료:

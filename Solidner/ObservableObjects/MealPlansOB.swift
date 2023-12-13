@@ -105,7 +105,7 @@ final class MealPlansOB: ObservableObject {
     /// - Returns: date가 포함된 meal plan의 list
     func getMealPlans(in date: Date) -> [MealPlan] {
         mealPlans.filter {
-            date.isInBetween(from: $0.startDate.dayOfStart, to: $0.endDate.dayOfEnd)
+            date.isInBetween(from: $0.startDate, to: $0.endDate)
         }
     }
     
@@ -122,19 +122,19 @@ final class MealPlansOB: ObservableObject {
             filteredMealPlans = mealPlans
         case let .dateRange(start, end):
             filteredMealPlans = mealPlans.filter {
-                start.isInBetween(from: $0.startDate.dayOfStart, to: $0.endDate.dayOfEnd) || end.isInBetween(from: $0.startDate.dayOfStart, to: $0.endDate.dayOfEnd)
+                start.isInBetween(from: $0.startDate, to: $0.endDate) || end.isInBetween(from: $0.startDate, to: $0.endDate)
             }
         case let .month(date):
             #warning("test해봐야...")
             filteredMealPlans = mealPlans.filter {
                 let start = Date.date(year: date.year, month: date.month, day: 1) ?? Date()
-                let end = start.add(.month, value: 1).add(.day, value: -1).dayOfEnd
+                let end = start.add(.month, value: 1).add(.day, value: -1)
                 return $0.startDate.isInBetween(from: start, to: end) || $0.endDate.isInBetween(from: start, to: end)
 //                return ($0.startDate <= end && $0.startDate >= start) || ($0.endDate >= start && $0.endDate <= end)
             }
         case let .day(date):
             filteredMealPlans = mealPlans.filter {
-                date.isInBetween(from: $0.startDate.dayOfStart, to: $0.endDate.dayOfEnd)
+                date.isInBetween(from: $0.startDate, to: $0.endDate)
             }
         }
     }
@@ -175,7 +175,7 @@ final class MealPlansOB: ObservableObject {
     
     private func isWrongPlan(at date: Date, in plans: [MealPlan]) -> Bool {
         let relatedPlans = plans.filter { date.isInBetween(from: $0.startDate, to: $0.endDate) }
-        
+        print(#function, plans, relatedPlans)
         return WrongPlanChecker.isWrongPlan(relatedPlans)
     }
 }

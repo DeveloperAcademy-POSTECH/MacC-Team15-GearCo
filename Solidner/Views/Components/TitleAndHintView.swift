@@ -71,7 +71,7 @@ extension TitleAndHintView {
         self.title = title
         self.hint = hint
         self._titleColor = State(initialValue: .defaultText.opacity(0.8))
-        self._hintColor = State(initialValue: .primary.opacity(0.6))
+        self._hintColor = State(initialValue: .primeText.opacity(0.6))
     }
 }
 
